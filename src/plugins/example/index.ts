@@ -29,26 +29,22 @@ class ViewCreator {
   createView(viewName: string, args: Array<string>) {
     const node = document.createElement('a');
 
-    console.log("Navigating to ", viewName, " with args: ", args)
+    console.log('Navigating to ', viewName, ' with args: ', args);
 
-    if (viewName == 'packages')
-    {
+    if (viewName == 'packages') {
       // create a packages view
       node.textContent = 'Packages: Hello world ' + args;
-      node.href = "/example/quetz/channels";
-    }
-    else if (viewName == 'channels')
-    {
+      node.href = '/example/quetz/channels';
+    } else if (viewName == 'channels') {
       // create a channels view
       node.textContent = 'Channels: Hello world ' + args;
-      node.href = "/example/quetz/packages";
+      node.href = '/example/quetz/packages';
     }
 
     this._parent.node.innerHTML = '';
     this._parent.node.appendChild(node);
   }
 }
-
 
 /**
  * The main plugin.
@@ -58,13 +54,17 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [IRouter],
   optional: [IMainMenu],
-  activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu | null): void => {
+  activate: (
+    app: JupyterFrontEnd,
+    router: IRouter,
+    menu: IMainMenu | null
+  ): void => {
     const { commands, shell } = app;
 
     const node = document.createElement('a');
 
     node.textContent = 'Hello world!';
-    node.href = "/example/quetz/packages"
+    node.href = '/example/quetz/packages';
 
     // let parent_layout = new BoxLayout();
     let content = new Widget({ node });
@@ -83,13 +83,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     commands.addCommand('quetz:gotopage', {
       execute: () => {
-        let url = new URL(window.location.href)
+        let url = new URL(window.location.href);
         let parts = url.pathname.split('/').slice(3);
         viewCreator.createView(parts[0], parts.slice(1));
       }
     });
 
-    router.register({pattern: /example\/quetz\/.*/, command: 'quetz:gotopage'});
+    router.register({
+      pattern: /example\/quetz\/.*/,
+      command: 'quetz:gotopage'
+    });
 
     commands.addCommand(CommandIDs.open, {
       label: 'Open Logo',
