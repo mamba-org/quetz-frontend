@@ -30,6 +30,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
 
     this._top = new Panel();
     this._main = new DockPanelSvg();
+    // this._main = new BoxLayout();
 
     this._top.id = 'top-panel';
     this._main.id = 'main-panel';

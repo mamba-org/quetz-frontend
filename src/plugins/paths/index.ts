@@ -13,6 +13,7 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
   activate: (
     app: JupyterFrontEnd<JupyterFrontEnd.IShell>
   ): JupyterFrontEnd.IPaths => {
+    console.log((app as App).paths);
     return (app as App).paths;
   },
   autoStart: true,
