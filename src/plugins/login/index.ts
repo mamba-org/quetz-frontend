@@ -19,7 +19,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   optional: [ILogInMenu],
   activate: (app: JupyterFrontEnd, logInMenu: ILogInMenu): void => {
-
     const node = document.createElement('div');
     node.textContent = 'LogIn with GitHub';
     const button = new Widget({ node });

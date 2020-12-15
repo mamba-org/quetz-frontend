@@ -68,10 +68,9 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
    * Add a widget to the application shell.
    *
    * @param widget - The widget being added.
-   *
    * @param area - Optional region in the shell into which the widget should
    * be added.
-   *
+   * @param options
    */
   add(
     widget: Widget,
@@ -89,7 +88,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
       }
       this._addToMainArea(widget);
     }
-    return 
+    return;
   }
 
   /**
@@ -168,6 +167,9 @@ namespace Private {
   }
   /**
    * A less-than comparison function for side bar rank items.
+   *
+   * @param first
+   * @param second
    */
   export function itemCmp(first: IRankItem, second: IRankItem): number {
     return first.rank - second.rank;
@@ -192,6 +194,9 @@ namespace Private {
      * Add a widget to the panel.
      *
      * If the widget is already added, it will be moved.
+     *
+     * @param widget
+     * @param rank
      */
     addWidget(widget: Widget, rank: number): void {
       widget.parent = null;
@@ -203,6 +208,9 @@ namespace Private {
 
     /**
      * A message hook for child add/remove messages on the main area dock panel.
+     *
+     * @param handler
+     * @param msg
      */
     private _panelChildHook = (
       handler: IMessageHandler,

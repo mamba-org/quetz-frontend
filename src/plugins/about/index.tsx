@@ -25,9 +25,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
 export default plugin;
 
-
 class About extends ReactWidget {
-
   onClick = () => {
     const title = (
       <span className="about-header">
@@ -63,11 +61,13 @@ class About extends ReactWidget {
         })
       ]
     });
-  }
-  
+  };
+
   render(): React.ReactElement {
     return (
-      <span style={{ margin: 15 }} onClick={this.onClick}>About</span>
+      <span style={{ margin: 15 }} onClick={this.onClick}>
+        About
+      </span>
     );
   }
 }

@@ -11,7 +11,7 @@ import { Widget } from '@lumino/widgets';
 
 import { MainMenu } from './menu';
 
-import { LogInMenu } from './login'
+import { LogInMenu } from './login';
 
 import { IMainMenu, ILogInMenu } from './tokens';
 
@@ -44,14 +44,13 @@ const login: JupyterFrontEndPlugin<ILogInMenu> = {
   activate: logInMenu
 };
 
-const plugins: JupyterFrontEndPlugin<any>[] = [
-  title,
-  menu,
-  login
-];
+const plugins: JupyterFrontEndPlugin<any>[] = [title, menu, login];
 
 export default plugins;
 
+/**
+ * @param app
+ */
 function quetzTitle(app: JupyterFrontEnd): void {
   const logo = new Widget();
   jupyterIcon.element({
@@ -71,12 +70,18 @@ function quetzTitle(app: JupyterFrontEnd): void {
   app.shell.add(spacer, 'top', { rank: 10000 });
 }
 
+/**
+ * @param app
+ */
 function toolbar(app: JupyterFrontEnd): IMainMenu {
   const menu = new MainMenu();
   app.shell.add(menu, 'top', { rank: 10001 });
   return menu;
 }
 
+/**
+ * @param app
+ */
 function logInMenu(app: JupyterFrontEnd): ILogInMenu {
   const login = new LogInMenu();
   app.shell.add(login, 'top', { rank: 19999 });

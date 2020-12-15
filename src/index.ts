@@ -23,7 +23,6 @@ async function main(): Promise<void> {
     require('./plugins/login'),
     require('./plugins/about'),
     require('./plugins/example')
-    
   ];
 
   app.registerPluginModules(mods);

@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-const CopyPlugin = require("copy-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: ['whatwg-fetch', './lib/index.js'],

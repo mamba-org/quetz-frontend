@@ -28,11 +28,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   id: 'quetz:example',
   autoStart: true,
   requires: [IRouter, IMainMenu],
-  activate: (
-    app: JupyterFrontEnd,
-    router: IRouter,
-    menu: IMainMenu
-  ): void => {
+  activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {
     const { commands, shell } = app;
 
     console.debug(window.location.pathname);
@@ -41,7 +37,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       execute: () => {
         const node = document.createElement('a');
         node.textContent = 'Hello world!';
-        let content = new Widget({ node });
+        const content = new Widget({ node });
         content.id = DOMUtils.createDomID();
         content.title.label = 'Hello';
         content.title.caption = 'Hello World';
@@ -54,7 +50,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
     });
 
-    
     router.register({
       pattern: /hello.*/,
       command: CommandIDs.hello
@@ -96,7 +91,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     button.title.icon = fileIcon;
     button.node.onclick = () => {
       commands.execute(CommandIDs.open);
-    }
+    };
 
     if (menu) {
       menu.addItem(button, 1001);

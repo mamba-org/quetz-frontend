@@ -15,11 +15,11 @@ export class MainMenu extends Panel implements IMainMenu {
    */
   constructor() {
     super();
-    this.id = "main-menu";
+    this.id = 'main-menu';
     MessageLoop.installMessageHook(this, this._panelChildHook);
   }
 
-  public addItem(widget: Widget, rank: number): void{
+  public addItem(widget: Widget, rank: number): void {
     widget.parent = null;
     const item = { widget, rank };
     const index = ArrayExt.upperBound(this._items, item, Private.itemCmp);
@@ -29,6 +29,9 @@ export class MainMenu extends Panel implements IMainMenu {
 
   /**
    * A message hook for child add/remove messages on the main area dock panel.
+   *
+   * @param handler
+   * @param msg
    */
   private _panelChildHook = (
     handler: IMessageHandler,
@@ -63,7 +66,6 @@ export class MainMenu extends Panel implements IMainMenu {
   private _items = new Array<Private.IRankItem>();
 }
 
-
 namespace Private {
   /**
    * An object which holds a widget and its sort rank.
@@ -81,6 +83,9 @@ namespace Private {
   }
   /**
    * A less-than comparison function for side bar rank items.
+   *
+   * @param first
+   * @param second
    */
   export function itemCmp(first: IRankItem, second: IRankItem): number {
     return first.rank - second.rank;
