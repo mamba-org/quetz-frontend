@@ -28,8 +28,8 @@ Then:
 
 ```bash
 # create a new environment
-mamba create -n jupyterlab-app-template -c conda-forge/label/jupyterlab_server_rc -c conda-forge nodejs yarn python jupyterlab_server=2 -y
-conda activate jupyterlab-app-template
+mamba create -n quetz-frontend -c conda-forge/label/jupyterlab_server_rc -c conda-forge nodejs yarn python jupyterlab_server=2 -y
+conda activate quetz-frontend
 
 # install the dependencies
 yarn

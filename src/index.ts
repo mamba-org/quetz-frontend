@@ -18,7 +18,9 @@ async function main(): Promise<void> {
   const app = new App();
   const mods = [
     require('./plugins/paths'),
-    require('./plugins/top'),
+    require('./plugins/topbar'),
+    require('./plugins/login'),
+    require('./plugins/about'),
     require('./plugins/example')
   ];
 

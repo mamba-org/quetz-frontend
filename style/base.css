@@ -1,3 +1,7 @@
+:root {
+  --jp-private-topbar-height: 42px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -15,7 +19,20 @@ body {
   border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
   background: var(--jp-layout-color1);
   display: flex;
-  min-height: var(--jp-private-menubar-height);
+  min-height: var(--jp-private-topbar-height);
+}
+
+#main-menu {
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
+  background: var(--jp-layout-color1);
+  display: flex;
+  min-height: var(--jp-private-topbar-height);
+  align-items: center;
+}
+
+.jp-ClassicSpacer {
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .jp-ExampleWidget {
