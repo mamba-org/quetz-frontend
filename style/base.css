@@ -30,6 +30,14 @@ body {
   align-items: center;
 }
 
+#login-menu {
+  border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
+  background: var(--jp-layout-color1);
+  display: flex;
+  min-height: var(--jp-private-topbar-height);
+  align-items: center;
+}
+
 .jp-ClassicSpacer {
   flex-grow: 1;
   flex-shrink: 1;
