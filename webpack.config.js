@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: ['whatwg-fetch', './lib/index.js'],
@@ -45,6 +46,11 @@ module.exports = {
       'process.env': '{}',
       // Needed for various packages using cwd(), like the path polyfill
       process: { cwd: () => '/' }
-    })
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: __dirname + "/public", to: __dirname + '/build' },
+      ],
+    }),
   ]
 };
