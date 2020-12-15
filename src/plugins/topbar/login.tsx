@@ -1,4 +1,4 @@
-import { ReactWidget, showDialog } from '@jupyterlab/apputils';
+import { ReactWidget } from '@jupyterlab/apputils';
 
 import { Widget } from '@lumino/widgets';
 
@@ -12,6 +12,7 @@ import { ILogInMenu } from './tokens';
 export class LogInMenu extends ReactWidget implements ILogInMenu {
   constructor() {
     super();
+    // TODO logout, show google login
     this.id = 'login-menu';
   }
 
@@ -20,26 +21,46 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
   }
 
   private _onClick = () => {
-    showDialog({ title: 'LogIn with GitHub' });
+    window.location.href = '/auth/github/login';
+  };
+
+  onAfterAttach = () => {
+    fetch('/api/me')
+      .then(response => response.json())
+      .then(data => {
+        this._state = data;
+        this.update();
+      });
   };
 
   render(): React.ReactElement {
-    return (
-      <div>
-        <span style={{ margin: 15 }} onClick={this._onClick}>
-          LogIn
-        </span>
-        {this._visible && (
-          <ul className="login-menu">
-            {this._items.map((value, index) => {
-              <li key={index}>{value}</li>;
-            })}
-          </ul>
-        )}
-      </div>
-    );
+    if (this._state) {
+      return (
+        <div>
+          <a style={{ margin: 15 }} onClick={this._onClick}>
+            Welcome back: {this._state && (this._state as any).user.username}
+          </a>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <a style={{ margin: 15 }} onClick={this._onClick}>
+            LogIn {this._state && (this._state as any).user.username}
+          </a>
+          {this._visible && (
+            <ul className="login-menu">
+              {this._items.map((value, index) => {
+                <li key={index}>{value}</li>;
+              })}
+            </ul>
+          )}
+        </div>
+      );
+    }
   }
 
+  private _state = {};
   private _visible = false;
   private _items = new Array<Widget>();
 }
