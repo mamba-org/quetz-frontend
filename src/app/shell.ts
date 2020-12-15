@@ -119,7 +119,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
    * @param widget The widget to add.
    */
   private _addToMainArea(widget: Widget): void {
-    console.log("Adding to main area")
+    console.log('Adding to main area');
     if (!widget.id) {
       console.error(
         'Widgets added to the app shell must have unique id property.'
@@ -141,8 +141,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
       // add some classes to help with displaying css background imgs
       title.iconClass = classes(title.iconClass, 'jp-Icon');
     }
-    if (dock.widgets.length)
-    {
+    if (dock.widgets.length) {
       dock.widgets[0].dispose();
     }
     dock.addWidget(widget);
@@ -202,7 +201,7 @@ namespace Private {
      * @param rank
      */
     addWidget(widget: Widget, rank: number): void {
-      console.log("adding widget: ", widget)
+      console.log('adding widget: ', widget);
       widget.parent = null;
       const item = { widget, rank };
       const index = ArrayExt.upperBound(this._items, item, Private.itemCmp);
