@@ -25,7 +25,7 @@ export class App extends JupyterFrontEnd<IShell> {
   /**
    * The name of the application.
    */
-  readonly name = 'JupyterLab Custom App';
+  readonly name = 'Quetz';
 
   /**
    * A namespace/prefix plugins may use to denote their provenance.

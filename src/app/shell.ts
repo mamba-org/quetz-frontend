@@ -2,9 +2,9 @@ import { JupyterFrontEnd } from '@jupyterlab/application';
 
 import { DocumentRegistry } from '@jupyterlab/docregistry';
 
-import { classes, DockPanelSvg, LabIcon } from '@jupyterlab/ui-components';
+import { classes, LabIcon } from '@jupyterlab/ui-components';
 
-import { ArrayExt, IIterator, iter, toArray } from '@lumino/algorithm';
+import { ArrayExt, IIterator, iter } from '@lumino/algorithm';
 
 import { Panel, Widget, BoxLayout } from '@lumino/widgets';
 
@@ -42,7 +42,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
     const rootLayout = new BoxLayout();
 
     this._top = new Private.PanelHandler();
-    this._main = new DockPanelSvg();
+    this._main = new Panel();
     // this._main = new BoxLayout();
 
     this._top.panel.id = 'top-panel';
@@ -51,7 +51,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
     BoxLayout.setStretch(this._top.panel, 0);
     BoxLayout.setStretch(this._main, 1);
 
-    this._main.spacing = 5;
+    // this._main.spacing = 5;
 
     rootLayout.spacing = 0;
     rootLayout.addWidget(this._top.panel);
@@ -82,10 +82,10 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
       return this._top.addWidget(widget, rank);
     }
     if (area === 'main' || area === undefined) {
-      if (this._main.widgets.length > 0) {
-        // do not add the widget if there is already one
-        return;
-      }
+      // if (this._main.widgets.length > 0) {
+      //   // do not add the widget if there is already one
+      //   return;
+      // }
       this._addToMainArea(widget);
     }
     return;
@@ -96,7 +96,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
    */
   get currentWidget(): Widget {
     // TODO: use a focus tracker to return the current widget
-    return toArray(this._main.widgets())[0];
+    return this._main.widgets[0];
   }
 
   /**
@@ -110,7 +110,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
     if (area === 'top') {
       return iter(this._top.panel.widgets);
     }
-    return this._main.widgets();
+    return iter(this._main.widgets);
   }
 
   /**
@@ -119,6 +119,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
    * @param widget The widget to add.
    */
   private _addToMainArea(widget: Widget): void {
+    console.log("Adding to main area")
     if (!widget.id) {
       console.error(
         'Widgets added to the app shell must have unique id property.'
@@ -140,12 +141,14 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
       // add some classes to help with displaying css background imgs
       title.iconClass = classes(title.iconClass, 'jp-Icon');
     }
-
-    dock.addWidget(widget, { mode: 'tab-after' });
-    dock.activateWidget(widget);
+    if (dock.widgets.length)
+    {
+      dock.widgets[0].dispose();
+    }
+    dock.addWidget(widget);
   }
 
-  private _main: DockPanelSvg;
+  private _main: Panel;
   private _top: Private.PanelHandler;
   private _topWrapper: Panel;
 }
@@ -199,6 +202,7 @@ namespace Private {
      * @param rank
      */
     addWidget(widget: Widget, rank: number): void {
+      console.log("adding widget: ", widget)
       widget.parent = null;
       const item = { widget, rank };
       const index = ArrayExt.upperBound(this._items, item, Private.itemCmp);
