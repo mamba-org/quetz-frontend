@@ -17,14 +17,16 @@ import '../style/index.css';
 async function main(): Promise<void> {
   const app = new App();
   const mods = [
+    require('./plugins/topbar'),
+    require('./plugins/router'),
     require('./plugins/paths'),
-    require('./plugins/top'),
-    require('./plugins/example'),
-    require('./plugins/router')
+    require('./plugins/login'),
+    require('./plugins/about'),
+    require('./plugins/example')
+    
   ];
 
   app.registerPluginModules(mods);
-
   await app.start();
 }
 

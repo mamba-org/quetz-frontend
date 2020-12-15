@@ -5,14 +5,14 @@ import {
   IRouter
 } from '@jupyterlab/application';
 
-// import { App } from '../../app/app';
-
 /**
  * The default paths.
  */
 const router: JupyterFrontEndPlugin<IRouter> = {
   id: 'quetz:router',
+  autoStart: true,
   requires: [JupyterFrontEnd.IPaths],
+  provides: IRouter,
   activate: (app: JupyterFrontEnd, paths: JupyterFrontEnd.IPaths) => {
     const { commands } = app;
     const base = paths.urls.base;
@@ -32,9 +32,7 @@ const router: JupyterFrontEndPlugin<IRouter> = {
     });
 
     return router;
-  },
-  autoStart: true,
-  provides: IRouter
+  }
 };
 
 export default router;

@@ -1,5 +1,5 @@
 {
-  "name": "jupyterlab-app-template",
+  "name": "quetz-frontend",
   "version": "0.1.0",
   "private": true,
   "files": [
@@ -18,6 +18,7 @@
   "scripts": {
     "build": "tsc && webpack",
     "build:prod": "tsc && webpack --mode=production",
+    "build:dev": "tsc && webpack --config webpack-dev.config.js",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "prepublishOnly": "yarn run build",
     "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
@@ -27,7 +28,9 @@
     "test": "",
     "watch:ts": "tsc -w --listEmittedFiles",
     "watch:webpack": "webpack --watch",
-    "watch": "npm-run-all --parallel watch:ts watch:webpack"
+    "watch:webpack-dev": "webpack --watch --config webpack-dev.config.js",
+    "watch": "npm-run-all --parallel watch:ts watch:webpack",
+    "watch:dev": "npm-run-all --parallel watch:ts watch:webpack-dev"
   },
   "dependencies": {
     "@jupyterlab/application": "^3.0.0-rc.10",
@@ -41,6 +44,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
+    "copy-webpack-plugin": "^6.4.0",
     "css-loader": "~3.2.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.15.0",
