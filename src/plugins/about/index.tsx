@@ -19,7 +19,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [IMainMenu],
   activate: (app: JupyterFrontEnd, menu: IMainMenu): void => {
-    menu.addItem(new About(), 1000);
+    menu.addItem(new About(), 10000);
   }
 };
 

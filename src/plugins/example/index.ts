@@ -32,9 +32,7 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {
     const { commands, shell } = app;
 
-    console.debug(window.location.pathname);
-
-    commands.addCommand('quetz:example/hello', {
+    commands.addCommand(CommandIDs.hello, {
       execute: () => {
         const node = document.createElement('a');
         node.textContent = 'Hello world!';
@@ -56,7 +54,7 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
       command: CommandIDs.hello
     });
 
-    commands.execute(CommandIDs.hello);
+    router.navigate("/hello");
 
     commands.addCommand(CommandIDs.open, {
       label: 'Open Logo',
@@ -91,12 +89,10 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
     button.title.caption = 'Open Jupyter logo';
     button.title.icon = fileIcon;
     button.node.onclick = () => {
-      commands.execute(CommandIDs.open);
+      router.navigate("/example");
     };
 
-    if (menu) {
-      menu.addItem(button, 1001);
-    }
+    menu.addItem(button, 10001);
   }
 };
 
