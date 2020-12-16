@@ -24,7 +24,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     button.title.label = 'LogIn';
     button.title.caption = 'LogIn with GitHub';
 
-    logInMenu.addItem(button);
+    //logInMenu.addItem(button);
   }
 };
 

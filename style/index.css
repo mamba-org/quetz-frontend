@@ -4,3 +4,4 @@
 @import url('~@jupyterlab/ui-components/style/index.css');
 
 @import url('./base.css');
+@import url('./channels.css');

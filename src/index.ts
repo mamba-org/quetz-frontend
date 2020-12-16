@@ -21,6 +21,7 @@ async function main(): Promise<void> {
     require('./plugins/router'),
     require('./plugins/paths'),
     require('./plugins/login'),
+    require('./plugins/channels'),
     require('./plugins/about'),
     require('./plugins/example')
   ];

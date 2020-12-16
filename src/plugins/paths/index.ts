@@ -15,8 +15,6 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
   activate: (
     app: JupyterFrontEnd<JupyterFrontEnd.IShell>
   ): JupyterFrontEnd.IPaths => {
-    console.debug('path');
-    console.log((app as App).paths);
     return (app as App).paths;
   }
 };

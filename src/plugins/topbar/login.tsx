@@ -45,8 +45,6 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
   };
 
   render(): React.ReactElement {
-    console.debug("entra");
-    console.debug(this._profile);
     if (this._profile) {
       return (
         <div>
