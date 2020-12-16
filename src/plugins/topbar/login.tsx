@@ -6,6 +6,15 @@ import * as React from 'react';
 
 import { ILogInMenu } from './tokens';
 
+export type Profile = {
+  name:	string,
+  avatar_url:	string,
+  user:	{
+    id:	string,
+    username:	string
+  }
+}
+
 /**
  * A concrete implementation of a help menu.
  */
@@ -26,19 +35,23 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
 
   onAfterAttach = () => {
     fetch('/api/me')
-      .then(response => response.json())
-      .then(data => {
-        this._state = data;
+      .then( async response => {
+        const data = await response.json();
+        if ('detail' in data) return;
+        this._profile = data;
         this.update();
-      });
+      }).catch( e => console.warn(e));
+    this.update();
   };
 
   render(): React.ReactElement {
-    if (this._state) {
+    console.debug("entra");
+    console.debug(this._profile);
+    if (this._profile) {
       return (
         <div>
           <a style={{ margin: 15 }} onClick={this._onClick}>
-            Welcome back: {this._state && (this._state as any).user.username}
+            Welcome back: {this._profile && this._profile.user.username}
           </a>
         </div>
       );
@@ -46,12 +59,12 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
       return (
         <div>
           <a style={{ margin: 15 }} onClick={this._onClick}>
-            LogIn {this._state && (this._state as any).user.username}
+            LogIn
           </a>
           {this._visible && (
             <ul className="login-menu">
               {this._items.map((value, index) => {
-                <li key={index}>{value}</li>;
+                <li key={index}>{value}</li>
               })}
             </ul>
           )}
@@ -60,7 +73,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     }
   }
 
-  private _state = {};
+  private _profile: Profile;
   private _visible = false;
   private _items = new Array<Widget>();
 }
