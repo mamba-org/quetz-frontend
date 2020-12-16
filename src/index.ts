@@ -22,7 +22,8 @@ async function main(): Promise<void> {
     require('./plugins/paths'),
     require('./plugins/login'),
     require('./plugins/about'),
-    require('./plugins/example')
+    require('./plugins/example'),
+    require('./plugins/channels')
   ];
 
   app.registerPluginModules(mods);
