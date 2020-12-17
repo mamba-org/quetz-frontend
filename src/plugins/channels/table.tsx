@@ -1,6 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
-
 import { useExpanded, useTable } from 'react-table';
 import React from 'react';
 import styled from 'styled-components';
@@ -35,66 +32,67 @@ const TableStyles = styled.div`
   }
 `;
 
-/**
- * @param root0
- * @param root0.columns
- * @param root0.data
- */
-function Table({ columns: userColumns, data, renderRowSubComponent }) {
+interface ITableFcProps {
+  columns: any;
+  data: any;
+  renderRowSubComponent?: any;
+}
+
+const Table: React.FC<ITableFcProps> = ({
+  columns: userColumns,
+  data,
+  renderRowSubComponent
+}) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow,
-    flatColumns,
-    state: { expanded }
+    prepareRow
   } = useTable(
     {
       columns: userColumns,
       data
     },
-    useExpanded // Use the useExpanded plugin hook
+    useExpanded
   );
 
   return (
     <TableStyles>
       <table {...getTableProps()}>
         <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <>
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  );
-                })}
-              </tr>
-              {row.isExpanded ? (
-                <tr>
-                  <td colSpan="5">
-                    {renderRowSubComponent({ row })}
-                  </td>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <>
+                <tr {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return (
+                      <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    );
+                  })}
                 </tr>
-              ) : null}
-            </>
-          );
-        })}
+                {(row as any).isExpanded ? (
+                  <tr>
+                    <td colSpan={5}>{renderRowSubComponent({ row })}</td>
+                  </tr>
+                ) : null}
+              </>
+            );
+          })}
         </tbody>
       </table>
     </TableStyles>
   );
 }
 
-export default Table
+export default Table;
