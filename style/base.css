@@ -15,6 +15,10 @@ body {
   bottom: 0;
 }
 
+#main-panel {
+  overflow: auto;
+}
+
 #top-panel {
   border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
   background: var(--jp-layout-color1);
