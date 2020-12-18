@@ -7,6 +7,18 @@ body {
   padding: 0;
 }
 
+/* Logo dark style */
+
+body[data-jp-theme-light="false"] path#quetz-logo-text,
+body[data-jp-theme-light="false"] path#quetz-logo-swirl {
+  fill: yellow;
+}
+
+body[data-jp-theme-light="false"] path#quetz-logo-swirl-highlight {
+  fill: #111;
+  stroke: #111;
+}
+
 #main {
   position: absolute;
   top: 0;
@@ -24,6 +36,10 @@ body {
   background: var(--jp-layout-color1);
   display: flex;
   min-height: var(--jp-private-topbar-height);
+}
+
+body[data-jp-theme-light="false"] #top-panel {
+  color: yellow;
 }
 
 #main-menu {

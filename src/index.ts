@@ -23,7 +23,15 @@ async function main(): Promise<void> {
     require('./plugins/login'),
     require('./plugins/about'),
     require('./plugins/example'),
-    require('./plugins/channels')
+    require('./plugins/channels'),
+    require('@jupyterlab/apputils-extension').default.filter(({ id }: any) =>
+      [
+        '@jupyterlab/apputils-extension:settings',
+        '@jupyterlab/apputils-extension:themes',
+      ].includes(id as string)
+    ),
+    require('@jupyterlab/theme-light-extension'),
+    require('@jupyterlab/theme-dark-extension')
   ];
 
   app.registerPluginModules(mods);

@@ -3,7 +3,7 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
-import { DOMUtils } from '@jupyterlab/apputils';
+import { DOMUtils, IThemeManager } from '@jupyterlab/apputils';
 
 import { LabIcon } from '@jupyterlab/ui-components';
 
@@ -15,7 +15,7 @@ import { LogInMenu } from './login';
 
 import { IMainMenu, ILogInMenu } from './tokens';
 
-import * as quetz_logo from '../../../style/quetz-logo-light.svg';
+import * as quetz_logo from '../../../style/quetz-logo.svg';
 
 /**
  * The main title plugin.
@@ -23,7 +23,8 @@ import * as quetz_logo from '../../../style/quetz-logo-light.svg';
 const title: JupyterFrontEndPlugin<void> = {
   id: 'quetz:topBar/title',
   autoStart: true,
-  activate: quetzTitle
+  activate: quetzTitle,
+  requires: []
 };
 
 /**
@@ -54,6 +55,7 @@ export default plugins;
  * @param app
  */
 function quetzTitle(app: JupyterFrontEnd): void {
+  console.log(app)
   const logo = new Widget();
   const logo_icon = new LabIcon({
     name: 'quetz_logo',

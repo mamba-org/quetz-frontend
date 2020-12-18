@@ -47,8 +47,10 @@ module.exports = {
       // Needed for various packages using cwd(), like the path polyfill
       process: { cwd: () => '/' }
     }),
-    new CopyPlugin({
-      patterns: [{ from: __dirname + '/public', to: __dirname + '/build' }]
-    })
+    new CopyPlugin({patterns: [
+        { from: 'node_modules/@jupyterlab/theme-dark-extension/style', to: '@jupyterlab/theme-dark-extension/' },
+        { from: 'node_modules/@jupyterlab/theme-light-extension/style', to: '@jupyterlab/theme-light-extension/' },
+    ]}),
+
   ]
 };
