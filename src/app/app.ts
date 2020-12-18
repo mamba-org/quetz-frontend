@@ -48,7 +48,7 @@ export class App extends JupyterFrontEnd<IShell> {
         app: PageConfig.getOption('appUrl'),
         static: PageConfig.getOption('staticUrl'),
         settings: PageConfig.getOption('settingsUrl'),
-        themes: "quetz-themes",
+        themes: 'quetz-themes',
         doc: PageConfig.getOption('docUrl'),
         translations: PageConfig.getOption('translationsApiUrl'),
         hubHost: PageConfig.getOption('hubHost') || undefined,

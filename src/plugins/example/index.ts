@@ -106,7 +106,7 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
 const translator: JupyterFrontEndPlugin<ITranslator> = {
   id: '@quetz/application-extension:translator',
   activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
-    console.log("Translator initialized!");
+    console.log('Translator initialized!');
     const translationManager = new TranslationManager();
     return translationManager;
   },
@@ -114,10 +114,6 @@ const translator: JupyterFrontEndPlugin<ITranslator> = {
   provides: ITranslator
 };
 
-const plugins: JupyterFrontEndPlugin<any>[] = [
-  main_plugin,
-  translator,
-];
-
+const plugins: JupyterFrontEndPlugin<any>[] = [main_plugin, translator];
 
 export default plugins;

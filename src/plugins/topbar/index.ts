@@ -3,7 +3,7 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
-import { DOMUtils, IThemeManager } from '@jupyterlab/apputils';
+import { DOMUtils } from '@jupyterlab/apputils';
 
 import { LabIcon } from '@jupyterlab/ui-components';
 
@@ -55,7 +55,7 @@ export default plugins;
  * @param app
  */
 function quetzTitle(app: JupyterFrontEnd): void {
-  console.log(app)
+  console.log(app);
   const logo = new Widget();
   const logo_icon = new LabIcon({
     name: 'quetz_logo',
