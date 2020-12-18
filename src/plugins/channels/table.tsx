@@ -93,6 +93,6 @@ const Table: React.FC<ITableFcProps> = ({
       </table>
     </TableStyles>
   );
-}
+};
 
 export default Table;

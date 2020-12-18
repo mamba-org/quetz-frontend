@@ -5,6 +5,7 @@ import {
 } from '@jupyterlab/application';
 
 import { DOMUtils, MainAreaWidget } from '@jupyterlab/apputils';
+import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
 import { IMainMenu } from '../topbar/tokens';
 
@@ -24,7 +25,7 @@ export namespace CommandIDs {
 /**
  * The main plugin.
  */
-const plugin: JupyterFrontEndPlugin<void> = {
+const main_plugin: JupyterFrontEndPlugin<void> = {
   id: 'quetz:example',
   autoStart: true,
   requires: [IRouter, IMainMenu],
@@ -99,4 +100,20 @@ const plugin: JupyterFrontEndPlugin<void> = {
   }
 };
 
-export default plugin;
+/**
+ * A simplified Translator
+ */
+const translator: JupyterFrontEndPlugin<ITranslator> = {
+  id: '@quetz/application-extension:translator',
+  activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
+    console.log('Translator initialized!');
+    const translationManager = new TranslationManager();
+    return translationManager;
+  },
+  autoStart: true,
+  provides: ITranslator
+};
+
+const plugins: JupyterFrontEndPlugin<any>[] = [main_plugin, translator];
+
+export default plugins;

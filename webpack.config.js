@@ -48,7 +48,16 @@ module.exports = {
       process: { cwd: () => '/' }
     }),
     new CopyPlugin({
-      patterns: [{ from: __dirname + '/public', to: __dirname + '/build' }]
+      patterns: [
+        {
+          from: 'node_modules/@jupyterlab/theme-dark-extension/style',
+          to: '@jupyterlab/theme-dark-extension/'
+        },
+        {
+          from: 'node_modules/@jupyterlab/theme-light-extension/style',
+          to: '@jupyterlab/theme-light-extension/'
+        }
+      ]
     })
   ]
 };

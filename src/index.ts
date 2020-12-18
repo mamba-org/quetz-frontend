@@ -8,6 +8,7 @@ import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 );
 
 import { App } from './app/app';
+import * as apputilsExtension from '@jupyterlab/apputils-extension';
 
 import '../style/index.css';
 
@@ -23,7 +24,15 @@ async function main(): Promise<void> {
     require('./plugins/login'),
     require('./plugins/about'),
     require('./plugins/example'),
-    require('./plugins/channels')
+    require('./plugins/channels'),
+    apputilsExtension.default.filter(({ id }: any) =>
+      [
+        '@jupyterlab/apputils-extension:settings',
+        '@jupyterlab/apputils-extension:themes'
+      ].includes(id as string)
+    ),
+    require('@jupyterlab/theme-light-extension'),
+    require('@jupyterlab/theme-dark-extension')
   ];
 
   app.registerPluginModules(mods);

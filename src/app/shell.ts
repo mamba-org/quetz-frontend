@@ -8,11 +8,7 @@ import { ArrayExt, IIterator, iter } from '@lumino/algorithm';
 
 import { Panel, Widget, BoxLayout } from '@lumino/widgets';
 
-//import { Token } from '@lumino/coreutils';
-
 import { Message, MessageLoop, IMessageHandler } from '@lumino/messaging';
-
-//import { ISignal, Signal } from '@lumino/signaling';
 
 export type IShell = Shell;
 
@@ -38,12 +34,10 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
   constructor() {
     super();
     this.id = 'main';
-
     const rootLayout = new BoxLayout();
 
     this._top = new Private.PanelHandler();
     this._main = new Panel();
-    // this._main = new BoxLayout();
 
     this._top.panel.id = 'top-panel';
     this._main.id = 'main-panel';
