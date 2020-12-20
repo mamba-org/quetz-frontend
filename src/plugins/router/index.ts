@@ -19,8 +19,6 @@ const router: JupyterFrontEndPlugin<IRouter> = {
     const router = new Router({ base, commands });
 
     void app.started.then(() => {
-      // Route the very first request on load.
-      console.log('Routing first');
       void router.route();
 
       // Route all pop state events.
