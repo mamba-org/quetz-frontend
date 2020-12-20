@@ -2,6 +2,12 @@ import { Token } from '@lumino/coreutils';
 
 import { Widget } from '@lumino/widgets';
 
+export type LogInItem = {
+	id: string,
+	label: string,
+	api: string
+};
+
 /**
  * The main menu token.
  */
@@ -29,5 +35,5 @@ export interface ILogInMenu {
   /**
    * Add a new menu to the main menu bar.
    */
-  addItem(menu: Widget): void;
+  addItem(item: LogInItem): void;
 }

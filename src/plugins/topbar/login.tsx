@@ -1,10 +1,8 @@
 import { ReactWidget } from '@jupyterlab/apputils';
 
-import { Widget } from '@lumino/widgets';
+import React, { useEffect, useState, useRef } from 'react';
 
-import * as React from 'react';
-
-import { ILogInMenu } from './tokens';
+import { ILogInMenu, LogInItem } from './tokens';
 
 export type Profile = {
   name:	string,
@@ -13,6 +11,11 @@ export type Profile = {
     id:	string,
     username:	string
   }
+};
+
+type Props = {
+	profile: Profile,
+	items: LogInItem[],
 }
 
 /**
@@ -22,18 +25,10 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
   constructor() {
     super();
     // TODO logout, show google login
-    this.id = 'login-menu';
-  }
-
-  public addItem(widget: Widget): void {
-    this._items.push(widget);
-  }
-
-  private _onClick = () => {
-    window.location.href = '/auth/github/login';
-  };
-
-  onAfterAttach = () => {
+		this.id = 'login-menu';
+	}
+	
+	onAfterAttach = () => {
     fetch('/api/me')
       .then( async response => {
         const data = await response.json();
@@ -44,34 +39,86 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     this.update();
   };
 
-  render(): React.ReactElement {
-    if (this._profile) {
-      return (
-        <div>
-          <a style={{ margin: 15 }} onClick={this._onClick}>
-            Welcome back: {this._profile && this._profile.user.username}
-          </a>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <a style={{ margin: 15 }} onClick={this._onClick}>
-            LogIn
-          </a>
-          {this._visible && (
-            <ul className="login-menu">
-              {this._items.map((value, index) => {
-                <li key={index}>{value}</li>
-              })}
-            </ul>
-          )}
-        </div>
-      );
-    }
+  public addItem(item: LogInItem): void {
+		this._items.push(item);
+		this.update();
   }
 
-  private _profile: Profile;
-  private _visible = false;
-  private _items = new Array<Widget>();
+  render(): React.ReactElement {
+		console.debug("items", this._items);
+		return (
+			<DropDownMenu profile={this._profile} items={this._items} />
+		);
+	}
+	
+	private _profile: Profile;
+  private _items = new Array<LogInItem>();
+}
+
+const DropDownMenu = ({ profile, items }: Props): JSX.Element => {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+	const [ isActive, setIsActive ] = useState(false);
+
+	useEffect(() => {
+		const onClick = (e: Event) => {
+			// If the active element exists and is clicked outside of
+			if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+				console.debug("click", dropdownRef);
+				setIsActive(!isActive);
+			}
+		};
+
+		// If the item is active (ie open) then listen for clicks outside
+		if (isActive) {
+			window.addEventListener("click", onClick);
+		}
+
+		return () => {
+			window.removeEventListener("click", onClick);
+		};
+	}, [isActive, dropdownRef]);
+
+	const onClick = () => setIsActive(!isActive);
+	const logIn = (api: string) => {
+		window.location.href = api;//'/auth/github/login';
+	};
+
+	console.log("active", isActive, dropdownRef);
+  return (
+    <div className="container">
+				<div className="menu-container">
+					{ profile ?
+						<button onClick={onClick} className="menu-trigger">
+							<span>{profile.user.username}</span>
+							<img
+								src={profile.avatar_url}
+								alt="avatar"
+							/>
+						</button>
+						:
+						<button onClick={onClick} className="menu-trigger">
+							<span>LogIn</span>
+						</button>
+					}
+					<div
+						ref={dropdownRef}
+						className={`menu ${isActive ? "active" : "inactive"}`}
+					>
+						<ul>
+							{ 
+								items.map( value => {
+									return (
+										<li key={value.id}>
+											<a href="#" onClick={() => logIn(value.api)}>
+												{value.label}
+											</a>
+										</li>
+									);
+								})
+							}
+						</ul>
+					</div>
+				</div>
+			</div>
+  );
 }
