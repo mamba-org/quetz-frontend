@@ -53,9 +53,7 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
         Header: 'Name',
         accessor: 'name',
         Cell: ({ row }: { row: ITableRow }) => (
-          <Link to={`/channels/${row.values.name}/packages`}>
-            {row.values.name}
-          </Link>
+          <Link to={`/channels/${row.values.name}`}>{row.values.name}</Link>
         )
       },
       {
@@ -76,7 +74,7 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
 
     return (
       <>
-        <h3>Channels</h3>
+        <h1>Channels</h1>
         <Table columns={channelColumns} data={channels} />
       </>
     );
