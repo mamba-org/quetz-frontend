@@ -2,7 +2,7 @@ import Table from './table';
 import React from 'react';
 import { API_STATUSES, BACKEND_HOST } from './constants';
 import PackageVersions from './versions';
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 interface IMatchParams {
   channelId: string;
@@ -96,17 +96,11 @@ class Packages extends React.PureComponent<PackagesProps, PackagesState> {
     }
 
     return (
-      <>
-        <div>
-          <Link to="/channels">Back to channels</Link>
-        </div>
-        <h3>Packages in {channel} channel</h3>
-        <Table
-          columns={packageColumns}
-          data={packages}
-          renderRowSubComponent={this.renderRowSubComponent}
-        />
-      </>
+      <Table
+        columns={packageColumns}
+        data={packages}
+        renderRowSubComponent={this.renderRowSubComponent}
+      />
     );
   }
 }
