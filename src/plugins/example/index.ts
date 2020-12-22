@@ -82,8 +82,8 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
 
     const label = document.createElement('div');
     label.textContent = 'Open Logo';
-    label.style.margin = '10px';
     const button = new Widget({ node: label });
+    button.addClass("topbar-item");
     button.id = DOMUtils.createDomID();
     button.title.label = 'Open Logo';
     button.title.caption = 'Open Jupyter logo';

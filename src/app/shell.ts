@@ -113,7 +113,6 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
    * @param widget The widget to add.
    */
   private _addToMainArea(widget: Widget): void {
-    console.log('Adding to main area');
     if (!widget.id) {
       console.error(
         'Widgets added to the app shell must have unique id property.'
@@ -195,7 +194,6 @@ namespace Private {
      * @param rank
      */
     addWidget(widget: Widget, rank: number): void {
-      console.log('adding widget: ', widget);
       widget.parent = null;
       const item = { widget, rank };
       const index = ArrayExt.upperBound(this._items, item, Private.itemCmp);

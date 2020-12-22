@@ -26,6 +26,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     super();
     // TODO logout, show google login
 		this.id = 'login-menu';
+		this.addClass("topbar-item");
 	}
 	
 	onAfterAttach = () => {
@@ -45,7 +46,6 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
   }
 
   render(): React.ReactElement {
-		console.debug("items", this._items);
 		return (
 			<DropDownMenu profile={this._profile} items={this._items} />
 		);
@@ -61,14 +61,11 @@ const DropDownMenu = ({ profile, items }: Props): JSX.Element => {
 
 	useEffect(() => {
 		const onClick = (e: Event) => {
-			// If the active element exists and is clicked outside of
 			if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-				console.debug("click", dropdownRef);
 				setIsActive(!isActive);
 			}
 		};
 
-		// If the item is active (ie open) then listen for clicks outside
 		if (isActive) {
 			window.addEventListener("click", onClick);
 		}
@@ -80,45 +77,79 @@ const DropDownMenu = ({ profile, items }: Props): JSX.Element => {
 
 	const onClick = () => setIsActive(!isActive);
 	const logIn = (api: string) => {
-		window.location.href = api;//'/auth/github/login';
+		console.debug(api);
+		window.location.href = '/auth/github/login';
 	};
 
-	console.log("active", isActive, dropdownRef);
-  return (
-    <div className="container">
-				<div className="menu-container">
-					{ profile ?
-						<button onClick={onClick} className="menu-trigger">
-							<span>{profile.user.username}</span>
-							<img
-								src={profile.avatar_url}
-								alt="avatar"
-							/>
-						</button>
-						:
-						<button onClick={onClick} className="menu-trigger">
-							<span>LogIn</span>
-						</button>
-					}
-					<div
-						ref={dropdownRef}
-						className={`menu ${isActive ? "active" : "inactive"}`}
-					>
-						<ul>
-							{ 
-								items.map( value => {
+	if (profile) {
+		return (
+			<div>
+				<a onClick={onClick}>
+						<img
+							className="user-img"
+							src={profile.avatar_url}
+							alt="avatar"
+						/>
+					</a>
+				<div
+					ref={dropdownRef}
+					className={`login-menu ${isActive ? "active" : "inactive"}`}
+				>
+					<ul>
+						<li key={profile.name}>
+							<a><span>Signed in as {profile.user.username}</span></a>
+						</li>
+						<hr/>
+						{ 
+							items.map( value => {
+								if (value.loggedIn) {
 									return (
 										<li key={value.id}>
-											<a href="#" onClick={() => logIn(value.api)}>
-												{value.label}
+											<a onClick={() => logIn(value.api)} >
+												<span>{value.label}</span>
 											</a>
 										</li>
 									);
-								})
-							}
-						</ul>
-					</div>
+								}
+							})
+						}
+						<hr/>
+						<li key={profile.name}>
+							<a onClick={() => logIn('/auth/github/login')}>
+								<span>Sign out</span>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
-  );
+		);
+	} else {
+		return (
+			<div>
+				<a onClick={onClick}>
+					<span>LogIn</span>
+				</a>
+				<div
+					ref={dropdownRef}
+					className={`login-menu ${isActive ? "active" : "inactive"}`}
+				>
+					<ul>
+						{ 
+							items.map( value => {
+								if (!value.loggedIn) {
+									return (
+										<li key={value.id}>
+											<a onClick={() => logIn(value.api)} >
+												<span>{value.label}</span>
+											</a>
+										</li>
+									);
+								}
+							})
+						}
+					</ul>
+				</div>
+			</div>
+		);
+	}
 }
