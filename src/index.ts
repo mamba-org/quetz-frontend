@@ -25,7 +25,6 @@ async function main(): Promise<void> {
     require('./plugins/channels'),
     require('./plugins/about'),
     require('./plugins/example'),
-    require('./plugins/channels'),
     apputilsExtension.default.filter(({ id }: any) =>
       [
         '@jupyterlab/apputils-extension:settings',

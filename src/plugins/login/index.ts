@@ -16,11 +16,23 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     const gitHub: LogInItem = {
       id: 'gitHub',
-      label: 'LogIn with GitHub',
-      api: '/auth/github/login'
+      label: 'GitHub LogIn',
+      icon: "empty",
+      api: '/auth/github/login',
+      loggedIn: false
     }
 
     logInMenu.addItem(gitHub);
+
+    const google: LogInItem = {
+      id: 'google',
+      label: 'Google LogIn ',
+      icon: "empty",
+      api: '/auth/google/login',
+      loggedIn: false
+    }
+
+    logInMenu.addItem(google);
   }
 };
 

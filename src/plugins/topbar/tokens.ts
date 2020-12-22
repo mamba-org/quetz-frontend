@@ -4,8 +4,10 @@ import { Widget } from '@lumino/widgets';
 
 export type LogInItem = {
 	id: string,
-	label: string,
-	api: string
+  label: string,
+  icon: string,
+  api: string,
+  loggedIn: boolean
 };
 
 /**

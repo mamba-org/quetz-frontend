@@ -55,7 +55,6 @@ export default plugins;
  * @param app
  */
 function quetzTitle(app: JupyterFrontEnd): void {
-  console.log(app);
   const logo = new Widget();
   const logo_icon = new LabIcon({
     name: 'quetz_logo',
@@ -72,7 +71,7 @@ function quetzTitle(app: JupyterFrontEnd): void {
 
   const spacer = new Widget();
   spacer.id = DOMUtils.createDomID();
-  spacer.addClass('jp-ClassicSpacer');
+  spacer.addClass('topbar-spacer');
 
   app.shell.add(logo, 'top', { rank: 0 });
   app.shell.add(spacer, 'top', { rank: 10000 });
