@@ -1,5 +1,6 @@
 :root {
   --jp-private-topbar-height: 42px;
+  --jp-quetz-primary-color: yellow;
 }
 
 body {
@@ -10,7 +11,7 @@ body {
 /* Logo dark style */
 body[data-jp-theme-light='false'] path#quetz-logo-text,
 body[data-jp-theme-light='false'] path#quetz-logo-swirl {
-  fill: yellow;
+  fill: var(--jp-quetz-primary-color);
 }
 
 body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
@@ -28,10 +29,13 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
 
 #main-panel {
   overflow: auto;
+  background: var(--jp-layout-color1);
+  color: var(--jp-ui-font-color0);
+  padding: var(--jp-cell-padding);
 }
 
 body[data-jp-theme-light='false'] #top-panel {
-  color: yellow;
+  color: var(--jp-quetz-primary-color);
 }
 
 #top-panel {

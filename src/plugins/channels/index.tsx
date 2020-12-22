@@ -12,7 +12,7 @@ import { IMainMenu } from '../topbar/tokens';
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 import { fileIcon } from '@jupyterlab/ui-components';
 import ChannelsApp from './channelsApp';
-import Packages from './packages';
+import ChannelDetails from './channelDetails';
 
 /**
  * The command ids used by the main plugin.
@@ -34,8 +34,8 @@ export class RouterWidget extends ReactWidget {
     return (
       <Router>
         <Switch>
-          <Route path="/channels/:channelId/packages">
-            <Packages />
+          <Route path="/channels/:channelId">
+            <ChannelDetails />
           </Route>
           <Route path="/channels">
             <ChannelsApp />
