@@ -41,7 +41,7 @@ export class RouterWidget extends ReactWidget {
           <Route path="/:channelId">
             <ChannelDetails />
           </Route>
-          <Route path="/" >
+          <Route path="/">
             <ChannelsApp />
           </Route>
         </Switch>
@@ -80,9 +80,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     menu.addItem({
       id: CommandIDs.channels,
-      label: "Channels",
-      icon: "empty",
-      api: "/channels",
+      label: 'Channels',
+      icon: 'empty',
+      api: '/channels',
       loggedIn: true
     });
   }

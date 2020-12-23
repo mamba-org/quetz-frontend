@@ -7,22 +7,22 @@ import { API_STATUSES } from './constants';
 import Table from './table';
 
 interface IProfile {
-  name:	string;
-  avatar_url:	string;
-  user:	{
-    id:	string;
-    username:	string;
-  }
-};
+  name: string;
+  avatar_url: string;
+  user: {
+    id: string;
+    username: string;
+  };
+}
 
 interface IJob {
   id: number;
   owner: IProfile;
-	created: Date;
-	status: {
-		description: string;
-	};
-	manifest: string;
+  created: Date;
+  status: {
+    description: string;
+  };
+  manifest: string;
 }
 
 type JobsState = {
@@ -59,33 +59,30 @@ class Jobs extends React.Component<any, JobsState> {
       {
         Header: 'Id',
         accessor: 'id',
-        Cell: ({ row }: { row: {values: IJob} }) => (
+        Cell: ({ row }: { row: { values: IJob } }) => (
           <Link to={`/jobs/${row.values.id}`}>{row.values.id}</Link>
         )
-			},
-			{
+      },
+      {
         Header: 'Created',
         accessor: 'created',
-				Cell: ({ row }: { row: {values: IJob} }) => 
-					row.values.created
-			},
-			{
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.created
+      },
+      {
         Header: 'Manifest',
         accessor: 'manifest',
-				Cell: ({ row }: { row: {values: IJob} }) => 
-					row.values.manifest
-			},
-			{
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.manifest
+      },
+      {
         Header: 'Status',
         accessor: 'status',
-				Cell: ({ row }: { row: {values: IJob} }) => 
-					row.values.status.description
+        Cell: ({ row }: { row: { values: IJob } }) =>
+          row.values.status.description
       },
-			{
+      {
         Header: 'Owner',
         accessor: 'owner',
-				Cell: ({ row }: { row: {values: IJob} }) => 
-					row.values.owner.name
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.name
       }
     ];
 

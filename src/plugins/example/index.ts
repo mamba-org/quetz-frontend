@@ -81,13 +81,13 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
     const label = document.createElement('div');
     label.textContent = 'Open Logo';
     const button = new Widget({ node: label });
-    button.addClass("topbar-item");
+    button.addClass('topbar-item');
     button.id = DOMUtils.createDomID();
     button.title.label = 'Open Logo';
     button.title.caption = 'Open Jupyter logo';
     button.title.icon = fileIcon;
     button.node.onclick = () => {
-      router.navigate("/example");
+      router.navigate('/example');
     };
 
     menu.addItem(button, 10001);

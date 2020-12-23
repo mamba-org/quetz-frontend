@@ -12,7 +12,6 @@ import * as React from 'react';
 
 import { ILogInMenu } from './../topbar/tokens';
 
-
 /**
  * The command ids used by the main plugin.
  */
@@ -47,9 +46,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     menu.addItem({
       id: CommandIDs.user,
-      label: "Profile",
-      icon: "empty",
-      api: "/user",
+      label: 'Profile',
+      icon: 'empty',
+      api: '/user',
       loggedIn: true
     });
   }
@@ -62,9 +61,8 @@ class UserRouter extends ReactWidget {
     return (
       <Router basename="/user">
         <Switch>
-          <Route path="/:userId">
-          </Route>
-          <Route path="/" >
+          <Route path="/:userId"></Route>
+          <Route path="/">
             <h1>User Page</h1>
           </Route>
         </Switch>

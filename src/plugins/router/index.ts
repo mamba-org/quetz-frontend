@@ -15,7 +15,7 @@ const router: JupyterFrontEndPlugin<IRouter> = {
   provides: IRouter,
   activate: (app: JupyterFrontEnd, paths: JupyterFrontEnd.IPaths) => {
     const { commands } = app;
-    const router = new Router({ base: "/", commands });
+    const router = new Router({ base: '/', commands });
 
     void app.started.then(() => {
       void router.route();

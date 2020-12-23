@@ -89,6 +89,7 @@ function toolbar(app: JupyterFrontEnd): IMainMenu {
 
 /**
  * @param app
+ * @param router
  */
 function logInMenu(app: JupyterFrontEnd, router: IRouter): ILogInMenu {
   const login = new LogInMenu(router);

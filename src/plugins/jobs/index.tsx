@@ -14,7 +14,6 @@ import { ILogInMenu } from './../topbar/tokens';
 
 import Jobs from './jobs';
 
-
 /**
  * The command ids used by the main plugin.
  */
@@ -49,9 +48,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     menu.addItem({
       id: CommandIDs.jobs,
-      label: "Jobs",
-      icon: "empty",
-      api: "/jobs",
+      label: 'Jobs',
+      icon: 'empty',
+      api: '/jobs',
       loggedIn: true
     });
   }
@@ -64,10 +63,9 @@ class JobsRouter extends ReactWidget {
     return (
       <Router basename="/jobs">
         <Switch>
-          <Route path="/:jobId">
-          </Route>
-          <Route path="/" >
-            <Jobs/>
+          <Route path="/:jobId"></Route>
+          <Route path="/">
+            <Jobs />
           </Route>
         </Switch>
       </Router>
