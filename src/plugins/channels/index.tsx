@@ -3,22 +3,26 @@ import {
   JupyterFrontEndPlugin,
   IRouter
 } from '@jupyterlab/application';
-import * as React from 'react';
-
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-
-import { IMainMenu } from '../topbar/tokens';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
+
 import { fileIcon } from '@jupyterlab/ui-components';
+
+import * as React from 'react';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { ILogInMenu } from '../topbar/tokens';
+
 import ChannelsApp from './channelsApp';
+
 import ChannelDetails from './channelDetails';
 
 /**
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const reactRouter = 'quetz:reactRouter';
+  export const channels = 'quetz:channels';
 }
 
 export class RouterWidget extends ReactWidget {
@@ -32,16 +36,13 @@ export class RouterWidget extends ReactWidget {
 
   render(): JSX.Element {
     return (
-      <Router>
+      <Router basename="/channels">
         <Switch>
-          <Route path="/channels/:channelId">
+          <Route path="/:channelId">
             <ChannelDetails />
           </Route>
-          <Route path="/channels">
+          <Route path="/" >
             <ChannelsApp />
-          </Route>
-          <Route>
-            <Link to="/channels">Go to channels</Link>
           </Route>
         </Switch>
       </Router>
@@ -55,11 +56,11 @@ export class RouterWidget extends ReactWidget {
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'quetz:channels',
   autoStart: true,
-  requires: [IRouter, IMainMenu],
-  activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {
+  requires: [IRouter, ILogInMenu],
+  activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
     const { commands, shell } = app;
 
-    commands.addCommand('quetz:reactRouter', {
+    commands.addCommand(CommandIDs.channels, {
       execute: () => {
         console.log('React router execute command called');
 
@@ -73,8 +74,16 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /.*/,
-      command: CommandIDs.reactRouter
+      pattern: /channels.*/,
+      command: CommandIDs.channels
+    });
+
+    menu.addItem({
+      id: CommandIDs.channels,
+      label: "Channels",
+      icon: "empty",
+      api: "/channels",
+      loggedIn: true
     });
   }
 };

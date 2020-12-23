@@ -54,8 +54,6 @@ const main_plugin: JupyterFrontEndPlugin<void> = {
       command: CommandIDs.hello
     });
 
-    router.navigate("/hello");
-
     commands.addCommand(CommandIDs.open, {
       label: 'Open Logo',
       execute: () => {
