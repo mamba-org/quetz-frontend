@@ -19,7 +19,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [IMainMenu],
   activate: (app: JupyterFrontEnd, menu: IMainMenu): void => {
-    menu.addItem(new About(), 1000);
+    menu.addItem(new About(), 10000);
   }
 };
 
@@ -65,9 +65,9 @@ class About extends ReactWidget {
 
   render(): React.ReactElement {
     return (
-      <span style={{ margin: 15 }} onClick={this.onClick}>
-        About
-      </span>
+      <a onClick={this.onClick}>
+        <span>About</span>
+      </a>
     );
   }
 }

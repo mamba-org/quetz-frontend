@@ -16,11 +16,13 @@ export class MainMenu extends Panel implements IMainMenu {
   constructor() {
     super();
     this.id = 'main-menu';
+    this.addClass('topbar-item');
     MessageLoop.installMessageHook(this, this._panelChildHook);
   }
 
   public addItem(widget: Widget, rank: number): void {
     widget.parent = null;
+    widget.addClass('topbar-item-content');
     const item = { widget, rank };
     const index = ArrayExt.upperBound(this._items, item, Private.itemCmp);
     ArrayExt.insert(this._items, index, item);

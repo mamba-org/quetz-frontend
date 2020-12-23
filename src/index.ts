@@ -22,9 +22,11 @@ async function main(): Promise<void> {
     require('./plugins/router'),
     require('./plugins/paths'),
     require('./plugins/login'),
+    require('./plugins/user'),
+    require('./plugins/channels'),
+    require('./plugins/jobs'),
     require('./plugins/about'),
     require('./plugins/example'),
-    require('./plugins/channels'),
     apputilsExtension.default.filter(({ id }: any) =>
       [
         '@jupyterlab/apputils-extension:settings',

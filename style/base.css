@@ -9,7 +9,6 @@ body {
 }
 
 /* Logo dark style */
-
 body[data-jp-theme-light='false'] path#quetz-logo-text,
 body[data-jp-theme-light='false'] path#quetz-logo-swirl {
   fill: var(--jp-quetz-primary-color);
@@ -35,36 +34,22 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
   padding: var(--jp-cell-padding);
 }
 
-#top-panel {
-  border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
-  background: var(--jp-layout-color1);
-  display: flex;
-  min-height: var(--jp-private-topbar-height);
-}
-
 body[data-jp-theme-light='false'] #top-panel {
   color: var(--jp-quetz-primary-color);
 }
 
-#main-menu {
-  border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
+#top-panel {
   background: var(--jp-layout-color1);
   display: flex;
   min-height: var(--jp-private-topbar-height);
-  align-items: center;
 }
 
-#login-menu {
-  border-bottom: var(--jp-border-width) solid var(--jp-border-color0);
-  background: var(--jp-layout-color1);
-  display: flex;
-  min-height: var(--jp-private-topbar-height);
-  align-items: center;
+.p-Widget {
+  overflow: unset;
 }
 
-.jp-ClassicSpacer {
-  flex-grow: 1;
-  flex-shrink: 1;
+.lm-Widget {
+  overflow: unset;
 }
 
 .jp-ExampleWidget {

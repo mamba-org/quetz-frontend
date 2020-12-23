@@ -3,13 +3,11 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
-import { DOMUtils } from '@jupyterlab/apputils';
+import { ILogInMenu, LogInItem } from '../topbar/tokens';
 
-import { ellipsesIcon } from '@jupyterlab/ui-components';
+import github_logo from '../../../style/img/github-logo.svg';
 
-import { Widget } from '@lumino/widgets';
-
-import { ILogInMenu } from '../topbar/tokens';
+import google_logo from '../../../style/img/google-logo.svg';
 
 /**
  * The main plugin.
@@ -17,19 +15,27 @@ import { ILogInMenu } from '../topbar/tokens';
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'quetz:login',
   autoStart: true,
-  optional: [ILogInMenu],
+  requires: [ILogInMenu],
   activate: (app: JupyterFrontEnd, logInMenu: ILogInMenu): void => {
-    const node = document.createElement('div');
-    node.textContent = 'LogIn with GitHub';
-    const button = new Widget({ node });
-    button.id = DOMUtils.createDomID();
-    button.title.label = 'LogIn';
-    button.title.caption = 'LogIn with GitHub';
-    button.title.icon = ellipsesIcon;
+    const gitHub: LogInItem = {
+      id: 'gitHub',
+      label: 'GitHub LogIn',
+      icon: github_logo,
+      api: '/auth/github/login',
+      loggedIn: false
+    };
 
-    if (logInMenu) {
-      logInMenu.addItem(button);
-    }
+    logInMenu.addItem(gitHub);
+
+    const google: LogInItem = {
+      id: 'google',
+      label: 'Google LogIn ',
+      icon: google_logo,
+      api: '/auth/google/login',
+      loggedIn: false
+    };
+
+    logInMenu.addItem(google);
   }
 };
 

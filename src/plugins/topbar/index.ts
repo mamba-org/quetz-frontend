@@ -1,6 +1,7 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
+  IRouter
 } from '@jupyterlab/application';
 
 import { DOMUtils } from '@jupyterlab/apputils';
@@ -15,7 +16,7 @@ import { LogInMenu } from './login';
 
 import { IMainMenu, ILogInMenu } from './tokens';
 
-import * as quetz_logo from '../../../style/quetz-logo.svg';
+import * as quetz_logo from '../../../style/img/quetz-logo.svg';
 
 /**
  * The main title plugin.
@@ -23,8 +24,7 @@ import * as quetz_logo from '../../../style/quetz-logo.svg';
 const title: JupyterFrontEndPlugin<void> = {
   id: 'quetz:topBar/title',
   autoStart: true,
-  activate: quetzTitle,
-  requires: []
+  activate: quetzTitle
 };
 
 /**
@@ -43,6 +43,7 @@ const menu: JupyterFrontEndPlugin<IMainMenu> = {
 const login: JupyterFrontEndPlugin<ILogInMenu> = {
   id: 'quetz:topBar/login',
   autoStart: true,
+  requires: [IRouter],
   provides: ILogInMenu,
   activate: logInMenu
 };
@@ -55,7 +56,6 @@ export default plugins;
  * @param app
  */
 function quetzTitle(app: JupyterFrontEnd): void {
-  console.log(app);
   const logo = new Widget();
   const logo_icon = new LabIcon({
     name: 'quetz_logo',
@@ -72,7 +72,7 @@ function quetzTitle(app: JupyterFrontEnd): void {
 
   const spacer = new Widget();
   spacer.id = DOMUtils.createDomID();
-  spacer.addClass('jp-ClassicSpacer');
+  spacer.addClass('topbar-spacer');
 
   app.shell.add(logo, 'top', { rank: 0 });
   app.shell.add(spacer, 'top', { rank: 10000 });
@@ -89,9 +89,10 @@ function toolbar(app: JupyterFrontEnd): IMainMenu {
 
 /**
  * @param app
+ * @param router
  */
-function logInMenu(app: JupyterFrontEnd): ILogInMenu {
-  const login = new LogInMenu();
+function logInMenu(app: JupyterFrontEnd, router: IRouter): ILogInMenu {
+  const login = new LogInMenu(router);
   app.shell.add(login, 'top', { rank: 19999 });
   return login;
 }
