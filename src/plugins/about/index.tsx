@@ -65,7 +65,7 @@ class About extends ReactWidget {
 
   render(): React.ReactElement {
     return (
-      <a href="#" className="topbar-item" onClick={this.onClick}>
+      <a onClick={this.onClick}>
         <span>About</span>
       </a>
     );

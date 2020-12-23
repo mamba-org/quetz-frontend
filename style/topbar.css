@@ -1,8 +1,14 @@
 .topbar-item {
   height: 100%;
-  padding: 10px;
+  margin: auto;
+  margin-right: 10px;
   display: flex;
   align-items: center;
+}
+
+.topbar-item-content {
+  margin: auto;
+  margin-right: 10px;
 }
 
 .topbar-spacer {
@@ -11,9 +17,12 @@
 }
 
 .user-img {
-  width: 24px;
-  height: 24px;
+  margin: auto;
+  width: 35px;
+  height: 35px;
   border-radius: 90px;
+  fill: var(--jp-quetz-primary-color);
+  color: var(--jp-quetz-primary-color);
 }
 
 .login-menu {
@@ -21,7 +30,7 @@
   position: absolute;
   top: 45px;
   right: 3px;
-  background: var(--jp-layout-color1);
+  background: var(--jp-quetz-primary-color);
   border-radius: 8px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   opacity: 0;
@@ -51,9 +60,13 @@
 }
 
 .login-menu hr {
-  border-color: yellow;
+  border-color: var(--jp-layout-color1);
 }
 
 .login-menu li a {
   margin: auto;
+}
+
+.login-menu li a span {
+  color: var(--jp-layout-color1);
 }

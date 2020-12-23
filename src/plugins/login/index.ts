@@ -5,6 +5,10 @@ import {
 
 import { ILogInMenu, LogInItem } from '../topbar/tokens';
 
+import github_logo from '../../../style/img/github-logo.svg';
+
+import google_logo from '../../../style/img/google-logo.svg';
+
 /**
  * The main plugin.
  */
@@ -17,7 +21,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     const gitHub: LogInItem = {
       id: 'gitHub',
       label: 'GitHub LogIn',
-      icon: "empty",
+      icon: github_logo,
       api: '/auth/github/login',
       loggedIn: false
     }
@@ -27,7 +31,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     const google: LogInItem = {
       id: 'google',
       label: 'Google LogIn ',
-      icon: "empty",
+      icon: google_logo,
       api: '/auth/google/login',
       loggedIn: false
     }

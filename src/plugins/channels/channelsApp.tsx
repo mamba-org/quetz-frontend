@@ -53,7 +53,7 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
         Header: 'Name',
         accessor: 'name',
         Cell: ({ row }: { row: ITableRow }) => (
-          <Link to={`/channels/${row.values.name}`}>{row.values.name}</Link>
+          <Link to={`/${row.values.name}`}>{row.values.name}</Link>
         )
       },
       {
