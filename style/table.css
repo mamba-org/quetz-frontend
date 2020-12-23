@@ -1,23 +1,24 @@
 .jp-table {
-    width: 100%;
-    border-spacing: 0;
-    font-size: var(--jp-ui-font-size2);
+  width: 100%;
+  border-spacing: 0;
+  font-size: var(--jp-ui-font-size2);
 }
 
-.jp-table th, .jp-table td {
-    margin: 0;
-    padding: calc(2 * var(--jp-cell-padding)) var(--jp-cell-padding);
-    border-bottom: 1px solid var(--jp-layout-color2);
+.jp-table th,
+.jp-table td {
+  margin: 0;
+  padding: calc(2 * var(--jp-cell-padding)) var(--jp-cell-padding);
+  border-bottom: 1px solid var(--jp-layout-color2);
 }
 
 .jp-table tr:last-child td {
-    border-bottom: 0;
+  border-bottom: 0;
 }
 
 .jp-table th {
-    text-align: left;
+  text-align: left;
 }
 
-.jp-table a{
-    color: var(--jp-quetz-primary-color);
+.jp-table a {
+  color: var(--jp-quetz-primary-color);
 }

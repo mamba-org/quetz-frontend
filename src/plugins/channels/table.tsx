@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types,react/jsx-key */
 import { useExpanded, useTable } from 'react-table';
 import React from 'react';
 import '../../../style/table.css';
