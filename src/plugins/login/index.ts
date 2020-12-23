@@ -17,14 +17,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [ILogInMenu],
   activate: (app: JupyterFrontEnd, logInMenu: ILogInMenu): void => {
-
     const gitHub: LogInItem = {
       id: 'gitHub',
       label: 'GitHub LogIn',
       icon: github_logo,
       api: '/auth/github/login',
       loggedIn: false
-    }
+    };
 
     logInMenu.addItem(gitHub);
 
@@ -34,7 +33,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       icon: google_logo,
       api: '/auth/google/login',
       loggedIn: false
-    }
+    };
 
     logInMenu.addItem(google);
   }

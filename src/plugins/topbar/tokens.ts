@@ -3,11 +3,11 @@ import { Token } from '@lumino/coreutils';
 import { Widget } from '@lumino/widgets';
 
 export type LogInItem = {
-	id: string,
-  label: string,
-  icon: string,
-  api: string,
-  loggedIn: boolean
+  id: string;
+  label: string;
+  icon: string;
+  api: string;
+  loggedIn: boolean;
 };
 
 /**

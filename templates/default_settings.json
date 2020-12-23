@@ -1,14 +1,14 @@
 {
-// Theme
-// @jupyterlab/apputils-extension:themes
-// Theme manager settings.
-// *************************************
+  // Theme
+  // @jupyterlab/apputils-extension:themes
+  // Theme manager settings.
+  // *************************************
 
-// Selected Theme
-// Application-level visual styling theme
-"theme": "JupyterLab Dark",
+  // Selected Theme
+  // Application-level visual styling theme
+  "theme": "JupyterLab Dark",
 
-// Scrollbar Theming
-// Enable/disable styling of the application scrollbars
-"theme-scrollbars": true
+  // Scrollbar Theming
+  // Enable/disable styling of the application scrollbars
+  "theme-scrollbars": true
 }

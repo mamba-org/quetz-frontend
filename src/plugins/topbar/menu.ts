@@ -16,7 +16,7 @@ export class MainMenu extends Panel implements IMainMenu {
   constructor() {
     super();
     this.id = 'main-menu';
-    this.addClass("topbar-item");
+    this.addClass('topbar-item');
     MessageLoop.installMessageHook(this, this._panelChildHook);
   }
 
