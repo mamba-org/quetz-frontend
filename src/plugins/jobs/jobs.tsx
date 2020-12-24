@@ -6,22 +6,21 @@ import { API_STATUSES } from './constants';
 
 import Table from './table';
 
-interface IProfile {
-  name: string;
-  avatar_url: string;
-  user: {
-    id: string;
-    username: string;
+interface IOwner {
+  id: string;
+  username: string;
+  profile: {
+    name: string;
+    avatar_url: string;
   };
 }
 
 interface IJob {
   id: number;
-  owner: IProfile;
+  items_spec: string;
+  owner: IOwner;
   created: Date;
-  status: {
-    description: string;
-  };
+  status: string;
   manifest: string;
 }
 
@@ -46,6 +45,8 @@ class Jobs extends React.Component<any, JobsState> {
     const fetchResponse = await fetch('/api/jobs');
     const jobs = await fetchResponse.json();
 
+    console.debug(jobs);
+
     this.setState({
       jobs,
       apiStatus: API_STATUSES.SUCCESS
@@ -57,11 +58,10 @@ class Jobs extends React.Component<any, JobsState> {
 
     const jobColumns = [
       {
-        Header: 'Id',
-        accessor: 'id',
-        Cell: ({ row }: { row: { values: IJob } }) => (
-          <Link to={`/jobs/${row.values.id}`}>{row.values.id}</Link>
-        )
+        Header: 'Manifest',
+        accessor: 'manifest',
+        Cell: ({ row }: { row: { values: IJob } }) => 
+          <Link to={`/jobs/${row.values.id}`}>{row.values.manifest}</Link>
       },
       {
         Header: 'Created',
@@ -69,20 +69,14 @@ class Jobs extends React.Component<any, JobsState> {
         Cell: ({ row }: { row: { values: IJob } }) => row.values.created
       },
       {
-        Header: 'Manifest',
-        accessor: 'manifest',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.manifest
-      },
-      {
         Header: 'Status',
         accessor: 'status',
-        Cell: ({ row }: { row: { values: IJob } }) =>
-          row.values.status.description
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.status
       },
       {
         Header: 'Owner',
         accessor: 'owner',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.name
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username
       }
     ];
 
