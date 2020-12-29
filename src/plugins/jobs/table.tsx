@@ -43,7 +43,7 @@ const Table: React.FC<ITableFcProps> = ({
           prepareRow(row);
           return (
             <>
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} key={row.id} data-status={row.values.status} >
                 {row.cells.map(cell => {
                   return (
                     <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
