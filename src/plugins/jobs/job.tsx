@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import * as React from 'react';
 
 import { API_STATUSES } from './constants';
@@ -24,44 +22,50 @@ interface IJob {
   manifest: string;
 }
 
-type JobsState = {
-  jobs: IJob[];
+type JobState = {
+  id: number;
+  job: IJob;
   apiStatus: API_STATUSES;
 };
 
 /**
  *
  */
-class Jobs extends React.Component<any, JobsState> {
+class Job extends React.Component<any, JobState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      jobs: new Array<IJob>(),
+      id: props.match.params.jobId,
+      job: {
+        id: 0,
+        created: new Date(),
+        manifest: '',
+        owner: { id: '', profile: { name: '', avatar_url: '' }, username: '' },
+        items_spec: '',
+        status: ''
+      },
       apiStatus: API_STATUSES.PENDING
     };
   }
 
   async componentDidMount() {
-    const fetchResponse = await fetch('/api/jobs');
-    const jobs = await fetchResponse.json();
+    const fetchResponse = await fetch(`/api/jobs/${this.state.id}`);
+    const job = await fetchResponse.json();
 
     this.setState({
-      jobs,
+      job,
       apiStatus: API_STATUSES.SUCCESS
     });
   }
 
   render(): JSX.Element {
-    const { apiStatus, jobs } = this.state;
+    const { apiStatus, job } = this.state;
 
     const jobColumns = [
       {
         Header: 'Manifest',
         accessor: 'manifest',
-        disableFilters: true,
-        Cell: ({ row }: { row: { original: IJob; values: IJob } }) => {
-          return <Link to={`/${row.original.id}`}>{row.values.manifest}</Link>;
-        }
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.manifest
       },
       {
         Header: 'Created',
@@ -87,10 +91,10 @@ class Jobs extends React.Component<any, JobsState> {
     return (
       <>
         <h1>Jobs</h1>
-        <Table columns={jobColumns} data={jobs} />
+        <Table columns={jobColumns} data={job} />
       </>
     );
   }
 }
 
-export default Jobs;
+export default Job;

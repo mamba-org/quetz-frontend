@@ -15,17 +15,17 @@
   border-bottom: 0;
 }
 
-.jp-table tr[data-status="pending"] {
+.jp-table tr[data-status='pending'] {
   background-color: orange;
   color: black;
 }
 
-.jp-table tr[data-status="running"] {
+.jp-table tr[data-status='running'] {
   background-color: green;
   color: black;
 }
 
-.jp-table tr[data-status="paused"] {
+.jp-table tr[data-status='paused'] {
   background-color: red;
   color: black;
 }

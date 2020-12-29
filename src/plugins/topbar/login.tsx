@@ -62,11 +62,11 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
   }
 
   private _onClickOutSide = (e: MouseEvent): void => {
-    if (!this.node.contains(e.target as Node) && this._isActive){
+    if (!this.node.contains(e.target as Node) && this._isActive) {
       this._isActive = false;
       this.update();
     }
-  }
+  };
 
   private _onClick = (): void => {
     this._isActive = !this._isActive;
@@ -75,11 +75,14 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
 
   private _logIn = (api: string): void => {
     window.location.href = api;
+    this._isActive = !this._isActive;
+    this.update();
   };
 
   private _route = (route: string): void => {
-    console.debug(route);
     this._router.navigate(route);
+    this._isActive = !this._isActive;
+    this.update();
   };
 
   render(): React.ReactElement {
