@@ -35,11 +35,18 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
-      const data = JSON.parse(config_data.innerHTML);
-      if (data.github_login_available) {
+      try {
+        const data = JSON.parse(config_data.innerHTML);
+        if (data.github_login_available) {
+          logInMenu.addItem(gitHub);
+        }
+        if (data.google_login_available) {
+          logInMenu.addItem(google);
+        }
+      } catch (err) {
+        console.error(err.message);
+        // add both if cannot parse data
         logInMenu.addItem(gitHub);
-      }
-      if (data.google_login_available) {
         logInMenu.addItem(google);
       }
     }
