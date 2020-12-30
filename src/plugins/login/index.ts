@@ -25,8 +25,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       loggedIn: false
     };
 
-    logInMenu.addItem(gitHub);
-
     const google: LogInItem = {
       id: 'google',
       label: 'Google LogIn ',
@@ -35,7 +33,23 @@ const plugin: JupyterFrontEndPlugin<void> = {
       loggedIn: false
     };
 
-    logInMenu.addItem(google);
+    const config_data = document.getElementById('jupyter-config-data');
+    if (config_data) {
+      try {
+        const data = JSON.parse(config_data.innerHTML);
+        if (data.github_login_available) {
+          logInMenu.addItem(gitHub);
+        }
+        if (data.google_login_available) {
+          logInMenu.addItem(google);
+        }
+      } catch (err) {
+        console.error(err.message);
+        // add both if cannot parse data
+        logInMenu.addItem(gitHub);
+        logInMenu.addItem(google);
+      }
+    }
   }
 };
 
