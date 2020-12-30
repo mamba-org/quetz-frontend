@@ -85,6 +85,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
       api: '/channels',
       loggedIn: true
     });
+
+    router.navigate('/channels');
   }
 };
 

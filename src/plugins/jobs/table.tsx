@@ -1,5 +1,7 @@
 import { useExpanded, useTable } from 'react-table';
 
+import PropTypes from 'prop-types';
+
 import React from 'react';
 
 interface ITableFcProps {
@@ -31,9 +33,11 @@ const Table: React.FC<ITableFcProps> = ({
     <table {...getTableProps()} className="jp-table">
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              <th {...column.getHeaderProps()} key={column.id}>
+                {column.render('Header')}
+              </th>
             ))}
           </tr>
         ))}
@@ -43,10 +47,16 @@ const Table: React.FC<ITableFcProps> = ({
           prepareRow(row);
           return (
             <>
-              <tr {...row.getRowProps()}>
+              <tr
+                {...row.getRowProps()}
+                key={row.id}
+                data-status={row.values.status}
+              >
                 {row.cells.map(cell => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td {...cell.getCellProps()} key={row.id}>
+                      {cell.render('Cell')}
+                    </td>
                   );
                 })}
               </tr>
@@ -61,6 +71,12 @@ const Table: React.FC<ITableFcProps> = ({
       </tbody>
     </table>
   );
+};
+
+Table.propTypes = {
+  columns: PropTypes.any,
+  data: PropTypes.any,
+  renderRowSubComponent: PropTypes.any
 };
 
 export default Table;

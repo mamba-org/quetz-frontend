@@ -14,6 +14,8 @@ import { ILogInMenu } from './../topbar/tokens';
 
 import Jobs from './jobs';
 
+import Job from './job';
+
 /**
  * The command ids used by the main plugin.
  */
@@ -63,10 +65,9 @@ class JobsRouter extends ReactWidget {
     return (
       <Router basename="/jobs">
         <Switch>
-          <Route path="/:jobId"></Route>
-          <Route path="/">
-            <Jobs />
-          </Route>
+          <Route path="/:jobId" render={props => <Job {...props} />} />
+          <Route path="/" component={Jobs} />
+          <Route path="/*" to="/" />
         </Switch>
       </Router>
     );
