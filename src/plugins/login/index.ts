@@ -33,16 +33,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
       loggedIn: false
     };
 
-    var config_data = document.getElementById('jupyter-config-data');
-    if(config_data)
-    {
-      var data = JSON.parse(config_data.innerHTML);
-      if(data.github_login_available)
-      {
+    const config_data = document.getElementById('jupyter-config-data');
+    if (config_data) {
+      const data = JSON.parse(config_data.innerHTML);
+      if (data.github_login_available) {
         logInMenu.addItem(gitHub);
       }
-      if(data.google_login_available)
-      {
+      if (data.google_login_available) {
         logInMenu.addItem(google);
       }
     }
