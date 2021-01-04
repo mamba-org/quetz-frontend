@@ -41,6 +41,9 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
       const data = JSON.parse(config_data.innerHTML);
+      if ('detail' in data) {
+        return;
+      }
       this._profile = data;
       this.update();
     }
