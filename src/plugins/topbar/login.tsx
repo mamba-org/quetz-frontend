@@ -38,16 +38,12 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     super.onAfterAttach(msg);
     window.addEventListener('click', this._onClickOutSide);
 
-    fetch('/api/me')
-      .then(async response => {
-        const data = await response.json();
-        if ('detail' in data) {
-          return;
-        }
-        this._profile = data;
-        this.update();
-      })
-      .catch(e => console.warn(e));
+    const config_data = document.getElementById('jupyter-config-data');
+    if (config_data) {
+      const data = JSON.parse(config_data.innerHTML);
+      this._profile = data;
+      this.update();
+    }
     this.update();
   }
 
