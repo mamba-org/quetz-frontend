@@ -24,6 +24,7 @@ import * as quetz_logo from '../../../style/img/quetz-logo.svg';
 const title: JupyterFrontEndPlugin<void> = {
   id: 'quetz:topBar/title',
   autoStart: true,
+  requires: [IRouter],
   activate: quetzTitle
 };
 
@@ -55,8 +56,9 @@ export default plugins;
 /**
  * @param app
  */
-function quetzTitle(app: JupyterFrontEnd): void {
-  const logo = new Widget();
+function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
+  const link = document.createElement('a');
+  const logo = new Widget({ node: link });
   const logo_icon = new LabIcon({
     name: 'quetz_logo',
     svgstr: quetz_logo.default
@@ -69,6 +71,12 @@ function quetzTitle(app: JupyterFrontEnd): void {
     width: '80px'
   });
   logo.id = 'jupyter-logo';
+  logo.addClass('topbar-item');
+  logo.title.label = 'Downloads';
+  logo.title.caption = 'Open Downloads page';
+  logo.node.onclick = () => {
+    router.navigate('/');
+  };
 
   const spacer = new Widget();
   spacer.id = DOMUtils.createDomID();

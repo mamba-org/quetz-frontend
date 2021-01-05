@@ -4,7 +4,7 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 (window as any).__webpack_public_path__ = URLExt.join(
   PageConfig.getBaseUrl(),
-  'example/'
+  ''// Start url
 );
 
 import { App } from './app/app';
@@ -21,12 +21,13 @@ async function main(): Promise<void> {
     require('./plugins/topbar'),
     require('./plugins/router'),
     require('./plugins/paths'),
+    require('./plugins/translator'),
     require('./plugins/login'),
     require('./plugins/user'),
     require('./plugins/channels'),
     require('./plugins/jobs'),
     require('./plugins/about'),
-    require('./plugins/example'),
+    require('./plugins/download'),
     apputilsExtension.default.filter(({ id }: any) =>
       [
         '@jupyterlab/apputils-extension:settings',
