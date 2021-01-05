@@ -1,4 +1,5 @@
 ![quetz header image](quetz_header.png)
+
 # Quetz-frontend
 
 ## The Open-Source Server for Conda Packages
@@ -40,6 +41,7 @@ yarn run watch
 ```
 
 Remember to add the path to the frontend build folder in the quetz `config.toml` file and add your github user as an admin.
+
 ```bash
 [users]
 admins = ["github username"]
