@@ -10,7 +10,7 @@ import { ReactWidget } from '@jupyterlab/apputils';
 
 import { Widget } from '@lumino/widgets';
 
-import { IMainMenu } from './../topbar/tokens';
+import { IMainMenu } from '../topbar/tokens';
 
 import * as React from 'react';
 
@@ -18,40 +18,40 @@ import * as React from 'react';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const open = 'quetz:about/open';
+  export const open = 'quetz:download/open';
 }
 
 /**
  * The main menu plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:about',
+  id: 'quetz:download',
   autoStart: true,
   requires: [IRouter, IMainMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {
     const { commands, shell } = app;
 
     commands.addCommand(CommandIDs.open, {
-      label: 'Open About',
+      label: 'Open Downloads',
       execute: () => {
-        shell.add(new About(), 'main');
+        shell.add(new Download(), 'main');
       }
     });
 
     router.register({
-      pattern: /about.*/,
+      pattern: /download.*/,
       command: CommandIDs.open
     });
 
     const label = document.createElement('a');
-    label.textContent = 'About';
+    label.textContent = 'Downloads';
     const button = new Widget({ node: label });
     button.addClass('topbar-item');
     button.id = DOMUtils.createDomID();
-    button.title.label = 'About';
-    button.title.caption = 'Open About page';
+    button.title.label = 'Downloads';
+    button.title.caption = 'Open Downloads page';
     button.node.onclick = () => {
-      router.navigate('/about');
+      router.navigate('/download');
     };
 
     menu.addItem(button, 10000);
@@ -60,42 +60,29 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
 export default plugin;
 
-class About extends ReactWidget {
+class Download extends ReactWidget {
   constructor() {
     super();
-    this.id = 'about-page';
-    this.title.label = 'About';
-    this.addClass('about-page');
+    this.id = 'download-page';
+    this.title.label = 'Download';
+    this.addClass('download-page');
   }
 
   render(): React.ReactElement {
     return (
-      <div className="about">
+      <div className="download">
         <div className="description">
           <h1>Mamba</h1>
-          <span>
-            Built upon OpenSUSE&#39;s libsolv, which was:
-            <br />
-          </span>
+          <hr />
           <p>
-            ported to Windows and OSX
+            The fastest package manager on Earth.
             <br />
-            adapted to handle conda&#39;s requirements specs.
+            Works on Windows, Mac OS X and Linux.
           </p>
-          <br />
-          <br />
-          <span>Benefits:</span>
-          <br />
-          <p>
-            Speed. Several orders of magnitude faster than conda for resolving
-            package specs.
-            <br />
-            Can be built into a single-binary executable (micromamba) which does
-            not require a<br />
-            Python interpreter. 4Mb download to replace miniconda / miniforge.
-            <br />
-            Coming soon: language bindings (R, Julia)
-          </p>
+          <div className="windows">
+            <div className="logo" />
+            <span className="label">Download</span>
+          </div>
         </div>
       </div>
     );

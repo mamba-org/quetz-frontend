@@ -1,0 +1,57 @@
+.download-page {
+  width: 100%;
+  height: 100%;
+}
+
+.download {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center center;
+  background: url(img/mamba.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.download .description {
+  width: 70%;
+  height: 70%;
+  margin: auto;
+  color: var(--jp-quetz-primary-color);
+}
+
+.download .description hr {
+  border-color: var(--jp-quetz-primary-color);
+}
+
+.download .description p {
+  padding-left: 20px;
+}
+
+.download .description .windows {
+  width: 100px;
+  height: 125px;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--jp-quetz-primary-color);
+  border: solid var(--jp-quetz-primary-color);
+  border-radius: 10px;
+  color: var(--jp-layout-color1);
+}
+
+.download .description .windows .logo {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  background: url(img/windows-logo.svg) no-repeat 50% 50%;
+  background-size: cover;
+  color: var(--jp-layout-color1);
+  fill: var(--jp-layout-color1);
+}
+
+.download .description .windows .label {
+  margin: auto;
+}
