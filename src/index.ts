@@ -4,7 +4,7 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 (window as any).__webpack_public_path__ = URLExt.join(
   PageConfig.getBaseUrl(),
-  ''// Start url
+  '' // Start url
 );
 
 import { App } from './app/app';

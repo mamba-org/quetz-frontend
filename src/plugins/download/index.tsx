@@ -73,13 +73,14 @@ class Download extends ReactWidget {
       <div className="download">
         <div className="description">
           <h1>Mamba</h1>
-          <hr/>
+          <hr />
           <p>
-            The fastest package manager on Earth.<br/>
+            The fastest package manager on Earth.
+            <br />
             Works on Windows, Mac OS X and Linux.
           </p>
           <div className="windows">
-            <div className="logo"/>
+            <div className="logo" />
             <span className="label">Download</span>
           </div>
         </div>

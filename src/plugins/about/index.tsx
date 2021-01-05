@@ -73,17 +73,27 @@ class About extends ReactWidget {
       <div className="about">
         <div className="description">
           <h1>Mamba</h1>
-          <span>Built upon OpenSUSE's libsolv, which was:<br/></span>
+          <span>
+            Built upon OpenSUSE&#39;s libsolv, which was:
+            <br />
+          </span>
           <p>
-            ported to Windows and OSX<br/>
-            adapted to handle conda's requirements specs.
+            ported to Windows and OSX
+            <br />
+            adapted to handle conda&#39;s requirements specs.
           </p>
-          <br/><br/>
-          <span>Benefits:</span><br/>
+          <br />
+          <br />
+          <span>Benefits:</span>
+          <br />
           <p>
-            Speed. Several orders of magnitude faster than conda for resolving package specs.<br/>
-            Can be built into a single-binary executable (micromamba) which does not require a<br/>
-            Python interpreter. 4Mb download to replace miniconda / miniforge.<br/>
+            Speed. Several orders of magnitude faster than conda for resolving
+            package specs.
+            <br />
+            Can be built into a single-binary executable (micromamba) which does
+            not require a<br />
+            Python interpreter. 4Mb download to replace miniconda / miniforge.
+            <br />
             Coming soon: language bindings (R, Julia)
           </p>
         </div>

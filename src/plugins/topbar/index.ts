@@ -55,6 +55,7 @@ export default plugins;
 
 /**
  * @param app
+ * @param router
  */
 function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
   const link = document.createElement('a');
