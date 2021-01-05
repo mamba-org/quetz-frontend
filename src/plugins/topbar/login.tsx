@@ -44,7 +44,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
       if ('detail' in data) {
         return;
       }
-      this._profile = data;
+      this._profile = JSON.parse(data.logged_in_user_profile);
       this.update();
     }
     this.update();
