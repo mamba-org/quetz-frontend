@@ -20,7 +20,7 @@
   color: black;
 }
 
-.jp-table tr[data-status='running'] {
+.jp-table tr[data-status='success'] {
   background-color: green;
   color: black;
 }
