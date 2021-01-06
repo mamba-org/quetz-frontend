@@ -17,12 +17,13 @@ import { ILogInMenu } from '../topbar/tokens';
 import ChannelsApp from './channelsApp';
 
 import ChannelDetails from './channelDetails';
+import PackageDetails from './packages/packages';
 
 /**
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const channels = 'quetz:channels';
+  export const reactRouter = 'quetz:react-router';
 }
 
 export class RouterWidget extends ReactWidget {
@@ -36,16 +37,27 @@ export class RouterWidget extends ReactWidget {
 
   render(): JSX.Element {
     return (
-      <Router basename="/channels">
-        <Switch>
-          <Route path="/:channelId">
-            <ChannelDetails />
-          </Route>
-          <Route path="/">
-            <ChannelsApp />
-          </Route>
-        </Switch>
-      </Router>
+      <div className="page-contents-width-limit">
+        <Router>
+          <Switch>
+            <Route path="/about">
+              <p>About</p>
+            </Route>
+            <Route path="/downloads">
+              <p>Downloads</p>
+            </Route>
+            <Route path="/packages">
+              <PackageDetails />
+            </Route>
+            <Route path="/channels/:channelId">
+              <ChannelDetails />
+            </Route>
+            <Route path="/channels">
+              <ChannelsApp />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }
@@ -54,16 +66,14 @@ export class RouterWidget extends ReactWidget {
  * The main plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:channels',
+  id: 'quetz:react-router',
   autoStart: true,
   requires: [IRouter, ILogInMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
     const { commands, shell } = app;
 
-    commands.addCommand(CommandIDs.channels, {
+    commands.addCommand(CommandIDs.reactRouter, {
       execute: () => {
-        console.log('React router execute command called');
-
         const widget = new RouterWidget();
         widget.id = DOMUtils.createDomID();
         widget.title.label = 'React router on frontend';
@@ -74,12 +84,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /channels.*/,
-      command: CommandIDs.channels
+      pattern: /(channels|about|downloads|packages).*/,
+      command: CommandIDs.reactRouter
     });
 
     menu.addItem({
-      id: CommandIDs.channels,
+      id: CommandIDs.reactRouter,
       label: 'Channels',
       icon: 'empty',
       api: '/channels',
