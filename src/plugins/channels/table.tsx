@@ -46,22 +46,20 @@ const Table: React.FC<ITableFcProps> = ({
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <>
+            <React.Fragment key={row.id}>
               <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <td {...cell.getCellProps()} key={row.id}>
-                      {cell.render('Cell')}
-                    </td>
-                  );
-                })}
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()} key={cell.column.id}>
+                    {cell.render('Cell')}
+                  </td>
+                ))}
               </tr>
               {(row as any).isExpanded ? (
                 <tr>
                   <td colSpan={5}>{renderRowSubComponent({ row })}</td>
                 </tr>
               ) : null}
-            </>
+            </React.Fragment>
           );
         })}
       </tbody>

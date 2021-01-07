@@ -1,0 +1,64 @@
+.package-main-content {
+  padding: 0 42px;
+}
+
+.package-subheading {
+  font-size: 18px;
+  font-weight: bold;
+  color: #f2f2f2;
+  margin: 18px 0 6px;
+}
+
+.package-text {
+  color: #bdbdbd;
+  font-size: 14px;
+}
+
+.package-row-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.package-second-column {
+  width: 200px;
+}
+
+.package-tag-heading {
+  width: 200px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.package-url-details {
+  font-size: 12px;
+  margin-top: 18px;
+  color: #e0e0e0;
+  line-height: 24px;
+}
+
+.package-section-padding {
+  padding-top: 20px;
+}
+
+.package-files-wrapper {
+  padding-top: 20px;
+}
+
+.package-files-row {
+  display: flex;
+  padding: 18px 42px;
+  border-bottom: 1px solid #828282;
+  align-items: center;
+}
+
+.package-files-text {
+  padding-left: 80px;
+}
+
+.package-people-name-column {
+  width: 65%;
+}
+
+.package-people-role-column {
+  width: 20%;
+}

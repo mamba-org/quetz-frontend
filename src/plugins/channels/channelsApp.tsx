@@ -1,7 +1,8 @@
 import React from 'react';
-import Table from './table';
+// import Table from './table';
 import { API_STATUSES, BACKEND_HOST } from './constants';
 import { Link } from 'react-router-dom';
+import SearchBox from './search';
 
 interface IChannelsApiItem {
   name: string;
@@ -12,9 +13,9 @@ interface IChannelsApiItem {
   mirror_mode: null | string;
 }
 
-interface ITableRow {
-  values: IChannelsApiItem;
-}
+// interface ITableRow {
+//   values: IChannelsApiItem;
+// }
 
 // the clock's state has one field: The current time, based upon the
 // JavaScript class Date
@@ -48,25 +49,25 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
   render(): JSX.Element {
     const { apiStatus, channels } = this.state;
 
-    const channelColumns = [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        Cell: ({ row }: { row: ITableRow }) => (
-          <Link to={`/${row.values.name}`}>{row.values.name}</Link>
-        )
-      },
-      {
-        Header: 'Description',
-        accessor: 'description'
-      },
-      {
-        Header: 'Private',
-        accessor: 'private',
-        Cell: ({ row }: { row: ITableRow }) =>
-          row.values.private ? 'Yes' : 'No'
-      }
-    ];
+    // const channelColumns = [
+    //   {
+    //     Header: 'Name',
+    //     accessor: 'name',
+    //     Cell: ({ row }: { row: ITableRow }) => (
+    //       <Link to={`/channels/${row.values.name}`}>{row.values.name}</Link>
+    //     )
+    //   },
+    //   {
+    //     Header: 'Description',
+    //     accessor: 'description'
+    //   },
+    //   {
+    //     Header: 'Private',
+    //     accessor: 'private',
+    //     Cell: ({ row }: { row: ITableRow }) =>
+    //       row.values.private ? 'Yes' : 'No'
+    //   }
+    // ];
 
     if (apiStatus === API_STATUSES.PENDING) {
       return <div>Loading list of available channels</div>;
@@ -74,8 +75,20 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
 
     return (
       <>
-        <h1>Channels</h1>
-        <Table columns={channelColumns} data={channels} />
+        <SearchBox />
+        {(channels || []).map(channelItem => (
+          <Link to={`/channels/${channelItem.name}`} key={channelItem.name}>
+            <div className="channel-row">
+              <div className="channel-icon-column">
+                <img src="/profile_image.png" className="profile-icon" />
+              </div>
+              <div className="channel-name-column">{channelItem.name}</div>
+              <div className="channel-packages-column">254 packages</div>
+              <div className="channel-members-column">7 members</div>
+            </div>
+          </Link>
+        ))}
+        {/*<Table columns={channelColumns} data={channels} />*/}
       </>
     );
   }
