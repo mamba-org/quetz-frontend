@@ -55,6 +55,9 @@ export class RouterWidget extends ReactWidget {
             <Route path="/channels">
               <ChannelsApp />
             </Route>
+            <Route path="/">
+              <ChannelsApp />
+            </Route>
           </Switch>
         </Router>
       </div>
@@ -85,6 +88,11 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     router.register({
       pattern: /(channels|about|downloads|packages).*/,
+      command: CommandIDs.reactRouter
+    });
+
+    router.register({
+      pattern: /\/$/,
       command: CommandIDs.reactRouter
     });
 
