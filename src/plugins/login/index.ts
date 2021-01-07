@@ -34,7 +34,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
     };
 
     const config_data = document.getElementById('jupyter-config-data');
-    logInMenu.addItem(gitHub);
     if (config_data) {
       try {
         const data = JSON.parse(config_data.innerHTML);
