@@ -101,9 +101,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
             <ul>
               <li key={this._profile.name}>
                 <a>
-                  <span>
-                    Signed in as {this._profile.user.username}
-                  </span>
+                  <span>Signed in as {this._profile.user.username}</span>
                 </a>
               </li>
               <hr />

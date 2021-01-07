@@ -83,7 +83,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn prettier && yarn eslint"
+      "pre-commit": "yarn prettier && yarn eslint && git add -A ."
     }
   }
 }
