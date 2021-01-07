@@ -1,65 +1,65 @@
 .profile-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
 }
 
 /**********************
         Tabs
  **********************/
 .react-tabs__tab-list {
-    padding: 0 42px !important;
-    border-bottom: 1px solid #ffffff !important;
+  padding: 0 42px !important;
+  border-bottom: 1px solid #ffffff !important;
 }
 
 .react-tabs__tab {
-    padding: 6px 40px !important;
+  padding: 6px 40px !important;
 }
 
 .react-tabs__tab-panel {
-    padding: 0 42px;
+  padding: 0 42px;
 }
 
 /**********************
         Leftbar
  **********************/
 .leftbar {
-    width: 215px;
-    border: 1px solid #ffffff;
-    border-radius: 5px;
-    flex-grow: 0;
+  width: 215px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  flex-grow: 0;
 }
 
 .leftbar-item {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-    background-color: transparent;
-    width: 100%;
-    padding: 0;
-    border-radius: 0;
-    color: inherit;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  background-color: transparent;
+  width: 100%;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
 }
 
 .leftbar-item.selected {
-    color: #000000;
-    background-color: #ffffff;
+  color: #000000;
+  background-color: #ffffff;
 }
 
 .leftbar-item + .leftbar-item {
-    border-top: 1px solid #ffffff;
+  border-top: 1px solid #ffffff;
 }
 
 .left-right {
-    display: flex;
-    align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
 }
 
 .right-section {
-    flex-grow: 1;
-    padding-left: 76px;
-    display: flex;
-    flex-direction: column;
+  flex-grow: 1;
+  padding-left: 76px;
+  display: flex;
+  flex-direction: column;
 }
