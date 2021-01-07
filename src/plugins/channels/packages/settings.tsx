@@ -6,19 +6,19 @@ class PackageSettings extends React.PureComponent<any, any> {
       <div className="package-files-wrapper">
         <div className="left-right">
           <div className="leftbar">
-            <div className="leftbar-item">
-              another option
-            </div>
-            <div className="leftbar-item selected">
-              API key
-            </div>
+            <button className="leftbar-item">another option</button>
+            <button className="leftbar-item selected">API key</button>
           </div>
           <div className="right-section">
             <button className="outline-button">Request API key</button>
             <div className="api-key-table">
               <div className="api-key-row">
-                <span><b>Name</b></span>
-                <span><b>Expiration date</b></span>
+                <span>
+                  <b>Name</b>
+                </span>
+                <span>
+                  <b>Expiration date</b>
+                </span>
               </div>
               <div className="api-key-row">
                 <span>My API key</span>

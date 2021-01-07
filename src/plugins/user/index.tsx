@@ -6,7 +6,8 @@ import {
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
-import { BrowserRouter as Router,
+import {
+  BrowserRouter as Router
   // Switch, Route
 } from 'react-router-dom';
 
@@ -66,28 +67,22 @@ class UserRouter extends ReactWidget {
           <div className="package-files-wrapper">
             <div className="left-right">
               <div className="leftbar">
-                <div className="leftbar-item">
-                  Profile
-                </div>
-                <div className="leftbar-item">
-                  Account
-                </div>
-                <div className="leftbar-item selected">
-                  API key
-                </div>
-                <div className="leftbar-item">
-                  Channels
-                </div>
-                <div className="leftbar-item">
-                  Packages
-                </div>
+                <div className="leftbar-item">Profile</div>
+                <div className="leftbar-item">Account</div>
+                <div className="leftbar-item selected">API key</div>
+                <div className="leftbar-item">Channels</div>
+                <div className="leftbar-item">Packages</div>
               </div>
               <div className="right-section">
                 <button className="outline-button">Request API key</button>
                 <div className="api-key-table">
                   <div className="api-key-row">
-                    <span><b>Name</b></span>
-                    <span><b>Expiration date</b></span>
+                    <span>
+                      <b>Name</b>
+                    </span>
+                    <span>
+                      <b>Expiration date</b>
+                    </span>
                   </div>
                   <div className="api-key-row">
                     <span>My API key</span>

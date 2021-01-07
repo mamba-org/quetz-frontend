@@ -77,7 +77,7 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
       <>
         <SearchBox />
         {(channels || []).map(channelItem => (
-          <Link to={`/channels/${channelItem.name}`}>
+          <Link to={`/channels/${channelItem.name}`} key={channelItem.name}>
             <div className="channel-row">
               <div className="channel-icon-column">
                 <img src="/profile_image.png" className="profile-icon" />

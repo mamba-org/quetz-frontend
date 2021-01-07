@@ -70,3 +70,12 @@
 .login-menu li a span {
   color: var(--jp-layout-color1);
 }
+
+.topbar-item {
+  font-weight: bold;
+  padding: 0 20px;
+}
+
+#top-panel {
+  padding: 10px;
+}

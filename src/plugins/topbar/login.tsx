@@ -78,11 +78,11 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     this.update();
   };
 
-  private _route = (route: string): void => {
-    this._router.navigate(route);
-    this._isActive = !this._isActive;
-    this.update();
-  };
+  // private _route = (route: string): void => {
+  //   this._router.navigate(route);
+  //   this._isActive = !this._isActive;
+  //   this.update();
+  // };
 
   render(): React.ReactElement {
     if (this._profile) {
@@ -101,21 +101,23 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
             <ul>
               <li key={this._profile.name}>
                 <a>
-                  <span>Signed in as {this._profile.user.username}</span>
+                  <p>
+                    Signed in as <span>{this._profile.user.username}</span>
+                  </p>
                 </a>
               </li>
-              <hr />
-              {this._items.map(value => {
-                if (value.loggedIn) {
-                  return (
-                    <li key={value.id}>
-                      <a onClick={() => this._route(value.api)}>
-                        <span>{value.label}</span>
-                      </a>
-                    </li>
-                  );
-                }
-              })}
+              {/*<hr />*/}
+              {/*{this._items.map(value => {*/}
+              {/*  if (value.loggedIn) {*/}
+              {/*    return (*/}
+              {/*      <li key={value.id}>*/}
+              {/*        <a onClick={() => this._route(value.api)}>*/}
+              {/*          <span>{value.label}</span>*/}
+              {/*        </a>*/}
+              {/*      </li>*/}
+              {/*    );*/}
+              {/*  }*/}
+              {/*})}*/}
               <hr />
               <li key="signout">
                 <a onClick={() => this._logIn('/auth/logout')}>
