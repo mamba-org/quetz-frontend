@@ -1,3 +1,64 @@
+.bottom-padding {
+  padding-bottom: 20px;
+}
+
+/**********************
+      Text styles
+ **********************/
+.heading1 {
+  font-size: 54px;
+  line-height: 68px;
+  margin-top: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.heading2 {
+  font-size: 40px;
+  line-height: 50px;
+  margin-top: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.heading3 {
+  font-size: 28px;
+  line-height: 36px;
+  margin-top: 0;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.paragraph {
+  font-size: 16px;
+  line-height: 22px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.minor-paragraph {
+  font-size: 14px;
+  line-height: 20px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.caption {
+  font-size: 14px;
+  line-height: 20px;
+  text-transform: uppercase;
+  color: var(--jp-quetz-primary-color);
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.section-heading {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: bold;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.annotation {
+  font-size: 12px;
+  line-height: 17px;
+  font-family: 'Open Sans', sans-serif;
+}
+
 .profile-icon {
   width: 34px;
   height: 34px;
@@ -5,51 +66,162 @@
 }
 
 /**********************
+        Button
+ **********************/
+.btn {
+  font-size: 16px;
+  line-height: 22px;
+  padding: 7px 20px;
+  font-family: 'Open Sans', sans-serif;
+  cursor: pointer;
+  border: 0;
+  border-radius: 6px;
+}
+
+.btn-default {
+  color: #ffffff;
+  background-color: #404040;
+}
+
+.btn-default:hover {
+  color: #222222;
+  background-color: #ffffff;
+}
+
+.btn-primary {
+  color: #000000;
+  background-color: var(--jp-quetz-primary-color);
+}
+
+.btn-primary:hover {
+  color: var(--jp-quetz-primary-color);
+  background-color: #404040;
+}
+
+.btn-group .btn,
+.btn-group .input {
+  border-radius: 0;
+}
+
+.btn-group .btn:first-child,
+.btn-group .input:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.btn-group .btn:last-child,
+.btn-group .input:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+/**********************
+        Inputs
+ **********************/
+
+.input {
+  font-size: 16px;
+  line-height: 22px;
+  padding: 7px 20px;
+  font-family: 'Open Sans', sans-serif;
+  border: 0;
+  border-radius: 6px;
+  color: #ffffff;
+  background-color: #404040;
+}
+
+/**********************
+      Breadcrumbs
+ **********************/
+.breadcrumbs {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.breadcrumb-item {
+  font-size: 14px;
+}
+
+.breadcrumb-separator {
+}
+
+.breadcrumb-link {
+  color: var(--jp-quetz-primary-color);
+  text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+  color: var(--jp-quetz-primary-color);
+  text-decoration: underline;
+}
+
+/**********************
         Tabs
  **********************/
 .react-tabs__tab-list {
-  padding: 0 42px !important;
-  border-bottom: 1px solid #ffffff !important;
+  padding: 0 5px !important;
+  border-bottom: 1px solid #404040 !important;
 }
 
 .react-tabs__tab {
-  padding: 6px 40px !important;
+  padding: 7px 20px !important;
+  color: #aaaaaa;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  background-color: transparent;
+  border: 0 !important;
+}
+
+.react-tabs__tab:hover {
+  color: var(--jp-quetz-primary-color);
+}
+
+.react-tabs__tab.react-tabs__tab--selected {
+  background-color: #404040;
+  color: var(--jp-quetz-primary-color);
 }
 
 .react-tabs__tab-panel {
-  padding: 0 42px;
+  padding: 20px;
 }
 
 /**********************
         Leftbar
  **********************/
 .leftbar {
-  width: 215px;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
+  width: 200px;
+  border-radius: 6px;
+  background-color: #404040;
   flex-grow: 0;
+  padding: 4px 0;
+  position: relative;
 }
 
 .leftbar-item {
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: 0;
   background-color: transparent;
   width: 100%;
-  padding: 0;
+  padding: 7px 20px;
   border-radius: 0;
-  color: inherit;
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  margin: 8px 0;
+  position: relative;
+  display: block;
 }
 
 .leftbar-item.selected {
-  color: #000000;
-  background-color: #ffffff;
+  color: var(--jp-quetz-primary-color);
+  font-weight: bold;
 }
 
-.leftbar-item + .leftbar-item {
-  border-top: 1px solid #ffffff;
+.leftbar-item.selected::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: var(--jp-quetz-primary-color);
 }
 
 .left-right {
