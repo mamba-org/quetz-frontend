@@ -75,6 +75,16 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
 
     return (
       <>
+        <div className="breadcrumbs">
+          <div className="breadcrumb-item">
+            <Link to="/" className="breadcrumb-link">
+              Home
+            </Link>
+          </div>
+          <div className="breadcrumb-separator">&emsp;/&emsp;</div>
+          <div className="breadcrumb-item bread">Channels</div>
+        </div>
+        <h2 className="heading2">Channels</h2>
         <SearchBox />
         {(channels || []).map(channelItem => (
           <Link to={`/channels/${channelItem.name}`} key={channelItem.name}>

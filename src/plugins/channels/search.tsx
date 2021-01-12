@@ -18,18 +18,15 @@ class SearchBox extends React.PureComponent<any, any> {
   render(): JSX.Element {
     const { input } = this.state;
     return (
-      <div className="search-wrapper">
-        <button className="search-filters">Filters</button>
+      <div className="search-wrapper btn-group">
+        <button className="btn btn-default">Filters</button>
         <input
-          className="search-input"
+          className="input search-input"
           value={input}
           type="text"
           onChange={this.updateInput}
           placeholder="from:RoboStack is:linux-64"
         />
-        <button className="search-caret">
-          <img className="caret-icon" src="/caret-down.svg" alt="" />
-        </button>
       </div>
     );
   }

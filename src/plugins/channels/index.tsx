@@ -40,13 +40,10 @@ export class RouterWidget extends ReactWidget {
       <div className="page-contents-width-limit">
         <Router>
           <Switch>
-            <Route path="/about">
-              <p>About</p>
-            </Route>
-            <Route path="/downloads">
-              <p>Downloads</p>
-            </Route>
             <Route path="/packages">
+              <PackageDetails />
+            </Route>
+            <Route path="/packages/:packageId">
               <PackageDetails />
             </Route>
             <Route path="/channels/:channelId">
@@ -87,7 +84,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /(channels|about|downloads|packages).*/,
+      pattern: /(channels|packages).*/,
       command: CommandIDs.reactRouter
     });
 
@@ -101,6 +98,13 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Channels',
       icon: 'empty',
       api: '/channels',
+      loggedIn: true
+    });
+    menu.addItem({
+      id: 'menu-packages',
+      label: 'Packages',
+      icon: 'empty',
+      api: '/packages',
       loggedIn: true
     });
   }
