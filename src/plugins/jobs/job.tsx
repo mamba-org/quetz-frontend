@@ -3,6 +3,7 @@ import * as React from 'react';
 import { API_STATUSES } from './constants';
 
 import Table from './table';
+import Breadcrumbs from '../../components/breadcrumbs';
 
 interface IOwner {
   id: string;
@@ -61,26 +62,40 @@ class Job extends React.Component<any, JobState> {
   render(): JSX.Element {
     const { apiStatus, job } = this.state;
 
+    const breadcrumbItems = [
+      {
+        text: 'Home',
+        link: '/'
+      },
+      {
+        text: 'Jobs',
+        link: '/jobs'
+      },
+      {
+        text: 'Job ID'
+      }
+    ];
+
     const jobColumns = [
       {
         Header: 'Manifest',
-        accessor: 'manifest',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.manifest
+        accessor: 'manifest'
+        // Cell: ({ row }: { row: { values: IJob } }) => row.values.manifest
       },
       {
         Header: 'Created',
-        accessor: 'created',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.created
+        accessor: 'created'
+        // Cell: ({ row }: { row: { values: IJob } }) => row.values.created
       },
       {
         Header: 'Status',
-        accessor: 'status',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.status
+        accessor: 'status'
+        // Cell: ({ row }: { row: { values: IJob } }) => row.values.status
       },
       {
         Header: 'Owner',
-        accessor: 'owner',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username
+        accessor: 'owner.username'
+        // Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username
       }
     ];
 
@@ -89,10 +104,11 @@ class Job extends React.Component<any, JobState> {
     }
 
     return (
-      <>
-        <h1>Jobs</h1>
+      <div className="page-contents-width-limit">
+        <Breadcrumbs items={breadcrumbItems} />
+        <h2 className="heading2">Jobs</h2>
         <Table columns={jobColumns} data={job} />
-      </>
+      </div>
     );
   }
 }

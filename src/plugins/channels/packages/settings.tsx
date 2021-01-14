@@ -10,7 +10,7 @@ class PackageSettings extends React.PureComponent<any, any> {
             <button className="leftbar-item selected">API key</button>
           </div>
           <div className="right-section">
-            <button className="outline-button">Request API key</button>
+            <button className="btn btn-default">Request API key</button>
             <div className="api-key-table">
               <div className="api-key-row">
                 <span>

@@ -1,5 +1,9 @@
 import React from 'react';
 import { API_STATUSES, BACKEND_HOST } from './constants';
+import { http } from '../../utils/http';
+import InlineLoader from '../../components/loader';
+import { formatSize } from './channel-details-info';
+import moment from 'moment';
 
 type PackageVersionProps = {
   channel: string;
@@ -25,10 +29,10 @@ class PackageVersions extends React.PureComponent<
 
   async componentDidMount() {
     const { channel, selectedPackage } = this.props;
-    const fetchResponse = await fetch(
-      `${BACKEND_HOST}/api/channels/${channel}/packages/${selectedPackage}/versions`
-    );
-    const versionData = await fetchResponse.json();
+    const { data: versionData } = (await http.get(
+      `${BACKEND_HOST}/api/channels/${channel}/packages/${selectedPackage}/versions`,
+      ''
+    )) as any;
 
     this.setState({
       versionData,
@@ -40,7 +44,7 @@ class PackageVersions extends React.PureComponent<
     const { versionData, apiStatus } = this.state;
     const { selectedPackage } = this.props;
     if (apiStatus === API_STATUSES.PENDING) {
-      return <div>Loading versions in {selectedPackage}</div>;
+      return <InlineLoader text={`Loading versions in ${selectedPackage}`} />;
     }
 
     if (versionData.length === 0) {
@@ -50,23 +54,30 @@ class PackageVersions extends React.PureComponent<
     const info = versionData[0].info;
 
     return (
-      <div>
-        <h4>Info:</h4>
-        Arch: {info.arch}
-        <br />
-        Build: {info.build}
-        <br />
-        Depends: {info.depends.join(', ')}
-        <br />
-        MD5: {info.md5}
-        <br />
-        Platform: {info.platform}
-        <h4>History:</h4>
-        <table>
+      <>
+        {/*TODO: Copy button for md5 */}
+        <h4 className="section-heading">Package Info</h4>
+        <p className="minor-paragraph">
+          <b>Arch</b>: {info.arch || 'n/a'}
+          <br />
+          <b>Build</b>: {info.build || 'n/a'}
+          <br />
+          <b>Depends</b>: {info.depends.join(', ')}
+          <br />
+          <b>MD5</b>: {info.md5}
+          <br />
+          <b>Platform</b>: {versionData[0].platform || info.platform}
+          <br />
+          <b>Version</b>: {info.version}
+        </p>
+        <h4 className="section-heading">History</h4>
+        <table className="table-small full-width">
           <thead>
             <tr>
               <th>Uploader</th>
               <th>Date</th>
+              <th>Filename</th>
+              <th>Size</th>
               <th>Version</th>
             </tr>
           </thead>
@@ -74,13 +85,15 @@ class PackageVersions extends React.PureComponent<
             {versionData.map((version: any) => (
               <tr key={version.time_created}>
                 <td>{version.uploader.name}</td>
-                <td>{version.time_created}</td>
+                <td>{moment(version.time_created).fromNow()}</td>
+                <td>{version.filename}</td>
+                <td>{formatSize(version.info.size)}</td>
                 <td>{version.version}</td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </>
     );
   }
 }

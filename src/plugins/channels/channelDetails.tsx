@@ -2,20 +2,38 @@ import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Packages from './packages';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import Breadcrumbs from '../../components/breadcrumbs';
+import ChannelDetailsInfo from './channel-details-info';
+import ChannelDetailsMembers from './channel-details-members';
 
 const CHANNEL_TABS = {
   MAIN: 0,
   PACKAGES: 1,
-  PEOPLE: 2,
+  MEMBERS: 2,
   SETTING: 3
+};
+
+const HASH_TO_INDEX: Record<string, number> = {
+  info: 0,
+  packages: 1,
+  members: 2,
+  settings: 3
+};
+
+const INDEX_TO_HASH: Record<number, string> = {
+  0: 'info',
+  1: 'packages',
+  2: 'members',
+  3: 'settings'
 };
 
 class ChannelDetails extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
+    const locationHash = (window.location.hash || '#info').substring(1);
     this.state = {
-      selectedTabIndex: CHANNEL_TABS.PACKAGES
+      selectedTabIndex: HASH_TO_INDEX[locationHash] || CHANNEL_TABS.MAIN
     };
   }
 
@@ -23,6 +41,7 @@ class ChannelDetails extends React.PureComponent<any, any> {
     this.setState({
       selectedTabIndex
     });
+    history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
   };
 
   render(): JSX.Element {
@@ -32,37 +51,39 @@ class ChannelDetails extends React.PureComponent<any, any> {
         params: { channelId }
       }
     } = this.props;
+    const breadcrumbItems = [
+      {
+        text: 'Home',
+        href: '/'
+      },
+      {
+        text: 'Channels',
+        link: '/'
+      },
+      {
+        text: channelId
+      }
+    ];
     return (
       <>
-        <div className="breadcrumbs">
-          <div className="breadcrumb-item">
-            <Link to="/" className="breadcrumb-link">
-              Home
-            </Link>
-          </div>
-          <div className="breadcrumb-separator">&emsp;/&emsp;</div>
-          <div className="breadcrumb-item bread">
-            <Link to="/channels" className="breadcrumb-link">
-              Channels
-            </Link>
-          </div>
-          <div className="breadcrumb-separator">&emsp;/&emsp;</div>
-          <div className="breadcrumb-item bread">{channelId}</div>
-        </div>
+        <Breadcrumbs items={breadcrumbItems} />
+
         <h2 className="heading2">{channelId}</h2>
         <Tabs selectedIndex={selectedTabIndex} onSelect={this.setTabIndex}>
           <TabList>
-            <Tab>Main</Tab>
+            <Tab>Info</Tab>
             <Tab>Packages</Tab>
-            <Tab>People</Tab>
-            <Tab>Setting</Tab>
+            <Tab>Members</Tab>
           </TabList>
-          <TabPanel>Main tab</TabPanel>
           <TabPanel>
-            <Packages />
+            <ChannelDetailsInfo channelId={channelId} />
           </TabPanel>
-          <TabPanel>People tab</TabPanel>
-          <TabPanel>Setting tab</TabPanel>
+          <TabPanel>
+            <Packages channelId={channelId} />
+          </TabPanel>
+          <TabPanel>
+            <ChannelDetailsMembers channelId={channelId} />
+          </TabPanel>
         </Tabs>
       </>
     );

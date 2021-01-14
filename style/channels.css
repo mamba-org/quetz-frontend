@@ -1,50 +1,37 @@
-.page-contents-width-limit {
-  width: 100%;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding-top: 60px;
-}
-
-.search-wrapper {
-  display: flex;
-  margin: 0 0 20px;
-}
-
 .search-input {
   flex-grow: 1;
 }
 
-.search-input::placeholder {
-  color: #828282;
-}
-
-.search-caret {
-  border: 0;
-  background-color: transparent;
-  flex-grow: 0;
-  padding: 0 20px;
-}
-
-.caret-icon {
-  width: 10px;
-}
-
-.channel-row {
+.list-row {
   display: flex;
   color: #ffffff;
-  padding: 9px 32px;
+  padding: 12px 20px;
   align-items: center;
-  border-bottom: 1px solid #828282;
-  font-size: 14px;
+  border-bottom: 1px solid #404040;
+}
+
+.list-row.clickable {
   cursor: pointer;
 }
 
+.list-row.clickable:hover {
+  background-color: #404040;
+}
+
+.channel-list-description {
+  margin: 5px 0 0;
+  color: #aaaaaa;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
 .channel-icon-column {
-  width: 10%;
+  width: 5%;
 }
 
 .channel-name-column {
-  width: 35%;
+  width: 45%;
 }
 
 .channel-packages-column {
@@ -87,4 +74,23 @@
 
 .api-key-row:first-child {
   border-bottom: 1px solid #ffffff;
+}
+
+.member-icon-column {
+  width: 10%;
+}
+.member-name-column {
+  width: 40%;
+}
+.member-username-column {
+  width: 30%;
+}
+.member-role-column {
+  width: 20%;
+}
+
+.user-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
 }

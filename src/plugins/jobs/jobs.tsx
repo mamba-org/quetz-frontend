@@ -5,6 +5,7 @@ import * as React from 'react';
 import { API_STATUSES } from './constants';
 
 import Table from './table';
+import Breadcrumbs from '../../components/breadcrumbs';
 
 interface IOwner {
   id: string;
@@ -54,6 +55,16 @@ class Jobs extends React.Component<any, JobsState> {
   render(): JSX.Element {
     const { apiStatus, jobs } = this.state;
 
+    const breadcrumbItems = [
+      {
+        text: 'Home',
+        link: '/'
+      },
+      {
+        text: 'Jobs'
+      }
+    ];
+
     const jobColumns = [
       {
         Header: 'Manifest',
@@ -85,10 +96,11 @@ class Jobs extends React.Component<any, JobsState> {
     }
 
     return (
-      <>
-        <h1>Jobs</h1>
+      <div className="page-contents-width-limit">
+        <Breadcrumbs items={breadcrumbItems} />
+        <h2 className="heading2">Jobs</h2>
         <Table columns={jobColumns} data={jobs} />
-      </>
+      </div>
     );
   }
 }
