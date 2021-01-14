@@ -1,5 +1,12 @@
+import { showDialog } from '@jupyterlab/apputils';
+
 import React from 'react';
+
 import { BACKEND_HOST } from '../channels/constants';
+
+import { APIKeyDialog } from './apiKeyDialog';
+
+//import { APIKey } from './types';
 
 class UserApiKey extends React.PureComponent<any, any> {
   constructor(props: any) {
@@ -20,16 +27,27 @@ class UserApiKey extends React.PureComponent<any, any> {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async requestApiKey() {
-    const data = {
-      description: ''
-    };
-
-    const response = await fetch(`${BACKEND_HOST}/api/api-keys`, {
-      method: 'POST',
-      redirect: 'follow',
-      body: JSON.stringify(data)
+    const body = new APIKeyDialog();
+    showDialog({
+      title: 'Keys',
+      body
+    }).then(async value => {
+      console.debug(value);
+      if (value.button.accept) {
+        const data = body.info;
+        console.debug(data);
+        /* 
+        const response = await fetch(`${BACKEND_HOST}/api/api-keys`, {
+          method: 'POST',
+          redirect: 'follow',
+          body: JSON.stringify(data)
+        });
+    
+        const resp = await response.json();
+        console.log(resp);
+        */
+      }
     });
-    console.log(response.json());
   }
 
   render(): JSX.Element {
