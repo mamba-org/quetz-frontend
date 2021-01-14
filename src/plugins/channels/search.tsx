@@ -1,5 +1,6 @@
 import React from 'react';
-// import * as caret_icon from '../../../style/img/caret-down.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 class SearchBox extends React.PureComponent<any, any> {
   constructor(props: any) {
@@ -10,24 +11,38 @@ class SearchBox extends React.PureComponent<any, any> {
   }
 
   updateInput = (e: any) => {
+    const { onSearch } = this.props;
     this.setState({
       input: e.target.value
     });
+    onSearch(e.target.value);
+  };
+
+  onSubmit = () => {
+    // TODO
   };
 
   render(): JSX.Element {
     const { input } = this.state;
     return (
-      <div className="search-wrapper btn-group">
-        <button className="btn btn-default">Filters</button>
-        <input
-          className="input search-input"
-          value={input}
-          type="text"
-          onChange={this.updateInput}
-          placeholder="from:RoboStack is:linux-64"
-        />
-      </div>
+      <form onSubmit={this.onSubmit}>
+        <div className="btn-group">
+          <button className="btn btn-default" type="button">
+            Filters&emsp;
+            <FontAwesomeIcon icon={faCaretDown} />
+          </button>
+          <input
+            className="input search-input"
+            value={input}
+            type="text"
+            onChange={this.updateInput}
+            placeholder="Search"
+          />
+          <button className="btn btn-default" type="submit">
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </div>
+      </form>
     );
   }
 }

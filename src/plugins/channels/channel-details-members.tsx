@@ -1,32 +1,32 @@
 import * as React from 'react';
-import { API_STATUSES, BACKEND_HOST } from '../constants';
-import { http } from '../../../utils/http';
-import InlineLoader from '../../../components/loader';
+import { API_STATUSES, BACKEND_HOST } from './constants';
+import { http } from '../../utils/http';
+import InlineLoader from '../../components/loader';
 
-class PackageMembers extends React.PureComponent<any, any> {
+class ChannelDetailsMembers extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      packageMembers: null,
+      channelMembers: null,
       apiStatus: API_STATUSES.PENDING
     };
   }
 
   async componentDidMount() {
-    const { channelId, packageId } = this.props;
-    const { data: packageMembers } = (await http.get(
-      `${BACKEND_HOST}/api/channels/${channelId}/packages/${packageId}/members`,
+    const { channelId } = this.props;
+    const { data: channelMembers } = (await http.get(
+      `${BACKEND_HOST}/api/channels/${channelId}/members`,
       ''
     )) as any;
 
     this.setState({
-      packageMembers,
+      channelMembers,
       apiStatus: API_STATUSES.SUCCESS
     });
   }
 
   render() {
-    const { packageMembers, apiStatus } = this.state;
+    const { channelMembers, apiStatus } = this.state;
 
     if (apiStatus === API_STATUSES.PENDING) {
       return <InlineLoader text="Fetching list of members" />;
@@ -34,7 +34,7 @@ class PackageMembers extends React.PureComponent<any, any> {
 
     return (
       <div className="package-files-wrapper padding">
-        {(packageMembers || []).map((member: any) => (
+        {(channelMembers || []).map((member: any) => (
           <div className="list-row" key={member.user.id}>
             <div className="member-icon-column">
               <img
@@ -53,4 +53,4 @@ class PackageMembers extends React.PureComponent<any, any> {
   }
 }
 
-export default PackageMembers;
+export default ChannelDetailsMembers;

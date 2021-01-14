@@ -38,19 +38,13 @@ export class RouterWidget extends ReactWidget {
   render(): JSX.Element {
     return (
       <div className="page-contents-width-limit">
-        <Router>
+        <Router basename="/channels">
           <Switch>
-            <Route path="/packages">
+            <Route path="/:channelId/packages/:packageId">
               <PackageDetails />
             </Route>
-            <Route path="/packages/:packageId">
-              <PackageDetails />
-            </Route>
-            <Route path="/channels/:channelId">
+            <Route path="/:channelId">
               <ChannelDetails />
-            </Route>
-            <Route path="/channels">
-              <ChannelsApp />
             </Route>
             <Route path="/">
               <ChannelsApp />
@@ -66,7 +60,7 @@ export class RouterWidget extends ReactWidget {
  * The main plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:react-router',
+  id: 'quetz:channels-router',
   autoStart: true,
   requires: [IRouter, ILogInMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
@@ -76,7 +70,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       execute: () => {
         const widget = new RouterWidget();
         widget.id = DOMUtils.createDomID();
-        widget.title.label = 'React router on frontend';
+        widget.title.label = 'React router for channels';
         widget.title.icon = fileIcon;
         widget.title.closable = false;
         shell.add(widget, 'main');
@@ -84,12 +78,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /(channels|packages).*/,
-      command: CommandIDs.reactRouter
-    });
-
-    router.register({
-      pattern: /\/$/,
+      pattern: /(channels).*/,
       command: CommandIDs.reactRouter
     });
 
@@ -98,13 +87,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Channels',
       icon: 'empty',
       api: '/channels',
-      loggedIn: true
-    });
-    menu.addItem({
-      id: 'menu-packages',
-      label: 'Packages',
-      icon: 'empty',
-      api: '/packages',
       loggedIn: true
     });
   }

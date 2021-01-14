@@ -33,29 +33,34 @@ class UserApiKey extends React.PureComponent<any, any> {
   }
 
   render(): JSX.Element {
-    // const { apiKeys } = this.state;
+    const { apiKeys } = this.state;
     return (
       <div>
-        <div className="bottom-padding">
+        <div className="padding-bottom">
           <button className="btn btn-default" onClick={this.requestApiKey}>
             Request API key
           </button>
         </div>
         <h3 className="heading3">API keys</h3>
-        <div className="api-key-table">
-          <div className="api-key-row">
-            <span>
-              <b>Name</b>
-            </span>
-            <span>
-              <b>Expiration date</b>
-            </span>
-          </div>
-          <div className="api-key-row">
-            <span>My API key</span>
-            <span>Fri Nov 27 2020</span>
-          </div>
-        </div>
+        <table className="jp-table table-small">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Description</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            {apiKeys.map((ak: any) => (
+              <tr key={ak.key}>
+                {/*TODO: Add copy button*/}
+                <td>{ak.key}</td>
+                <td>{ak.description}</td>
+                <td>{ak.roles[0].role}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }

@@ -7,8 +7,17 @@
 .jp-table th,
 .jp-table td {
   margin: 0;
-  padding: calc(2 * var(--jp-cell-padding)) var(--jp-cell-padding);
+  /*padding: calc(2 * var(--jp-cell-padding)) var(--jp-cell-padding);*/
+  padding: 12px;
   border-bottom: 1px solid var(--jp-layout-color2);
+}
+
+.jp-table tr.expanded td {
+  border-bottom: 0;
+}
+
+.jp-table td.jp-table-expanded-contents {
+  padding: 10px 0 20px 60px;
 }
 
 .jp-table tr:last-child td {
@@ -36,4 +45,8 @@
 
 .jp-table a {
   color: var(--jp-quetz-primary-color);
+}
+
+.jp-table a:hover {
+  text-decoration: underline;
 }

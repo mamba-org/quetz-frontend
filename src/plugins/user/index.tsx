@@ -8,14 +8,19 @@ import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
 import {
   BrowserRouter as Router,
-  Link
-  // Switch, Route
+  Route,
+  Switch,
+  Redirect,
+  NavLink
 } from 'react-router-dom';
 
 import * as React from 'react';
 
-import { ILogInMenu } from './../topbar/tokens';
+import { ILogInMenu } from '../topbar/tokens';
 import UserApiKey from './api-key';
+import Breadcrumbs from '../../components/breadcrumbs';
+import UserProfile from './profile';
+import { last, capitalize } from 'lodash';
 
 /**
  * The command ids used by the main plugin.
@@ -61,41 +66,77 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
 export default plugin;
 
-class UserRouter extends ReactWidget {
-  render(): React.ReactElement {
+const getBreadcrumbText = () => {
+  const currentSection = last(window.location.pathname.split('/'));
+  if (currentSection === 'api-keys') {
+    return 'API keys';
+  }
+  return capitalize(currentSection);
+};
+
+class UserComponent extends React.PureComponent<any, any> {
+  render() {
+    const breadcrumbItems = [
+      {
+        text: 'Home',
+        href: '/'
+      },
+      {
+        text: 'User details',
+        link: '/'
+      },
+      {
+        text: getBreadcrumbText()
+      }
+    ];
     return (
       <Router basename="/user">
         <div className="page-contents-width-limit">
-          <div className="breadcrumbs">
-            <div className="breadcrumb-item">
-              <Link to="/" className="breadcrumb-link">
-                Home
-              </Link>
-            </div>
-            <div className="breadcrumb-separator">&emsp;/&emsp;</div>
-            <div className="breadcrumb-item bread">
-              <Link to="/user" className="breadcrumb-link">
-                User details
-              </Link>
-            </div>
-            <div className="breadcrumb-separator">&emsp;/&emsp;</div>
-            <div className="breadcrumb-item bread">API keys</div>
-          </div>
+          <Breadcrumbs items={breadcrumbItems} />
           <h2 className="heading2">User details</h2>
           <div className="left-right">
             <div className="leftbar">
-              <div className="leftbar-item">Profile</div>
-              <div className="leftbar-item">Account</div>
-              <div className="leftbar-item selected">API key</div>
-              <div className="leftbar-item">Channels</div>
-              <div className="leftbar-item">Packages</div>
+              <NavLink className="leftbar-item" to="/profile">
+                Profile
+              </NavLink>
+              <NavLink className="leftbar-item" to="/api-keys">
+                API key
+              </NavLink>
+              <NavLink className="leftbar-item" to="/channels">
+                Channels
+              </NavLink>
+              <NavLink className="leftbar-item" to="/packages">
+                Packages
+              </NavLink>
             </div>
             <div className="right-section">
-              <UserApiKey />
+              <Switch>
+                <Route path="/profile">
+                  <UserProfile />
+                </Route>
+                <Route path="/api-keys">
+                  <UserApiKey />
+                </Route>
+                <Route path="/channels">
+                  <div>Channels</div>
+                </Route>
+                <Route path="/packages">
+                  <div>Packages</div>
+                </Route>
+                <Route path="/" exact>
+                  <Redirect to="/profile" />
+                </Route>
+              </Switch>
             </div>
           </div>
         </div>
       </Router>
     );
+  }
+}
+
+class UserRouter extends ReactWidget {
+  render(): React.ReactElement {
+    return <UserComponent />;
   }
 }

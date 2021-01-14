@@ -1,8 +1,17 @@
 import React from 'react';
-// import Table from './table';
 import { API_STATUSES, BACKEND_HOST } from './constants';
 import { Link } from 'react-router-dom';
 import SearchBox from './search';
+import ReactTooltip from 'react-tooltip';
+import Breadcrumbs from '../../components/breadcrumbs';
+import InlineLoader from '../../components/loader';
+import {
+  faGlobeAmericas,
+  faUnlockAlt
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { filter, includes } from 'lodash';
+import { http } from '../../utils/http';
 
 interface IChannelsApiItem {
   name: string;
@@ -13,15 +22,24 @@ interface IChannelsApiItem {
   mirror_mode: null | string;
 }
 
-// interface ITableRow {
-//   values: IChannelsApiItem;
-// }
-
-// the clock's state has one field: The current time, based upon the
-// JavaScript class Date
 type ChannelsAppState = {
   channels: null | IChannelsApiItem[];
   apiStatus: API_STATUSES;
+  searchText: string;
+};
+
+const filterList = (
+  list: null | IChannelsApiItem[] = [],
+  searchText = ''
+): Array<IChannelsApiItem> => {
+  if (!searchText || !list) {
+    return list || [];
+  }
+  return filter(
+    list,
+    ({ name, description }) =>
+      includes(name, searchText) || includes(description, searchText)
+  );
 };
 
 /**
@@ -32,13 +50,16 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
     super(props);
     this.state = {
       channels: null,
-      apiStatus: API_STATUSES.PENDING
+      apiStatus: API_STATUSES.PENDING,
+      searchText: ''
     };
   }
 
   async componentDidMount() {
-    const fetchResponse = await fetch(`${BACKEND_HOST}/api/channels`);
-    const channels = await fetchResponse.json();
+    const { data: channels } = (await http.get(
+      `${BACKEND_HOST}/api/channels`,
+      ''
+    )) as any;
 
     this.setState({
       channels,
@@ -46,59 +67,63 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
     });
   }
 
+  onSearch = (searchText: string) => {
+    this.setState({ searchText });
+  };
+
   render(): JSX.Element {
-    const { apiStatus, channels } = this.state;
+    const { apiStatus, channels, searchText } = this.state;
 
-    // const channelColumns = [
-    //   {
-    //     Header: 'Name',
-    //     accessor: 'name',
-    //     Cell: ({ row }: { row: ITableRow }) => (
-    //       <Link to={`/channels/${row.values.name}`}>{row.values.name}</Link>
-    //     )
-    //   },
-    //   {
-    //     Header: 'Description',
-    //     accessor: 'description'
-    //   },
-    //   {
-    //     Header: 'Private',
-    //     accessor: 'private',
-    //     Cell: ({ row }: { row: ITableRow }) =>
-    //       row.values.private ? 'Yes' : 'No'
-    //   }
-    // ];
+    const breadcrumbItems = [
+      {
+        text: 'Home',
+        href: '/'
+      },
+      {
+        text: 'Channels'
+      }
+    ];
 
-    if (apiStatus === API_STATUSES.PENDING) {
-      return <div>Loading list of available channels</div>;
-    }
+    const filteredResults = filterList(channels, searchText);
 
     return (
       <>
-        <div className="breadcrumbs">
-          <div className="breadcrumb-item">
-            <Link to="/" className="breadcrumb-link">
-              Home
-            </Link>
-          </div>
-          <div className="breadcrumb-separator">&emsp;/&emsp;</div>
-          <div className="breadcrumb-item bread">Channels</div>
-        </div>
+        <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Channels</h2>
-        <SearchBox />
-        {(channels || []).map(channelItem => (
-          <Link to={`/channels/${channelItem.name}`} key={channelItem.name}>
-            <div className="channel-row">
-              <div className="channel-icon-column">
-                <img src="/profile_image.png" className="profile-icon" />
+        <SearchBox onSearch={this.onSearch} />
+        {apiStatus === API_STATUSES.PENDING && (
+          <InlineLoader text="Fetching list of channels" />
+        )}
+        {(filteredResults || []).map(channelItem => (
+          <Link to={`/${channelItem.name}`} key={channelItem.name}>
+            <div className="list-row">
+              <p className="text channel-icon-column">
+                <span
+                  data-for={`tooltip-${channelItem.name}`}
+                  data-tip={channelItem.private ? 'Private' : 'Public'}
+                >
+                  <FontAwesomeIcon
+                    icon={channelItem.private ? faUnlockAlt : faGlobeAmericas}
+                  />
+                </span>
+              </p>
+              <ReactTooltip
+                id={`tooltip-${channelItem.name}`}
+                place="right"
+                type="dark"
+                effect="solid"
+              />
+              <div className="channel-name-column">
+                <p className="text">{channelItem.name}</p>
+                <p className="minor-paragraph channel-list-description">
+                  {channelItem.description}
+                </p>
               </div>
-              <div className="channel-name-column">{channelItem.name}</div>
-              <div className="channel-packages-column">254 packages</div>
-              <div className="channel-members-column">7 members</div>
+              <p className="text channel-packages-column">254 packages</p>
+              <p className="text channel-members-column">7 members</p>
             </div>
           </Link>
         ))}
-        {/*<Table columns={channelColumns} data={channels} />*/}
       </>
     );
   }

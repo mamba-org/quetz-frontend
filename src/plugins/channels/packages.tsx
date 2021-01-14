@@ -1,22 +1,27 @@
-import Table from './table';
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleRight, faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+
+import Table from './table';
 import { API_STATUSES, BACKEND_HOST } from './constants';
 import PackageVersions from './versions';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { http } from '../../utils/http';
+import InlineLoader from '../../components/loader';
 
-interface IMatchParams {
-  channelId: string;
-}
+// interface IMatchParams {
+//   channelId: string;
+// }
 
-type PackagesProps = RouteComponentProps<IMatchParams>;
+// type PackagesProps = RouteComponentProps<IMatchParams>;
 
 type PackagesState = {
   packages: null | Date;
   apiStatus: API_STATUSES;
 };
 
-class Packages extends React.PureComponent<PackagesProps, PackagesState> {
-  constructor(props: PackagesProps) {
+class Packages extends React.PureComponent<any, PackagesState> {
+  constructor(props: any) {
     super(props);
     this.state = {
       packages: null,
@@ -25,15 +30,11 @@ class Packages extends React.PureComponent<PackagesProps, PackagesState> {
   }
 
   async componentDidMount() {
-    const {
-      match: {
-        params: { channelId: channel }
-      }
-    } = this.props;
-    const fetchResponse = await fetch(
-      `${BACKEND_HOST}/api/channels/${channel}/packages`
-    );
-    const packages = await fetchResponse.json();
+    const { channelId } = this.props;
+    const { data: packages } = (await http.get(
+      `${BACKEND_HOST}/api/channels/${channelId}/packages`,
+      ''
+    )) as any;
 
     this.setState({
       packages,
@@ -42,22 +43,16 @@ class Packages extends React.PureComponent<PackagesProps, PackagesState> {
   }
 
   renderRowSubComponent = ({ row }: any) => {
-    const {
-      match: {
-        params: { channelId: channel }
-      }
-    } = this.props;
+    const { channelId } = this.props;
     const packageName = row.values.name;
 
-    return <PackageVersions selectedPackage={packageName} channel={channel} />;
+    return (
+      <PackageVersions selectedPackage={packageName} channel={channelId} />
+    );
   };
 
   render(): JSX.Element {
-    const {
-      match: {
-        params: { channelId: channel }
-      }
-    } = this.props;
+    const { channelId } = this.props;
 
     const { packages, apiStatus } = this.state;
 
@@ -73,13 +68,20 @@ class Packages extends React.PureComponent<PackagesProps, PackagesState> {
               }
             })}
           >
-            {row.isExpanded ? '👇' : '👉'}
+            <FontAwesomeIcon
+              icon={row.isExpanded ? faAngleDown : faAngleRight}
+            />
           </span>
         )
       },
       {
         Header: 'Package Name',
-        accessor: 'name'
+        accessor: 'name',
+        Cell: ({ row }: any) => (
+          <Link to={`${channelId}/packages/${row.values.name}`}>
+            {row.values.name}
+          </Link>
+        )
       },
       {
         Header: 'Description',
@@ -92,17 +94,21 @@ class Packages extends React.PureComponent<PackagesProps, PackagesState> {
     ];
 
     if (apiStatus === API_STATUSES.PENDING) {
-      return <div>Loading list of packages in {channel}</div>;
+      return (
+        <InlineLoader text={`Fetching the list of packages in ${channelId}`} />
+      );
     }
 
     return (
-      <Table
-        columns={packageColumns}
-        data={packages}
-        renderRowSubComponent={this.renderRowSubComponent}
-      />
+      <div className="padding">
+        <Table
+          columns={packageColumns}
+          data={packages || []}
+          renderRowSubComponent={this.renderRowSubComponent}
+        />
+      </div>
     );
   }
 }
 
-export default withRouter(Packages);
+export default Packages;

@@ -2,21 +2,31 @@ import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import PackageMainContent from './packageMainContent';
-// import PackageFiles from './files';
 import PackagePeople from './people';
-import PackageSettings from './settings';
+import Breadcrumbs from '../../../components/breadcrumbs';
+import { withRouter } from 'react-router-dom';
 
 const PACKAGE_TABS = {
-  MAIN: 0,
-  PEOPLE: 1,
-  SETTINGS: 2
+  INFO: 0,
+  MEMBERS: 1
+};
+
+const HASH_TO_INDEX: Record<string, number> = {
+  info: 0,
+  members: 1
+};
+
+const INDEX_TO_HASH: Record<number, string> = {
+  0: 'info',
+  1: 'members'
 };
 
 class PackageDetails extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
+    const locationHash = (window.location.hash || '#info').substring(1);
     this.state = {
-      selectedTabIndex: PACKAGE_TABS.MAIN
+      selectedTabIndex: HASH_TO_INDEX[locationHash] || PACKAGE_TABS.INFO
     };
   }
 
@@ -24,33 +34,54 @@ class PackageDetails extends React.PureComponent<any, any> {
     this.setState({
       selectedTabIndex
     });
+    history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
   };
 
   render(): JSX.Element {
     const { selectedTabIndex } = this.state;
+    const {
+      match: {
+        params: { channelId, packageId }
+      }
+    } = this.props;
+    const breadcrumbItems = [
+      {
+        text: 'Home',
+        href: '/'
+      },
+      {
+        text: 'Channels',
+        link: '/'
+      },
+      {
+        text: 'rosmelodic',
+        link: `/${channelId}`
+      },
+      {
+        text: 'packages',
+        link: `/${channelId}#packages`
+      },
+      {
+        text: packageId
+      }
+    ];
+
     return (
       <div>
-        <h2 className="page-heading">Mamba-org/ros-melodic-runtime</h2>
+        <Breadcrumbs items={breadcrumbItems} />
+        <h2 className="heading2">
+          {channelId}/{packageId}
+        </h2>
         <Tabs selectedIndex={selectedTabIndex} onSelect={this.setTabIndex}>
           <TabList>
-            <Tab>Main</Tab>
-            {/*<Tab>Files</Tab>*/}
-            {/*<Tab>Logs</Tab>*/}
-            <Tab>People</Tab>
-            <Tab>Settings</Tab>
+            <Tab>Info</Tab>
+            <Tab>Members</Tab>
           </TabList>
           <TabPanel>
             <PackageMainContent />
           </TabPanel>
-          {/*<TabPanel>*/}
-          {/*  <PackageFiles />*/}
-          {/*</TabPanel>*/}
-          {/*<TabPanel>Logs tab</TabPanel>*/}
           <TabPanel>
-            <PackagePeople />
-          </TabPanel>
-          <TabPanel>
-            <PackageSettings />
+            <PackagePeople channelId={channelId} packageId={packageId} />
           </TabPanel>
         </Tabs>
       </div>
@@ -58,4 +89,4 @@ class PackageDetails extends React.PureComponent<any, any> {
   }
 }
 
-export default PackageDetails;
+export default withRouter(PackageDetails);

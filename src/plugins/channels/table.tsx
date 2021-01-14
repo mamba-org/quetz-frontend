@@ -1,4 +1,5 @@
 import { useExpanded, useTable } from 'react-table';
+import clsx from 'clsx';
 
 import PropTypes from 'prop-types';
 
@@ -29,6 +30,9 @@ const Table: React.FC<ITableFcProps> = ({
     useExpanded
   );
 
+  console.log(headerGroups);
+  console.log(rows);
+
   return (
     <table {...getTableProps()} className="jp-table">
       <thead>
@@ -47,7 +51,10 @@ const Table: React.FC<ITableFcProps> = ({
           prepareRow(row);
           return (
             <React.Fragment key={row.id}>
-              <tr {...row.getRowProps()}>
+              <tr
+                {...row.getRowProps()}
+                className={clsx({ expanded: (row as any).isExpanded })}
+              >
                 {row.cells.map(cell => (
                   <td {...cell.getCellProps()} key={cell.column.id}>
                     {cell.render('Cell')}
@@ -56,7 +63,9 @@ const Table: React.FC<ITableFcProps> = ({
               </tr>
               {(row as any).isExpanded ? (
                 <tr>
-                  <td colSpan={5}>{renderRowSubComponent({ row })}</td>
+                  <td colSpan={5} className="jp-table-expanded-contents">
+                    {renderRowSubComponent({ row })}
+                  </td>
                 </tr>
               ) : null}
             </React.Fragment>
