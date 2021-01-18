@@ -119,10 +119,8 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
       if (keys.length !== 0) {
         return (
           <tr key={keys[0].key} className="qs-clickable-Row">
-            <td onClick={() => this._showRoles(keys[0].roles)}>
-              {keys[0].key}
-            </td>
-            <td onClick={() => this._showRoles(keys[0].roles)}>
+            <td>{keys[0].key}</td>
+            <td>
               <label className="qs-Label-Caption">{keys[0].description}</label>
             </td>
             <td onClick={() => this._copyAPIKey(keys[0].key)}>
