@@ -204,6 +204,29 @@ body {
 }
 
 /**********************
+        Tags
+ **********************/
+
+.tag {
+  font-size: 12px;
+  background-color: #404040;
+  color: #e0e0e0;
+  display: inline-block;
+  padding: 2px 14px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.tag:last-child {
+  margin-right: 0;
+}
+
+.tag.clickable {
+  cursor: pointer;
+}
+
+/**********************
         Inputs
  **********************/
 

@@ -12,6 +12,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { filter, includes } from 'lodash';
 import { http } from '../../utils/http';
+import { formatPlural } from '../../utils';
 
 interface IChannelsApiItem {
   name: string;
@@ -20,6 +21,8 @@ interface IChannelsApiItem {
   size_limit: null | number;
   mirror_channel_url: null | string;
   mirror_mode: null | string;
+  members_count: number;
+  packages_count: number;
 }
 
 type ChannelsAppState = {
@@ -96,7 +99,7 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
         )}
         {(filteredResults || []).map(channelItem => (
           <Link to={`/${channelItem.name}`} key={channelItem.name}>
-            <div className="list-row">
+            <div className="list-row clickable">
               <p className="text channel-icon-column">
                 <span
                   data-for={`tooltip-${channelItem.name}`}
@@ -119,8 +122,12 @@ class ChannelsApp extends React.Component<any, ChannelsAppState> {
                   {channelItem.description}
                 </p>
               </div>
-              <p className="text channel-packages-column">254 packages</p>
-              <p className="text channel-members-column">7 members</p>
+              <p className="text channel-packages-column">
+                {formatPlural(channelItem.packages_count, 'package')}
+              </p>
+              <p className="text channel-members-column">
+                {formatPlural(channelItem.members_count, 'member')}
+              </p>
             </div>
           </Link>
         ))}
