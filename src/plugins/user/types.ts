@@ -14,3 +14,14 @@ export type APIKey = {
   roles: Role[];
   key: string;
 };
+
+export type Channel = {
+  name: string;
+  role: string;
+};
+
+export type Package = {
+  name: string;
+  channel_name: string;
+  role: string;
+};

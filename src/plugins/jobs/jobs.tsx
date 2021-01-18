@@ -5,6 +5,9 @@ import * as React from 'react';
 import { API_STATUSES } from './constants';
 
 import Table from './table';
+
+import InlineLoader from '../../components/loader';
+
 import Breadcrumbs from '../../components/breadcrumbs';
 
 interface IOwner {
@@ -45,9 +48,10 @@ class Jobs extends React.Component<any, JobsState> {
   async componentDidMount() {
     const fetchResponse = await fetch('/api/jobs');
     const jobs = await fetchResponse.json();
-
+    console.debug(jobs);
+    /* TODO: Support pagination */
     this.setState({
-      jobs,
+      jobs: jobs.result,
       apiStatus: API_STATUSES.SUCCESS
     });
   }
@@ -91,14 +95,13 @@ class Jobs extends React.Component<any, JobsState> {
       }
     ];
 
-    if (apiStatus === API_STATUSES.PENDING) {
-      return <div>Loading list of available channels</div>;
-    }
-
     return (
       <div className="page-contents-width-limit">
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Jobs</h2>
+        {apiStatus === API_STATUSES.PENDING && (
+          <InlineLoader text="Fetching jobs" />
+        )}
         <Table columns={jobColumns} data={jobs} />
       </div>
     );
