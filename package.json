@@ -16,21 +16,17 @@
     "lib": "lib/"
   },
   "scripts": {
-    "build": "tsc && webpack",
-    "build:prod": "tsc && webpack --mode=production",
-    "build:dev": "tsc && webpack --config webpack-dev.config.js",
+    "build": "tsc && webpack --config webpack.dev.config.js",
+    "build:prod": "tsc && webpack  --config webpack.prod.config.js",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "prepublishOnly": "yarn run build",
     "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
     "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
-    "test": "",
     "watch:ts": "tsc -w --listEmittedFiles",
-    "watch:webpack": "webpack --watch",
-    "watch:webpack-dev": "webpack --watch --config webpack-dev.config.js",
-    "watch": "npm-run-all --parallel watch:ts watch:webpack",
-    "watch:dev": "npm-run-all --parallel watch:ts watch:webpack-dev"
+    "watch:webpack": "webpack --config webpack.dev.config.js --watch",
+    "watch": "npm-run-all --parallel watch:ts watch:webpack"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -62,7 +58,8 @@
     "react-table": "^7.6.2",
     "react-tabs": "^3.1.2",
     "react-tooltip": "^4.2.11",
-    "styled-components": "^5.2.1"
+    "styled-components": "^5.2.1",
+    "webpack-merge": "^5.7.3"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.2.0",

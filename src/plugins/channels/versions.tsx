@@ -4,6 +4,7 @@ import { http } from '../../utils/http';
 import InlineLoader from '../../components/loader';
 import { formatSize } from './channel-details-info';
 import moment from 'moment';
+import { map } from 'lodash';
 
 type PackageVersionProps = {
   channel: string;
@@ -62,13 +63,17 @@ class PackageVersions extends React.PureComponent<
           <br />
           <b>Build</b>: {info.build || 'n/a'}
           <br />
-          <b>Depends</b>: {info.depends.join(', ')}
-          <br />
           <b>MD5</b>: {info.md5}
           <br />
           <b>Platform</b>: {versionData[0].platform || info.platform}
           <br />
           <b>Version</b>: {info.version}
+        </p>
+        <h4 className="section-heading">Dependencies</h4>
+        <p className="minor-paragraph">
+          {map(info.depends, (dep: string) => (
+            <span className="tag">{dep}</span>
+          ))}
         </p>
         <h4 className="section-heading">History</h4>
         <table className="table-small full-width">
