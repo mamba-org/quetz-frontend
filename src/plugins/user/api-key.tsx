@@ -1,69 +1,190 @@
-import React from 'react';
-import { BACKEND_HOST } from '../channels/constants';
+import { Dialog, showDialog } from '@jupyterlab/apputils';
 
-class UserApiKey extends React.PureComponent<any, any> {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
+
+import React from 'react';
+
+import InlineLoader from '../../components/loader';
+
+import { BACKEND_HOST, API_STATUSES } from '../channels/constants';
+
+import { RequestAPIKeyDialog, APIKeyDialog } from './apiKeyDialog';
+
+import { APIKey, Role } from './types';
+
+type APIKeyState = {
+  apiKeys: APIKey[];
+  apiStatus: API_STATUSES;
+};
+
+class UserAPIKey extends React.PureComponent<any, APIKeyState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      apiKeys: []
+      apiKeys: [],
+      apiStatus: API_STATUSES.PENDING
     };
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async componentDidMount() {
     const fetchResponse = await fetch(`${BACKEND_HOST}/api/api-keys`);
-    const apiKeys = await fetchResponse.json();
+    const resp = await fetchResponse.json();
+    if (resp.detail) {
+      return console.error(resp.detail);
+    }
     this.setState({
-      apiKeys
+      apiKeys: resp,
+      apiStatus: API_STATUSES.SUCCESS
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async requestApiKey() {
-    const data = {
-      description: ''
-    };
+  private _requestApiKey = async () => {
+    const body = new RequestAPIKeyDialog();
+    const value = await showDialog({ title: 'Keys', body });
+    if (value.button.accept) {
+      const data = body.info;
+      if (!data.user && data.key.roles.length === 0) {
+        showDialog({
+          title: 'Format error',
+          body: 'Add roles',
+          buttons: [Dialog.okButton()]
+        });
+        return;
+      }
 
-    const response = await fetch(`${BACKEND_HOST}/api/api-keys`, {
-      method: 'POST',
-      redirect: 'follow',
-      body: JSON.stringify(data)
+      const response = await fetch(`${BACKEND_HOST}/api/api-keys`, {
+        method: 'POST',
+        redirect: 'follow',
+        body: JSON.stringify(data.key)
+      });
+
+      const resp = await response.json();
+
+      if (resp.detail) {
+        return console.error(resp.detail);
+      }
+      const apiKeys = [...this.state.apiKeys, resp];
+      this.setState({ apiKeys });
+    }
+  };
+
+  private _showRoles = async (roles: Role[]) => {
+    const body = new APIKeyDialog(roles);
+    showDialog({
+      title: 'Roles',
+      body,
+      buttons: [Dialog.okButton()]
     });
-    console.log(response.json());
-  }
+  };
+
+  private _removeAPIKey = async (key: string) => {
+    const body = (
+      <label>
+        Do you want to delete the API key:{' '}
+        <label className="qs-Label-Caption">{key}</label>.
+      </label>
+    );
+    const value = await showDialog({
+      title: 'Delete API key',
+      body
+    });
+
+    if (value.button.accept) {
+      const resp = await fetch(`${BACKEND_HOST}/api/api-keys/${key}`, {
+        method: 'DELETE',
+        redirect: 'follow'
+      });
+      if (!resp.ok) {
+        return console.error(resp.statusText);
+      }
+      const apiKeys = this.state.apiKeys.filter(api => api.key !== key);
+      this.setState({ apiKeys });
+    }
+  };
+
+  private _copyAPIKey = async (key: string) => {
+    navigator.clipboard
+      .writeText(key)
+      .then(v => alert('Copied key: ' + key))
+      .catch(e => console.error(e));
+  };
 
   render(): JSX.Element {
-    const { apiKeys } = this.state;
+    const { apiStatus, apiKeys } = this.state;
+
+    const renderUserKey = () => {
+      const keys = apiKeys.filter((item: APIKey) => item.roles === null);
+      if (keys.length !== 0) {
+        return (
+          <tr key={keys[0].key} className="qs-clickable-Row">
+            <td>{keys[0].key}</td>
+            <td>
+              <label className="qs-Label-Caption">{keys[0].description}</label>
+            </td>
+            <td onClick={() => this._copyAPIKey(keys[0].key)}>
+              <FontAwesomeIcon icon={faCopy} />
+            </td>
+            <td onClick={() => this._removeAPIKey(keys[0].key)}>
+              <FontAwesomeIcon icon={faTrash} />
+            </td>
+          </tr>
+        );
+      }
+    };
+
+    const renderKeys = () => {
+      return apiKeys.map((item: APIKey) => {
+        if (item.roles !== null) {
+          return (
+            <tr key={item.key} className="qs-clickable-Row">
+              <td onClick={() => this._showRoles(item.roles)}>{item.key}</td>
+              <td onClick={() => this._showRoles(item.roles)}>
+                {item.description}
+              </td>
+              <td onClick={() => this._copyAPIKey(item.key)}>
+                <FontAwesomeIcon icon={faCopy} />
+              </td>
+              <td onClick={() => this._removeAPIKey(item.key)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </td>
+            </tr>
+          );
+        }
+      });
+    };
+
     return (
       <div>
         <div className="padding-bottom">
-          <button className="btn btn-default" onClick={this.requestApiKey}>
+          <button className="btn btn-default" onClick={this._requestApiKey}>
             Request API key
           </button>
         </div>
         <h3 className="heading3">API keys</h3>
-        <table className="jp-table table-small">
-          <thead>
-            <tr>
-              <th>Key</th>
-              <th>Description</th>
-              <th>Role</th>
-            </tr>
-          </thead>
-          <tbody>
-            {apiKeys.map((ak: any) => (
-              <tr key={ak.key}>
-                {/*TODO: Add copy button*/}
-                <td>{ak.key}</td>
-                <td>{ak.description}</td>
-                <td>{ak.roles[0].role}</td>
+        {apiStatus === API_STATUSES.PENDING && (
+          <InlineLoader text="Fetching APIKeys" />
+        )}
+        {apiKeys.length !== 0 && (
+          <table className="jp-table table-small">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Description</th>
+                <th></th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {renderUserKey()}
+              {renderKeys()}
+            </tbody>
+          </table>
+        )}
       </div>
     );
   }
 }
 
-export default UserApiKey;
+export default UserAPIKey;

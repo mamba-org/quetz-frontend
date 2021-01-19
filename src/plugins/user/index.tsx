@@ -17,7 +17,7 @@ import {
 import * as React from 'react';
 
 import { ILogInMenu } from '../topbar/tokens';
-import UserApiKey from './api-key';
+import UserAPIKey from './api-key';
 import Breadcrumbs from '../../components/breadcrumbs';
 import UserProfile from './profile';
 import { last, capitalize } from 'lodash';
@@ -115,7 +115,7 @@ class UserComponent extends React.PureComponent<any, any> {
                   <UserProfile />
                 </Route>
                 <Route path="/api-keys">
-                  <UserApiKey />
+                  <UserAPIKey />
                 </Route>
                 <Route path="/channels">
                   <div>Channels</div>

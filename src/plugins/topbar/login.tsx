@@ -10,6 +10,8 @@ import * as React from 'react';
 
 import { ILogInMenu, LogInItem } from './tokens';
 
+import { BACKEND_HOST } from '../channels/constants';
+
 import * as avatar_icon from '../../../style/img/avatar-icon.svg';
 
 export type Profile = {
@@ -41,10 +43,24 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
       const data = JSON.parse(config_data.innerHTML);
-      if ('detail' in data) {
-        return;
+      if (data.detail) {
+        return console.error(data.detail);
       }
-      this._profile = JSON.parse(data.logged_in_user_profile);
+      if (data.logged_in_user_profile) {
+        this._profile = JSON.parse(data.logged_in_user_profile);
+      } else {
+        fetch(`${BACKEND_HOST}/api/me`)
+          .then(resp => {
+            return resp.json();
+          })
+          .then(async data => {
+            if (data.detail) {
+              return console.error(data.detail);
+            }
+            this._profile = data;
+            this.update();
+          });
+      }
       this.update();
     }
     this.update();

@@ -3,6 +3,9 @@ import * as React from 'react';
 import { API_STATUSES } from './constants';
 
 import Table from './table';
+
+import InlineLoader from '../../components/loader';
+
 import Breadcrumbs from '../../components/breadcrumbs';
 
 interface IOwner {
@@ -99,14 +102,13 @@ class Job extends React.Component<any, JobState> {
       }
     ];
 
-    if (apiStatus === API_STATUSES.PENDING) {
-      return <div>Loading list of available channels</div>;
-    }
-
     return (
       <div className="page-contents-width-limit">
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Jobs</h2>
+        {apiStatus === API_STATUSES.PENDING && (
+          <InlineLoader text="Fetching tasks" />
+        )}
         <Table columns={jobColumns} data={job} />
       </div>
     );
