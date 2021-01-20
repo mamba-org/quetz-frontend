@@ -286,7 +286,7 @@ body {
 .btn:disabled,
 .btn[disabled] {
   opacity: 0.3;
-  cursor: initial;
+  cursor: not-allowed;
 }
 
 .btn-inline {
