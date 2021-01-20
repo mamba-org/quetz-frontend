@@ -50,3 +50,7 @@
 .jp-table a:hover {
   text-decoration: underline;
 }
+
+.pagination {
+  align-items: center;
+}

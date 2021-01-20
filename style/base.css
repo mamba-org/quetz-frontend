@@ -60,3 +60,8 @@ body[data-jp-theme-light='false'] #top-panel {
 .lm-Widget {
   overflow: unset;
 }
+
+#main-menu {
+  margin-right: 0;
+  padding-right: 0;
+}

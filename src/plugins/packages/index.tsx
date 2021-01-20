@@ -1,9 +1,9 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import PackageMainContent from './packageMainContent';
-import PackagePeople from './people';
-import Breadcrumbs from '../../../components/breadcrumbs';
+import PackageInfo from './tab-info';
+import PackageMembers from './tab-members';
+import Breadcrumbs from '../../components/breadcrumbs';
 import { withRouter } from 'react-router-dom';
 
 const PACKAGE_TABS = {
@@ -78,10 +78,10 @@ class PackageDetails extends React.PureComponent<any, any> {
             <Tab>Members</Tab>
           </TabList>
           <TabPanel>
-            <PackageMainContent />
+            <PackageInfo />
           </TabPanel>
           <TabPanel>
-            <PackagePeople channelId={channelId} packageId={packageId} />
+            <PackageMembers channelId={channelId} packageId={packageId} />
           </TabPanel>
         </Tabs>
       </div>

@@ -19,6 +19,10 @@ body {
   border-collapse: collapse;
 }
 
+.flex {
+  display: flex;
+}
+
 /**********************
      Layout styles
  **********************/
@@ -277,6 +281,24 @@ body {
   border: 0;
   border-radius: 6px;
   transition: background-color 0.5s ease;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.btn-inline {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  color: var(--jp-quetz-primary-color);
+}
+
+.btn-inline:hover {
+  text-decoration: underline;
 }
 
 .btn-default {

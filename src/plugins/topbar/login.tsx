@@ -10,7 +10,7 @@ import * as React from 'react';
 
 import { ILogInMenu, LogInItem } from './tokens';
 
-import { BACKEND_HOST } from '../channels/constants';
+import { BACKEND_HOST } from '../../utils/constants';
 
 import * as avatar_icon from '../../../style/img/avatar-icon.svg';
 
