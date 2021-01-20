@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { isObject } from 'lodash';
 import { stringify } from 'query-string';
 import { BACKEND_HOST } from './constants';
 
@@ -26,7 +27,9 @@ const handleError = (e: any, reject: any) => {
 const http = {
   get: async (url: any, params: any) => {
     return new Promise((resolve, reject) => {
-      const query = params ? `/${params}` : '';
+      const query = isObject(params)
+        ? `?${stringify({ ...params })}`
+        : params || '';
 
       axiosRequest
         .get(`${url}${query}`)

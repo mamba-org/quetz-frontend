@@ -11,20 +11,30 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import React from 'react';
+import InlineLoader from './loader';
+import { http } from '../utils/http';
 
 interface ITableFcProps {
   columns: any;
   data: any;
   renderRowSubComponent?: any;
   paginated?: undefined | boolean;
+  fetchData?: any;
+  loading?: any;
+  pageCount?: any;
+  dataSize?: any;
 }
 
 const Table: React.FC<ITableFcProps> = ({
   columns: userColumns,
   data,
   renderRowSubComponent,
-  paginated
-}) => {
+  paginated,
+  fetchData,
+  loading,
+  pageCount: controlledPageCount,
+  dataSize
+}: any) => {
   const {
     getTableProps,
     getTableBodyProps,
@@ -49,11 +59,17 @@ const Table: React.FC<ITableFcProps> = ({
     {
       columns: userColumns,
       data,
-      initialState: { pageIndex: 0 } as any
-    },
+      initialState: { pageIndex: 0 },
+      manualPagination: paginated,
+      pageCount: controlledPageCount
+    } as any,
     useExpanded,
     ...(paginated ? [usePagination] : [])
   ) as any;
+
+  React.useEffect(() => {
+    fetchData({ pageIndex, pageSize });
+  }, [fetchData, pageIndex, pageSize]);
 
   return (
     <>
@@ -94,6 +110,19 @@ const Table: React.FC<ITableFcProps> = ({
               </React.Fragment>
             );
           })}
+          <tr>
+            {loading ? (
+              // Use our custom loading state to show a loading indicator
+              <td colSpan={10000}>
+                <InlineLoader text="Loading..." />
+              </td>
+            ) : (
+              <td colSpan={10000}>
+                Showing {pageIndex * pageSize + 1} to{' '}
+                {pageIndex * pageSize + page.length} of {dataSize} results
+              </td>
+            )}
+          </tr>
         </tbody>
       </table>
 
@@ -164,6 +193,50 @@ const Table: React.FC<ITableFcProps> = ({
         </p>
       </div>
     </>
+  );
+};
+
+export const PaginatedTable = ({
+  url,
+  columns,
+  renderRowSubComponent
+}: any) => {
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [pageCount, setPageCount] = React.useState(0);
+  const [dataSize, setDataSize] = React.useState(0);
+  const fetchIdRef = React.useRef(0);
+
+  const fetchData = React.useCallback(async ({ pageSize, pageIndex }) => {
+    const fetchId = ++fetchIdRef.current;
+    setLoading(true);
+
+    const {
+      data: { pagination, result }
+    }: any = await http.get(url, {
+      skip: pageIndex * pageSize,
+      limit: pageSize
+    });
+
+    if (fetchId === fetchIdRef.current) {
+      setData(result);
+      setDataSize(pagination.all_records_count);
+      setPageCount(Math.ceil(pagination.all_records_count / pageSize));
+      setLoading(false);
+    }
+  }, []);
+
+  return (
+    <Table
+      columns={columns}
+      data={data}
+      renderRowSubComponent={renderRowSubComponent}
+      paginated
+      fetchData={fetchData}
+      loading={loading}
+      pageCount={pageCount}
+      dataSize={dataSize}
+    />
   );
 };
 

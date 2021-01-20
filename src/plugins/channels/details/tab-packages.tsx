@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-import Table from '../../../components/table';
+import { PaginatedTable } from '../../../components/table';
 import { API_STATUSES, BACKEND_HOST } from '../../../utils/constants';
 import PackageVersions from '../../packages/versions';
-import FetchHoc from '../../../components/fetch-hoc';
+// import FetchHoc from '../../../components/fetch-hoc';
 
 // interface IMatchParams {
 //   channelId: string;
@@ -70,22 +70,11 @@ class ChannelDetailsPackages extends React.PureComponent<any, PackagesState> {
     ];
 
     return (
-      <FetchHoc
-        url={`${BACKEND_HOST}/api/channels/${channelId}/packages`}
-        loadingMessage={`Fetching the list of packages in ${channelId}`}
-        genericErrorMessage="Error fetching list of packages"
-      >
-        {(packages: any) => (
-          <div className="padding">
-            <Table
-              paginated
-              columns={packageColumns}
-              data={packages || []}
-              renderRowSubComponent={this.renderRowSubComponent}
-            />
-          </div>
-        )}
-      </FetchHoc>
+      <PaginatedTable
+        url={`${BACKEND_HOST}/api/paginated/channels/${channelId}/packages`}
+        columns={packageColumns}
+        renderRowSubComponent={this.renderRowSubComponent}
+      />
     );
   }
 }
