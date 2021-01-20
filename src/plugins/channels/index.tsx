@@ -14,10 +14,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { ILogInMenu } from '../topbar/tokens';
 
-import ChannelsApp from './channelsApp';
+import ChannelsList from './list';
 
-import ChannelDetails from './channelDetails';
-import PackageDetails from './packages/packages';
+import ChannelDetails from './details';
+import PackageDetails from '../packages';
 
 /**
  * The command ids used by the main plugin.
@@ -47,7 +47,7 @@ export class RouterWidget extends ReactWidget {
               <ChannelDetails />
             </Route>
             <Route path="/">
-              <ChannelsApp />
+              <ChannelsList />
             </Route>
           </Switch>
         </Router>

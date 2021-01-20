@@ -8,7 +8,7 @@ import React from 'react';
 
 import InlineLoader from '../../components/loader';
 
-import { BACKEND_HOST, API_STATUSES } from '../channels/constants';
+import { BACKEND_HOST, API_STATUSES } from '../../utils/constants';
 
 import { RequestAPIKeyDialog, APIKeyDialog } from './apiKeyDialog';
 

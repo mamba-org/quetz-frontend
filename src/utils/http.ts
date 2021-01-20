@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { stringify } from 'query-string';
-import { BACKEND_HOST } from '../plugins/channels/constants';
+import { BACKEND_HOST } from './constants';
 
 const axiosRequest = axios.create({
   baseURL: BACKEND_HOST,
@@ -17,7 +17,7 @@ const handleResponse = (response: any, resolve: any, reject: any) => {
 
 const handleError = (e: any, reject: any) => {
   if (e.response) {
-    const promiseResponse = { ...e.response?.data, error: true };
+    const promiseResponse = { ...e.response?.data, status: e.response.status };
     return reject(promiseResponse);
   }
   return reject(e);

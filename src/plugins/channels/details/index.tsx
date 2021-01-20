@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import Packages from './packages';
 import { withRouter } from 'react-router-dom';
-import Breadcrumbs from '../../components/breadcrumbs';
-import ChannelDetailsInfo from './channel-details-info';
-import ChannelDetailsMembers from './channel-details-members';
+import Breadcrumbs from '../../../components/breadcrumbs';
+import TabInfo from './tab-info';
+import ChannelDetailsPackages from './tab-packages';
+import ChannelDetailsMembers from './tab-members';
 
 const CHANNEL_TABS = {
   MAIN: 0,
@@ -76,10 +76,10 @@ class ChannelDetails extends React.PureComponent<any, any> {
             <Tab>Members</Tab>
           </TabList>
           <TabPanel>
-            <ChannelDetailsInfo channelId={channelId} />
+            <TabInfo channelId={channelId} />
           </TabPanel>
           <TabPanel>
-            <Packages channelId={channelId} />
+            <ChannelDetailsPackages channelId={channelId} />
           </TabPanel>
           <TabPanel>
             <ChannelDetailsMembers channelId={channelId} />

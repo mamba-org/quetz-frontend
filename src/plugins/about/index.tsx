@@ -10,7 +10,7 @@ import { ReactWidget } from '@jupyterlab/apputils';
 
 import { Widget } from '@lumino/widgets';
 
-import { IMainMenu } from './../topbar/tokens';
+import { IMainMenu } from '../topbar/tokens';
 
 import * as React from 'react';
 
@@ -71,32 +71,30 @@ class About extends ReactWidget {
   render(): React.ReactElement {
     return (
       <div className="about">
-        <div className="description">
-          <h1>Mamba</h1>
-          <span>
-            Built upon OpenSUSE&#39;s libsolv, which was:
-            <br />
-          </span>
-          <p>
-            ported to Windows and OSX
-            <br />
-            adapted to handle conda&#39;s requirements specs.
-          </p>
-          <br />
-          <br />
-          <span>Benefits:</span>
-          <br />
-          <p>
-            Speed. Several orders of magnitude faster than conda for resolving
-            package specs.
-            <br />
-            Can be built into a single-binary executable (micromamba) which does
-            not require a<br />
-            Python interpreter. 4Mb download to replace miniconda / miniforge.
-            <br />
-            Coming soon: language bindings (R, Julia)
-          </p>
-        </div>
+        <h1 className="heading1">Mamba</h1>
+        <hr />
+        <p className="paragraph">
+          Built upon OpenSUSE&#39;s libsolv, which was:
+          <ul className="about-list">
+            <li>ported to Windows and OSX</li>
+            <li>adapted to handle conda&#39;s requirements specs.</li>
+          </ul>
+        </p>
+        <h3 className="heading3">Benefits</h3>
+        <p className="paragraph">
+          <ul className="about-list">
+            <li>
+              Speed. Several orders of magnitude faster than conda for resolving
+              package specs.
+            </li>
+            <li>
+              Can be built into a single-binary executable (micromamba) which
+              does not require a Python interpreter.
+            </li>
+            <li>4Mb download to replace miniconda / miniforge.</li>
+            <li>Coming soon: language bindings (R, Julia)</li>
+          </ul>
+        </p>
       </div>
     );
   }

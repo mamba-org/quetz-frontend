@@ -10,7 +10,7 @@ import InlineLoader from '../../components/loader';
 
 import { APIKeyInfo, Role, Channel, Package } from './types';
 
-import { BACKEND_HOST, API_STATUSES } from '../channels/constants';
+import { BACKEND_HOST, API_STATUSES } from '../../utils/constants';
 
 /**
  * A ReactWidget to edit the dashboard notebook metadata.

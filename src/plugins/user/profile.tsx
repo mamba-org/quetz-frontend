@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { API_STATUSES, BACKEND_HOST } from '../channels/constants';
+import { API_STATUSES, BACKEND_HOST } from '../../utils/constants';
 import { http } from '../../utils/http';
 import InlineLoader from '../../components/loader';
 

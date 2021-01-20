@@ -71,19 +71,18 @@ class Download extends ReactWidget {
   render(): React.ReactElement {
     return (
       <div className="download">
-        <div className="description">
-          <h1>Mamba</h1>
-          <hr />
-          <p>
-            The fastest package manager on Earth.
-            <br />
-            Works on Windows, Mac OS X and Linux.
-          </p>
-          <div className="windows">
-            <div className="logo" />
-            <span className="label">Download</span>
-          </div>
-        </div>
+        <h1 className="heading1">Mamba</h1>
+        <hr />
+        <p className="paragraph">
+          The fastest package manager on Earth.
+          <br />
+          Works on Windows, Mac OS X and Linux.
+        </p>
+
+        <button className="download-button windows">
+          <span className="download-logo windows" />
+          <p className="download-label">Download</p>
+        </button>
       </div>
     );
   }

@@ -3,11 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-import Table from './table';
-import { API_STATUSES, BACKEND_HOST } from './constants';
-import PackageVersions from './versions';
-import { http } from '../../utils/http';
-import InlineLoader from '../../components/loader';
+import Table from '../../../components/table';
+import { API_STATUSES, BACKEND_HOST } from '../../../utils/constants';
+import PackageVersions from '../../packages/versions';
+import FetchHoc from '../../../components/fetch-hoc';
 
 // interface IMatchParams {
 //   channelId: string;
@@ -20,28 +19,7 @@ type PackagesState = {
   apiStatus: API_STATUSES;
 };
 
-class Packages extends React.PureComponent<any, PackagesState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      packages: null,
-      apiStatus: API_STATUSES.PENDING
-    };
-  }
-
-  async componentDidMount() {
-    const { channelId } = this.props;
-    const { data: packages } = (await http.get(
-      `${BACKEND_HOST}/api/channels/${channelId}/packages`,
-      ''
-    )) as any;
-
-    this.setState({
-      packages,
-      apiStatus: API_STATUSES.SUCCESS
-    });
-  }
-
+class ChannelDetailsPackages extends React.PureComponent<any, PackagesState> {
   renderRowSubComponent = ({ row }: any) => {
     const { channelId } = this.props;
     const packageName = row.values.name;
@@ -53,8 +31,6 @@ class Packages extends React.PureComponent<any, PackagesState> {
 
   render(): JSX.Element {
     const { channelId } = this.props;
-
-    const { packages, apiStatus } = this.state;
 
     const packageColumns = [
       {
@@ -93,22 +69,25 @@ class Packages extends React.PureComponent<any, PackagesState> {
       }
     ];
 
-    if (apiStatus === API_STATUSES.PENDING) {
-      return (
-        <InlineLoader text={`Fetching the list of packages in ${channelId}`} />
-      );
-    }
-
     return (
-      <div className="padding">
-        <Table
-          columns={packageColumns}
-          data={packages || []}
-          renderRowSubComponent={this.renderRowSubComponent}
-        />
-      </div>
+      <FetchHoc
+        url={`${BACKEND_HOST}/api/channels/${channelId}/packages`}
+        loadingMessage={`Fetching the list of packages in ${channelId}`}
+        genericErrorMessage="Error fetching list of packages"
+      >
+        {(packages: any) => (
+          <div className="padding">
+            <Table
+              paginated
+              columns={packageColumns}
+              data={packages || []}
+              renderRowSubComponent={this.renderRowSubComponent}
+            />
+          </div>
+        )}
+      </FetchHoc>
     );
   }
 }
 
-export default Packages;
+export default ChannelDetailsPackages;
