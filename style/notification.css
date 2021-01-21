@@ -1,0 +1,89 @@
+:root {
+  /*TODO: Rename variables*/
+  --jp-notification-color-default: #00b5ec;
+  --jp-notification-color-info: #00b5ec;
+  --jp-notification-color-success: #21a67a;
+  --jp-notification-color-danger: #ef3934;
+  --jp-notification-color-warning: #f0a92d;
+}
+
+.notification {
+  width: 400px !important;
+  height: 100px;
+}
+
+.notification-container--top-right {
+  position: fixed;
+  right: 0;
+  padding: 20px;
+}
+
+.notification-item {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  background-color: #404040;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  align-items: center;
+  min-height: 100px;
+}
+
+.notification-icon {
+  font-size: 28px;
+  margin-bottom: 0;
+  margin-right: 20px;
+}
+
+.notification-content {
+  flex-grow: 1;
+}
+
+.notification-title {
+  font-size: 16px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+.notification-message {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.notification-close {
+  font-size: 14px;
+  margin-bottom: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  color: #888888;
+}
+.notification-close:hover {
+  color: #ffffff;
+}
+
+/**********************
+  Notification colors
+ **********************/
+.notification-icon.default,
+.notification-title.default {
+  color: var(--jp-notification-color-default);
+}
+
+.notification-icon.danger,
+.notification-title.danger {
+  color: var(--jp-notification-color-danger);
+}
+
+.notification-icon.success,
+.notification-title.success {
+  color: var(--jp-notification-color-success);
+}
+
+.notification-icon.info,
+.notification-title.info {
+  color: var(--jp-notification-color-info);
+}
+
+.notification-icon.warning,
+.notification-title.warning {
+  color: var(--jp-notification-color-warning);
+}

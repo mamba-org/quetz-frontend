@@ -13,6 +13,7 @@ import { BACKEND_HOST, API_STATUSES } from '../../utils/constants';
 import { RequestAPIKeyDialog, APIKeyDialog } from './apiKeyDialog';
 
 import { APIKey, Role } from './types';
+import { copyToClipboard } from '../../utils';
 
 type APIKeyState = {
   apiKeys: APIKey[];
@@ -104,13 +105,6 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     }
   };
 
-  private _copyAPIKey = async (key: string) => {
-    navigator.clipboard
-      .writeText(key)
-      .then(v => alert('Copied key: ' + key))
-      .catch(e => console.error(e));
-  };
-
   render(): JSX.Element {
     const { apiStatus, apiKeys } = this.state;
 
@@ -123,7 +117,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
             <td>
               <label className="qs-Label-Caption">{keys[0].description}</label>
             </td>
-            <td onClick={() => this._copyAPIKey(keys[0].key)}>
+            <td onClick={() => copyToClipboard(keys[0].key, 'API key')}>
               <FontAwesomeIcon icon={faCopy} />
             </td>
             <td onClick={() => this._removeAPIKey(keys[0].key)}>
@@ -143,7 +137,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
               <td onClick={() => this._showRoles(item.roles)}>
                 {item.description}
               </td>
-              <td onClick={() => this._copyAPIKey(item.key)}>
+              <td onClick={() => copyToClipboard(item.key, 'API key')}>
                 <FontAwesomeIcon icon={faCopy} />
               </td>
               <td onClick={() => this._removeAPIKey(item.key)}>
