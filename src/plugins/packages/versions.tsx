@@ -1,5 +1,5 @@
 import React from 'react';
-import { API_STATUSES, BACKEND_HOST } from '../../utils/constants';
+import { API_STATUSES, BACKEND_HOST, REPO_HOST } from '../../utils/constants';
 import { formatSize } from '../../utils';
 import moment from 'moment';
 import { map } from 'lodash';
@@ -69,7 +69,14 @@ class PackageVersions extends React.PureComponent<
                     <tr key={version.time_created}>
                       <td>{version.uploader.name}</td>
                       <td>{moment(version.time_created).fromNow()}</td>
-                      <td>{version.filename}</td>
+                      <td>
+                        <a
+                          href={`${REPO_HOST}/get/${channel}/${info.arch}/${version.filename}`}
+                          download
+                        >
+                          {version.filename}
+                        </a>
+                      </td>
                       <td>{formatSize(version.info.size)}</td>
                       <td>{version.version}</td>
                     </tr>
