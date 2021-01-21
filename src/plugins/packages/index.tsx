@@ -54,7 +54,7 @@ class PackageDetails extends React.PureComponent<any, any> {
         link: '/'
       },
       {
-        text: 'rosmelodic',
+        text: channelId,
         link: `/${channelId}`
       },
       {
