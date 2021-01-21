@@ -3,6 +3,7 @@ import {
   JupyterFrontEndPlugin,
   IRouter
 } from '@jupyterlab/application';
+import ReactNotification from 'react-notifications-component';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
@@ -91,6 +92,7 @@ class UserComponent extends React.PureComponent<any, any> {
     ];
     return (
       <Router basename="/user">
+        <ReactNotification />
         <div className="page-contents-width-limit">
           <Breadcrumbs items={breadcrumbItems} />
           <h2 className="heading2">User details</h2>

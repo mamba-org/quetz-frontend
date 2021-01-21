@@ -71,7 +71,7 @@ class PackageVersions extends React.PureComponent<
                       <td>{moment(version.time_created).fromNow()}</td>
                       <td>
                         <a
-                          href={`${REPO_HOST}/get/${channel}/${info.arch}/${version.filename}`}
+                          href={`${REPO_HOST}/${channel}/${info.arch}/${version.filename}`}
                           download
                         >
                           {version.filename}
