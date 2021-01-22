@@ -44,7 +44,7 @@ Remember to add the path to the frontend build folder in the quetz `config.toml`
 
 ```bash
 [users]
-admins = ["github username"]
+admins = ["github:username"]
 
 [general]
 frontend_dir = "/path/to/quetz-frontend/build/"
