@@ -1,17 +1,19 @@
 import React from 'react';
 import { BACKEND_HOST } from '../../../utils/constants';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import SearchBox from './search';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 import Breadcrumbs from '../../../components/breadcrumbs';
-import {
-  faGlobeAmericas,
-  faUnlockAlt
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import {
+//   faGlobeAmericas,
+//   faUnlockAlt
+// } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { filter, includes } from 'lodash';
-import { formatPlural } from '../../../utils';
+// import { formatPlural } from '../../../utils';
 import FetchHoc from '../../../components/fetch-hoc';
+import List from '../../../components/list';
+import { getChannelsListColumns } from '../../../utils/table-configs';
 
 interface IChannelsApiItem {
   name: string;
@@ -84,42 +86,13 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
         >
           {(channels: any) => {
             const filteredResults = filterList(channels, searchText);
-            return (filteredResults || []).map(channelItem => (
-              <Link to={`/${channelItem.name}`} key={channelItem.name}>
-                <div className="list-row clickable">
-                  <p className="text channel-icon-column">
-                    <span
-                      data-for={`tooltip-${channelItem.name}`}
-                      data-tip={channelItem.private ? 'Private' : 'Public'}
-                    >
-                      <FontAwesomeIcon
-                        icon={
-                          channelItem.private ? faUnlockAlt : faGlobeAmericas
-                        }
-                      />
-                    </span>
-                  </p>
-                  <ReactTooltip
-                    id={`tooltip-${channelItem.name}`}
-                    place="right"
-                    type="dark"
-                    effect="solid"
-                  />
-                  <div className="channel-name-column">
-                    <p className="text">{channelItem.name}</p>
-                    <p className="minor-paragraph channel-list-description">
-                      {channelItem.description}
-                    </p>
-                  </div>
-                  <p className="text channel-packages-column">
-                    {formatPlural(channelItem.packages_count, 'package')}
-                  </p>
-                  <p className="text channel-members-column">
-                    {formatPlural(channelItem.members_count, 'member')}
-                  </p>
-                </div>
-              </Link>
-            ));
+            return (
+              <List
+                columns={getChannelsListColumns()}
+                data={filteredResults}
+                to={(rowData: any) => `/${rowData.name}`}
+              />
+            );
           }}
         </FetchHoc>
       </>
