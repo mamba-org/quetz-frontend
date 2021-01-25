@@ -1,11 +1,4 @@
 import { useExpanded, useTable, usePagination } from 'react-table';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faAngleRight,
-  faAngleDoubleRight,
-  faAngleLeft,
-  faAngleDoubleLeft
-} from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 
 import PropTypes from 'prop-types';
@@ -13,6 +6,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import InlineLoader from './loader';
 import { http } from '../utils/http';
+import Pagination from './pagination';
 
 interface ITableFcProps {
   columns: any;
@@ -125,73 +119,18 @@ const Table: React.FC<ITableFcProps> = ({
           </tr>
         </tbody>
       </table>
-
-      <div className="pagination flex">
-        <div className="btn-group">
-          <button
-            className="btn btn-default"
-            onClick={() => gotoPage(0)}
-            disabled={!canPreviousPage}
-          >
-            <FontAwesomeIcon icon={faAngleDoubleLeft} />
-          </button>
-          <button
-            className="btn btn-default"
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-          >
-            <FontAwesomeIcon icon={faAngleLeft} />
-          </button>
-          <button
-            className="btn btn-default"
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-          >
-            <FontAwesomeIcon icon={faAngleRight} />
-          </button>
-          <button
-            className="btn btn-default"
-            onClick={() => gotoPage(pageCount - 1)}
-            disabled={!canNextPage}
-          >
-            <FontAwesomeIcon icon={faAngleDoubleRight} />
-          </button>
-        </div>
-        <p className="paragraph padding-side">
-          Page{' '}
-          <strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>
-        </p>
-        <p className="paragraph padding-side">
-          Go to page: &emsp;
-          <input
-            className="input"
-            type="number"
-            defaultValue={pageIndex + 1}
-            onChange={e => {
-              const page = e.target.value ? Number(e.target.value) - 1 : 0;
-              gotoPage(page);
-            }}
-            style={{ width: '100px' }}
-          />
-        </p>
-        <p className="paragraph padding-side">
-          <select
-            className="btn btn-default"
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select>
-        </p>
-      </div>
+      <Pagination
+        pageSize={pageSize}
+        pageCount={pageCount}
+        gotoPage={gotoPage}
+        canPreviousPage={canPreviousPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        canNextPage={canNextPage}
+        pageIndex={pageIndex}
+        pageOptions={pageOptions}
+        setPageSize={setPageSize}
+      />
     </>
   );
 };

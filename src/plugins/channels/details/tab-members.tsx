@@ -1,36 +1,22 @@
 import * as React from 'react';
 import { BACKEND_HOST } from '../../../utils/constants';
 import FetchHoc from '../../../components/fetch-hoc';
+import List from '../../../components/list';
+import { getMembersListColumns } from '../../../utils/table-configs';
 
 class ChannelDetailsMembers extends React.PureComponent<any, any> {
-  render() {
+  render(): JSX.Element {
     const { channelId } = this.props;
+
     return (
       <FetchHoc
         url={`${BACKEND_HOST}/api/channels/${channelId}/members`}
         loadingMessage="Fetching list of members"
-        genericErrorMessage="Error fetching members in the channel"
+        genericErrorMessage="Error fetching members"
       >
         {(channelMembers: any) => (
-          <div className="package-files-wrapper padding">
-            {(channelMembers || []).map((member: any) => (
-              <div className="list-row" key={member.user.id}>
-                <div className="member-icon-column">
-                  <img
-                    src={member.user.profile.avatar_url}
-                    className="profile-icon"
-                    alt=""
-                  />
-                </div>
-                <div className="member-name-column">
-                  {member.user.profile.name}
-                </div>
-                <div className="member-username-column">
-                  {member.user.username}
-                </div>
-                <div className="member-role-column">{member.role}</div>
-              </div>
-            ))}
+          <div className="padding">
+            <List columns={getMembersListColumns()} data={channelMembers} />
           </div>
         )}
       </FetchHoc>
