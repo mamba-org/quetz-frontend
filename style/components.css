@@ -26,6 +26,10 @@ body {
 /**********************
      Layout styles
  **********************/
+.padding-top {
+  padding-top: 20px;
+}
+
 .padding-bottom {
   padding-bottom: 20px;
 }
