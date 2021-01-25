@@ -61,9 +61,11 @@ const Table: React.FC<ITableFcProps> = ({
     ...(paginated ? [usePagination] : [])
   ) as any;
 
-  React.useEffect(() => {
-    fetchData({ pageIndex, pageSize });
-  }, [fetchData, pageIndex, pageSize]);
+  if (paginated) {
+    React.useEffect(() => {
+      fetchData({ pageIndex, pageSize });
+    }, [fetchData, pageIndex, pageSize]);
+  }
 
   return (
     <>
@@ -105,12 +107,12 @@ const Table: React.FC<ITableFcProps> = ({
             );
           })}
           <tr>
-            {loading ? (
-              // Use our custom loading state to show a loading indicator
+            {loading && (
               <td colSpan={10000}>
                 <InlineLoader text="Loading..." />
               </td>
-            ) : (
+            )}
+            {paginated && !loading && (
               <td colSpan={10000}>
                 Showing {pageIndex * pageSize + 1} to{' '}
                 {pageIndex * pageSize + page.length} of {dataSize} results
@@ -119,18 +121,20 @@ const Table: React.FC<ITableFcProps> = ({
           </tr>
         </tbody>
       </table>
-      <Pagination
-        pageSize={pageSize}
-        pageCount={pageCount}
-        gotoPage={gotoPage}
-        canPreviousPage={canPreviousPage}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canNextPage={canNextPage}
-        pageIndex={pageIndex}
-        pageOptions={pageOptions}
-        setPageSize={setPageSize}
-      />
+      {paginated && (
+        <Pagination
+          pageSize={pageSize}
+          pageCount={pageCount}
+          gotoPage={gotoPage}
+          canPreviousPage={canPreviousPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canNextPage={canNextPage}
+          pageIndex={pageIndex}
+          pageOptions={pageOptions}
+          setPageSize={setPageSize}
+        />
+      )}
     </>
   );
 };

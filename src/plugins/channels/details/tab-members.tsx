@@ -16,7 +16,10 @@ class ChannelDetailsMembers extends React.PureComponent<any, any> {
       >
         {(channelMembers: any) => (
           <div className="padding">
-            <List columns={getMembersListColumns()} data={channelMembers} />
+            <List
+              columns={getMembersListColumns()}
+              data={channelMembers || []}
+            />
           </div>
         )}
       </FetchHoc>

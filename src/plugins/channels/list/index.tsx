@@ -1,18 +1,10 @@
 import React from 'react';
 import { BACKEND_HOST } from '../../../utils/constants';
-// import { Link } from 'react-router-dom';
 import SearchBox from './search';
-// import ReactTooltip from 'react-tooltip';
 import Breadcrumbs from '../../../components/breadcrumbs';
-// import {
-//   faGlobeAmericas,
-//   faUnlockAlt
-// } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { filter, includes } from 'lodash';
-// import { formatPlural } from '../../../utils';
 import FetchHoc from '../../../components/fetch-hoc';
-import List from '../../../components/list';
+import List, { PaginatedList } from '../../../components/list';
 import { getChannelsListColumns } from '../../../utils/table-configs';
 
 interface IChannelsApiItem {
@@ -33,7 +25,7 @@ type ChannelsAppState = {
 
 const filterList = (
   list: null | IChannelsApiItem[] = [],
-  searchText = ''
+  { searchText = '' }
 ): Array<IChannelsApiItem> => {
   if (!searchText || !list) {
     return list || [];
@@ -79,22 +71,32 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Channels</h2>
         <SearchBox onSearch={this.onSearch} />
-        <FetchHoc
-          url={`${BACKEND_HOST}/api/channels`}
-          loadingMessage="Fetching list of channels"
-          genericErrorMessage="Error fetching list of channels"
-        >
-          {(channels: any) => {
-            const filteredResults = filterList(channels, searchText);
-            return (
-              <List
-                columns={getChannelsListColumns()}
-                data={filteredResults}
-                to={(rowData: any) => `/${rowData.name}`}
-              />
-            );
-          }}
-        </FetchHoc>
+        {searchText ? (
+          <FetchHoc
+            url={`${BACKEND_HOST}/api/channels`}
+            loadingMessage="Fetching list of channels"
+            genericErrorMessage="Error fetching list of channels"
+          >
+            {(channels: any) => {
+              const filteredResults = filterList(channels, { searchText });
+              return filteredResults.length > 0 ? (
+                <List
+                  columns={getChannelsListColumns()}
+                  data={filteredResults}
+                  to={(rowData: any) => `/${rowData.name}`}
+                />
+              ) : (
+                <p className="paragraph">No results found for the search</p>
+              );
+            }}
+          </FetchHoc>
+        ) : (
+          <PaginatedList
+            url={`${BACKEND_HOST}/api/paginated/channels`}
+            columns={getChannelsListColumns()}
+            to={(rowData: any) => `/${rowData.name}`}
+          />
+        )}
       </>
     );
   }

@@ -56,6 +56,10 @@ module.exports = {
         {
           from: 'node_modules/@jupyterlab/theme-light-extension/style',
           to: '@jupyterlab/theme-light-extension/'
+        },
+        {
+          from: 'public',
+          to: ''
         }
       ]
     })
