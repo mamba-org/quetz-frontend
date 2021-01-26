@@ -1,7 +1,7 @@
 import React from 'react';
 import { API_STATUSES, BACKEND_HOST, REPO_HOST } from '../../utils/constants';
 import { formatSize } from '../../utils';
-import moment from 'moment';
+import fromNow from 'fromnow';
 import { map } from 'lodash';
 import FetchHoc from '../../components/fetch-hoc';
 
@@ -68,7 +68,12 @@ class PackageVersions extends React.PureComponent<
                   {versionData.map((version: any) => (
                     <tr key={version.time_created}>
                       <td>{version.uploader.name}</td>
-                      <td>{moment(version.time_created).fromNow()}</td>
+                      <td>
+                        {fromNow(version.time_created, {
+                          max: 1,
+                          suffix: true
+                        })}
+                      </td>
                       <td>
                         <a
                           href={`${REPO_HOST}/${channel}/${info.arch}/${version.filename}`}

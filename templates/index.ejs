@@ -8,6 +8,7 @@
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+  <%= htmlWebpackPlugin.tags.headTags %>
 </head>
 <body>
 
@@ -17,7 +18,6 @@
   <script id="jupyter-config-data" type="application/json">
     {{ page_config | tojson }}
   </script>
-  <script src="{{page_config['fullStaticUrl'] | e}}/bundle.js" main="index"></script>
 
   <script type="text/javascript">
     /* Remove token from URL. */
@@ -29,6 +29,7 @@
       }
     })();
   </script>
+  <%= htmlWebpackPlugin.tags.headTags %>
 
 </body>
 </html>
