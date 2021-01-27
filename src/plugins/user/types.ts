@@ -1,5 +1,6 @@
 export type APIKeyInfo = {
   description: string;
+  expire_at: string;
   roles: Role[];
 };
 
@@ -11,6 +12,8 @@ export type Role = {
 
 export type APIKey = {
   description: string;
+  created_at: string;
+  expire_at: string;
   roles: Role[];
   key: string;
 };

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { API_STATUSES, BACKEND_HOST } from '../../utils/constants';
-import { http } from '../../utils/http';
+import { API_STATUSES } from '../../utils/constants';
 import InlineLoader from '../../components/loader';
 
 class UserProfile extends React.PureComponent<any, any> {
@@ -13,13 +12,14 @@ class UserProfile extends React.PureComponent<any, any> {
   }
 
   async componentDidMount() {
-    const { data: userData } = (await http.get(
-      `${BACKEND_HOST}/api/me`,
-      ''
-    )) as any;
+    const fetchResponse = await fetch('/api/me');
+    const resp = await fetchResponse.json();
+    if (resp.detail) {
+      return console.error(resp.detail);
+    }
 
     this.setState({
-      userData,
+      userData: resp,
       apiStatus: API_STATUSES.SUCCESS
     });
   }

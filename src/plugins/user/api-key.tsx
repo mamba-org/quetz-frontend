@@ -8,11 +8,12 @@ import React from 'react';
 
 import InlineLoader from '../../components/loader';
 
-import { BACKEND_HOST, API_STATUSES } from '../../utils/constants';
+import { API_STATUSES } from '../../utils/constants';
 
 import { RequestAPIKeyDialog, APIKeyDialog } from './apiKeyDialog';
 
 import { APIKey, Role } from './types';
+
 import { copyToClipboard } from '../../utils';
 
 type APIKeyState = {
@@ -30,11 +31,12 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
   }
 
   async componentDidMount() {
-    const fetchResponse = await fetch(`${BACKEND_HOST}/api/api-keys`);
+    const fetchResponse = await fetch('/api/api-keys');
     const resp = await fetchResponse.json();
     if (resp.detail) {
       return console.error(resp.detail);
     }
+    console.debug(resp);
     this.setState({
       apiKeys: resp,
       apiStatus: API_STATUSES.SUCCESS
@@ -55,7 +57,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
         return;
       }
 
-      const response = await fetch(`${BACKEND_HOST}/api/api-keys`, {
+      const response = await fetch('/api/api-keys', {
         method: 'POST',
         redirect: 'follow',
         body: JSON.stringify(data.key)
@@ -93,7 +95,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     });
 
     if (value.button.accept) {
-      const resp = await fetch(`${BACKEND_HOST}/api/api-keys/${key}`, {
+      const resp = await fetch(`/api/api-keys/${key}`, {
         method: 'DELETE',
         redirect: 'follow'
       });
@@ -109,34 +111,41 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     const { apiStatus, apiKeys } = this.state;
 
     const renderUserKey = () => {
-      const keys = apiKeys.filter((item: APIKey) => item.roles === null);
-      if (keys.length !== 0) {
-        return (
-          <tr key={keys[0].key} className="qs-clickable-Row">
-            <td>{keys[0].key}</td>
-            <td>
-              <label className="qs-Label-Caption">{keys[0].description}</label>
-            </td>
-            <td onClick={() => copyToClipboard(keys[0].key, 'API key')}>
-              <FontAwesomeIcon icon={faCopy} />
-            </td>
-            <td onClick={() => this._removeAPIKey(keys[0].key)}>
-              <FontAwesomeIcon icon={faTrash} />
-            </td>
-          </tr>
-        );
-      }
+      return apiKeys.map((item: APIKey) => {
+        if (item.roles === null) {
+          const expire = item.expire_at ? item.expire_at.split('T')[0] : '';
+          return (
+            <tr key={item.key}>
+              <td>{item.key}</td>
+              <td>
+                <label className="qs-Label-Caption">{item.description}</label>
+              </td>
+              <td>{item.created_at.split('T')[0]}</td>
+              <td>{expire}</td>
+              <td onClick={() => copyToClipboard(item.key, 'API key')}>
+                <FontAwesomeIcon icon={faCopy} />
+              </td>
+              <td onClick={() => this._removeAPIKey(item.key)}>
+                <FontAwesomeIcon icon={faTrash} />
+              </td>
+            </tr>
+          );
+        }
+      });
     };
 
     const renderKeys = () => {
       return apiKeys.map((item: APIKey) => {
         if (item.roles !== null) {
+          const expire = item.expire_at ? item.expire_at.split('T')[0] : '';
           return (
             <tr key={item.key} className="qs-clickable-Row">
               <td onClick={() => this._showRoles(item.roles)}>{item.key}</td>
               <td onClick={() => this._showRoles(item.roles)}>
                 {item.description}
               </td>
+              <td>{item.created_at.split('T')[0]}</td>
+              <td>{expire}</td>
               <td onClick={() => copyToClipboard(item.key, 'API key')}>
                 <FontAwesomeIcon icon={faCopy} />
               </td>
@@ -166,6 +175,8 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
               <tr>
                 <th>Key</th>
                 <th>Description</th>
+                <th>Created at</th>
+                <th>Expires</th>
                 <th></th>
                 <th></th>
               </tr>
