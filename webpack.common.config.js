@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: ['whatwg-fetch', './lib/index.js'],
@@ -62,6 +63,9 @@ module.exports = {
           to: ''
         }
       ]
+    }),
+    new HtmlWebpackPlugin({
+      template: 'templates/index.ejs'
     })
   ]
 };
