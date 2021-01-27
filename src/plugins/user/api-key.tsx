@@ -113,15 +113,14 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     const renderUserKey = () => {
       return apiKeys.map((item: APIKey) => {
         if (item.roles === null) {
-          const expire = item.expire_at ? item.expire_at.split('T')[0] : '';
           return (
             <tr key={item.key}>
               <td>{item.key}</td>
               <td>
                 <label className="qs-Label-Caption">{item.description}</label>
               </td>
-              <td>{item.created_at.split('T')[0]}</td>
-              <td>{expire}</td>
+              <td>{item.time_created}</td>
+              <td>{item.expire_at}</td>
               <td onClick={() => copyToClipboard(item.key, 'API key')}>
                 <FontAwesomeIcon icon={faCopy} />
               </td>
@@ -137,15 +136,14 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     const renderKeys = () => {
       return apiKeys.map((item: APIKey) => {
         if (item.roles !== null) {
-          const expire = item.expire_at ? item.expire_at.split('T')[0] : '';
           return (
             <tr key={item.key} className="qs-clickable-Row">
               <td onClick={() => this._showRoles(item.roles)}>{item.key}</td>
               <td onClick={() => this._showRoles(item.roles)}>
                 {item.description}
               </td>
-              <td>{item.created_at.split('T')[0]}</td>
-              <td>{expire}</td>
+              <td>{item.time_created}</td>
+              <td>{item.expire_at}</td>
               <td onClick={() => copyToClipboard(item.key, 'API key')}>
                 <FontAwesomeIcon icon={faCopy} />
               </td>
@@ -175,7 +173,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
               <tr>
                 <th>Key</th>
                 <th>Description</th>
-                <th>Created at</th>
+                <th>Created</th>
                 <th>Expires</th>
                 <th></th>
                 <th></th>

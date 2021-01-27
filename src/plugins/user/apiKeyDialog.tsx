@@ -4,6 +4,8 @@ import { Button } from '@jupyterlab/ui-components';
 
 import { Message } from '@lumino/messaging';
 
+import moment from 'moment';
+
 import * as React from 'react';
 
 import InlineLoader from '../../components/loader';
@@ -23,11 +25,13 @@ export class RequestAPIKeyDialog extends ReactWidget
    */
   constructor() {
     super();
-    const expire_at = new Date();
-    expire_at.setMonth(expire_at.getMonth() + 1);
+    const expire_at = moment()
+      .add(1, 'months')
+      .format(moment.HTML5_FMT.DATE);
+    console.debug(expire_at);
     this._api_key_info = {
       description: '',
-      expire_at: expire_at.toISOString().split('T')[0],
+      expire_at,
       roles: []
     };
     this._username = '';
@@ -290,10 +294,7 @@ export class RequestAPIKeyDialog extends ReactWidget
             type="date"
             name="expire_at"
             className="jp-mod-styled"
-            min={new Date()
-              .toISOString()
-              .split('T')[0]
-              .toString()}
+            min={moment().format(moment.HTML5_FMT.DATE)}
             value={this._api_key_info.expire_at}
             onChange={this._handleExpire}
           />
