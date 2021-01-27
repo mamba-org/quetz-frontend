@@ -10,8 +10,6 @@ import * as React from 'react';
 
 import { ILogInMenu, LogInItem } from './tokens';
 
-import { BACKEND_HOST } from '../../utils/constants';
-
 import * as avatar_icon from '../../../style/img/avatar-icon.svg';
 
 export type Profile = {
@@ -49,7 +47,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
       if (data.logged_in_user_profile) {
         this._profile = JSON.parse(data.logged_in_user_profile);
       } else {
-        fetch(`${BACKEND_HOST}/api/me`)
+        fetch('/api/me')
           .then(resp => {
             return resp.json();
           })

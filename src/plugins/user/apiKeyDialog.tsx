@@ -10,7 +10,7 @@ import InlineLoader from '../../components/loader';
 
 import { APIKeyInfo, Role, Channel, Package } from './types';
 
-import { BACKEND_HOST, API_STATUSES } from '../../utils/constants';
+import { API_STATUSES } from '../../utils/constants';
 
 /**
  * A ReactWidget to edit the dashboard notebook metadata.
@@ -23,8 +23,11 @@ export class RequestAPIKeyDialog extends ReactWidget
    */
   constructor() {
     super();
+    const expire_at = new Date();
+    expire_at.setMonth(expire_at.getMonth() + 1);
     this._api_key_info = {
       description: '',
+      expire_at: expire_at.toISOString().split('T')[0],
       roles: []
     };
     this._username = '';
@@ -45,7 +48,8 @@ export class RequestAPIKeyDialog extends ReactWidget
       return {
         user: true,
         key: {
-          description: this._username,
+          description: this._api_key_info.description,
+          expire_at: this._api_key_info.expire_at,
           roles: []
         }
       };
@@ -55,7 +59,7 @@ export class RequestAPIKeyDialog extends ReactWidget
   }
 
   onAfterAttach(message: Message): void {
-    fetch(`${BACKEND_HOST}/api/me`)
+    fetch('/api/me')
       .then(resp => {
         return resp.json();
       })
@@ -65,7 +69,7 @@ export class RequestAPIKeyDialog extends ReactWidget
         }
         this._username = data.user.username;
         const respChannels = await fetch(
-          `${BACKEND_HOST}/api/users/${this._username}/channels`
+          `/api/users/${this._username}/channels`
         );
         const channels = await respChannels.json();
         if (channels.detail) {
@@ -76,7 +80,7 @@ export class RequestAPIKeyDialog extends ReactWidget
         }
 
         const respPackage = await fetch(
-          `${BACKEND_HOST}/api/users/${this._username}/packages`
+          `/api/users/${this._username}/packages`
         );
         const packages = await respPackage.json();
         if (packages.detail) {
@@ -99,6 +103,13 @@ export class RequestAPIKeyDialog extends ReactWidget
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     this._api_key_info.description = event.target.value;
+    this.update();
+  };
+
+  private _handleExpire = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    this._api_key_info.expire_at = event.target.value;
     this.update();
   };
 
@@ -262,6 +273,32 @@ export class RequestAPIKeyDialog extends ReactWidget
 
     return (
       <form className="jp-Input-Dialog">
+        <div className="qs-Form-Section">
+          <label className="qs-Form-Section-Label">Description</label>
+          <input
+            type="textarea"
+            name="description"
+            className="jp-mod-styled"
+            value={this._api_key_info.description}
+            onChange={this._handleDescription}
+          />
+        </div>
+
+        <div className="qs-Form-Section">
+          <label className="qs-Form-Section-Label">Expiration date</label>
+          <input
+            type="date"
+            name="expire_at"
+            className="jp-mod-styled"
+            min={new Date()
+              .toISOString()
+              .split('T')[0]
+              .toString()}
+            value={this._api_key_info.expire_at}
+            onChange={this._handleExpire}
+          />
+        </div>
+
         <div className="qs-Form-Section-Row">
           <input
             id="user-apiKey"
@@ -278,16 +315,6 @@ export class RequestAPIKeyDialog extends ReactWidget
 
         {!this._user_api_key && (
           <>
-            <div className="qs-Form-Section">
-              <label className="qs-Form-Section-Label">Description</label>
-              <input
-                type="textarea"
-                name="description"
-                className="jp-mod-styled"
-                value={this._api_key_info.description}
-                onChange={this._handleDescription}
-              />
-            </div>
             {this._apiStatus === API_STATUSES.PENDING && (
               <InlineLoader text="Fetching user channels and packages" />
             )}
