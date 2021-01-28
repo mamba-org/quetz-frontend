@@ -14,14 +14,19 @@ import {
   Redirect,
   NavLink
 } from 'react-router-dom';
+import { last, capitalize } from 'lodash';
 
 import * as React from 'react';
 
 import { ILogInMenu } from '../topbar/tokens';
 import UserAPIKey from './api-key';
 import Breadcrumbs from '../../components/breadcrumbs';
-import UserProfile from './profile';
-import { last, capitalize } from 'lodash';
+import UserProfile from './tab-profile';
+
+import FetchHoc from '../../components/fetch-hoc';
+import { BACKEND_HOST } from '../../utils/constants';
+import UserPackages from './tab-packages';
+import UserChannels from './tab-channels';
 
 /**
  * The command ids used by the main plugin.
@@ -112,23 +117,31 @@ class UserComponent extends React.PureComponent<any, any> {
               </NavLink>
             </div>
             <div className="right-section">
-              <Switch>
-                <Route path="/profile">
-                  <UserProfile />
-                </Route>
-                <Route path="/api-keys">
-                  <UserAPIKey />
-                </Route>
-                <Route path="/channels">
-                  <div>Channels</div>
-                </Route>
-                <Route path="/packages">
-                  <div>Packages</div>
-                </Route>
-                <Route path="/" exact>
-                  <Redirect to="/profile" />
-                </Route>
-              </Switch>
+              <FetchHoc
+                url={`${BACKEND_HOST}/api/me`}
+                loadingMessage="Fetching user information"
+                genericErrorMessage="Error fetching user information"
+              >
+                {(userData: any) => (
+                  <Switch>
+                    <Route path="/profile">
+                      <UserProfile userData={userData} />
+                    </Route>
+                    <Route path="/api-keys">
+                      <UserAPIKey />
+                    </Route>
+                    <Route path="/channels">
+                      <UserChannels username={userData.user.username} />
+                    </Route>
+                    <Route path="/packages">
+                      <UserPackages username={userData.user.username} />
+                    </Route>
+                    <Route path="/" exact>
+                      <Redirect to="/profile" />
+                    </Route>
+                  </Switch>
+                )}
+              </FetchHoc>
             </div>
           </div>
         </div>

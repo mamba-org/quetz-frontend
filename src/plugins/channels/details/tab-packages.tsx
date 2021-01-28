@@ -1,7 +1,7 @@
 import React from 'react';
 import { PaginatedTable } from '../../../components/table';
 import { API_STATUSES, BACKEND_HOST } from '../../../utils/constants';
-import PackageVersions from '../../packages/versions';
+import PackageVersions from '../../package-details/versions';
 import { getPackageTableColumns } from '../../../utils/table-configs';
 
 type PackagesState = {

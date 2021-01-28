@@ -67,6 +67,9 @@ const Table: React.FC<ITableFcProps> = ({
     }, [fetchData, pageIndex, pageSize]);
   }
 
+  // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
+  const showPaginationInformation = dataSize > pageSize;
+
   return (
     <>
       <table {...getTableProps()} className="jp-table">
@@ -112,16 +115,19 @@ const Table: React.FC<ITableFcProps> = ({
                 <InlineLoader text="Loading..." />
               </td>
             )}
-            {paginated && !loading && (
+            {paginated && !loading && showPaginationInformation && (
               <td colSpan={10000}>
                 Showing {pageIndex * pageSize + 1} to{' '}
                 {pageIndex * pageSize + page.length} of {dataSize} results
               </td>
             )}
+            {!loading && data.length === 0 && (
+              <td colSpan={10000}>No data available</td>
+            )}
           </tr>
         </tbody>
       </table>
-      {paginated && (
+      {paginated && showPaginationInformation && (
         <Pagination
           pageSize={pageSize}
           pageCount={pageCount}
