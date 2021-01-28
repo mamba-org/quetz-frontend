@@ -3,7 +3,9 @@ import {
   faAngleDown,
   faAngleRight,
   faGlobeAmericas,
-  faUnlockAlt
+  faUnlockAlt,
+  faTrash,
+  faCopy
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
@@ -129,5 +131,56 @@ export const getChannelsListColumns = (): any => [
     accessor: 'role',
     Cell: ({ row }: any) => formatPlural(row.original.packages_count, 'member'),
     width: 20
+  }
+];
+
+export const getUserChannelsTableColumns = (): any => [
+  {
+    Header: 'Name',
+    accessor: 'name',
+    Cell: ({ row }: any) =>
+      (
+        <a href={`/channels/${row.original.name}`}>{row.original.name}</a>
+      ) as any
+  },
+  {
+    Header: 'Role',
+    accessor: 'role'
+  }
+];
+
+export const getApikeysTableColumns = ({ onCopy, onDelete }: any): any => [
+  {
+    Header: 'API key',
+    accessor: 'key'
+  },
+  {
+    Header: 'Description',
+    accessor: 'description'
+  },
+  {
+    Header: 'Role',
+    accessor: 'roles[0].role'
+  },
+  {
+    Header: 'Actions',
+    accessor: 'actions',
+    Cell: ({ row }: any) =>
+      (
+        <p className="text">
+          <button
+            className="btn btn-transparent"
+            onClick={() => onCopy(row.original.key)}
+          >
+            <FontAwesomeIcon icon={faCopy} />
+          </button>
+          <button
+            className="btn btn-transparent"
+            onClick={() => onDelete(row.original.key)}
+          >
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        </p>
+      ) as any
   }
 ];

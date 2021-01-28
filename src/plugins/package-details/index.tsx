@@ -5,20 +5,24 @@ import PackageInfo from './tab-info';
 import PackageMembers from './tab-members';
 import Breadcrumbs from '../../components/breadcrumbs';
 import { withRouter } from 'react-router-dom';
+import PackageDetailsApiKeys from './tab-api-keys';
 
 const PACKAGE_TABS = {
   INFO: 0,
-  MEMBERS: 1
+  MEMBERS: 1,
+  API_KEYS: 2
 };
 
 const HASH_TO_INDEX: Record<string, number> = {
   info: 0,
-  members: 1
+  members: 1,
+  api_keys: 2
 };
 
 const INDEX_TO_HASH: Record<number, string> = {
   0: 'info',
-  1: 'members'
+  1: 'members',
+  2: 'api_keys'
 };
 
 class PackageDetails extends React.PureComponent<any, any> {
@@ -47,19 +51,19 @@ class PackageDetails extends React.PureComponent<any, any> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        href: '/'
-      },
-      {
-        text: 'Channels',
         link: '/'
       },
       {
+        text: 'Channels',
+        link: '/channels/'
+      },
+      {
         text: channelId,
-        link: `/${channelId}`
+        link: `/channels/${channelId}`
       },
       {
         text: 'packages',
-        link: `/${channelId}#packages`
+        link: `/channels/${channelId}#packages`
       },
       {
         text: packageId
@@ -76,12 +80,19 @@ class PackageDetails extends React.PureComponent<any, any> {
           <TabList>
             <Tab>Info</Tab>
             <Tab>Members</Tab>
+            <Tab>API keys</Tab>
           </TabList>
           <TabPanel>
             <PackageInfo />
           </TabPanel>
           <TabPanel>
             <PackageMembers channelId={channelId} packageId={packageId} />
+          </TabPanel>
+          <TabPanel>
+            <PackageDetailsApiKeys
+              channelId={channelId}
+              packageId={packageId}
+            />
           </TabPanel>
         </Tabs>
       </div>

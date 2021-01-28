@@ -6,26 +6,27 @@ import Breadcrumbs from '../../../components/breadcrumbs';
 import TabInfo from './tab-info';
 import ChannelDetailsPackages from './tab-packages';
 import ChannelDetailsMembers from './tab-members';
+import ChannelDetailsApiKeys from './tab-api-keys';
 
 const CHANNEL_TABS = {
-  MAIN: 0,
+  INFO: 0,
   PACKAGES: 1,
   MEMBERS: 2,
-  SETTING: 3
+  API_KEYS: 3
 };
 
 const HASH_TO_INDEX: Record<string, number> = {
   info: 0,
   packages: 1,
   members: 2,
-  settings: 3
+  api_keys: 3
 };
 
 const INDEX_TO_HASH: Record<number, string> = {
   0: 'info',
   1: 'packages',
   2: 'members',
-  3: 'settings'
+  3: 'api_keys'
 };
 
 class ChannelDetails extends React.PureComponent<any, any> {
@@ -33,7 +34,7 @@ class ChannelDetails extends React.PureComponent<any, any> {
     super(props);
     const locationHash = (window.location.hash || '#info').substring(1);
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[locationHash] || CHANNEL_TABS.MAIN
+      selectedTabIndex: HASH_TO_INDEX[locationHash] || CHANNEL_TABS.INFO
     };
   }
 
@@ -54,11 +55,11 @@ class ChannelDetails extends React.PureComponent<any, any> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        href: '/'
+        link: '/'
       },
       {
         text: 'Channels',
-        link: '/'
+        link: '/channels/'
       },
       {
         text: channelId
@@ -74,6 +75,7 @@ class ChannelDetails extends React.PureComponent<any, any> {
             <Tab>Info</Tab>
             <Tab>Packages</Tab>
             <Tab>Members</Tab>
+            <Tab>API keys</Tab>
           </TabList>
           <TabPanel>
             <TabInfo channelId={channelId} />
@@ -83,6 +85,9 @@ class ChannelDetails extends React.PureComponent<any, any> {
           </TabPanel>
           <TabPanel>
             <ChannelDetailsMembers channelId={channelId} />
+          </TabPanel>
+          <TabPanel>
+            <ChannelDetailsApiKeys channelId={channelId} />
           </TabPanel>
         </Tabs>
       </>

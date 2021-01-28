@@ -79,6 +79,9 @@ const List = ({
     }, [fetchData, pageIndex, pageSize]);
   }
 
+  // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
+  const showPaginationInformation = dataSize > pageSize;
+
   const ContentTag: any = to ? Link : 'div';
 
   return (
@@ -137,16 +140,21 @@ const List = ({
                 <InlineLoader text="Loading..." />
               </div>
             )}
-            {paginated && !loading && (
+            {paginated && !loading && showPaginationInformation && (
               <div className="padding-bottom padding-top">
                 Showing {pageIndex * pageSize + 1} to{' '}
                 {pageIndex * pageSize + page.length} of {dataSize} results
               </div>
             )}
+            {!loading && data.length === 0 && (
+              <div className="padding-bottom padding-top">
+                No data available
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {paginated && (
+      {paginated && showPaginationInformation && (
         <Pagination
           pageSize={pageSize}
           pageCount={pageCount}
@@ -164,7 +172,7 @@ const List = ({
   );
 };
 
-export const PaginatedList = ({ url, columns, to }: any) => {
+export const PaginatedList = ({ url, columns, to, q }: any) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [pageCount, setPageCount] = React.useState(0);
@@ -178,6 +186,7 @@ export const PaginatedList = ({ url, columns, to }: any) => {
     const {
       data: { pagination, result }
     }: any = await http.get(url, {
+      ...q,
       skip: pageIndex * pageSize,
       limit: pageSize
     });

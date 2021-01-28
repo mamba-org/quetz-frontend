@@ -23,6 +23,16 @@ body {
   display: flex;
 }
 
+.link {
+  color: var(--jp-quetz-primary-color);
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--jp-quetz-primary-color);
+  text-decoration: underline;
+}
+
 /**********************
      Layout styles
  **********************/
@@ -291,6 +301,16 @@ body {
 .btn[disabled] {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.btn-transparent {
+  background-color: transparent;
+  color: inherit;
+}
+
+.btn-transparent:hover {
+  background-color: #404040;
+  color: inherit;
 }
 
 .btn-inline {

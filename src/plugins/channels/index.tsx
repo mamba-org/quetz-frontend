@@ -17,13 +17,15 @@ import { ILogInMenu } from '../topbar/tokens';
 import ChannelsList from './list';
 
 import ChannelDetails from './details';
-import PackageDetails from '../packages';
+import PackageDetails from '../package-details';
+import Homepage from '../home';
 
 /**
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
   export const reactRouter = 'quetz:react-router';
+  // export const homeRouter = 'quetz:homepage';
 }
 
 export class RouterWidget extends ReactWidget {
@@ -38,16 +40,19 @@ export class RouterWidget extends ReactWidget {
   render(): JSX.Element {
     return (
       <div className="page-contents-width-limit">
-        <Router basename="/channels">
+        <Router>
           <Switch>
-            <Route path="/:channelId/packages/:packageId">
+            <Route path="/channels/:channelId/packages/:packageId">
               <PackageDetails />
             </Route>
-            <Route path="/:channelId">
+            <Route path="/channels/:channelId">
               <ChannelDetails />
             </Route>
-            <Route path="/">
+            <Route path="/channels" exact>
               <ChannelsList />
+            </Route>
+            <Route path="" exact>
+              <Homepage />
             </Route>
           </Switch>
         </Router>
@@ -78,7 +83,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /(channels).*/,
+      pattern: /.*/,
       command: CommandIDs.reactRouter
     });
 
