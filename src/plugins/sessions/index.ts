@@ -4,7 +4,7 @@ import {
 } from '@jupyterlab/application';
 
 /**
- * A plugin to open documents in the main area.
+ * A plugin to stop the kernels, sessions and terminals polling
  */
 const plugin: JupyterFrontEndPlugin<void> = {
   id: 'quetz:stop-polling',
