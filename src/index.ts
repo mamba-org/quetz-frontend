@@ -28,6 +28,7 @@ async function main(): Promise<void> {
     require('./plugins/jobs'),
     require('./plugins/about'),
     require('./plugins/download'),
+    require('./plugins/sessions'),
     apputilsExtension.default.filter(({ id }: any) =>
       [
         '@jupyterlab/apputils-extension:settings',
