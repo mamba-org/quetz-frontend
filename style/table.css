@@ -4,12 +4,21 @@
   font-size: var(--jp-ui-font-size2);
 }
 
+.jp-table tbody,
+.jp-table tr {
+  width: 100%;
+}
+
 .jp-table th,
 .jp-table td {
+  max-width: 400px;
   margin: 0;
   /*padding: calc(2 * var(--jp-cell-padding)) var(--jp-cell-padding);*/
   padding: 12px;
   border-bottom: 1px solid var(--jp-layout-color2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .jp-table tr.expanded td {

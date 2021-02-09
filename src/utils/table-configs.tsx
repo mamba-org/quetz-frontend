@@ -30,7 +30,7 @@ export const getPackageTableColumns = (channelId: string) => [
       ) as any
   },
   {
-    Header: 'Package Name',
+    Header: 'Name',
     accessor: 'name',
     Cell: ({ row }: any) =>
       (
@@ -40,12 +40,13 @@ export const getPackageTableColumns = (channelId: string) => [
       ) as any
   },
   {
-    Header: 'Description',
-    accessor: 'description'
-  },
-  {
     Header: 'Summary',
     accessor: 'summary'
+  },
+  {
+    Header: 'Version',
+    accessor: 'current_version',
+    Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any
   }
 ];
 

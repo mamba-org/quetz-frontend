@@ -1,5 +1,12 @@
 .about-page {
   width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+}
+
+.page-about-mamba {
+  width: 100%;
+  padding: 50px;
   min-height: calc(100vh - var(--jp-private-topbar-height));
   display: flex;
   justify-content: center;
@@ -7,28 +14,87 @@
   background-size: cover;
 }
 
-.about {
-  min-width: 70%;
+.about-mamba {
+  width: 70%;
+  min-width: 400px;
   padding: 20px;
   margin: 0 auto;
 }
 
-.about hr {
+.about-mamba hr {
   border-color: var(--jp-quetz-primary-color);
   margin-bottom: 30px;
 }
 
-.about h1 {
+.about-mamba h1 {
   color: var(--jp-quetz-primary-color);
 }
 
-.about p {
+.about-mamba p {
   line-height: 30px;
   text-shadow: 0 0 5px black;
 }
 
-.about-list {
+.about-mamba-list {
   margin: 0;
   padding-left: 20px;
   list-style: none;
+}
+
+.page-about-quetz {
+  width: 100%;
+  padding: 50px;
+  min-height: calc(100vh - var(--jp-private-topbar-height));
+  display: flex;
+  justify-content: center;
+  background: url(img/quetz-backgraund.png) no-repeat center center fixed;
+  background-size: cover;
+}
+
+.about-quetz {
+  width: 70%;
+  min-width: 400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.about-quetz hr {
+  border-color: white;
+  margin-bottom: 30px;
+}
+
+.about-quetz .section {
+  height: 45%;
+  width: 100%;
+  display: flex;
+}
+
+.about-quetz .paragraph {
+  width: 50%;
+}
+
+.about-quetz-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.about-quetz-row {
+  width: 100%;
+  align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+}
+
+.about-quetz-column {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+}
+
+.about-quetz-column p {
+  font-size: 18px;
 }
