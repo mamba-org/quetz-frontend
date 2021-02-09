@@ -62,3 +62,33 @@
 .package-people-role-column {
   width: 20%;
 }
+
+.package-platform-noarch {
+  padding-right: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.package-platform-icons {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.package-platform-icon {
+  margin-right: 20px;
+}
+
+.package-platform-list {
+  list-style: none;
+  padding-left: 15px;
+}
+
+.package-install-command {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #404040;
+}
+
+.package-install-command pre {
+  margin: 0px;
+}

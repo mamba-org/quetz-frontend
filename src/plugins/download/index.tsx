@@ -68,6 +68,10 @@ class Download extends ReactWidget {
     this.addClass('download-page');
   }
 
+  private _windows = () => {
+    window.location.href = 'https://github.com/mamba-org/mamba';
+  };
+
   render(): React.ReactElement {
     return (
       <div className="download">
@@ -79,10 +83,22 @@ class Download extends ReactWidget {
           Works on Windows, Mac OS X and Linux.
         </p>
 
-        <button className="download-button windows">
-          <span className="download-logo windows" />
-          <p className="download-label">Download</p>
-        </button>
+        <div className="download-container">
+          <div className="download-row">
+            <button onClick={this._windows} className="download-button">
+              <span className="download-windows" />
+              <p className="download-label">Windows</p>
+            </button>
+            <button onClick={this._windows} className="download-button">
+              <span className="download-osx" />
+              <p className="download-label">OS X</p>
+            </button>
+            <button onClick={this._windows} className="download-button">
+              <span className="download-linux" />
+              <p className="download-label">Linux</p>
+            </button>
+          </div>
+        </div>
       </div>
     );
   }

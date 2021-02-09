@@ -88,13 +88,13 @@ const List = ({
     <>
       <div {...getTableProps()} className="table">
         <div>
-          {headerGroups.map((headerGroup: any) => (
+          {headerGroups.map((headerGroup: any, key: string) => (
             <div
               {...headerGroup.getHeaderGroupProps({
                 // style: { paddingRight: '15px' },
               })}
               className="tr"
-              key={headerGroup.id}
+              key={key}
             >
               {headerGroup.headers.map((column: any) => (
                 <div

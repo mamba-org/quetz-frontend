@@ -74,8 +74,8 @@ const Table: React.FC<ITableFcProps> = ({
     <>
       <table {...getTableProps()} className="jp-table">
         <thead>
-          {headerGroups.map((headerGroup: any) => (
-            <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+          {headerGroups.map((headerGroup: any, key: string) => (
+            <tr {...headerGroup.getHeaderGroupProps()} key={key}>
               {headerGroup.headers.map((column: any) => (
                 <th {...column.getHeaderProps()} key={column.id}>
                   {column.render('Header')}
@@ -90,6 +90,7 @@ const Table: React.FC<ITableFcProps> = ({
             return (
               <React.Fragment key={row.id}>
                 <tr
+                  key={row.id}
                   {...row.getRowProps()}
                   className={clsx({ expanded: (row as any).isExpanded })}
                 >

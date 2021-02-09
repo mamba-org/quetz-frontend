@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { API_STATUSES, BACKEND_HOST, REPO_HOST } from '../../utils/constants';
 import { formatSize } from '../../utils';
 import fromNow from 'fromnow';
@@ -35,22 +36,38 @@ class PackageVersions extends React.PureComponent<
           return (
             <>
               {/*TODO: Copy button for md5 */}
-              <h4 className="section-heading">Package Info</h4>
-              <p className="minor-paragraph">
-                <b>Arch</b>: {info.arch || 'n/a'}
-                <br />
-                <b>Build</b>: {info.build || 'n/a'}
-                <br />
-                <b>MD5</b>: {info.md5}
-                <br />
-                <b>Platform</b>: {versionData[0].platform || info.platform}
-                <br />
-                <b>Version</b>: {info.version}
-              </p>
+              <div className="package-row-flex">
+                <div>
+                  <h4 className="section-heading">Package Info</h4>
+                  <p className="minor-paragraph">
+                    <b>Arch</b>: {info.arch || 'n/a'}
+                    <br />
+                    <b>Build</b>: {info.build || 'n/a'}
+                    <br />
+                    <b>MD5</b>: {info.md5}
+                    <br />
+                    <b>Platform</b>: {versionData[0].platform || info.platform}
+                    <br />
+                    <b>Version</b>: {info.version}
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="section-heading">Install</h4>
+                  <div className="package-install-command">
+                    <pre>
+                      mamba install -c {channel} {selectedPackage}
+                    </pre>
+                  </div>
+                </div>
+              </div>
+
               <h4 className="section-heading">Dependencies</h4>
               <p className="minor-paragraph">
-                {map(info.depends, (dep: string) => (
-                  <span className="tag">{dep}</span>
+                {map(info.depends, (dep: string, key: string) => (
+                  <span key={key} className="tag">
+                    {dep}
+                  </span>
                 ))}
               </p>
               <h4 className="section-heading">History</h4>
@@ -60,6 +77,7 @@ class PackageVersions extends React.PureComponent<
                     <th>Uploader</th>
                     <th>Date</th>
                     <th>Filename</th>
+                    <th>Platform</th>
                     <th>Size</th>
                     <th>Version</th>
                   </tr>
@@ -76,11 +94,26 @@ class PackageVersions extends React.PureComponent<
                       </td>
                       <td>
                         <a
-                          href={`${REPO_HOST}/${channel}/${info.arch}/${version.filename}`}
+                          href={`${REPO_HOST}/${channel}/${version.info.subdir}/${version.filename}`}
                           download
                         >
                           {version.filename}
                         </a>
+                      </td>
+                      <td>
+                        {version.info.platform === 'linux' ? (
+                          <i className="fa fa-linux fa-2x" />
+                        ) : version.info.platform === 'osx' ? (
+                          <i className="fa fa-apple fa-2x" />
+                        ) : version.info.platform === 'win' ? (
+                          <i className="fa fa-windows fa-2x" />
+                        ) : (
+                          <div className="package-platform-noarch">
+                            <i className="fa fa-linux" />
+                            <i className="fa fa-apple" />
+                            <i className="fa fa-windows" />
+                          </div>
+                        )}
                       </td>
                       <td>{formatSize(version.info.size)}</td>
                       <td>{version.version}</td>

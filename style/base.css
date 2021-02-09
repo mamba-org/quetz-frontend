@@ -40,7 +40,7 @@ button {
   overflow: auto;
   background: var(--jp-layout-color1);
   color: var(--jp-ui-font-color0);
-  /*padding: var(--jp-cell-padding);*/
+  /* padding: var(--jp-cell-padding); */
 }
 
 body[data-jp-theme-light='false'] #top-panel {
