@@ -30,3 +30,19 @@ export const copyToClipboard = (text: string, textType: string): void => {
     })
     .catch(e => console.error(e));
 };
+
+export const getUrlParameter = function getUrlParameter(sParam: string) {
+  const sPageURL = window.location.search.substring(1);
+  const sURLVariables = sPageURL.split('&');
+
+  for (let i = 0; i < sURLVariables.length; i++) {
+    const sParameterName = sURLVariables[i].split('=');
+
+    if (sParameterName[0] === sParam) {
+      return typeof sParameterName[1] === undefined
+        ? true
+        : decodeURIComponent(sParameterName[1]);
+    }
+  }
+  return false;
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BACKEND_HOST } from '../../../utils/constants';
-import SearchBox from './search';
+import SearchBox from '../../../components/search';
 import Breadcrumbs from '../../../components/breadcrumbs';
 // import { filter, includes } from 'lodash';
 // import FetchHoc from '../../../components/fetch-hoc';
@@ -73,7 +73,7 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
       <>
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Channels</h2>
-        <SearchBox onSearch={this.onSearch} />
+        <SearchBox onTextUpdate={this.onSearch} />
         <PaginatedList
           url={`${BACKEND_HOST}/api/paginated/channels`}
           params={{ q: searchText }}

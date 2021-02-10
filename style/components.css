@@ -275,6 +275,7 @@ body {
 
 .input:active,
 .input:focus {
+  color: #222222;
   background-color: #ffffff;
 }
 
@@ -358,12 +359,16 @@ body {
 
 .btn-group .btn:first-child,
 .btn-group .input:first-child {
-  border-radius: 6px 0 0 6px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  /*border-radius: 6px 0 0 6px;*/
 }
 
 .btn-group .btn:last-child,
 .btn-group .input:last-child {
-  border-radius: 0 6px 6px 0;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  /*border-radius: 0 6px 6px 0;*/
   border-right: 0;
 }
 

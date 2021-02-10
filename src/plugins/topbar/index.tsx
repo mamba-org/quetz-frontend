@@ -4,7 +4,7 @@ import {
   IRouter
 } from '@jupyterlab/application';
 
-import { DOMUtils } from '@jupyterlab/apputils';
+import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
 import { LabIcon } from '@jupyterlab/ui-components';
 
@@ -17,6 +17,8 @@ import { LogInMenu } from './login';
 import { IMainMenu, ILogInMenu } from './tokens';
 
 import * as quetz_logo from '../../../style/img/quetz-logo.svg';
+import * as React from 'react';
+import SearchBox from '../../components/search';
 
 /**
  * The main title plugin.
@@ -53,6 +55,25 @@ const plugins: JupyterFrontEndPlugin<any>[] = [title, menu, login];
 
 export default plugins;
 
+class SearchWidget extends ReactWidget {
+  onSearch = (searchText: string): void => {
+    window.history.pushState({}, 'Search', `/search?q=${searchText}`);
+    // TODO: Find a more elegant way to do this
+    // Reload is required since react router in page doesn't get to know
+    // of the history change from outside component and hence doesn't remount
+    // the component
+    window.location.reload();
+  };
+
+  render(): React.ReactElement {
+    return (
+      <div className="topbar-search-wrapper">
+        <SearchBox onSubmit={this.onSearch} />
+      </div>
+    );
+  }
+}
+
 /**
  * @param app
  * @param router
@@ -79,7 +100,7 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
     router.navigate('/');
   };
 
-  const spacer = new Widget();
+  const spacer = new SearchWidget();
   spacer.id = DOMUtils.createDomID();
   spacer.addClass('topbar-spacer');
 

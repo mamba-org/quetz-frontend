@@ -16,6 +16,11 @@
   flex-shrink: 1;
 }
 
+.topbar-search-wrapper {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 .user-img {
   margin: auto;
   width: 30px;

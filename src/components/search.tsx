@@ -1,6 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  // faCaretDown,
+  faSearch
+} from '@fortawesome/free-solid-svg-icons';
 
 class SearchBox extends React.PureComponent<any, any> {
   constructor(props: any) {
@@ -11,26 +14,35 @@ class SearchBox extends React.PureComponent<any, any> {
   }
 
   updateInput = (e: any) => {
-    const { onSearch } = this.props;
+    const { onTextUpdate } = this.props;
     this.setState({
       input: e.target.value
     });
-    onSearch(e.target.value);
+    if (onTextUpdate) {
+      onTextUpdate(e.target.value);
+    }
   };
 
-  onSubmit = () => {
-    // TODO
+  onSubmit = (e: any) => {
+    const { onSubmit } = this.props;
+    const { input } = this.state;
+    e.preventDefault();
+    if (onSubmit) {
+      onSubmit(input);
+    }
   };
 
   render(): JSX.Element {
     const { input } = this.state;
+    const { onSubmit } = this.props;
+
     return (
       <form onSubmit={this.onSubmit}>
         <div className="btn-group">
-          <button className="btn btn-default" type="button">
-            Filters&emsp;
-            <FontAwesomeIcon icon={faCaretDown} />
-          </button>
+          {/*<button className="btn btn-default" type="button">*/}
+          {/*  Filters&emsp;*/}
+          {/*  <FontAwesomeIcon icon={faCaretDown} />*/}
+          {/*</button>*/}
           <input
             className="input search-input"
             value={input}
@@ -38,9 +50,11 @@ class SearchBox extends React.PureComponent<any, any> {
             onChange={this.updateInput}
             placeholder="Search"
           />
-          <button className="btn btn-default" type="submit">
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
+          {onSubmit && (
+            <button className="btn btn-default" type="submit">
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          )}
         </div>
       </form>
     );

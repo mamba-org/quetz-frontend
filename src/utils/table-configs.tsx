@@ -12,6 +12,30 @@ import * as React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { formatPlural } from './index';
 
+export const getPackageSearchTableColumns = () => [
+  {
+    Header: 'Name',
+    accessor: 'name',
+    Cell: ({ row }: any) =>
+      (
+        <Link
+          to={`/channels/${row.original.channel_name}/packages/${row.values.name}`}
+        >
+          {row.values.name}
+        </Link>
+      ) as any
+  },
+  {
+    Header: 'Summary',
+    accessor: 'summary'
+  },
+  {
+    Header: 'Version',
+    accessor: 'current_version',
+    Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any
+  }
+];
+
 export const getPackageTableColumns = (channelId: string) => [
   {
     id: 'expander',

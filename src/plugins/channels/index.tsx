@@ -19,6 +19,7 @@ import ChannelsList from './list';
 import ChannelDetails from './details';
 import PackageDetails from '../package-details';
 import Homepage from '../home';
+import SearchPage from '../../components/search-page';
 
 /**
  * The command ids used by the main plugin.
@@ -42,6 +43,9 @@ export class RouterWidget extends ReactWidget {
       <div className="page-contents-width-limit">
         <Router>
           <Switch>
+            <Route path="/search">
+              <SearchPage />
+            </Route>
             <Route path="/channels/:channelId/packages/:packageId">
               <PackageDetails />
             </Route>
