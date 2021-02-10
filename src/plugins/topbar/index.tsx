@@ -64,12 +64,6 @@ class SearchWidget extends ReactWidget {
   }
   onSearch = (searchText: string): void => {
     this.router.navigate(`/search?q=${searchText}`);
-    // window.history.pushState({}, 'Search', `/search?q=${searchText}`);
-    // TODO: Find a more elegant way to do this
-    // Reload is required since react router in page doesn't get to know
-    // of the history change from outside component and hence doesn't remount
-    // the component
-    // window.location.reload();
   };
 
   render(): React.ReactElement {
