@@ -38,7 +38,7 @@ class SearchPage extends React.Component<any, any> {
       <div>
         <Breadcrumbs items={breadcrumbItems} />
         <FetchHoc
-          url={`${BACKEND_HOST}/api/packages/search>q=${searchText}`}
+          url={`${BACKEND_HOST}/api/packages/search/?q=${searchText}`}
           loadingMessage="Searching for packages"
           genericErrorMessage="Error fetching API keys"
         >
