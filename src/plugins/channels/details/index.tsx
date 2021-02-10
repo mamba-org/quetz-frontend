@@ -32,9 +32,11 @@ const INDEX_TO_HASH: Record<number, string> = {
 class ChannelDetails extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
-    const locationHash = (window.location.hash || '#info').substring(1);
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentTab = urlParams.get('tab') || 'info';
+    console.log('Current Tab: ', currentTab);
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[locationHash] || CHANNEL_TABS.INFO
+      selectedTabIndex: HASH_TO_INDEX[currentTab] || CHANNEL_TABS.INFO
     };
   }
 
@@ -42,7 +44,12 @@ class ChannelDetails extends React.PureComponent<any, any> {
     this.setState({
       selectedTabIndex
     });
-    history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.delete('tab');
+    urlParams.append('tab', INDEX_TO_HASH[selectedTabIndex]);
+    history.pushState(null, '', '?' + urlParams.toString());
+    // history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
   };
 
   render(): JSX.Element {

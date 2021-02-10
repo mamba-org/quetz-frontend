@@ -40,26 +40,30 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
 
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
-      const data = JSON.parse(config_data.innerHTML);
-      if (data.detail) {
-        return console.error(data.detail);
+      try {
+        const data = JSON.parse(config_data.innerHTML);
+        if (data.detail) {
+          return console.error(data.detail);
+        }
+        if (data.logged_in_user_profile) {
+          this._profile = JSON.parse(data.logged_in_user_profile);
+        } else {
+          fetch('/api/me')
+            .then(resp => {
+              return resp.json();
+            })
+            .then(async data => {
+              if (data.detail) {
+                return console.error(data.detail);
+              }
+              this._profile = data;
+              this.update();
+            });
+        }
+        this.update();
+      } catch (e) {
+        console.log("Couldn't parse JSON from template.");
       }
-      if (data.logged_in_user_profile) {
-        this._profile = JSON.parse(data.logged_in_user_profile);
-      } else {
-        fetch('/api/me')
-          .then(resp => {
-            return resp.json();
-          })
-          .then(async data => {
-            if (data.detail) {
-              return console.error(data.detail);
-            }
-            this._profile = data;
-            this.update();
-          });
-      }
-      this.update();
     }
     this.update();
   }
