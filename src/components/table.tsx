@@ -19,6 +19,27 @@ interface ITableFcProps {
   enableSearch?: boolean;
 }
 
+const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
+  const search_params = new URLSearchParams(window.location.search);
+  const prev_index = search_params.delete('index');
+  const prev_size = search_params.delete('size');
+  const prev_query = search_params.delete('query');
+  if (prev_index != pageIndex || prev_size != pageSize || prev_query != query) {
+    console.log('Recording history!');
+
+    search_params.delete('size');
+    search_params.delete('query');
+    search_params.append('size', pageSize);
+    search_params.append('index', pageIndex);
+
+    if (query) {
+      search_params.append('query', query);
+    }
+
+    window.history.pushState(null, '', '?' + search_params.toString());
+  }
+};
+
 const Table: React.FC<ITableFcProps> = ({
   columns: userColumns,
   data,
@@ -30,6 +51,13 @@ const Table: React.FC<ITableFcProps> = ({
   dataSize,
   enableSearch
 }: any) => {
+  // get initial state from URL params
+
+  const search_params = new URLSearchParams(window.location.search);
+  const initialPageIndex = parseInt(search_params.get('index') || '0');
+  const initialPageSize = parseInt(search_params.get('size') || '25');
+  const initialQuery = search_params.get('query') || '';
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -54,7 +82,7 @@ const Table: React.FC<ITableFcProps> = ({
     {
       columns: userColumns,
       data,
-      initialState: { pageIndex: 0, pageSize: 25 },
+      initialState: { pageIndex: initialPageIndex, pageSize: initialPageSize },
       manualPagination: paginated,
       pageCount: controlledPageCount
     } as any,
@@ -62,18 +90,25 @@ const Table: React.FC<ITableFcProps> = ({
     ...(paginated ? [usePagination] : [])
   ) as any;
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState(initialQuery);
 
   if (enableSearch) {
     React.useEffect(() => {
-      fetchData({ pageIndex, pageSize, query: searchTerm });
+      fetchData({ pageIndex: 0, pageSize, query: searchTerm });
     }, [searchTerm]);
   }
 
   if (paginated) {
     React.useEffect(() => {
+      recordPaginationHistory({ pageIndex, pageSize, query: searchTerm });
       fetchData({ pageIndex, pageSize, query: searchTerm });
     }, [pageIndex, pageSize]);
+  }
+
+  if (paginated || enableSearch) {
+    React.useEffect(() => {
+      recordPaginationHistory({ pageIndex, pageSize, query: searchTerm });
+    }, [pageIndex, pageSize, searchTerm]);
   }
 
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
@@ -170,7 +205,6 @@ export const PaginatedTable = ({
     async ({ pageSize, pageIndex, query }) => {
       const fetchId = ++fetchIdRef.current;
       setLoading(true);
-
       const {
         data: { pagination, result }
       }: any = await http.get(url, {

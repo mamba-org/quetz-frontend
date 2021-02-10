@@ -51,7 +51,9 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
       <>
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Channels</h2>
-        <SearchBox onTextUpdate={this.onSearch} />
+        <div className="channels-search">
+          <SearchBox onTextUpdate={this.onSearch} />
+        </div>
         <PaginatedList
           url={`${BACKEND_HOST}/api/paginated/channels`}
           params={{ q: searchText }}
