@@ -25,6 +25,7 @@ class ChannelDetailsPackages extends React.PureComponent<any, PackagesState> {
     return (
       <PaginatedTable
         url={`${BACKEND_HOST}/api/paginated/channels/${channelId}/packages`}
+        enableSearch={true}
         columns={getPackageTableColumns(channelId)}
         renderRowSubComponent={this.renderRowSubComponent}
       />
