@@ -3,7 +3,7 @@ import { useTable, useFlexLayout, usePagination } from 'react-table';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import Pagination from './pagination';
-import InlineLoader from './loader';
+
 import { http } from '../utils/http';
 
 const headerProps = (props: any, { column }: any) =>
@@ -135,17 +135,12 @@ const List = ({
             );
           })}
           <div className="tr">
-            {!!loading && (
-              <div>
-                <InlineLoader text="Loading..." />
-              </div>
-            )}
-            {paginated && !loading && showPaginationInformation && (
+            {/* {paginated && !loading && showPaginationInformation && (
               <div className="padding-bottom padding-top">
                 Showing {pageIndex * pageSize + 1} to{' '}
                 {pageIndex * pageSize + page.length} of {dataSize} results
               </div>
-            )}
+            )} */}
             {!loading && data.length === 0 && (
               <div className="padding-bottom padding-top">
                 No data available
@@ -166,6 +161,7 @@ const List = ({
           pageIndex={pageIndex}
           pageOptions={pageOptions}
           setPageSize={setPageSize}
+          loading={loading}
         />
       )}
     </>

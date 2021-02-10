@@ -60,6 +60,41 @@
   text-decoration: underline;
 }
 
-.pagination {
+.jp-table-controls {
+  height: fit-content;
+  margin: 15px;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.jp-table-controls-left {
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+}
+
+.jp-table-controls-right {
+  height: fit-content;
+  display: flex;
+  align-items: flex-end;
+}
+
+.jp-table-controls-text {
+  height: 36px;
+  margin: 0px;
+}
+
+.jp-table-controls-text .padding {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.jp-table-controls-text .padding-text {
+  margin-left: 10px;
+  padding: 7px;
+}
+
+.jp-table-controls-text .paragraph {
+  margin-bottom: 0px;
 }

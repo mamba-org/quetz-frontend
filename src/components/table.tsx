@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import React from 'react';
-import InlineLoader from './loader';
 import { http } from '../utils/http';
 import Pagination from './pagination';
 
@@ -111,17 +110,6 @@ const Table: React.FC<ITableFcProps> = ({
             );
           })}
           <tr>
-            {loading && (
-              <td colSpan={10000}>
-                <InlineLoader text="Loading..." />
-              </td>
-            )}
-            {paginated && !loading && showPaginationInformation && (
-              <td colSpan={10000}>
-                Showing {pageIndex * pageSize + 1} to{' '}
-                {pageIndex * pageSize + page.length} of {dataSize} results
-              </td>
-            )}
             {!loading && data.length === 0 && (
               <td colSpan={10000}>No data available</td>
             )}
@@ -140,6 +128,7 @@ const Table: React.FC<ITableFcProps> = ({
           pageIndex={pageIndex}
           pageOptions={pageOptions}
           setPageSize={setPageSize}
+          loading={loading}
         />
       )}
     </>
