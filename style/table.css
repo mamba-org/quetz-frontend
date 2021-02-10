@@ -98,3 +98,8 @@
 .jp-table-controls-text .paragraph {
   margin-bottom: 0px;
 }
+
+.table-search-input {
+  margin: 10px 0;
+  width: 100%;
+}

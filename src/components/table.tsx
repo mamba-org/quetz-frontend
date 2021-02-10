@@ -16,6 +16,7 @@ interface ITableFcProps {
   loading?: any;
   pageCount?: any;
   dataSize?: any;
+  enableSearch?: boolean;
 }
 
 const Table: React.FC<ITableFcProps> = ({
@@ -26,7 +27,8 @@ const Table: React.FC<ITableFcProps> = ({
   fetchData,
   loading,
   pageCount: controlledPageCount,
-  dataSize
+  dataSize,
+  enableSearch
 }: any) => {
   const {
     getTableProps,
@@ -52,7 +54,7 @@ const Table: React.FC<ITableFcProps> = ({
     {
       columns: userColumns,
       data,
-      initialState: { pageIndex: 0 },
+      initialState: { pageIndex: 0, pageSize: 25 },
       manualPagination: paginated,
       pageCount: controlledPageCount
     } as any,
@@ -60,10 +62,18 @@ const Table: React.FC<ITableFcProps> = ({
     ...(paginated ? [usePagination] : [])
   ) as any;
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+
+  if (enableSearch) {
+    React.useEffect(() => {
+      fetchData({ pageIndex, pageSize, query: searchTerm });
+    }, [searchTerm]);
+  }
+
   if (paginated) {
     React.useEffect(() => {
-      fetchData({ pageIndex, pageSize });
-    }, [fetchData, pageIndex, pageSize]);
+      fetchData({ pageIndex, pageSize, query: searchTerm });
+    }, [pageIndex, pageSize]);
   }
 
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
@@ -71,6 +81,15 @@ const Table: React.FC<ITableFcProps> = ({
 
   return (
     <>
+      {enableSearch && (
+        <input
+          className="input search-input table-search-input"
+          placeholder="Search"
+          type="text"
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+        />
+      )}
       <table {...getTableProps()} className="jp-table">
         <thead>
           {headerGroups.map((headerGroup: any, key: string) => (
@@ -138,7 +157,8 @@ const Table: React.FC<ITableFcProps> = ({
 export const PaginatedTable = ({
   url,
   columns,
-  renderRowSubComponent
+  renderRowSubComponent,
+  enableSearch
 }: any) => {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -146,24 +166,28 @@ export const PaginatedTable = ({
   const [dataSize, setDataSize] = React.useState(0);
   const fetchIdRef = React.useRef(0);
 
-  const fetchData = React.useCallback(async ({ pageSize, pageIndex }) => {
-    const fetchId = ++fetchIdRef.current;
-    setLoading(true);
+  const fetchData = React.useCallback(
+    async ({ pageSize, pageIndex, query }) => {
+      const fetchId = ++fetchIdRef.current;
+      setLoading(true);
 
-    const {
-      data: { pagination, result }
-    }: any = await http.get(url, {
-      skip: pageIndex * pageSize,
-      limit: pageSize
-    });
+      const {
+        data: { pagination, result }
+      }: any = await http.get(url, {
+        skip: pageIndex * pageSize,
+        limit: pageSize,
+        q: query
+      });
 
-    if (fetchId === fetchIdRef.current) {
-      setData(result);
-      setDataSize(pagination.all_records_count);
-      setPageCount(Math.ceil(pagination.all_records_count / pageSize));
-      setLoading(false);
-    }
-  }, []);
+      if (fetchId === fetchIdRef.current) {
+        setData(result);
+        setDataSize(pagination.all_records_count);
+        setPageCount(Math.ceil(pagination.all_records_count / pageSize));
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   return (
     <Table
@@ -175,6 +199,7 @@ export const PaginatedTable = ({
       loading={loading}
       pageCount={pageCount}
       dataSize={dataSize}
+      enableSearch={enableSearch}
     />
   );
 };
