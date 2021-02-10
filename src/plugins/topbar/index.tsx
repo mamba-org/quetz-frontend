@@ -56,13 +56,20 @@ const plugins: JupyterFrontEndPlugin<any>[] = [title, menu, login];
 export default plugins;
 
 class SearchWidget extends ReactWidget {
+  router: any;
+
+  constructor(router: any) {
+    super();
+    this.router = router;
+  }
   onSearch = (searchText: string): void => {
-    window.history.pushState({}, 'Search', `/search?q=${searchText}`);
+    this.router.navigate(`/search?q=${searchText}`);
+    // window.history.pushState({}, 'Search', `/search?q=${searchText}`);
     // TODO: Find a more elegant way to do this
     // Reload is required since react router in page doesn't get to know
     // of the history change from outside component and hence doesn't remount
     // the component
-    window.location.reload();
+    // window.location.reload();
   };
 
   render(): React.ReactElement {
@@ -100,7 +107,7 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
     router.navigate('/');
   };
 
-  const spacer = new SearchWidget();
+  const spacer = new SearchWidget(router);
   spacer.id = DOMUtils.createDomID();
   spacer.addClass('topbar-spacer');
 
