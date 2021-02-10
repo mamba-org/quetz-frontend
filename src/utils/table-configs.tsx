@@ -18,11 +18,17 @@ export const getPackageSearchTableColumns = () => [
     accessor: 'name',
     Cell: ({ row }: any) =>
       (
-        <Link
-          to={`/channels/${row.original.channel_name}/packages/${row.values.name}`}
-        >
-          {row.values.name}
-        </Link>
+        <>
+          <Link to={`/channels/${row.original.channel_name}`}>
+            {row.original.channel_name}
+          </Link>
+          &nbsp;/&nbsp;
+          <Link
+            to={`/channels/${row.original.channel_name}/packages/${row.values.name}`}
+          >
+            {row.values.name}
+          </Link>
+        </>
       ) as any
   },
   {
