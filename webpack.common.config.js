@@ -47,7 +47,8 @@ module.exports = {
       // Needed for Blueprint. See https://github.com/palantir/blueprint/issues/4393
       'process.env': '{}',
       process: { cwd: () => '/' },
-      BACKEND_HOST: JSON.stringify(process.env.BACKEND_HOST)
+      BACKEND_HOST: JSON.stringify(process.env.BACKEND_HOST),
+      REPO_HOST: JSON.stringify(process.env.REPO_HOST)
     }),
     new CopyPlugin({
       patterns: [
