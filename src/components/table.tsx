@@ -2,7 +2,8 @@ import {
   useExpanded,
   useTable,
   usePagination,
-  useGlobalFilter
+  useGlobalFilter,
+  useAsyncDebounce
 } from 'react-table';
 import clsx from 'clsx';
 
@@ -15,16 +16,16 @@ import Pagination from './pagination';
 interface ITableFcProps {
   columns: any;
   data: any;
-  renderRowSubComponent?: any;
-  paginated?: undefined | boolean;
-  fetchData?: any;
-  loading?: any;
-  initialPageIndex?: number;
-  initialPageSize?: number;
-  pageCount?: any;
   dataSize?: any;
+  fetchData?: any;
+  renderRowSubComponent?: any;
+  loading?: any;
+  paginated?: undefined | boolean;
+  pageIndex?: number;
+  pageSize?: number;
+  pageCount?: any;
   enableSearch?: boolean;
-  initialQuery?: string;
+  query?: string;
 }
 
 const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
@@ -35,7 +36,6 @@ const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
   if (!prev_index && pageIndex === 0 && !query) {
     return;
   }
-  console.log('Recording history!', search_params.toString());
   if (prev_index != pageIndex || prev_size != pageSize || prev_query != query) {
     search_params.delete('size');
     search_params.append('size', pageSize);
@@ -54,26 +54,25 @@ const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
 const Table: React.FC<ITableFcProps> = ({
   columns: userColumns,
   data,
-  renderRowSubComponent,
-  paginated,
-  fetchData,
-  loading,
-  initialPageIndex,
-  initialPageSize,
-  pageCount: controlledPageCount,
   dataSize,
+  fetchData,
+  renderRowSubComponent,
+  loading,
+  paginated,
+  pageIndex: controlledPageIndex,
+  pageSize: controlledPageSize,
+  pageCount: controlledPageCount,
   enableSearch,
-  initialQuery
+  query: controlledQuery
 }: any) => {
+  const searching = React.useRef(false);
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-
     // Non-paginated table
     rows,
-
     // Paginated table
     page,
     canPreviousPage,
@@ -91,43 +90,39 @@ const Table: React.FC<ITableFcProps> = ({
       columns: userColumns,
       data,
       initialState: {
-        pageIndex: initialPageIndex,
-        pageSize: initialPageSize,
-        globalFilter: initialQuery
+        pageIndex: controlledPageIndex,
+        pageSize: controlledPageSize,
+        globalFilter: controlledQuery
       },
       manualPagination: paginated,
+      autoResetPage: true,
       pageCount: controlledPageCount,
-      manualGlobalFilter: true
+      manualGlobalFilter: enableSearch,
+      autoResetGlobalFilter: true
     } as any,
-    ...(paginated
-      ? [useGlobalFilter, useExpanded, usePagination]
-      : [useExpanded])
+    ...(enableSearch ? [useGlobalFilter] : []),
+    useExpanded,
+    ...(paginated ? [usePagination] : [])
   ) as any;
 
-  if (paginated) {
-    React.useEffect(() => {
-      fetchData({
-        pageIndex: pageIndex,
-        pageSize: pageSize,
-        query: globalFilter
-      });
-    }, [pageIndex, pageSize]);
-  }
+  // Debounce our onFetchData call for 100ms
+  const fetchDataDebounced = useAsyncDebounce(fetchData, 100);
 
-  if (enableSearch) {
-    React.useEffect(() => {
+  // When these table states change, fetch new data!
+  React.useEffect(() => {
+    if (searching.current) {
       gotoPage(0);
-      fetchData({
-        pageIndex: pageIndex,
-        pageSize: pageSize,
-        query: globalFilter
-      });
-    }, [globalFilter]);
-  }
+    }
+    searching.current = false;
+    fetchDataDebounced({
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+      query: globalFilter
+    });
+  }, [fetchDataDebounced, pageIndex, pageSize, globalFilter]);
 
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
   const showPaginationInformation = dataSize > pageSize;
-
   return (
     <>
       {enableSearch && (
@@ -136,7 +131,10 @@ const Table: React.FC<ITableFcProps> = ({
           placeholder="Search"
           type="text"
           value={globalFilter || ''}
-          onChange={e => setGlobalFilter(e.target.value)}
+          onChange={e => {
+            searching.current = true;
+            setGlobalFilter(e.target.value);
+          }}
         />
       )}
       <table {...getTableProps()} className="jp-table">
@@ -215,16 +213,22 @@ export const PaginatedTable = ({
   const initialPageSize = parseInt(search_params.get('size') || '25');
   const initialQuery = search_params.get('query') || '';
 
-  const [data, setData] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-  const [pageCount, setPageCount] = React.useState(0);
-  const [dataSize, setDataSize] = React.useState(0);
+  const [state, setState] = React.useState({
+    data: [],
+    dataSize: 0,
+    loading: false,
+    pageIndex: initialPageIndex,
+    pageSize: initialPageSize,
+    pageCount: 0,
+    query: initialQuery
+  });
   const fetchIdRef = React.useRef(0);
 
   const fetchData = React.useCallback(
     async ({ pageSize, pageIndex, query }) => {
       const fetchId = ++fetchIdRef.current;
-      setLoading(true);
+      setState({ ...state, loading: true });
+
       const {
         data: { pagination, result }
       }: any = await http.get(url, {
@@ -234,12 +238,16 @@ export const PaginatedTable = ({
       });
 
       if (fetchId === fetchIdRef.current) {
-        console.debug('Fetching', pageIndex, pageSize, query);
         recordPaginationHistory({ pageIndex, pageSize, query });
-        setData(result);
-        setDataSize(pagination.all_records_count);
-        setPageCount(Math.ceil(pagination.all_records_count / pageSize));
-        setLoading(false);
+        setState({
+          data: result,
+          dataSize: pagination.all_records_count,
+          loading: false,
+          pageIndex: pageIndex,
+          pageSize: pageSize,
+          pageCount: Math.ceil(pagination.all_records_count / pageSize),
+          query: query
+        });
       }
     },
     []
@@ -248,17 +256,17 @@ export const PaginatedTable = ({
   return (
     <Table
       columns={columns}
-      data={data}
-      renderRowSubComponent={renderRowSubComponent}
-      paginated
+      data={state.data}
+      dataSize={state.dataSize}
       fetchData={fetchData}
-      loading={loading}
-      initialPageIndex={initialPageIndex}
-      initialPageSize={initialPageSize}
-      pageCount={pageCount}
-      dataSize={dataSize}
+      renderRowSubComponent={renderRowSubComponent}
+      loading={state.loading}
+      paginated={true}
+      pageIndex={state.pageIndex}
+      pageSize={state.pageSize}
+      pageCount={state.pageCount}
       enableSearch={enableSearch}
-      initialQuery={initialQuery}
+      query={state.query}
     />
   );
 };
@@ -267,7 +275,7 @@ Table.propTypes = {
   columns: PropTypes.any,
   data: PropTypes.any,
   renderRowSubComponent: PropTypes.any,
-  paginated: PropTypes.any
+  enableSearch: PropTypes.any
 };
 
 export default Table;

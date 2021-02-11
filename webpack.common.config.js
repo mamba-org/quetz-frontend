@@ -3,7 +3,12 @@ const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: ['whatwg-fetch', './lib/index.js'],
+  entry: [
+    'whatwg-fetch',
+    'react-app-polyfill/ie9', // Only if you want to support IE 9
+    'react-app-polyfill/stable',
+    './lib/index.js'
+  ],
   output: {
     path: __dirname + '/build',
     filename: 'bundle.js',
