@@ -2,7 +2,6 @@ import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import FetchHoc from './fetch-hoc';
 import { BACKEND_HOST } from '../utils/constants';
-import { getUrlParameter } from '../utils';
 import Breadcrumbs from './breadcrumbs';
 import Table from './table';
 import { getPackageSearchTableColumns } from '../utils/table-configs';
@@ -24,7 +23,7 @@ class SearchPage extends React.Component<any, any> {
   };
 
   render(): React.ReactElement {
-    const searchText = getUrlParameter('q');
+    const searchText = new URLSearchParams(window.location.search).get('q');
     const breadcrumbItems = [
       {
         text: 'Home',

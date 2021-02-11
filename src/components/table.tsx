@@ -1,4 +1,9 @@
-import { useExpanded, useTable, usePagination } from 'react-table';
+import {
+  useExpanded,
+  useTable,
+  usePagination,
+  useGlobalFilter
+} from 'react-table';
 import clsx from 'clsx';
 
 import PropTypes from 'prop-types';
@@ -14,10 +19,37 @@ interface ITableFcProps {
   paginated?: undefined | boolean;
   fetchData?: any;
   loading?: any;
+  initialPageIndex?: number;
+  initialPageSize?: number;
   pageCount?: any;
   dataSize?: any;
   enableSearch?: boolean;
+  initialQuery?: string;
 }
+
+const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
+  const search_params = new URLSearchParams(window.location.search);
+  const prev_index = search_params.get('index');
+  const prev_size = search_params.get('size');
+  const prev_query = search_params.get('query') || '';
+  // if (!prev_index && pageIndex === 0) {
+  //   return;
+  // }
+  console.log('Recording history!', search_params.toString());
+  if (prev_index != pageIndex || prev_size != pageSize || prev_query != query) {
+    search_params.delete('size');
+    search_params.append('size', pageSize);
+    search_params.delete('index');
+    search_params.append('index', pageIndex);
+
+    if (query) {
+      search_params.delete('query');
+      search_params.append('query', query);
+    }
+
+    window.history.pushState(null, '', '?' + search_params.toString());
+  }
+};
 
 const Table: React.FC<ITableFcProps> = ({
   columns: userColumns,
@@ -26,9 +58,12 @@ const Table: React.FC<ITableFcProps> = ({
   paginated,
   fetchData,
   loading,
+  initialPageIndex,
+  initialPageSize,
   pageCount: controlledPageCount,
   dataSize,
-  enableSearch
+  enableSearch,
+  initialQuery
 }: any) => {
   const {
     getTableProps,
@@ -49,31 +84,45 @@ const Table: React.FC<ITableFcProps> = ({
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize }
+    setGlobalFilter,
+    state: { pageIndex, pageSize, globalFilter }
   } = useTable(
     {
       columns: userColumns,
       data,
-      initialState: { pageIndex: 0, pageSize: 25 },
+      initialState: {
+        pageIndex: initialPageIndex,
+        pageSize: initialPageSize,
+        globalFilter: initialQuery
+      },
       manualPagination: paginated,
-      pageCount: controlledPageCount
+      pageCount: controlledPageCount,
+      manualGlobalFilter: true
     } as any,
-    useExpanded,
-    ...(paginated ? [usePagination] : [])
+    ...(paginated
+      ? [useGlobalFilter, useExpanded, usePagination]
+      : [useExpanded])
   ) as any;
-
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  if (enableSearch) {
-    React.useEffect(() => {
-      fetchData({ pageIndex, pageSize, query: searchTerm });
-    }, [searchTerm]);
-  }
 
   if (paginated) {
     React.useEffect(() => {
-      fetchData({ pageIndex, pageSize, query: searchTerm });
+      fetchData({
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        query: globalFilter
+      });
     }, [pageIndex, pageSize]);
+  }
+
+  if (enableSearch) {
+    React.useEffect(() => {
+      gotoPage(0);
+      fetchData({
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        query: globalFilter
+      });
+    }, [globalFilter]);
   }
 
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
@@ -86,8 +135,8 @@ const Table: React.FC<ITableFcProps> = ({
           className="input search-input table-search-input"
           placeholder="Search"
           type="text"
-          value={searchTerm}
-          onChange={e => setSearchTerm(e.target.value)}
+          value={globalFilter || ''}
+          onChange={e => setGlobalFilter(e.target.value)}
         />
       )}
       <table {...getTableProps()} className="jp-table">
@@ -160,6 +209,12 @@ export const PaginatedTable = ({
   renderRowSubComponent,
   enableSearch
 }: any) => {
+  // get initial state from URL params
+  const search_params = new URLSearchParams(window.location.search);
+  const initialPageIndex = parseInt(search_params.get('index') || '0');
+  const initialPageSize = parseInt(search_params.get('size') || '25');
+  const initialQuery = search_params.get('query') || '';
+
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [pageCount, setPageCount] = React.useState(0);
@@ -170,7 +225,6 @@ export const PaginatedTable = ({
     async ({ pageSize, pageIndex, query }) => {
       const fetchId = ++fetchIdRef.current;
       setLoading(true);
-
       const {
         data: { pagination, result }
       }: any = await http.get(url, {
@@ -180,6 +234,8 @@ export const PaginatedTable = ({
       });
 
       if (fetchId === fetchIdRef.current) {
+        console.debug('Fetching', pageIndex, pageSize, query);
+        recordPaginationHistory({ pageIndex, pageSize, query });
         setData(result);
         setDataSize(pagination.all_records_count);
         setPageCount(Math.ceil(pagination.all_records_count / pageSize));
@@ -197,9 +253,12 @@ export const PaginatedTable = ({
       paginated
       fetchData={fetchData}
       loading={loading}
+      initialPageIndex={initialPageIndex}
+      initialPageSize={initialPageSize}
       pageCount={pageCount}
       dataSize={dataSize}
       enableSearch={enableSearch}
+      initialQuery={initialQuery}
     />
   );
 };
