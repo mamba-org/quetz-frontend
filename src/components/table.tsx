@@ -32,9 +32,9 @@ const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
   const prev_index = search_params.get('index');
   const prev_size = search_params.get('size');
   const prev_query = search_params.get('query') || '';
-  // if (!prev_index && pageIndex === 0) {
-  //   return;
-  // }
+  if (!prev_index && pageIndex === 0 && !query) {
+    return;
+  }
   console.log('Recording history!', search_params.toString());
   if (prev_index != pageIndex || prev_size != pageSize || prev_query != query) {
     search_params.delete('size');
