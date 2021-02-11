@@ -47,6 +47,10 @@ class ChannelDetails extends React.PureComponent<any, any> {
 
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.delete('tab');
+    // delete things from pagination
+    urlParams.delete('index');
+    urlParams.delete('query');
+    urlParams.delete('size');
     urlParams.append('tab', INDEX_TO_HASH[selectedTabIndex]);
     history.pushState(null, '', '?' + urlParams.toString());
     // history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
