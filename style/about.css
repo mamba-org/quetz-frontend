@@ -135,7 +135,7 @@
 
 .banner .button:hover {
   background: #000;
-  color: #FFF;
+  color: #fff;
 }
 
 .banner .button-yellow {
@@ -146,9 +146,8 @@
 
 .banner .button:hover {
   background: #000;
-  color: #FFF;
+  color: #fff;
 }
-
 
 .logos-holder {
   text-align: center;
@@ -184,14 +183,14 @@
   width: 100%;
   position: absolute;
   bottom: 0px;
-  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 .about-quetz-banner-content-container .content-flex {
-  margin: 30px auto 20px
+  margin: 30px auto 20px;
 }
 
 .about-quetz-banner-content-container .flex-1of3 {
-  border-right: 1px solid #FFF;
+  border-right: 1px solid #fff;
   padding: 0px 15px 0px 15px;
   text-align: center;
 }
@@ -202,7 +201,7 @@
 
 .about-quetz-content {
   padding: 30px 0;
-  background: #FFF;
+  background: #fff;
   width: 100%;
   height: 200px;
   color: #333;
@@ -256,12 +255,12 @@
 
 .about-quetz-content .button:hover {
   background: #000;
-  color: #FFF;
+  color: #fff;
 }
 
 .about-quetz-content .button.button-black {
   background: #000;
-  color: #FFF;
+  color: #fff;
 }
 
 .about-quetz-content .button.button-black:hover {

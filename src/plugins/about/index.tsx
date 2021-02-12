@@ -114,15 +114,18 @@ class About extends ReactWidget {
             <div className="about-quetz-banner-content">
               <h1 className="heading1">MAMBA</h1>
               <hr />
-                <div className="paragraph">
-                  <h3 className="heading3">
-                    Blazing fast package installation <i>for all platforms, programming languages, and architectures.</i>
-                  </h3>
-                </div>
-                <div className="logos-holder">
-                  <img src="img/logos.svg" />
-                  <a className="button button-yellow">Get Started</a>
-                </div>
+              <div className="paragraph">
+                <h3 className="heading3">
+                  Blazing fast package installation{' '}
+                  <i>
+                    for all platforms, programming languages, and architectures.
+                  </i>
+                </h3>
+              </div>
+              <div className="logos-holder">
+                <img src="img/logos.svg" />
+                <a className="button button-yellow">Get Started</a>
+              </div>
             </div>
 
             <div className="about-quetz-banner-callout">
@@ -131,19 +134,24 @@ class About extends ReactWidget {
                   <div className="flex-1of3">
                     <h3>FAST</h3>
                     <p>
-                      Mamba is programmed in C++ for maximum efficiency. It uses the fast and battle-tested libsolv library for real dependency solving.
+                      Mamba is programmed in C++ for maximum efficiency. It uses
+                      the fast and battle-tested libsolv library for real
+                      dependency solving.
                     </p>
                   </div>
                   <div className="flex-1of3">
                     <h3>CROSS-PLATFORM</h3>
                     <p>
-                      The most reliable cross-platform package management: use the same commands on Windows, OS X and Linux.
+                      The most reliable cross-platform package management: use
+                      the same commands on Windows, OS X and Linux.
                     </p>
                   </div>
                   <div className="flex-1of3">
                     <h3>PARTICIPATE</h3>
                     <p>
-                      Package your own software and make it readily available for customers (for example through the conda-forge channel)!
+                      Package your own software and make it readily available
+                      for customers (for example through the conda-forge
+                      channel)!
                     </p>
                   </div>
                 </div>
@@ -170,22 +178,26 @@ class About extends ReactWidget {
                     <h3>FAST</h3>
                     <p>
                       Quetz is relentlessly optimized to deliver packages as
-                      fast as possible, on any platform. For bioscience, robotics, fintech, data-science and healthcare.
+                      fast as possible, on any platform. For bioscience,
+                      robotics, fintech, data-science and healthcare.
                     </p>
                   </div>
                   <div className="flex-1of3">
                     <h3>SECURE</h3>
                     <p>
-                      We follow best practices to deliver packages, and we have implementation for several authentication mechanisms.
-                      Quetz can seamlessly integrate with your existing SSO solution through plugins.
+                      We follow best practices to deliver packages, and we have
+                      implementation for several authentication mechanisms.
+                      Quetz can seamlessly integrate with your existing SSO
+                      solution through plugins.
                     </p>
                   </div>
                   <div className="flex-1of3">
                     <h3>ON THE SHOULDERS...</h3>
                     <p>
-                    Of giants! Leverage the work of the open-source community to create your in-house distribution.
-                    Choosing an enterprise quetz deployment means
-                    access to mirrors of popular conda package repositories.
+                      Of giants! Leverage the work of the open-source community
+                      to create your in-house distribution. Choosing an
+                      enterprise quetz deployment means access to mirrors of
+                      popular conda package repositories.
                     </p>
                   </div>
                 </div>
@@ -201,19 +213,19 @@ class About extends ReactWidget {
               </div>
               <div className="flex-2of3">
                 <p>
-                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                aliquyam erat, sed diam voluptua. At vero eos et accusam et
-                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
-                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-                eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                sed diam voluptua. At vero eos et accusam et justo duo dolores
-                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-                est Lorem ipsum dolor sit amet.
+                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                  diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem
+                  ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+                  nonumy eirmod tempor invidunt ut labore et dolore magna
+                  aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                  justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+                  sea takimata sanctus est Lorem ipsum dolor sit amet.
                 </p>
               </div>
-             </div>
+            </div>
           </div>
         </div>
       </div>
