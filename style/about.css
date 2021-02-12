@@ -2,6 +2,41 @@
   width: 100%;
   height: 100%;
   overflow-y: hidden;
+  scroll-behavior: smooth;
+}
+
+.page-about-indicator {
+  position: fixed;
+  top: 48%;
+  left: 0px;
+}
+
+.page-about-indicator ul {
+  list-style: none;
+}
+
+.page-about-indicator li {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  opacity: 60%;
+  font-size: 20px;
+}
+
+.page-about-indicator li[data-status='true'] {
+  opacity: 100%;
+}
+
+.page-about-indicator li:hover {
+  cursor: pointer;
+  opacity: 100%;
+}
+
+.page-about-indicator .indicator {
+  width: 3px;
+  height: 25px;
+  margin-right: 10px;
+  background-color: white;
 }
 
 .page-about-mamba {
@@ -266,4 +301,12 @@
 .about-quetz-content .button.button-black:hover {
   background: yellow;
   color: #000;
+}
+
+.page-about-boa {
+  width: 100%;
+  padding: 50px;
+  min-height: calc(100vh - var(--jp-private-topbar-height));
+  display: flex;
+  justify-content: center;
 }
