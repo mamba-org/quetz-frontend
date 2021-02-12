@@ -6,15 +6,18 @@
 
 .page-about-mamba {
   width: 100%;
-  padding: 50px;
+  /*padding: 50px;*/
   min-height: calc(100vh - var(--jp-private-topbar-height));
   display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
+  /*background: url(img/quetz-backgraund.png) no-repeat center center fixed;*/
+  /*background: url(img/quetz-bg-yellow.jpg) no-repeat center center fixed;*/
   background: url(img/mamba.jpg) no-repeat center center fixed;
   background-size: cover;
 }
 
-.about-mamba {
+.about-mamba-banner {
   width: 70%;
   min-width: 400px;
   padding: 20px;
@@ -43,11 +46,15 @@
 
 .page-about-quetz {
   width: 100%;
-  padding: 50px;
+  /*padding: 50px;*/
   min-height: calc(100vh - var(--jp-private-topbar-height));
   display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
-  background: url(img/quetz-backgraund.png) no-repeat center center fixed;
+  /*background: url(img/quetz-backgraund.png) no-repeat center center fixed;*/
+  /*background: url(img/quetz-bg-yellow.jpg) no-repeat center center fixed;*/
+  background: url(img/quetz-bird.jpg) no-repeat center center fixed;
+
   background-size: cover;
 }
 
@@ -97,4 +104,166 @@
 
 .about-quetz-column p {
   font-size: 18px;
+}
+
+.banner {
+  height: 100%;
+  position: relative;
+  flex: 1;
+  align-items: stretch;
+  padding: 30px 0;
+}
+
+.banner .button {
+  height: 40px;
+  line-height: 1;
+  -webkit-margin-end: 0;
+  margin-inline-end: 0;
+  padding: 10px 32px;
+  white-space: nowrap;
+
+  color: #000;
+  border: 3px solid #000;
+
+  text-transform: uppercase;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 5px 0 0 0;
+  transition: 0.5s ease-in all;
+}
+
+.banner .button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.banner .button-yellow {
+  background: yellow;
+  border-color: yellow;
+  color: #000;
+}
+
+.banner .button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.logos-holder {
+  text-align: center;
+  position: relative;
+}
+
+.logos-holder img {
+  width: 500px;
+}
+
+.logos-holder .button {
+  position: absolute;
+  width: 200px;
+  top: calc(50% - 20px);
+  left: calc(50% - 100px);
+}
+
+.about-quetz-banner-callout {
+  /*height: 100%;*/
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  margin: 0 auto;
+  width: 100%;
+}
+.about-quetz-banner-content {
+  margin: 10px auto;
+  width: 975px;
+}
+
+.about-quetz-banner-content-container {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.about-quetz-banner-content-container .content-flex {
+  margin: 30px auto 20px;
+}
+
+.about-quetz-banner-content-container .flex-1of3 {
+  border-right: 1px solid #fff;
+  padding: 0px 15px 0px 15px;
+  text-align: center;
+}
+
+.about-quetz-banner-content-container h3 {
+  text-align: center;
+}
+
+.about-quetz-content {
+  padding: 30px 0;
+  background: #fff;
+  width: 100%;
+  height: 200px;
+  color: #333;
+}
+
+.content-flex {
+  width: 975px;
+  margin: 5px auto 0;
+  display: flex;
+}
+
+.content-flex > div {
+  padding-right: 30px;
+}
+
+.content-flex > div:last-child {
+  padding-right: 0px;
+}
+
+.content-flex h3 {
+  margin-top: 0px;
+}
+
+.flex-1of3 {
+  width: 33%;
+}
+
+.flex-2of3 {
+  min-width: 67%;
+}
+
+.about-quetz-content .button {
+  height: 40px;
+  line-height: 1;
+  -webkit-margin-end: 0;
+  margin-inline-end: 0;
+  padding: 10px 32px;
+  white-space: nowrap;
+  min-width: calc(50% - 8px);
+
+  color: #000;
+  border: 3px solid #000;
+
+  text-transform: uppercase;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+  margin: 5px 0 0 0;
+  transition: 0.5s ease-in all;
+}
+
+.about-quetz-content .button:hover {
+  background: #000;
+  color: #fff;
+}
+
+.about-quetz-content .button.button-black {
+  background: #000;
+  color: #fff;
+}
+
+.about-quetz-content .button.button-black:hover {
+  background: yellow;
+  color: #000;
 }

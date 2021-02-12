@@ -68,11 +68,16 @@ module.exports = {
         {
           from: 'public',
           to: ''
+        },
+        {
+          from: 'style/img',
+          to: 'img'
         }
       ]
     }),
     new HtmlWebpackPlugin({
-      template: 'templates/index.ejs'
+      template: 'templates/index.ejs',
+      inject: false
     })
   ]
 };
