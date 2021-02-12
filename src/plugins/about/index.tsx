@@ -110,65 +110,110 @@ class About extends ReactWidget {
     return (
       <div>
         <div className="page-about-mamba">
-          <div className="about-mamba">
-            <h1 className="heading1">MAMBA</h1>
-            <hr />
-            <div className="paragraph">
-              <p>Built upon OpenSUSE&#39;s libsolv, which was:</p>
-              <ul className="about-list">
-                <li>ported to Windows and OSX</li>
-                <li>adapted to handle conda&#39;s requirements specs.</li>
-              </ul>
+          <div className="banner">
+            <div className="about-quetz-banner-content">
+              <h1 className="heading1">MAMBA</h1>
+              <hr />
+                <div className="paragraph">
+                  <h3 className="heading3">
+                    Blazing fast package installation <i>for all platforms, programming languages, and architectures.</i>
+                  </h3>
+                </div>
+                <div className="logos-holder">
+                  <img src="img/logos.svg" />
+                  <a className="button button-yellow">Get Started</a>
+                </div>
             </div>
-            <h3 className="heading3">Benefits</h3>
-            <div className="paragraph">
-              <ul className="about-mamba-list">
-                <li>
-                  Speed. Several orders of magnitude faster than conda for
-                  resolving package specs.
-                </li>
-                <li>
-                  Can be built into a single-binary executable (micromamba)
-                  which does not require a Python interpreter.
-                </li>
-                <li>4Mb download to replace miniconda / miniforge.</li>
-                <li>Coming soon: language bindings (R, Julia)</li>
-              </ul>
+
+            <div className="about-quetz-banner-callout">
+              <div className="about-quetz-banner-content-container">
+                <div className="content-flex">
+                  <div className="flex-1of3">
+                    <h3>FAST</h3>
+                    <p>
+                      Mamba is programmed in C++ for maximum efficiency. It uses the fast and battle-tested libsolv library for real dependency solving.
+                    </p>
+                  </div>
+                  <div className="flex-1of3">
+                    <h3>CROSS-PLATFORM</h3>
+                    <p>
+                      The most reliable cross-platform package management: use the same commands on Windows, OS X and Linux.
+                    </p>
+                  </div>
+                  <div className="flex-1of3">
+                    <h3>PARTICIPATE</h3>
+                    <p>
+                      Package your own software and make it readily available for customers (for example through the conda-forge channel)!
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="page-about-quetz">
-          <div className="about-quetz">
-            <h1 className="heading1">QUETZ</h1>
-            <hr />
-            <div className="section">
+          <div className="banner">
+            <div className="about-quetz-banner-content">
+              <h1 className="heading1">QUETZ</h1>
+              <hr />
               <div className="paragraph">
                 <h3 className="heading3">
                   The package server for enterprise-ready package distribution
                 </h3>
               </div>
             </div>
-            <div className="section">
-              <div className="about-quetz-container">
-                <div className="about-quetz-row">
-                  <div className="about-quetz-column">
-                    <h2 className="heading2">FAST</h2>
+            <div className="about-quetz-banner-callout">
+              <div className="about-quetz-banner-content-container">
+                <div className="content-flex">
+                  <div className="flex-1of3">
+                    <h3>FAST</h3>
                     <p>
                       Quetz is relentlessly optimized to deliver packages as
-                      fast as possible
+                      fast as possible, on any platform. For bioscience, robotics, fintech, data-science and healthcare.
                     </p>
                   </div>
-                  <div className="about-quetz-column">
-                    <h2 className="heading2">SECURE</h2>
-                    <p></p>
+                  <div className="flex-1of3">
+                    <h3>SECURE</h3>
+                    <p>
+                      We follow best practices to deliver packages, and we have implementation for several authentication mechanisms.
+                      Quetz can seamlessly integrate with your existing SSO solution through plugins.
+                    </p>
                   </div>
-                  <div className="about-quetz-column">
-                    <h2 className="heading2">LOTS OF GOODIES</h2>
+                  <div className="flex-1of3">
+                    <h3>ON THE SHOULDERS...</h3>
+                    <p>
+                    Of giants! Leverage the work of the open-source community to create your in-house distribution.
+                    Choosing an enterprise quetz deployment means
+                    access to mirrors of popular conda package repositories.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div className="about-quetz-content">
+            <div className="content-flex">
+              <div className="flex-1of3">
+                <h3>QUETZ</h3>
+                <a className="button">Get support now</a>
+                <a className="button button-black">Quetz on-premise</a>
+              </div>
+              <div className="flex-2of3">
+                <p>
+                Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
+                diam nonumy eirmod tempor invidunt ut labore et dolore magna
+                aliquyam erat, sed diam voluptua. At vero eos et accusam et
+                justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum
+                dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+                eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                sed diam voluptua. At vero eos et accusam et justo duo dolores
+                et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
+                est Lorem ipsum dolor sit amet.
+                </p>
+              </div>
+             </div>
           </div>
         </div>
       </div>
