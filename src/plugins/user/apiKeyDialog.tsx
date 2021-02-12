@@ -28,7 +28,6 @@ export class RequestAPIKeyDialog extends ReactWidget
     const expire_at = moment()
       .add(1, 'months')
       .format(moment.HTML5_FMT.DATE);
-    console.debug(expire_at);
     this._api_key_info = {
       description: '',
       expire_at,
@@ -44,6 +43,7 @@ export class RequestAPIKeyDialog extends ReactWidget
     };
     this._channels = [];
     this._packages = [];
+    this._roles = [];
     this._packages_channel = [];
   }
 
@@ -128,6 +128,28 @@ export class RequestAPIKeyDialog extends ReactWidget
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     this._role.channel = event.target.value;
+    const channel = this._channels.find(
+      channel => channel.name === this._role.channel
+    );
+    if (channel) {
+      switch (channel.role) {
+        case 'owner':
+          this._roles = ['member', 'maintainer', 'owner'];
+          break;
+        case 'maintainer':
+          this._roles = ['member', 'maintainer'];
+          break;
+        case 'member':
+          this._roles = ['member'];
+          break;
+        default:
+          this._roles = [];
+          break;
+      }
+    } else {
+      this._roles = [];
+    }
+
     this._packages_channel = this._packages.filter(
       value => value.channel_name === this._role.channel
     );
@@ -138,6 +160,20 @@ export class RequestAPIKeyDialog extends ReactWidget
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     this._role.package = event.target.value;
+    const pkg = this._packages.find(pkg => pkg.name === this._role.package);
+    if (pkg) {
+      switch (pkg.role) {
+        case 'owner':
+          this._roles = ['member', 'maintainer', 'owner'];
+          break;
+        case 'maintainer':
+          this._roles = ['member', 'maintainer'];
+          break;
+        case 'member':
+          this._roles = ['member'];
+          break;
+      }
+    }
     this.update();
   };
 
@@ -230,15 +266,11 @@ export class RequestAPIKeyDialog extends ReactWidget
             value={this._role.role}
             onChange={this._handleRole}
           >
-            <option key="1" value="member">
-              member
-            </option>
-            <option key="2" value="maintainer">
-              maintainer
-            </option>
-            <option key="3" value="owner">
-              owner
-            </option>
+            {this._roles.map((role, i) => (
+              <option key={i} value={role}>
+                {role}
+              </option>
+            ))}
           </select>
         </div>
       );
@@ -320,11 +352,11 @@ export class RequestAPIKeyDialog extends ReactWidget
               <InlineLoader text="Fetching user channels and packages" />
             )}
 
-            {this._channels.length !== 0 && (
+            {this._channels.length !== 0 ? (
               <>
                 {renderChannels()}
 
-                {this._role.channel.length !== 0 && (
+                {this._role.channel.length !== 0 ? (
                   <>
                     {this._packages_channel.length !== 0 && renderPackages()}
 
@@ -336,11 +368,15 @@ export class RequestAPIKeyDialog extends ReactWidget
                       </Button>
                     </div>
                   </>
+                ) : (
+                  <label>No packages available</label>
                 )}
               </>
+            ) : (
+              <label>No channels available</label>
             )}
 
-            {renderTable()}
+            {this._api_key_info.roles.length !== 0 && renderTable()}
           </>
         )}
       </form>
@@ -355,6 +391,7 @@ export class RequestAPIKeyDialog extends ReactWidget
   private _channels: Channel[];
   private _packages: Package[];
   private _packages_channel: Package[];
+  private _roles: string[];
 }
 
 /**
@@ -373,7 +410,6 @@ export class APIKeyDialog extends ReactWidget
   }
 
   render(): JSX.Element {
-    console.debug(this._roles);
     return (
       <table className="jp-table table-small">
         <thead>
