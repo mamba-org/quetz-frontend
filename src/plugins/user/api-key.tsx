@@ -36,7 +36,6 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     if (resp.detail) {
       return console.error(resp.detail);
     }
-    console.debug(resp);
     this.setState({
       apiKeys: resp,
       apiStatus: API_STATUSES.SUCCESS
