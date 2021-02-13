@@ -43,4 +43,7 @@ async function main(): Promise<void> {
   await app.start();
 }
 
-window.addEventListener('load', main);
+window.addEventListener('load', event => {
+  console.debug('load');
+  main();
+});
