@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { ModuleFederationPlugin } = webpack.container;
 
 module.exports = {
   entry: [
@@ -68,16 +69,23 @@ module.exports = {
         {
           from: 'public',
           to: ''
-        },
-        {
-          from: 'style/img',
-          to: 'img'
         }
       ]
     }),
     new HtmlWebpackPlugin({
       template: 'templates/index.ejs',
       inject: false
+    }),
+    new ModuleFederationPlugin({
+      library: {
+        type: 'var',
+        name: ['_QUETZ', 'CORE_LIBRARY_FEDERATION']
+      },
+      name: 'CORE_FEDERATION'
+      /*shared: {
+        ...labJson.resolutions,
+        ...singletons
+      }*/
     })
   ]
 };

@@ -1,0 +1,7 @@
+tbody.qs-scrollable-Table {
+  overflow-y: auto;
+}
+
+tr.qs-clickable-Row:hover {
+  cursor: pointer;
+}

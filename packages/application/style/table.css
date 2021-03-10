@@ -1,0 +1,105 @@
+.jp-table {
+  width: 100%;
+  border-spacing: 0;
+  font-size: var(--jp-ui-font-size2);
+}
+
+.jp-table tbody,
+.jp-table tr {
+  width: 100%;
+}
+
+.jp-table th,
+.jp-table td {
+  max-width: 400px;
+  margin: 0;
+  /*padding: calc(2 * var(--jp-cell-padding)) var(--jp-cell-padding);*/
+  padding: 12px;
+  border-bottom: 1px solid var(--jp-layout-color2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jp-table tr.expanded td {
+  border-bottom: 0;
+}
+
+.jp-table td.jp-table-expanded-contents {
+  padding: 10px 0 20px 60px;
+}
+
+.jp-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.jp-table tr[data-status='pending'] {
+  background-color: orange;
+  color: black;
+}
+
+.jp-table tr[data-status='success'] {
+  background-color: green;
+  color: black;
+}
+
+.jp-table tr[data-status='paused'] {
+  background-color: red;
+  color: black;
+}
+
+.jp-table th {
+  text-align: left;
+}
+
+.jp-table a {
+  color: var(--jp-quetz-primary-color);
+}
+
+.jp-table a:hover {
+  text-decoration: underline;
+}
+
+.jp-table-controls {
+  height: fit-content;
+  margin: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.jp-table-controls-left {
+  height: fit-content;
+  display: flex;
+  align-items: flex-start;
+}
+
+.jp-table-controls-right {
+  height: fit-content;
+  display: flex;
+  align-items: flex-end;
+}
+
+.jp-table-controls-text {
+  height: 36px;
+  margin: 0px;
+}
+
+.jp-table-controls-text .padding {
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.jp-table-controls-text .padding-text {
+  margin-left: 10px;
+  padding: 7px;
+}
+
+.jp-table-controls-text .paragraph {
+  margin-bottom: 0px;
+}
+
+.table-search-input {
+  margin: 10px 0;
+  width: 100%;
+}

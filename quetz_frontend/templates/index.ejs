@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{page_config['appName'] | e}}</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+  <%= htmlWebpackPlugin.tags.headTags %>
+</head>
+<body>
+
+  {# Copy so we do not modify the page_config with updates. #}
+  {% set page_config_full = page_config.copy() %}
+
+  <script id="jupyter-config-data" type="application/json">
+    {{ page_config | tojson }}
+  </script>
+
+  <script type="text/javascript">
+    /* Remove token from URL. */
+    (function () {
+      var parsedUrl = new URL(window.location.href);
+      if (parsedUrl.searchParams.get('token')) {
+        parsedUrl.searchParams.delete('token');
+        window.history.replaceState({ }, '', parsedUrl.href);
+      }
+    })();
+  </script>
+  <%= htmlWebpackPlugin.tags.bodyTags %>
+
+</body>
+</html>

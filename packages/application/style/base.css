@@ -1,0 +1,67 @@
+:root {
+  --jp-private-topbar-height: 60px;
+  --jp-quetz-primary-color: #ffff00;
+}
+
+html {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Logo dark style */
+body[data-jp-theme-light='false'] path#quetz-logo-text,
+body[data-jp-theme-light='false'] path#quetz-logo-swirl {
+  fill: var(--jp-quetz-primary-color);
+}
+
+body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
+  fill: #111;
+  stroke: #111;
+}
+
+button {
+  cursor: pointer;
+}
+
+#main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#main-panel {
+  overflow: auto;
+  background: var(--jp-layout-color1);
+  color: var(--jp-ui-font-color0);
+  /* padding: var(--jp-cell-padding); */
+}
+
+body[data-jp-theme-light='false'] #top-panel {
+  color: var(--jp-quetz-primary-color);
+}
+
+#top-panel {
+  background: var(--jp-layout-color1);
+  display: flex;
+  min-height: var(--jp-private-topbar-height);
+}
+
+.p-Widget {
+  overflow: unset;
+}
+
+.lm-Widget {
+  overflow: unset;
+}
+
+#main-menu {
+  margin-right: 0;
+  padding-right: 0;
+}

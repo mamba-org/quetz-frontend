@@ -1,0 +1,100 @@
+.search-input {
+  flex-grow: 1;
+}
+
+.channels-search .search-input {
+  margin: 0 0 20px;
+}
+
+.list-row {
+  display: flex;
+  color: #ffffff;
+  padding: 12px 20px;
+  align-items: center;
+  border-bottom: 1px solid #404040;
+}
+
+.list-row.clickable {
+  cursor: pointer;
+}
+
+.list-row.clickable:hover {
+  background-color: #404040;
+}
+
+.channel-list-description {
+  margin: 5px 0 0;
+  color: #aaaaaa;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.channel-icon-column {
+  width: 5%;
+}
+
+.channel-name-column {
+  width: 45%;
+}
+
+.channel-packages-column {
+  width: 35%;
+}
+
+.channel-members-column {
+  width: 20%;
+}
+
+.page-heading {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 11px 42px;
+}
+
+.outline-button {
+  align-self: flex-end;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  height: 33px;
+  padding: 0 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.api-key-table {
+  width: 100%;
+}
+
+.api-key-row {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.api-key-row:first-child {
+  border-bottom: 1px solid #ffffff;
+}
+
+.member-icon-column {
+  width: 10%;
+}
+.member-name-column {
+  width: 40%;
+}
+.member-username-column {
+  width: 30%;
+}
+.member-role-column {
+  width: 20%;
+}
+
+.user-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+}
