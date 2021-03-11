@@ -4,6 +4,7 @@ MANIFEST
 build
 dist
 lib
+quetz_frontend/static
 
 # local env files
 .env.local
