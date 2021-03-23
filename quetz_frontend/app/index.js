@@ -1,98 +1,119 @@
-// Copyright (c) Jupyter Development Team.
-// Distributed under the terms of the Modified BSD License.
+// This file is auto-generated from the corresponding file in /dev_mode
+/*-----------------------------------------------------------------------------
+| Copyright (c) Jupyter Development Team.
+| Distributed under the terms of the Modified BSD License.
+|----------------------------------------------------------------------------*/
 
-import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-
-//require('./style.js');
+import { PageConfig } from '@jupyterlab/coreutils';
 
 // Promise.allSettled polyfill, until our supported browsers implement it
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-// eslint-disable-next-line no-undef
 if (Promise.allSettled === undefined) {
   Promise.allSettled = promises =>
     Promise.all(
       promises.map(promise =>
-        promise.then(
-          value => ({
-            status: 'fulfilled',
-            value
-          }),
-          reason => ({
-            status: 'rejected',
-            reason
-          })
-        )
+        promise
+          .then(value => ({
+            status: "fulfilled",
+            value,
+          }), reason => ({
+            status: "rejected",
+            reason,
+          }))
       )
     );
 }
 
-function loadScript(url) {
-  return new Promise((resolve, reject) => {
-    const newScript = document.createElement('script');
-    newScript.onerror = reject;
-    newScript.onload = resolve;
-    newScript.async = true;
-    document.head.appendChild(newScript);
-    newScript.src = url;
-  });
-}
-
-async function loadComponent(url, scope) {
-  console.debug(url);
-  loadScript(url)
-    .then(v => console.debug(v))
-    .catch(e => console.debug(e));
-
-  // From MIT-licensed https://github.com/module-federation/module-federation-examples/blob/af043acd6be1718ee195b2511adf6011fba4233c/advanced-api/dynamic-remotes/app1/src/App.js#L6-L12
-  // eslint-disable-next-line no-undef
-  await __webpack_init_sharing__('default');
-  console.debug(window);
-  console.debug(window._QUETZ);
-  const container = window._QUETZ[scope];
-  // Initialize the container, it may provide shared modules and may need ours
-  // eslint-disable-next-line no-undef
-  await container.init(__webpack_share_scopes__.default);
-}
+import './style.js';
 
 async function createModule(scope, module) {
   try {
-    const factory = await window._QUETZ[scope].get(module);
+    const factory = await window._JUPYTERLAB[scope].get(module);
     return factory();
-  } catch (e) {
-    console.warn(
-      `Failed to create module: package: ${scope}; module: ${module}`
-    );
+  } catch(e) {
+    console.warn(`Failed to create module: package: ${scope}; module: ${module}`);
     throw e;
   }
 }
 
 /**
- * The main function
+ * The main entry point for the application.
  */
-async function main() {
-  const app = require('@quetz-frontend/app').App;
-  const disabled = [];
-  const mods = [
-    require('@jupyterlab/apputils-extension').default.filter(({ id }) =>
-      [
-        '@jupyterlab/apputils-extension:settings',
-        '@jupyterlab/apputils-extension:themes'
-      ].includes(id)
-    ),
-    require('@jupyterlab/theme-light-extension'),
-    require('@jupyterlab/theme-dark-extension')
-  ];
+export async function main() {
+   // Handle a browser test.
+   // Set up error handling prior to loading extensions.
+   var browserTest = PageConfig.getOption('browserTest');
+   if (browserTest.toLowerCase() === 'true') {
+     var el = document.createElement('div');
+     el.id = 'browserTest';
+     document.body.appendChild(el);
+     el.textContent = '[]';
+     el.style.display = 'none';
+     var errors = [];
+     var reported = false;
+     var timeout = 25000;
+
+     var report = function() {
+       if (reported) {
+         return;
+       }
+       reported = true;
+       el.className = 'completed';
+     }
+
+     window.onerror = function(msg, url, line, col, error) {
+       errors.push(String(error));
+       el.textContent = JSON.stringify(errors)
+     };
+     console.error = function(message) {
+       errors.push(String(message));
+       el.textContent = JSON.stringify(errors)
+     };
+  }
+
+  const App = require('@quetz-frontend/application').App;
+  const app = new App();
+  //var JupyterLab = require('@jupyterlab/application').JupyterLab;
+  var disabled = [];
+  var deferred = [];
+  var ignorePlugins = [];
+  var register = [];
+
+
+  const federatedExtensionPromises = [];
+  const federatedMimeExtensionPromises = [];
+  const federatedStylePromises = [];
+
+  // Start initializing the federated extensions
+  const extensions = JSON.parse(
+    PageConfig.getOption('federated_extensions')
+  );
+  const queuedFederated = [];
+
+  extensions.forEach(data => {
+    if (data.extension) {
+      queuedFederated.push(data.name);
+      federatedExtensionPromises.push(createModule(data.name, data.extension));
+    }
+    if (data.mimeExtension) {
+      queuedFederated.push(data.name);
+      federatedMimeExtensionPromises.push(createModule(data.name, data.mimeExtension));
+    }
+    if (data.style) {
+      federatedStylePromises.push(createModule(data.name, data.style));
+    }
+  });
 
   /**
    * Iterate over active plugins in an extension.
    *
    * #### Notes
-   * This also populates the disabled
+   * This also populates the disabled, deferred, and ignored arrays.
    */
   function* activePlugins(extension) {
     // Handle commonjs or es2015 modules
     let exports;
-    if (Object.prototype.hasOwnProperty.call(extension, '__esModule')) {
+    if (extension.hasOwnProperty('__esModule')) {
       exports = extension.default;
     } else {
       // CommonJS exports.
@@ -105,68 +126,69 @@ async function main() {
         disabled.push(plugin.id);
         continue;
       }
+      if (PageConfig.Extension.isDeferred(plugin.id)) {
+        deferred.push(plugin.id);
+        ignorePlugins.push(plugin.id);
+      }
       yield plugin;
     }
   }
 
-  console.debug('PageConfig.extensions', PageConfig.Extension);
-  console.debug('PageConfig.extensions', PageConfig);
-  const plugins = PageConfig.getOption('federated_extensions') || '[]';
-  console.debug('plugins', plugins);
-  const extensions = JSON.parse(plugins);
-  console.debug('extension_data', extensions);
-  //{extension: "./extension", load: "static/remoteEntry.a1fe33117f8149d71c15.js", name: "@mamba-org/gator-lab", style: "./style"}
+  // Handle the registered mime extensions.
+  // TODO: use Handlebars (see JupyterLab)
+  const mimeExtensions = [];
 
-  const federatedExtensionPromises = [];
-  const federatedMimeExtensionPromises = [];
-  const federatedStylePromises = [];
-
-  const extensions = await Promise.allSettled(
-    extension_data.map(async data => {
-      console.debug('data', data);
-      await loadComponent(
-        `${URLExt.join(
-          PageConfig.getOption('fullLabextensionsUrl'),
-          data.name,
-          data.src
-        )}`,
-        data.name
-      );
-      return data;
-    })
-  );
-
-  extensions.forEach(p => {
-    console.debug(p);
-    if (p.status === 'rejected') {
-      // There was an error loading the component
+  // Add the federated mime extensions.
+  const federatedMimeExtensions = await Promise.allSettled(federatedMimeExtensionPromises);
+  federatedMimeExtensions.forEach(p => {
+    if (p.status === "fulfilled") {
+      for (let plugin of activePlugins(p.value)) {
+        mimeExtensions.push(plugin);
+      }
+    } else {
       console.error(p.reason);
-      return;
-    }
-
-    const data = p.value;
-    if (data.extension) {
-      federatedExtensionPromises.push(createModule(data.name, data.extension));
-    }
-    if (data.mimeExtension) {
-      federatedMimeExtensionPromises.push(
-        createModule(data.name, data.mimeExtension)
-      );
-    }
-    if (data.style) {
-      federatedStylePromises.push(createModule(data.name, data.style));
     }
   });
 
+  // Handled the registered standard extensions.
+  // TODO: use Handlebars (see JupyterLab)
+  if (!queuedFederated.includes('@jupyterlab/apputils-extension')) {
+    try {
+      let ext = require('@jupyterlab/apputils-extension');
+      for (let plugin of activePlugins(ext)) {
+        register.push(plugin);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  if (!queuedFederated.includes('@jupyterlab/theme-dark-extension')) {
+    try {
+      let ext = require('@jupyterlab/theme-dark-extension');
+      for (let plugin of activePlugins(ext)) {
+        register.push(plugin);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  if (!queuedFederated.includes('@jupyterlab/theme-light-extension')) {
+    try {
+      let ext = require('@jupyterlab/theme-light-extension');
+      for (let plugin of activePlugins(ext)) {
+        register.push(plugin);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   // Add the federated extensions.
-  // TODO: Add support for disabled extensions
-  const federatedExtensions = await Promise.allSettled(
-    federatedExtensionPromises
-  );
+  const federatedExtensions = await Promise.allSettled(federatedExtensionPromises);
   federatedExtensions.forEach(p => {
-    if (p.status === 'fulfilled') {
+    if (p.status === "fulfilled") {
       for (let plugin of activePlugins(p.value)) {
-        mods.push(plugin);
+        register.push(plugin);
       }
     } else {
       console.error(p.reason);
@@ -174,14 +196,45 @@ async function main() {
   });
 
   // Load all federated component styles and log errors for any that do not
-  (await Promise.allSettled(federatedStylePromises))
-    .filter(({ status }) => status === 'rejected')
-    .forEach(({ reason }) => {
-      console.error(reason);
-    });
+  (await Promise.allSettled(federatedStylePromises)).filter(({status}) => status === "rejected").forEach(({reason}) => {
+    console.error(reason);
+  });
 
-  app.registerPluginModules(mods);
-  await app.start();
+  /* const lab = new JupyterLab({
+    mimeExtensions,
+    disabled: {
+      matches: disabled,
+      patterns: PageConfig.Extension.disabled
+        .map(function (val) { return val.raw; })
+    },
+    deferred: {
+      matches: deferred,
+      patterns: PageConfig.Extension.deferred
+        .map(function (val) { return val.raw; })
+    },
+  });
+  register.forEach(function(item) { lab.registerPluginModule(item); });
+  lab.start({ ignorePlugins }); */
+
+  app.registerPluginModules(register);
+  app.start();
+
+  // Expose global app instance when in dev mode or when toggled explicitly.
+  var exposeAppInBrowser = (PageConfig.getOption('exposeAppInBrowser') || '').toLowerCase() === 'true';
+  var devMode = (PageConfig.getOption('devMode') || '').toLowerCase() === 'true';
+
+  if (exposeAppInBrowser || devMode) {
+    window.jupyterlab = lab;
+  }
+
+  // Handle a browser test.
+  if (browserTest.toLowerCase() === 'true') {
+    lab.restored
+      .then(function() { report(errors); })
+      .catch(function(reason) { report([`RestoreError: ${reason.message}`]); });
+
+    // Handle failures to restore after the timeout has elapsed.
+    window.setTimeout(function() { report(errors); }, timeout);
+  }
+
 }
-
-window.addEventListener('load', main);

@@ -5,6 +5,12 @@ build
 dist
 lib
 quetz_frontend/static
+quetz_frontend/schemas
+quetz_frontend/themes
+quetz_frontend/style.js
+dev_mode/static
+dev_mode/schemas
+dev_mode/themes
 
 # local env files
 .env.local

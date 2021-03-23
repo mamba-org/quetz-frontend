@@ -1,3 +1,4 @@
+// This file is auto-generated from the corresponding file in /dev_mode
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
@@ -20,7 +21,7 @@
  * configuration as valid JSON.  In order to support the classic Notebook,
  * we fall back on checking for `body` data of the given `name`.
  */
-function getOption(name) {
+ function getOption(name) {
   let configData = Object.create(null);
   // Use script tag if available.
   if (typeof document !== 'undefined' && document) {
@@ -32,6 +33,5 @@ function getOption(name) {
   }
   return configData[name] || '';
 }
-
 // eslint-disable-next-line no-undef
 __webpack_public_path__ = getOption('fullStaticUrl') + '/';
