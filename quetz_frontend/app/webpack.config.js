@@ -261,7 +261,7 @@ const plugins = [
   }),
   new HtmlWebpackPlugin({
     title: jlab.name || 'Quetz-Frontend',
-    template: path.join(__dirname, 'templates', 'index.ejs'),
+    template: path.join(__dirname, 'templates', 'template.html'),
     chunksSortMode: 'none',
     inject: false
   }),

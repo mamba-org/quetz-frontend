@@ -1,0 +1,18 @@
+{# Copy so we do not modify the page_config with updates. #}
+{% set page_config_full = page_config.copy() %}
+
+{# Set a dummy variable - we just want the side effect of the update. #}
+{% set _ = page_config_full.update(baseUrl=base_url, wsUrl=ws_url) %}
+
+  <script id="jupyter-config-data" type="application/json">
+    {{ page_config_full | tojson }}
+  </script>
+
+  {% block favicon %}
+  <!-- <link rel="icon" type="image/x-icon" href="{{ base_url | escape }}static/favicons/favicon.ico" class="idle favicon"> -->
+  <!-- <link rel="" type="image/x-icon" href="{{ base_url | escape }}static/favicons/favicon-busy-1.ico" class="busy favicon"> -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ base_url | escape }}static/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ base_url | escape }}static/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ base_url | escape }}static/icons/favicon-16x16.png">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Source+Sans+Pro:wght@400;700&display=swap" rel="stylesheet">
+  {% endblock %}
