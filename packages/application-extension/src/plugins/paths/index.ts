@@ -3,7 +3,7 @@ import {
   JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
-import { App } from '../../app/app';
+import { App } from '@quetz-frontend/application';
 
 /**
  * The default paths.

@@ -204,7 +204,7 @@
     gud "^1.0.0"
     warning "^4.0.3"
 
-"@jupyterlab/application@^3.0.0-rc.10", "@jupyterlab/application@^3.0.7", "@jupyterlab/application@~3.0.0":
+"@jupyterlab/application@^3.0.0", "@jupyterlab/application@^3.0.7":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@jupyterlab/application/-/application-3.0.7.tgz#de5f237cf06b6a69ddbe308e1449726ae05936a0"
   integrity sha512-l3g9LUMRtHIclwyNlSqmE9TUe8k/kJX5jB6E+a5iruRMjlX3Oij1gubIK1XXdUR7c9o/nuBA6DVBWyhhQ51PoQ==
@@ -230,7 +230,7 @@
     "@lumino/signaling" "^1.4.3"
     "@lumino/widgets" "^1.16.1"
 
-"@jupyterlab/apputils-extension@^3.0.0-rc.13", "@jupyterlab/apputils-extension@~3.0.0":
+"@jupyterlab/apputils-extension@^3.0.0":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@jupyterlab/apputils-extension/-/apputils-extension-3.0.7.tgz#b3c32922bf8bcb460965c77ea76f515600dfd319"
   integrity sha512-3UXMMFjJMr/+fuC2YTqeRDzyDXbPu6HCOa1XtBczaHz1WijUyCXsSkUF/1IMn6Zcyx+yYJkoioCtQYwBskqFFw==
@@ -254,7 +254,7 @@
     "@lumino/widgets" "^1.16.1"
     es6-promise "~4.2.8"
 
-"@jupyterlab/apputils@^3.0.0-rc.10", "@jupyterlab/apputils@^3.0.5", "@jupyterlab/apputils@~3.0.0":
+"@jupyterlab/apputils@^3.0.0", "@jupyterlab/apputils@^3.0.5":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@jupyterlab/apputils/-/apputils-3.0.5.tgz#1eb682e20f5da98ea7c1d2b3909ea8c17565f607"
   integrity sha512-m09ClizpX/rysqFvlVRVe683xmbG/Lk8d4TDXZDVmApNyWOLhsBHqfk+Im5WSQt2Oe2DiolwiiJXgZdWN57vag==
@@ -414,7 +414,7 @@
     "@lumino/widgets" "^1.16.1"
     react "^17.0.1"
 
-"@jupyterlab/docregistry@^3.0.7":
+"@jupyterlab/docregistry@^3.0.0", "@jupyterlab/docregistry@^3.0.7":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@jupyterlab/docregistry/-/docregistry-3.0.7.tgz#fe18d9294e22a580a3f5f712975865649c49b672"
   integrity sha512-BkyYZjARHw4FF+dtSSOdYxdILtw3PiQSRGQdKmhrN+/jsTK28Kl9U2Cz0sBkar9ZIG70tj8wjIe2xNj8kazInA==
@@ -462,7 +462,7 @@
     "@lumino/widgets" "^1.16.1"
     react "^17.0.1"
 
-"@jupyterlab/mainmenu@^3.0.0-rc.10", "@jupyterlab/mainmenu@^3.0.5", "@jupyterlab/mainmenu@~3.0.0":
+"@jupyterlab/mainmenu@^3.0.0", "@jupyterlab/mainmenu@^3.0.5":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@jupyterlab/mainmenu/-/mainmenu-3.0.5.tgz#0376f3202bb61ef83077581ab1155dd2025578cd"
   integrity sha512-2rziVmmr3/Sl84PzzGYfcGfvjB1tx9aLQVJF+iMvKLEWtPZAsObCVK0SZLPb1S/f942l6/tC87nNOMinIFujBw==
@@ -587,7 +587,7 @@
     react "^17.0.1"
     typestyle "^2.0.4"
 
-"@jupyterlab/theme-dark-extension@^3.0.0-rc.10", "@jupyterlab/theme-dark-extension@~3.0.0":
+"@jupyterlab/theme-dark-extension@^3.0.0":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@jupyterlab/theme-dark-extension/-/theme-dark-extension-3.0.7.tgz#e074858213187d9b757af6208d56de6a74e3a5d6"
   integrity sha512-WiBeEVMSPx+x+AqJFVfmsft8lmklGYxMVFexn0bqwAdAeCwvwK85fFntbaoKVr122pFPHF4eccU91DRL+3dfeA==
@@ -596,7 +596,7 @@
     "@jupyterlab/apputils" "^3.0.5"
     "@jupyterlab/translation" "^3.0.5"
 
-"@jupyterlab/theme-light-extension@^3.0.0-rc.10", "@jupyterlab/theme-light-extension@~3.0.0":
+"@jupyterlab/theme-light-extension@^3.0.0":
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/@jupyterlab/theme-light-extension/-/theme-light-extension-3.0.7.tgz#1cf9ec4bca5c3a98fff78bf7dfd1957e5b421363"
   integrity sha512-KgUfKXvMDvWHhfq0oRxx003cmpVdcWaOA7C9AOlztZlbO8VQYq59JKUz3RRshoGQDuFp1xZ2BbLePtCJieNrfw==
@@ -615,7 +615,7 @@
     "@jupyterlab/statedb" "^3.0.3"
     "@lumino/coreutils" "^1.5.3"
 
-"@jupyterlab/ui-components@^3.0.0-rc.10", "@jupyterlab/ui-components@^3.0.4", "@jupyterlab/ui-components@~3.0.0":
+"@jupyterlab/ui-components@^3.0.0", "@jupyterlab/ui-components@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@jupyterlab/ui-components/-/ui-components-3.0.4.tgz#354b222ef141746e18b1bfda83a5219a9213e8d3"
   integrity sha512-6+a5tYQn8HhDNELvQsA190CrgYIJpnKKzRzi5cs8IO2yila+mTHO+xaX2ZOs7jnEbv9dOqdxopjWHRMiKvgGKA==
@@ -4734,9 +4734,9 @@ hosted-git-info@^2.1.4, hosted-git-info@^2.7.1:
   integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
 
 hosted-git-info@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-4.0.1.tgz#710ef5452ea429a844abc33c981056e7371edab7"
-  integrity sha512-eT7NrxAsppPRQEBSwKSosReE+v8OzABwEScQYk5d4uxaEPlzxTIku7LINXtBGalthkLhJnq5lBI89PfK43zAKg==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-4.0.2.tgz#5e425507eede4fea846b7262f0838456c4209961"
+  integrity sha512-c9OGXbZ3guC/xOlCg1Ci/VgWlwsqDv1yMQL1CWqXDL0hDjXuNcq0zuR4xqPSuasI3kqFDhqSyTjREz5gzq0fXg==
   dependencies:
     lru-cache "^6.0.0"
 

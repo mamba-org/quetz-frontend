@@ -4,6 +4,8 @@
 | Distributed under the terms of the Modified BSD License.
 |----------------------------------------------------------------------------*/
 
+import { App } from '@jupyterlab/application';
+
 import { PageConfig } from '@jupyterlab/coreutils';
 
 // Promise.allSettled polyfill, until our supported browsers implement it
@@ -75,9 +77,7 @@ export async function main() {
     };
   }
 
-  const App = require('@quetz-frontend/application-extension').App;
   const app = new App();
-  //var JupyterLab = require('@jupyterlab/application').JupyterLab;
   var disabled = [];
   var deferred = [];
   var ignorePlugins = [];

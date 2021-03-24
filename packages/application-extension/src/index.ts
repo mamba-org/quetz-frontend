@@ -1,2 +1,1 @@
-export * from './app/app';
-export * from './app/shell';
+export * from './plugins/about/index';
