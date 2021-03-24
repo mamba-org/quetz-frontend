@@ -45,7 +45,7 @@
     "@jupyterlab/theme-dark-extension": "~3.0.0",
     "@jupyterlab/theme-light-extension": "~3.0.0",
     "@jupyterlab/ui-components": "~3.0.0",
-    "@quetz-frontend/application": "^0.1.0"
+    "@quetz-frontend/application-extension": "^0.1.0"
   },
   "devDependencies": {
     "@jupyterlab/builder": "^3.0.6",

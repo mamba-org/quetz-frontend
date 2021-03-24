@@ -75,7 +75,7 @@ export async function main() {
     };
   }
 
-  const App = require('@quetz-frontend/application').App;
+  const App = require('@quetz-frontend/application-extension').App;
   const app = new App();
   //var JupyterLab = require('@jupyterlab/application').JupyterLab;
   var disabled = [];
