@@ -13,18 +13,18 @@ interface ITableFcProps {
 const Table: React.FC<ITableFcProps> = ({
   columns: userColumns,
   data,
-  renderRowSubComponent
+  renderRowSubComponent,
 }) => {
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     rows,
-    prepareRow
+    prepareRow,
   } = useTable(
     {
       columns: userColumns,
-      data
+      data,
     },
     useExpanded
   );
@@ -32,9 +32,9 @@ const Table: React.FC<ITableFcProps> = ({
   return (
     <table {...getTableProps()} className="jp-table">
       <thead>
-        {headerGroups.map(headerGroup => (
+        {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
-            {headerGroup.headers.map(column => (
+            {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()} key={column.id}>
                 {column.render('Header')}
               </th>
@@ -52,7 +52,7 @@ const Table: React.FC<ITableFcProps> = ({
                 key={row.id}
                 data-status={row.values.status}
               >
-                {row.cells.map(cell => {
+                {row.cells.map((cell) => {
                   return (
                     <td {...cell.getCellProps()} key={row.id}>
                       {cell.render('Cell')}
@@ -76,7 +76,7 @@ const Table: React.FC<ITableFcProps> = ({
 Table.propTypes = {
   columns: PropTypes.any,
   data: PropTypes.any,
-  renderRowSubComponent: PropTypes.any
+  renderRowSubComponent: PropTypes.any,
 };
 
 export default Table;

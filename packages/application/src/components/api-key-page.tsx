@@ -19,7 +19,7 @@ class ApiKeyComponent extends React.PureComponent<any, any> {
 
     // Filter the list if matches in roles
     const filteredList = filters
-      ? filter(apiKeyList, key => some(key.roles, filters))
+      ? filter(apiKeyList, (key) => some(key.roles, filters))
       : apiKeyList;
     return (
       <>
@@ -29,7 +29,7 @@ class ApiKeyComponent extends React.PureComponent<any, any> {
         <Table
           columns={getApikeysTableColumns({
             onCopy: this.onCopy,
-            onDelete: this.onDelete
+            onDelete: this.onDelete,
           })}
           data={filteredList || []}
         />

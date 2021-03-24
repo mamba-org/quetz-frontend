@@ -1,6 +1,6 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
 import { ITranslator, TranslationManager } from '@jupyterlab/translation';
@@ -16,7 +16,7 @@ const plugin: JupyterFrontEndPlugin<ITranslator> = {
     return translationManager;
   },
   autoStart: true,
-  provides: ITranslator
+  provides: ITranslator,
 };
 
 export default plugin;

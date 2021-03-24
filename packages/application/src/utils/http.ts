@@ -5,7 +5,7 @@ import { BACKEND_HOST } from './constants';
 
 const axiosRequest = axios.create({
   baseURL: BACKEND_HOST,
-  responseType: 'json'
+  responseType: 'json',
 });
 
 const handleResponse = (response: any, resolve: any, reject: any) => {
@@ -33,8 +33,8 @@ const http = {
 
       axiosRequest
         .get(`${url}${query}`)
-        .then(response => handleResponse(response, resolve, reject))
-        .catch(e => handleError(e, reject));
+        .then((response) => handleResponse(response, resolve, reject))
+        .catch((e) => handleError(e, reject));
     });
   },
   post: async (url: any, params: any, payload: any, config = {}) => {
@@ -42,8 +42,8 @@ const http = {
       const query = params ? `?${stringify({ ...params })}` : '';
       axiosRequest
         .post(`${url}${query}`, payload, config)
-        .then(response => handleResponse(response, resolve, reject))
-        .catch(e => handleError(e, reject));
+        .then((response) => handleResponse(response, resolve, reject))
+        .catch((e) => handleError(e, reject));
     });
   },
   patch: async (url: any, params: any, payload: any, config = {}) => {
@@ -51,8 +51,8 @@ const http = {
       const query = params ? `?${stringify({ ...params })}` : '';
       axiosRequest
         .patch(`${url}${query}`, payload, config)
-        .then(response => handleResponse(response, resolve, reject))
-        .catch(e => handleError(e, reject));
+        .then((response) => handleResponse(response, resolve, reject))
+        .catch((e) => handleError(e, reject));
     });
   },
 
@@ -61,8 +61,8 @@ const http = {
       const query = params ? `?${stringify({ ...params })}` : '';
       axiosRequest
         .put(`${url}${query}`, payload, config)
-        .then(response => handleResponse(response, resolve, reject))
-        .catch(e => handleError(e, reject));
+        .then((response) => handleResponse(response, resolve, reject))
+        .catch((e) => handleError(e, reject));
     });
   },
   delete: async (url: any, params: any) => {
@@ -71,10 +71,10 @@ const http = {
 
       axiosRequest
         .delete(`${url}${query}`)
-        .then(response => handleResponse(response, resolve, reject))
-        .catch(e => handleError(e, reject));
+        .then((response) => handleResponse(response, resolve, reject))
+        .catch((e) => handleError(e, reject));
     });
-  }
+  },
 };
 
 export { http };

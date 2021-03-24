@@ -26,7 +26,7 @@ class FetchHoc extends React.PureComponent<any, any> {
     this.state = {
       data: null,
       apiStatus: API_STATUSES.PENDING,
-      error: ''
+      error: '',
     };
   }
 
@@ -38,7 +38,7 @@ class FetchHoc extends React.PureComponent<any, any> {
     const { url } = this.props;
 
     this.setState({
-      apiStatus: API_STATUSES.PENDING
+      apiStatus: API_STATUSES.PENDING,
     });
 
     try {
@@ -46,12 +46,12 @@ class FetchHoc extends React.PureComponent<any, any> {
 
       this.setState({
         data,
-        apiStatus: API_STATUSES.SUCCESS
+        apiStatus: API_STATUSES.SUCCESS,
       });
     } catch (e) {
       this.setState({
         apiStatus: API_STATUSES.FAILED,
-        error: getErrorMessage(e)
+        error: getErrorMessage(e),
       });
     }
   };

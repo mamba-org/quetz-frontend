@@ -1,6 +1,6 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
 /**
@@ -10,14 +10,14 @@ const plugin: JupyterFrontEndPlugin<void> = {
   id: 'quetz:stop-polling',
   autoStart: true,
   activate: (app: JupyterFrontEnd): void => {
-    app.serviceManager.sessions?.ready.then(value => {
+    app.serviceManager.sessions?.ready.then((value) => {
       // stop polling the kernel sessions
       app.serviceManager.sessions['_kernelManager']['_pollModels']?.stop();
       // stop polling the sessions
       void app.serviceManager.sessions['_pollModels'].stop();
     });
 
-    app.serviceManager.kernelspecs?.ready.then(value => {
+    app.serviceManager.kernelspecs?.ready.then((value) => {
       // stop polling the kernelspecs
       void app.serviceManager.kernelspecs.dispose();
     });
@@ -29,7 +29,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       void app.serviceManager.terminals['_pollModels'].stop();
     });
     */
-  }
+  },
 };
 
 export default plugin;

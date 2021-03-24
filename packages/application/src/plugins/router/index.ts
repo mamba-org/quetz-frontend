@@ -2,7 +2,7 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
   Router,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 /**
@@ -28,7 +28,7 @@ const router: JupyterFrontEndPlugin<IRouter> = {
     });
 
     return router;
-  }
+  },
 };
 
 export default router;

@@ -18,9 +18,9 @@ const getStyles = (props: any, align = 'left') => [
     style: {
       justifyContent: align === 'right' ? 'flex-end' : 'flex-start',
       alignItems: 'flex-start',
-      display: 'flex'
-    }
-  }
+      display: 'flex',
+    },
+  },
 ];
 
 const List = ({
@@ -32,10 +32,10 @@ const List = ({
   fetchData,
   loading,
   pageCount: controlledPageCount,
-  dataSize
+  dataSize,
 }: any) => {
   const defaultColumn = {
-    width: 150 // width is used for both the flex-basis and flex-grow
+    width: 150, // width is used for both the flex-basis and flex-grow
   };
 
   const {
@@ -56,7 +56,7 @@ const List = ({
     nextPage,
     previousPage,
     setPageSize,
-    state: { pageIndex, pageSize }
+    state: { pageIndex, pageSize },
   } = useTable(
     {
       columns: userColumns,
@@ -64,11 +64,11 @@ const List = ({
       defaultColumn,
       initialState: { pageIndex: 0 },
       manualPagination: paginated,
-      pageCount: controlledPageCount
+      pageCount: controlledPageCount,
     } as any,
     useFlexLayout,
-    hooks => {
-      hooks.allColumns.push(columns => [...columns]);
+    (hooks) => {
+      hooks.allColumns.push((columns) => [...columns]);
     },
     ...(paginated ? [usePagination] : [])
   ) as any;
@@ -116,7 +116,7 @@ const List = ({
                 {...row.getRowProps()}
                 key={row.id}
                 className={clsx('tr', 'list-row', {
-                  clickable: !!to
+                  clickable: !!to,
                 })}
                 to={to ? to(row.original) : null}
               >
@@ -180,11 +180,11 @@ export const PaginatedList = ({ url, columns, to, q }: any) => {
     setLoading(true);
 
     const {
-      data: { pagination, result }
+      data: { pagination, result },
     }: any = await http.get(url, {
       ...q,
       skip: pageIndex * pageSize,
-      limit: pageSize
+      limit: pageSize,
     });
 
     if (fetchId === fetchIdRef.current) {

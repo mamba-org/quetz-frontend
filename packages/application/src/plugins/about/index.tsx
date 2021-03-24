@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 import { DOMUtils } from '@jupyterlab/apputils';
@@ -37,12 +37,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Open About',
       execute: () => {
         shell.add(new About(), 'main');
-      }
+      },
     });
 
     router.register({
       pattern: /about.*/,
-      command: CommandIDs.open
+      command: CommandIDs.open,
     });
 
     const label = document.createElement('a');
@@ -57,7 +57,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     };
 
     menu.addItem(button, 10000);
-  }
+  },
 };
 
 export default plugin;
@@ -65,7 +65,7 @@ export default plugin;
 export enum PAGE {
   MAMBA = 0,
   QUETZ = 1,
-  BOA = 2
+  BOA = 2,
 }
 
 class About extends ReactWidget {

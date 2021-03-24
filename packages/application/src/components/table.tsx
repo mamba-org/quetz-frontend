@@ -3,7 +3,7 @@ import {
   useTable,
   usePagination,
   useGlobalFilter,
-  useAsyncDebounce
+  useAsyncDebounce,
 } from 'react-table';
 import clsx from 'clsx';
 
@@ -63,7 +63,7 @@ const Table: React.FC<ITableFcProps> = ({
   pageSize: controlledPageSize,
   pageCount: controlledPageCount,
   enableSearch,
-  query: controlledQuery
+  query: controlledQuery,
 }: any) => {
   const searching = React.useRef(false);
   const {
@@ -84,7 +84,7 @@ const Table: React.FC<ITableFcProps> = ({
     previousPage,
     setPageSize,
     setGlobalFilter,
-    state: { pageIndex, pageSize, globalFilter }
+    state: { pageIndex, pageSize, globalFilter },
   } = useTable(
     {
       columns: userColumns,
@@ -92,13 +92,13 @@ const Table: React.FC<ITableFcProps> = ({
       initialState: {
         pageIndex: controlledPageIndex,
         pageSize: controlledPageSize,
-        globalFilter: controlledQuery
+        globalFilter: controlledQuery,
       },
       manualPagination: paginated,
       autoResetPage: true,
       pageCount: controlledPageCount,
       manualGlobalFilter: enableSearch,
-      autoResetGlobalFilter: true
+      autoResetGlobalFilter: true,
     } as any,
     ...(enableSearch ? [useGlobalFilter] : []),
     useExpanded,
@@ -117,7 +117,7 @@ const Table: React.FC<ITableFcProps> = ({
     fetchDataDebounced({
       pageIndex: pageIndex,
       pageSize: pageSize,
-      query: globalFilter
+      query: globalFilter,
     });
   }, [fetchDataDebounced, pageIndex, pageSize, globalFilter]);
 
@@ -131,7 +131,7 @@ const Table: React.FC<ITableFcProps> = ({
           placeholder="Search"
           type="text"
           value={globalFilter || ''}
-          onChange={e => {
+          onChange={(e) => {
             searching.current = true;
             setGlobalFilter(e.target.value);
           }}
@@ -205,7 +205,7 @@ export const PaginatedTable = ({
   url,
   columns,
   renderRowSubComponent,
-  enableSearch
+  enableSearch,
 }: any) => {
   // get initial state from URL params
   const search_params = new URLSearchParams(window.location.search);
@@ -220,7 +220,7 @@ export const PaginatedTable = ({
     pageIndex: initialPageIndex,
     pageSize: initialPageSize,
     pageCount: 0,
-    query: initialQuery
+    query: initialQuery,
   });
   const fetchIdRef = React.useRef(0);
 
@@ -230,11 +230,11 @@ export const PaginatedTable = ({
       setState({ ...state, loading: true });
 
       const {
-        data: { pagination, result }
+        data: { pagination, result },
       }: any = await http.get(url, {
         skip: pageIndex * pageSize,
         limit: pageSize,
-        q: query
+        q: query,
       });
 
       if (fetchId === fetchIdRef.current) {
@@ -246,7 +246,7 @@ export const PaginatedTable = ({
           pageIndex: pageIndex,
           pageSize: pageSize,
           pageCount: Math.ceil(pagination.all_records_count / pageSize),
-          query: query
+          query: query,
         });
       }
     },
@@ -275,7 +275,7 @@ Table.propTypes = {
   columns: PropTypes.any,
   data: PropTypes.any,
   renderRowSubComponent: PropTypes.any,
-  enableSearch: PropTypes.any
+  enableSearch: PropTypes.any,
 };
 
 export default Table;

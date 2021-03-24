@@ -12,21 +12,21 @@ const CHANNEL_TABS = {
   INFO: 0,
   PACKAGES: 1,
   MEMBERS: 2,
-  API_KEYS: 3
+  API_KEYS: 3,
 };
 
 const HASH_TO_INDEX: Record<string, number> = {
   info: 0,
   packages: 1,
   members: 2,
-  api_keys: 3
+  api_keys: 3,
 };
 
 const INDEX_TO_HASH: Record<number, string> = {
   0: 'info',
   1: 'packages',
   2: 'members',
-  3: 'api_keys'
+  3: 'api_keys',
 };
 
 class ChannelDetails extends React.PureComponent<any, any> {
@@ -36,13 +36,13 @@ class ChannelDetails extends React.PureComponent<any, any> {
     const currentTab = urlParams.get('tab') || 'info';
     console.log('Current Tab: ', currentTab);
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[currentTab] || CHANNEL_TABS.INFO
+      selectedTabIndex: HASH_TO_INDEX[currentTab] || CHANNEL_TABS.INFO,
     };
   }
 
   setTabIndex = (selectedTabIndex: any) => {
     this.setState({
-      selectedTabIndex
+      selectedTabIndex,
     });
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -60,21 +60,21 @@ class ChannelDetails extends React.PureComponent<any, any> {
     const { selectedTabIndex } = this.state;
     const {
       match: {
-        params: { channelId }
-      }
+        params: { channelId },
+      },
     } = this.props;
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/'
+        link: '/',
       },
       {
         text: 'Channels',
-        link: '/channels/'
+        link: '/channels/',
       },
       {
-        text: channelId
-      }
+        text: channelId,
+      },
     ];
     return (
       <>

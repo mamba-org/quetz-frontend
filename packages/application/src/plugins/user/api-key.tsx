@@ -26,7 +26,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     super(props);
     this.state = {
       apiKeys: [],
-      apiStatus: API_STATUSES.PENDING
+      apiStatus: API_STATUSES.PENDING,
     };
   }
 
@@ -38,7 +38,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     }
     this.setState({
       apiKeys: resp,
-      apiStatus: API_STATUSES.SUCCESS
+      apiStatus: API_STATUSES.SUCCESS,
     });
   }
 
@@ -51,7 +51,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
         showDialog({
           title: 'Format error',
           body: 'Add roles',
-          buttons: [Dialog.okButton()]
+          buttons: [Dialog.okButton()],
         });
         return;
       }
@@ -59,7 +59,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
       const response = await fetch('/api/api-keys', {
         method: 'POST',
         redirect: 'follow',
-        body: JSON.stringify(data.key)
+        body: JSON.stringify(data.key),
       });
 
       const resp = await response.json();
@@ -77,7 +77,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     showDialog({
       title: 'Roles',
       body,
-      buttons: [Dialog.okButton()]
+      buttons: [Dialog.okButton()],
     });
   };
 
@@ -90,18 +90,18 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     );
     const value = await showDialog({
       title: 'Delete API key',
-      body
+      body,
     });
 
     if (value.button.accept) {
       const resp = await fetch(`/api/api-keys/${key}`, {
         method: 'DELETE',
-        redirect: 'follow'
+        redirect: 'follow',
       });
       if (!resp.ok) {
         return console.error(resp.statusText);
       }
-      const apiKeys = this.state.apiKeys.filter(api => api.key !== key);
+      const apiKeys = this.state.apiKeys.filter((api) => api.key !== key);
       this.setState({ apiKeys });
     }
   };

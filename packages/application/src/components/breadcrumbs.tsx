@@ -37,7 +37,7 @@ class Breadcrumbs extends React.PureComponent<any, any> {
                 key={`${item.text}-separator`}
               >
                 &emsp;/&emsp;
-              </div>
+              </div>,
             ]),
           []
         ) as Array<any>).slice(0, -1)}

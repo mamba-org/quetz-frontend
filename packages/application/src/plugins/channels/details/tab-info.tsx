@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {
   faGlobeAmericas,
-  faUnlockAlt
+  faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { formatSize } from '../../../utils';

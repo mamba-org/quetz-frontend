@@ -41,7 +41,7 @@ class Jobs extends React.Component<any, JobsState> {
     super(props);
     this.state = {
       jobs: new Array<IJob>(),
-      apiStatus: API_STATUSES.PENDING
+      apiStatus: API_STATUSES.PENDING,
     };
   }
 
@@ -52,7 +52,7 @@ class Jobs extends React.Component<any, JobsState> {
     /* TODO: Support pagination */
     this.setState({
       jobs: jobs.result,
-      apiStatus: API_STATUSES.SUCCESS
+      apiStatus: API_STATUSES.SUCCESS,
     });
   }
 
@@ -62,11 +62,11 @@ class Jobs extends React.Component<any, JobsState> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/'
+        link: '/',
       },
       {
-        text: 'Jobs'
-      }
+        text: 'Jobs',
+      },
     ];
 
     const jobColumns = [
@@ -76,23 +76,23 @@ class Jobs extends React.Component<any, JobsState> {
         disableFilters: true,
         Cell: ({ row }: { row: { original: IJob; values: IJob } }) => {
           return <Link to={`/${row.original.id}`}>{row.values.manifest}</Link>;
-        }
+        },
       },
       {
         Header: 'Created',
         accessor: 'created',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.created
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.created,
       },
       {
         Header: 'Status',
         accessor: 'status',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.status
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.status,
       },
       {
         Header: 'Owner',
         accessor: 'owner',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username
-      }
+        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username,
+      },
     ];
 
     return (

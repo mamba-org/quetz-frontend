@@ -18,14 +18,14 @@ config[0] = merge(config[0], {
           mangle: true,
           output: {
             beautify: false,
-            comments: false
+            comments: false,
           },
-          safari10: true
+          safari10: true,
         },
-        cache: process.platform !== 'win32'
-      })
-    ]
-  }
+        cache: process.platform !== 'win32',
+      }),
+    ],
+  },
 });
 
 module.exports = config;

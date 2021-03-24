@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
@@ -40,12 +40,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
         widget.title.label = 'Jobs main page';
         widget.title.closable = false;
         shell.add(widget, 'main');
-      }
+      },
     });
 
     router.register({
       pattern: /jobs.*/,
-      command: CommandIDs.jobs
+      command: CommandIDs.jobs,
     });
 
     menu.addItem({
@@ -53,9 +53,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Jobs',
       icon: 'empty',
       api: '/jobs',
-      loggedIn: true
+      loggedIn: true,
     });
-  }
+  },
 };
 
 export default plugin;
@@ -65,7 +65,7 @@ class JobsRouter extends ReactWidget {
     return (
       <Router basename="/jobs">
         <Switch>
-          <Route path="/:jobId" render={props => <Job {...props} />} />
+          <Route path="/:jobId" render={(props) => <Job {...props} />} />
           <Route path="/" component={Jobs} />
           <Route path="/*" component={Jobs} />
         </Switch>

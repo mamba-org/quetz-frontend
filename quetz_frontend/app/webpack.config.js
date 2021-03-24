@@ -11,7 +11,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const merge = require('webpack-merge').default;
 const CopyPlugin = require('copy-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const baseConfig = require('@jupyterlab/builder/lib/webpack.config.base');
 const { ModuleFederationPlugin } = webpack.container;
 
@@ -27,7 +28,7 @@ const { extensions, mimeExtensions, externalExtensions } = jlab;
 // appropriate
 for (const pkg in externalExtensions) {
   const {
-    jupyterlab: { extension, mimeExtension }
+    jupyterlab: { extension, mimeExtension },
   } = require(`${pkg}/package.json`);
   if (extension !== undefined) {
     extensions[pkg] = extension === true ? '' : extension;
@@ -39,7 +40,7 @@ for (const pkg in externalExtensions) {
 
 // Deduplicated list of extension package names.
 const extensionPackages = [
-  ...new Set([...Object.keys(extensions), ...Object.keys(mimeExtensions)])
+  ...new Set([...Object.keys(extensions), ...Object.keys(mimeExtensions)]),
 ];
 
 // Ensure a clear build directory.
@@ -54,7 +55,7 @@ const outputDir = path.resolve(jlab.outputDir);
 // Configuration to handle extension assets
 const extensionAssetConfig = Build.ensureAssets({
   packageNames: extensionPackages,
-  output: outputDir
+  output: outputDir,
 });
 
 // Create the entry point and other assets in build directory.
@@ -142,7 +143,7 @@ function ignored(path) {
 
   // Limit the watched files to those in our local linked package dirs.
   let ignore = true;
-  Object.keys(watched).some(name => {
+  Object.keys(watched).some((name) => {
     const rootPath = watched[name];
     const contained = path.indexOf(rootPath + path.sep) !== -1;
     if (path !== rootPath && !contained) {
@@ -171,7 +172,7 @@ for (let [pkg, requiredVersion] of Object.entries(packageData.resolutions)) {
 for (let pkg of extensionPackages) {
   if (!shared[pkg]) {
     shared[pkg] = {
-      requiredVersion: require(`${pkg}/package.json`).version
+      requiredVersion: require(`${pkg}/package.json`).version,
     };
   }
 }
@@ -184,7 +185,7 @@ for (let pkg of extensionPackages) {
   let pkgShared = {};
   let {
     dependencies = {},
-    jupyterlab: { sharedPackages = {} } = {}
+    jupyterlab: { sharedPackages = {} } = {},
   } = require(`${pkg}/package.json`);
   for (let [dep, requiredVersion] of Object.entries(dependencies)) {
     if (!shared[dep]) {
@@ -257,29 +258,29 @@ const plugins = [
       return ['domelementtype', 'hash-base', 'inherits'].includes(
         instance.name
       );
-    }
+    },
   }),
   new HtmlWebpackPlugin({
     title: jlab.name || 'Quetz-Frontend',
     template: path.join(__dirname, 'templates', 'template.html'),
     chunksSortMode: 'none',
-    inject: false
+    inject: false,
   }),
   // custom plugin for ignoring files during a `--watch` build
   new WPPlugin.FilterWatchIgnorePlugin(ignored),
   new CopyPlugin({
-    patterns: [{ from: 'public', to: '' }]
+    patterns: [{ from: 'public', to: '' }],
   }),
   // custom plugin that copies the assets to the static directory
   new WPPlugin.FrontEndPlugin(buildDir, jlab.staticDir),
   new ModuleFederationPlugin({
     library: {
       type: 'var',
-      name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION']
+      name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION'],
     },
     name: 'CORE_FEDERATION',
-    shared
-  })
+    shared,
+  }),
 ];
 
 if (process.argv.includes('--analyze')) {
@@ -290,12 +291,12 @@ module.exports = [
   merge(baseConfig, {
     mode: 'development',
     entry: {
-      main: ['./publicpath', 'whatwg-fetch', entryPoint]
+      main: ['./publicpath', 'whatwg-fetch', entryPoint],
     },
     output: {
       path: path.resolve(buildDir),
       publicPath: '{{page_config.fullStaticUrl}}/',
-      filename: '[name].[contenthash].js'
+      filename: '[name].[contenthash].js',
     },
     optimization: {
       splitChunks: {
@@ -303,10 +304,10 @@ module.exports = [
         cacheGroups: {
           jlab_core: {
             test: /[\\/]node_modules[\\/]@(jupyterlab|lumino)[\\/]/,
-            name: 'jlab_core'
-          }
-        }
-      }
+            name: 'jlab_core',
+          },
+        },
+      },
     },
     module: {
       rules: [
@@ -314,14 +315,14 @@ module.exports = [
           test: /\.js$/,
           include: sourceMapRes,
           use: ['source-map-loader'],
-          enforce: 'pre'
-        }
-      ]
+          enforce: 'pre',
+        },
+      ],
     },
     devtool: 'inline-source-map',
     externals: ['node-fetch', 'ws'],
-    plugins
-  })
+    plugins,
+  }),
 ].concat(extensionAssetConfig);
 
 // Needed to watch changes in linked extensions in node_modules

@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
@@ -27,7 +27,7 @@ const title: JupyterFrontEndPlugin<void> = {
   id: 'quetz:topBar/title',
   autoStart: true,
   requires: [IRouter],
-  activate: quetzTitle
+  activate: quetzTitle,
 };
 
 /**
@@ -37,7 +37,7 @@ const menu: JupyterFrontEndPlugin<IMainMenu> = {
   id: 'quetz:topBar/menu',
   autoStart: true,
   provides: IMainMenu,
-  activate: toolbar
+  activate: toolbar,
 };
 
 /**
@@ -48,7 +48,7 @@ const login: JupyterFrontEndPlugin<ILogInMenu> = {
   autoStart: true,
   requires: [IRouter],
   provides: ILogInMenu,
-  activate: logInMenu
+  activate: logInMenu,
 };
 
 const plugins: JupyterFrontEndPlugin<any>[] = [title, menu, login];
@@ -84,14 +84,14 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
   const logo = new Widget({ node: link });
   const logo_icon = new LabIcon({
     name: 'quetz_logo',
-    svgstr: quetz_logo.default
+    svgstr: quetz_logo.default,
   });
   logo_icon.element({
     container: logo.node,
     elementPosition: 'center',
     margin: '2px 2px 2px 8px',
     height: 'auto',
-    width: '80px'
+    width: '80px',
   });
   logo.id = 'jupyter-logo';
   logo.addClass('topbar-item');

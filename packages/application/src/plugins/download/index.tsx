@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 import { DOMUtils } from '@jupyterlab/apputils';
@@ -35,12 +35,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Open Downloads',
       execute: () => {
         shell.add(new Download(), 'main');
-      }
+      },
     });
 
     router.register({
       pattern: /download.*/,
-      command: CommandIDs.open
+      command: CommandIDs.open,
     });
 
     const label = document.createElement('a');
@@ -55,7 +55,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     };
 
     menu.addItem(button, 10000);
-  }
+  },
 };
 
 export default plugin;

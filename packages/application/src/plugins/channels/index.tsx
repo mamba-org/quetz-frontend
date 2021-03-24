@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
@@ -83,12 +83,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
         widget.title.icon = fileIcon;
         widget.title.closable = false;
         shell.add(widget, 'main');
-      }
+      },
     });
 
     router.register({
       pattern: /.*/,
-      command: CommandIDs.reactRouter
+      command: CommandIDs.reactRouter,
     });
 
     menu.addItem({
@@ -96,9 +96,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Channels',
       icon: 'empty',
       api: '/channels',
-      loggedIn: true
+      loggedIn: true,
     });
-  }
+  },
 };
 
 export default plugin;

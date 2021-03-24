@@ -1,6 +1,6 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
 import { ILogInMenu, LogInItem } from '../topbar/tokens';
@@ -22,7 +22,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'GitHub LogIn',
       icon: github_logo,
       api: '/auth/github/login',
-      loggedIn: false
+      loggedIn: false,
     };
 
     const google: LogInItem = {
@@ -30,7 +30,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Google LogIn ',
       icon: google_logo,
       api: '/auth/google/login',
-      loggedIn: false
+      loggedIn: false,
     };
 
     const config_data = document.getElementById('jupyter-config-data');
@@ -50,7 +50,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         logInMenu.addItem(google);
       }
     }
-  }
+  },
 };
 
 export default plugin;

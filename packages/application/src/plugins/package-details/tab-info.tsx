@@ -12,7 +12,7 @@ class PackageMainContent extends React.PureComponent<any, any> {
     const win: string[] = [];
     const other: string[] = [];
 
-    platforms.forEach(platform => {
+    platforms.forEach((platform) => {
       const os = platform.split('-')[0];
       switch (os) {
         case 'linux':
@@ -94,8 +94,8 @@ class PackageMainContent extends React.PureComponent<any, any> {
   render(): JSX.Element {
     const {
       match: {
-        params: { packageId, channelId }
-      }
+        params: { packageId, channelId },
+      },
     } = this.props;
 
     return (

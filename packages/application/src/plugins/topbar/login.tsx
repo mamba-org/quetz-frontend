@@ -49,10 +49,10 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
           this._profile = JSON.parse(data.logged_in_user_profile);
         } else {
           fetch('/api/me')
-            .then(resp => {
+            .then((resp) => {
               return resp.json();
             })
-            .then(async data => {
+            .then(async (data) => {
               if (data.detail) {
                 return console.error(data.detail);
               }
@@ -123,7 +123,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
                 </a>
               </li>
               <hr />
-              {this._items.map(value => {
+              {this._items.map((value) => {
                 if (value.loggedIn) {
                   return (
                     <li key={value.id}>
@@ -147,7 +147,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
     } else {
       const avatar = new LabIcon({
         name: 'avatar_icon',
-        svgstr: avatar_icon.default
+        svgstr: avatar_icon.default,
       });
 
       return (
@@ -164,7 +164,7 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
             className={`login-menu ${this._isActive ? 'active' : 'inactive'}`}
           >
             <ul>
-              {this._items.map(value => {
+              {this._items.map((value) => {
                 if (!value.loggedIn) {
                   return (
                     <li key={value.id}>

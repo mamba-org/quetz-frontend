@@ -44,7 +44,7 @@ export class MainMenu extends Panel implements IMainMenu {
         {
           const widget = (msg as Widget.ChildMessage).child;
           // If we already know about this widget, we're done
-          if (this._items.find(v => v.widget === widget)) {
+          if (this._items.find((v) => v.widget === widget)) {
             break;
           }
 
@@ -56,7 +56,7 @@ export class MainMenu extends Panel implements IMainMenu {
       case 'child-removed':
         {
           const widget = (msg as Widget.ChildMessage).child;
-          ArrayExt.removeFirstWhere(this._items, v => v.widget === widget);
+          ArrayExt.removeFirstWhere(this._items, (v) => v.widget === widget);
         }
         break;
       default:

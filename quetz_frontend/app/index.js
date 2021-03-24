@@ -9,17 +9,19 @@ import { PageConfig } from '@jupyterlab/coreutils';
 // Promise.allSettled polyfill, until our supported browsers implement it
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
 if (Promise.allSettled === undefined) {
-  Promise.allSettled = promises =>
+  Promise.allSettled = (promises) =>
     Promise.all(
-      promises.map(promise =>
-        promise
-          .then(value => ({
-            status: "fulfilled",
+      promises.map((promise) =>
+        promise.then(
+          (value) => ({
+            status: 'fulfilled',
             value,
-          }), reason => ({
-            status: "rejected",
+          }),
+          (reason) => ({
+            status: 'rejected',
             reason,
-          }))
+          })
+        )
       )
     );
 }
@@ -30,8 +32,10 @@ async function createModule(scope, module) {
   try {
     const factory = await window._JUPYTERLAB[scope].get(module);
     return factory();
-  } catch(e) {
-    console.warn(`Failed to create module: package: ${scope}; module: ${module}`);
+  } catch (e) {
+    console.warn(
+      `Failed to create module: package: ${scope}; module: ${module}`
+    );
     throw e;
   }
 }
@@ -40,35 +44,35 @@ async function createModule(scope, module) {
  * The main entry point for the application.
  */
 export async function main() {
-   // Handle a browser test.
-   // Set up error handling prior to loading extensions.
-   var browserTest = PageConfig.getOption('browserTest');
-   if (browserTest.toLowerCase() === 'true') {
-     var el = document.createElement('div');
-     el.id = 'browserTest';
-     document.body.appendChild(el);
-     el.textContent = '[]';
-     el.style.display = 'none';
-     var errors = [];
-     var reported = false;
-     var timeout = 25000;
+  // Handle a browser test.
+  // Set up error handling prior to loading extensions.
+  var browserTest = PageConfig.getOption('browserTest');
+  if (browserTest.toLowerCase() === 'true') {
+    var el = document.createElement('div');
+    el.id = 'browserTest';
+    document.body.appendChild(el);
+    el.textContent = '[]';
+    el.style.display = 'none';
+    var errors = [];
+    var reported = false;
+    var timeout = 25000;
 
-     var report = function() {
-       if (reported) {
-         return;
-       }
-       reported = true;
-       el.className = 'completed';
-     }
+    var report = function () {
+      if (reported) {
+        return;
+      }
+      reported = true;
+      el.className = 'completed';
+    };
 
-     window.onerror = function(msg, url, line, col, error) {
-       errors.push(String(error));
-       el.textContent = JSON.stringify(errors)
-     };
-     console.error = function(message) {
-       errors.push(String(message));
-       el.textContent = JSON.stringify(errors)
-     };
+    window.onerror = function (msg, url, line, col, error) {
+      errors.push(String(error));
+      el.textContent = JSON.stringify(errors);
+    };
+    console.error = function (message) {
+      errors.push(String(message));
+      el.textContent = JSON.stringify(errors);
+    };
   }
 
   const App = require('@quetz-frontend/application').App;
@@ -79,25 +83,24 @@ export async function main() {
   var ignorePlugins = [];
   var register = [];
 
-
   const federatedExtensionPromises = [];
   const federatedMimeExtensionPromises = [];
   const federatedStylePromises = [];
 
   // Start initializing the federated extensions
-  const extensions = JSON.parse(
-    PageConfig.getOption('federated_extensions')
-  );
+  const extensions = JSON.parse(PageConfig.getOption('federated_extensions'));
   const queuedFederated = [];
 
-  extensions.forEach(data => {
+  extensions.forEach((data) => {
     if (data.extension) {
       queuedFederated.push(data.name);
       federatedExtensionPromises.push(createModule(data.name, data.extension));
     }
     if (data.mimeExtension) {
       queuedFederated.push(data.name);
-      federatedMimeExtensionPromises.push(createModule(data.name, data.mimeExtension));
+      federatedMimeExtensionPromises.push(
+        createModule(data.name, data.mimeExtension)
+      );
     }
     if (data.style) {
       federatedStylePromises.push(createModule(data.name, data.style));
@@ -139,9 +142,11 @@ export async function main() {
   const mimeExtensions = [];
 
   // Add the federated mime extensions.
-  const federatedMimeExtensions = await Promise.allSettled(federatedMimeExtensionPromises);
-  federatedMimeExtensions.forEach(p => {
-    if (p.status === "fulfilled") {
+  const federatedMimeExtensions = await Promise.allSettled(
+    federatedMimeExtensionPromises
+  );
+  federatedMimeExtensions.forEach((p) => {
+    if (p.status === 'fulfilled') {
       for (let plugin of activePlugins(p.value)) {
         mimeExtensions.push(plugin);
       }
@@ -184,9 +189,11 @@ export async function main() {
   }
 
   // Add the federated extensions.
-  const federatedExtensions = await Promise.allSettled(federatedExtensionPromises);
-  federatedExtensions.forEach(p => {
-    if (p.status === "fulfilled") {
+  const federatedExtensions = await Promise.allSettled(
+    federatedExtensionPromises
+  );
+  federatedExtensions.forEach((p) => {
+    if (p.status === 'fulfilled') {
       for (let plugin of activePlugins(p.value)) {
         register.push(plugin);
       }
@@ -196,9 +203,11 @@ export async function main() {
   });
 
   // Load all federated component styles and log errors for any that do not
-  (await Promise.allSettled(federatedStylePromises)).filter(({status}) => status === "rejected").forEach(({reason}) => {
-    console.error(reason);
-  });
+  (await Promise.allSettled(federatedStylePromises))
+    .filter(({ status }) => status === 'rejected')
+    .forEach(({ reason }) => {
+      console.error(reason);
+    });
 
   /* const lab = new JupyterLab({
     mimeExtensions,
@@ -220,8 +229,10 @@ export async function main() {
   app.start();
 
   // Expose global app instance when in dev mode or when toggled explicitly.
-  var exposeAppInBrowser = (PageConfig.getOption('exposeAppInBrowser') || '').toLowerCase() === 'true';
-  var devMode = (PageConfig.getOption('devMode') || '').toLowerCase() === 'true';
+  var exposeAppInBrowser =
+    (PageConfig.getOption('exposeAppInBrowser') || '').toLowerCase() === 'true';
+  var devMode =
+    (PageConfig.getOption('devMode') || '').toLowerCase() === 'true';
 
   if (exposeAppInBrowser || devMode) {
     window.jupyterlab = lab;
@@ -230,11 +241,16 @@ export async function main() {
   // Handle a browser test.
   if (browserTest.toLowerCase() === 'true') {
     lab.restored
-      .then(function() { report(errors); })
-      .catch(function(reason) { report([`RestoreError: ${reason.message}`]); });
+      .then(function () {
+        report(errors);
+      })
+      .catch(function (reason) {
+        report([`RestoreError: ${reason.message}`]);
+      });
 
     // Handle failures to restore after the timeout has elapsed.
-    window.setTimeout(function() { report(errors); }, timeout);
+    window.setTimeout(function () {
+      report(errors);
+    }, timeout);
   }
-
 }

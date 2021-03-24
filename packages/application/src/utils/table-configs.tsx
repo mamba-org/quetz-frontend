@@ -5,7 +5,7 @@ import {
   faGlobeAmericas,
   faUnlockAlt,
   faTrash,
-  faCopy
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import * as React from 'react';
@@ -29,17 +29,17 @@ export const getPackageSearchTableColumns = () => [
             {row.values.name}
           </Link>
         </>
-      ) as any
+      ) as any,
   },
   {
     Header: 'Summary',
-    accessor: 'summary'
+    accessor: 'summary',
   },
   {
     Header: 'Version',
     accessor: 'current_version',
-    Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any
-  }
+    Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any,
+  },
 ];
 
 export const getPackageTableColumns = (channelId: string) => [
@@ -51,13 +51,13 @@ export const getPackageTableColumns = (channelId: string) => [
         <span
           {...row.getToggleRowExpandedProps({
             style: {
-              paddingLeft: `${row.depth * 2}rem`
-            }
+              paddingLeft: `${row.depth * 2}rem`,
+            },
           })}
         >
           <FontAwesomeIcon icon={row.isExpanded ? faAngleDown : faAngleRight} />
         </span>
-      ) as any
+      ) as any,
   },
   {
     Header: 'Name',
@@ -67,17 +67,17 @@ export const getPackageTableColumns = (channelId: string) => [
         <Link to={`${channelId}/packages/${row.values.name}`}>
           {row.values.name}
         </Link>
-      ) as any
+      ) as any,
   },
   {
     Header: 'Summary',
-    accessor: 'summary'
+    accessor: 'summary',
   },
   {
     Header: 'Version',
     accessor: 'current_version',
-    Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any
-  }
+    Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any,
+  },
 ];
 
 export const getMembersListColumns = (): any => [
@@ -92,23 +92,23 @@ export const getMembersListColumns = (): any => [
           alt=""
         />
       ) as any,
-    width: 10
+    width: 10,
   },
   {
     Header: '',
     accessor: 'user.profile.name',
-    width: 40
+    width: 40,
   },
   {
     Header: '',
     accessor: 'user.username',
-    width: 30
+    width: 30,
   },
   {
     Header: '',
     accessor: 'role',
-    width: 20
-  }
+    width: 20,
+  },
 ];
 
 export const getChannelsListColumns = (): any => [
@@ -134,7 +134,7 @@ export const getChannelsListColumns = (): any => [
           />
         </>
       ) as any,
-    width: 5
+    width: 5,
   },
   {
     Header: '',
@@ -148,21 +148,21 @@ export const getChannelsListColumns = (): any => [
           </p>
         </div>
       ) as any,
-    width: 45
+    width: 45,
   },
   {
     Header: '',
     accessor: 'user.username',
     Cell: ({ row }: any) =>
       formatPlural(row.original.packages_count, 'package'),
-    width: 35
+    width: 35,
   },
   {
     Header: '',
     accessor: 'role',
     Cell: ({ row }: any) => formatPlural(row.original.packages_count, 'member'),
-    width: 20
-  }
+    width: 20,
+  },
 ];
 
 export const getUserChannelsTableColumns = (): any => [
@@ -172,26 +172,26 @@ export const getUserChannelsTableColumns = (): any => [
     Cell: ({ row }: any) =>
       (
         <a href={`/channels/${row.original.name}`}>{row.original.name}</a>
-      ) as any
+      ) as any,
   },
   {
     Header: 'Role',
-    accessor: 'role'
-  }
+    accessor: 'role',
+  },
 ];
 
 export const getApikeysTableColumns = ({ onCopy, onDelete }: any): any => [
   {
     Header: 'API key',
-    accessor: 'key'
+    accessor: 'key',
   },
   {
     Header: 'Description',
-    accessor: 'description'
+    accessor: 'description',
   },
   {
     Header: 'Role',
-    accessor: 'roles[0].role'
+    accessor: 'roles[0].role',
   },
   {
     Header: 'Actions',
@@ -212,6 +212,6 @@ export const getApikeysTableColumns = ({ onCopy, onDelete }: any): any => [
             <FontAwesomeIcon icon={faTrash} />
           </button>
         </p>
-      ) as any
-  }
+      ) as any,
+  },
 ];

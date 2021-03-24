@@ -26,7 +26,7 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
     super(props);
     this.state = {
       channels: null,
-      searchText: ''
+      searchText: '',
     };
   }
 
@@ -40,11 +40,11 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/'
+        link: '/',
       },
       {
-        text: 'Channels'
-      }
+        text: 'Channels',
+      },
     ];
 
     return (

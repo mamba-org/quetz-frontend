@@ -6,14 +6,14 @@ class SearchBox extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      input: ''
+      input: '',
     };
   }
 
   updateInput = (e: any) => {
     const { onTextUpdate } = this.props;
     this.setState({
-      input: e.target.value
+      input: e.target.value,
     });
     if (onTextUpdate) {
       onTextUpdate(e.target.value);

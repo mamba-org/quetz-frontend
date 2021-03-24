@@ -6,7 +6,7 @@ import {
   faCheckCircle,
   faTimesCircle,
   faInfoCircle,
-  faExclamationCircle
+  faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 
@@ -15,7 +15,7 @@ export const NOTIFICATION_TYPES = {
   DANGER: 'danger',
   INFO: 'info',
   DEFAULT: 'default',
-  WARNING: 'warning'
+  WARNING: 'warning',
 };
 
 const NOTIFICATION_ICONS = {
@@ -23,7 +23,7 @@ const NOTIFICATION_ICONS = {
   [NOTIFICATION_TYPES.DANGER]: faTimesCircle,
   [NOTIFICATION_TYPES.INFO]: faInfoCircle,
   [NOTIFICATION_TYPES.DEFAULT]: faInfoCircle,
-  [NOTIFICATION_TYPES.WARNING]: faExclamationCircle
+  [NOTIFICATION_TYPES.WARNING]: faExclamationCircle,
 };
 
 class NotificationComponent extends React.PureComponent<any, any> {
@@ -53,7 +53,7 @@ export const sendNotification = ({
   type = NOTIFICATION_TYPES.DEFAULT,
   title,
   message,
-  duration
+  duration,
 }: any) => {
   const notifId = store.addNotification({
     content: ({ id }: any) =>
@@ -70,8 +70,8 @@ export const sendNotification = ({
     animationIn: ['animate__animated', 'animate__fadeIn'],
     animationOut: ['animate__animated', 'animate__fadeOut'],
     dismiss: {
-      duration
-    }
+      duration,
+    },
   });
 
   // TODO: Find out why the notifiaction is not automatically disappearing

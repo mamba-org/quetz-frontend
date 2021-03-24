@@ -17,7 +17,8 @@ import { API_STATUSES } from '../../utils/constants';
 /**
  * A ReactWidget to edit the dashboard notebook metadata.
  */
-export class RequestAPIKeyDialog extends ReactWidget
+export class RequestAPIKeyDialog
+  extends ReactWidget
   implements Dialog.IBodyWidget<ReactWidget> {
   /**
    * Construct a `DashboardMetadataEditor`.
@@ -25,13 +26,11 @@ export class RequestAPIKeyDialog extends ReactWidget
    */
   constructor() {
     super();
-    const expire_at = moment()
-      .add(1, 'months')
-      .format(moment.HTML5_FMT.DATE);
+    const expire_at = moment().add(1, 'months').format(moment.HTML5_FMT.DATE);
     this._api_key_info = {
       description: '',
       expire_at,
-      roles: []
+      roles: [],
     };
     this._username = '';
     this._apiStatus = API_STATUSES.PENDING;
@@ -39,7 +38,7 @@ export class RequestAPIKeyDialog extends ReactWidget
     this._role = {
       channel: '',
       package: '',
-      role: 'member'
+      role: 'member',
     };
     this._channels = [];
     this._packages = [];
@@ -54,8 +53,8 @@ export class RequestAPIKeyDialog extends ReactWidget
         key: {
           description: this._api_key_info.description,
           expire_at: this._api_key_info.expire_at,
-          roles: []
-        }
+          roles: [],
+        },
       };
     } else {
       return { user: false, key: this._api_key_info };
@@ -64,10 +63,10 @@ export class RequestAPIKeyDialog extends ReactWidget
 
   onAfterAttach(message: Message): void {
     fetch('/api/me')
-      .then(resp => {
+      .then((resp) => {
         return resp.json();
       })
-      .then(async data => {
+      .then(async (data) => {
         if (data.detail) {
           return console.error(data.detail);
         }
@@ -129,7 +128,7 @@ export class RequestAPIKeyDialog extends ReactWidget
   ): void => {
     this._role.channel = event.target.value;
     const channel = this._channels.find(
-      channel => channel.name === this._role.channel
+      (channel) => channel.name === this._role.channel
     );
     if (channel) {
       switch (channel.role) {
@@ -151,7 +150,7 @@ export class RequestAPIKeyDialog extends ReactWidget
     }
 
     this._packages_channel = this._packages.filter(
-      value => value.channel_name === this._role.channel
+      (value) => value.channel_name === this._role.channel
     );
     this.update();
   };
@@ -160,7 +159,7 @@ export class RequestAPIKeyDialog extends ReactWidget
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     this._role.package = event.target.value;
-    const pkg = this._packages.find(pkg => pkg.name === this._role.package);
+    const pkg = this._packages.find((pkg) => pkg.name === this._role.package);
     if (pkg) {
       switch (pkg.role) {
         case 'owner':
@@ -190,7 +189,7 @@ export class RequestAPIKeyDialog extends ReactWidget
     this._role = {
       channel: '',
       package: '',
-      role: 'member'
+      role: 'member',
     };
     this._packages_channel = [];
     this.update();
@@ -397,7 +396,8 @@ export class RequestAPIKeyDialog extends ReactWidget
 /**
  * A ReactWidget to render a table for APIKeys' roles.
  */
-export class APIKeyDialog extends ReactWidget
+export class APIKeyDialog
+  extends ReactWidget
   implements Dialog.IBodyWidget<ReactWidget> {
   /**
    * Construct a `APIKeyDialog`.

@@ -1,6 +1,6 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
 import { App } from '../../app/app';
@@ -16,7 +16,7 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
     return (app as App).paths;
   },
   autoStart: true,
-  provides: JupyterFrontEnd.IPaths
+  provides: JupyterFrontEnd.IPaths,
 };
 
 export default paths;

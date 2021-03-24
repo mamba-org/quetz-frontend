@@ -25,8 +25,8 @@ export const copyToClipboard = (text: string, textType: string): void => {
       sendNotification({
         type: NOTIFICATION_TYPES.INFO,
         message: `Copied ${textType && `${textType} `}to clipboard`,
-        duration: 3000
+        duration: 3000,
       });
     })
-    .catch(e => console.error(e));
+    .catch((e) => console.error(e));
 };

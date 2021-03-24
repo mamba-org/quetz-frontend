@@ -27,11 +27,11 @@ class SearchPage extends React.Component<any, any> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/'
+        link: '/',
       },
       {
-        text: `Search for "${searchText}"`
-      }
+        text: `Search for "${searchText}"`,
+      },
     ];
     return (
       <div>

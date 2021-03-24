@@ -46,9 +46,9 @@ class Job extends React.Component<any, JobState> {
         manifest: '',
         owner: { id: '', profile: { name: '', avatar_url: '' }, username: '' },
         items_spec: '',
-        status: ''
+        status: '',
       },
-      apiStatus: API_STATUSES.PENDING
+      apiStatus: API_STATUSES.PENDING,
     };
   }
 
@@ -58,7 +58,7 @@ class Job extends React.Component<any, JobState> {
 
     this.setState({
       job,
-      apiStatus: API_STATUSES.SUCCESS
+      apiStatus: API_STATUSES.SUCCESS,
     });
   }
 
@@ -68,38 +68,38 @@ class Job extends React.Component<any, JobState> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/'
+        link: '/',
       },
       {
         text: 'Jobs',
-        link: '/jobs'
+        link: '/jobs',
       },
       {
-        text: 'Job ID'
-      }
+        text: 'Job ID',
+      },
     ];
 
     const jobColumns = [
       {
         Header: 'Manifest',
-        accessor: 'manifest'
+        accessor: 'manifest',
         // Cell: ({ row }: { row: { values: IJob } }) => row.values.manifest
       },
       {
         Header: 'Created',
-        accessor: 'created'
+        accessor: 'created',
         // Cell: ({ row }: { row: { values: IJob } }) => row.values.created
       },
       {
         Header: 'Status',
-        accessor: 'status'
+        accessor: 'status',
         // Cell: ({ row }: { row: { values: IJob } }) => row.values.status
       },
       {
         Header: 'Owner',
-        accessor: 'owner.username'
+        accessor: 'owner.username',
         // Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username
-      }
+      },
     ];
 
     return (

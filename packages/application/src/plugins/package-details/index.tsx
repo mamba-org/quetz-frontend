@@ -10,19 +10,19 @@ import PackageDetailsApiKeys from './tab-api-keys';
 const PACKAGE_TABS = {
   INFO: 0,
   MEMBERS: 1,
-  API_KEYS: 2
+  API_KEYS: 2,
 };
 
 const HASH_TO_INDEX: Record<string, number> = {
   info: 0,
   members: 1,
-  api_keys: 2
+  api_keys: 2,
 };
 
 const INDEX_TO_HASH: Record<number, string> = {
   0: 'info',
   1: 'members',
-  2: 'api_keys'
+  2: 'api_keys',
 };
 
 class PackageDetails extends React.PureComponent<any, any> {
@@ -30,13 +30,13 @@ class PackageDetails extends React.PureComponent<any, any> {
     super(props);
     const locationHash = (window.location.hash || '#info').substring(1);
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[locationHash] || PACKAGE_TABS.INFO
+      selectedTabIndex: HASH_TO_INDEX[locationHash] || PACKAGE_TABS.INFO,
     };
   }
 
   setTabIndex = (selectedTabIndex: any) => {
     this.setState({
-      selectedTabIndex
+      selectedTabIndex,
     });
     history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
   };
@@ -45,29 +45,29 @@ class PackageDetails extends React.PureComponent<any, any> {
     const { selectedTabIndex } = this.state;
     const {
       match: {
-        params: { channelId, packageId }
-      }
+        params: { channelId, packageId },
+      },
     } = this.props;
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/'
+        link: '/',
       },
       {
         text: 'Channels',
-        link: '/channels/'
+        link: '/channels/',
       },
       {
         text: channelId,
-        link: `/channels/${channelId}`
+        link: `/channels/${channelId}`,
       },
       {
         text: 'packages',
-        link: `/channels/${channelId}#packages`
+        link: `/channels/${channelId}#packages`,
       },
       {
-        text: packageId
-      }
+        text: packageId,
+      },
     ];
 
     return (

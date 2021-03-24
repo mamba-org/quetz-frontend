@@ -89,7 +89,7 @@ class PackageVersions extends React.PureComponent<
                       <td>
                         {fromNow(version.time_created, {
                           max: 1,
-                          suffix: true
+                          suffix: true,
                         })}
                       </td>
                       <td>

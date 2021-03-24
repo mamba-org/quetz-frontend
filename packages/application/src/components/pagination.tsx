@@ -3,7 +3,7 @@ import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
-  faAngleRight
+  faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
@@ -20,7 +20,7 @@ const Pagination = ({
   pageIndex,
   pageOptions,
   setPageSize,
-  loading
+  loading,
 }: any) => (
   <div className="jp-table-controls">
     <div className="jp-table-controls-left">
@@ -75,7 +75,7 @@ const Pagination = ({
           className="input"
           type="number"
           value={pageIndex + 1}
-          onChange={e => {
+          onChange={(e) => {
             const page = e.target.value ? Number(e.target.value) - 1 : 0;
             gotoPage(page);
           }}
@@ -86,11 +86,11 @@ const Pagination = ({
         <select
           className="btn btn-default"
           value={pageSize}
-          onChange={e => {
+          onChange={(e) => {
             setPageSize(Number(e.target.value));
           }}
         >
-          {[25, 50, 100].map(pageSize => (
+          {[25, 50, 100].map((pageSize) => (
             <option key={pageSize} value={pageSize} defaultValue="25">
               Show {pageSize}
             </option>

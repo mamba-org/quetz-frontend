@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 import ReactNotification from 'react-notifications-component';
 
@@ -12,7 +12,7 @@ import {
   Route,
   Switch,
   Redirect,
-  NavLink
+  NavLink,
 } from 'react-router-dom';
 import { last, capitalize } from 'lodash';
 
@@ -52,12 +52,12 @@ const plugin: JupyterFrontEndPlugin<void> = {
         widget.title.label = 'User main page';
         widget.title.closable = false;
         shell.add(widget, 'main');
-      }
+      },
     });
 
     router.register({
       pattern: /user.*/,
-      command: CommandIDs.user
+      command: CommandIDs.user,
     });
 
     menu.addItem({
@@ -65,9 +65,9 @@ const plugin: JupyterFrontEndPlugin<void> = {
       label: 'Profile',
       icon: 'empty',
       api: '/user',
-      loggedIn: true
+      loggedIn: true,
     });
-  }
+  },
 };
 
 export default plugin;
@@ -85,15 +85,15 @@ class UserComponent extends React.PureComponent<any, any> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        href: '/'
+        href: '/',
       },
       {
         text: 'User details',
-        link: '/'
+        link: '/',
       },
       {
-        text: getBreadcrumbText()
-      }
+        text: getBreadcrumbText(),
+      },
     ];
     return (
       <Router basename="/user">
