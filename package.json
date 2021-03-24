@@ -10,7 +10,7 @@
   },
   "scripts": {
     "install": "lerna bootstrap",
-    "build": "yarn run build:core && yarn run build:packages",
+    "build": "lerna run build",
     "build:core": "cd quetz_frontend/app && yarn && yarn run build",
     "build:packages": "lerna run build",
     "clean": "yarn run clean:core && yarn run clean:packages",
