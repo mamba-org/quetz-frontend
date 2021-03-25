@@ -38,13 +38,9 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.0",
-    "@jupyterlab/apputils": "^3.0.0",
     "@jupyterlab/apputils-extension": "^3.0.0",
-    "@jupyterlab/mainmenu": "^3.0.0",
     "@jupyterlab/theme-dark-extension": "^3.0.0",
     "@jupyterlab/theme-light-extension": "^3.0.0",
-    "@jupyterlab/ui-components": "^3.0.0",
     "@quetz-frontend/application-extension": "^0.1.0"
   },
   "devDependencies": {
