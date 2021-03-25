@@ -8,7 +8,7 @@ const Build = require('@jupyterlab/builder').Build;
 // such as setting schema files, theme assets, etc.
 const extensionAssetConfig = Build.ensureAssets({
   packageNames: data.jupyterlab.extensions,
-  output: './build'
+  output: './build',
 });
 
 module.exports = [
@@ -16,7 +16,7 @@ module.exports = [
     entry: ['whatwg-fetch', './index.js'],
     output: {
       path: __dirname + '/build',
-      filename: 'bundle.js'
+      filename: 'bundle.js',
     },
     bail: true,
     devtool: 'source-map',
@@ -30,15 +30,15 @@ module.exports = [
         { test: /\.js.map$/, use: 'file-loader' },
         {
           test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-          use: 'url-loader?limit=10000&mimetype=application/font-woff'
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
         },
         {
           test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-          use: 'url-loader?limit=10000&mimetype=application/font-woff'
+          use: 'url-loader?limit=10000&mimetype=application/font-woff',
         },
         {
           test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-          use: 'url-loader?limit=10000&mimetype=application/octet-stream'
+          use: 'url-loader?limit=10000&mimetype=application/octet-stream',
         },
         { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, use: 'file-loader' },
         {
@@ -47,8 +47,8 @@ module.exports = [
           issuer: /\.css$/,
           use: {
             loader: 'svg-url-loader',
-            options: { encoding: 'none', limit: 10000 }
-          }
+            options: { encoding: 'none', limit: 10000 },
+          },
         },
         {
           // In .ts and .tsx files (both of which compile to .js), svg files
@@ -56,19 +56,18 @@ module.exports = [
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           issuer: /\.js$/,
           use: {
-            loader: 'raw-loader'
-          }
-        }
-      ]
+            loader: 'raw-loader',
+          },
+        },
+      ],
     },
     plugins: [
       new webpack.DefinePlugin({
         // Needed for Blueprint. See https://github.com/palantir/blueprint/issues/4393
         'process.env': '{}',
         // Needed for various packages using cwd(), like the path polyfill
-        process: { cwd: () => '/' }
-      })
-    ]
-  }
+        process: { cwd: () => '/' },
+      }),
+    ],
+  },
 ].concat(extensionAssetConfig);
-
