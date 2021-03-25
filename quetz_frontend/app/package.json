@@ -14,29 +14,6 @@
     "prepublishOnly": "npm run build",
     "watch": "webpack --watch"
   },
-  "resolutions": {
-    "@jupyterlab/application": "~3.0.0",
-    "@jupyterlab/apputils": "~3.0.0",
-    "@jupyterlab/apputils-extension": "~3.0.0",
-    "@jupyterlab/mainmenu": "~3.0.0",
-    "@jupyterlab/theme-dark-extension": "~3.0.0",
-    "@jupyterlab/theme-light-extension": "~3.0.0",
-    "@jupyterlab/ui-components": "~3.0.0",
-    "@lumino/algorithm": "^1.3.3",
-    "@lumino/application": "^1.13.1",
-    "@lumino/commands": "^1.12.0",
-    "@lumino/coreutils": "^1.5.3",
-    "@lumino/disposable": "^1.4.3",
-    "@lumino/domutils": "^1.2.3",
-    "@lumino/dragdrop": "^1.7.1",
-    "@lumino/messaging": "^1.4.3",
-    "@lumino/properties": "^1.2.3",
-    "@lumino/signaling": "^1.4.3",
-    "@lumino/virtualdom": "^1.8.0",
-    "@lumino/widgets": "^1.16.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
-  },
   "dependencies": {
     "@jupyterlab/apputils-extension": "^3.0.0",
     "@jupyterlab/theme-dark-extension": "^3.0.0",
@@ -78,36 +55,10 @@
   "jupyterlab": {
     "name": "Quetz-Frontend",
     "version": "0.1.0",
-    "outputDir": "..",
-    "buildDir": "./build",
-    "staticDir": "../static",
-    "extensions": {
-      "@jupyterlab/apputils-extension": "",
-      "@jupyterlab/theme-dark-extension": "",
-      "@jupyterlab/theme-light-extension": ""
-    },
-    "mimeExtensions": {},
-    "externalExtensions": {},
-    "singletonPackages": [
-      "@jupyterlab/application",
-      "@jupyterlab/apputils",
-      "@jupyterlab/mainmenu",
-      "@jupyterlab/ui-components",
-      "@lumino/algorithm",
-      "@lumino/application",
-      "@lumino/commands",
-      "@lumino/coreutils",
-      "@lumino/disposable",
-      "@lumino/domutils",
-      "@lumino/dragdrop",
-      "@lumino/messaging",
-      "@lumino/properties",
-      "@lumino/signaling",
-      "@lumino/virtualdom",
-      "@lumino/widgets",
-      "react",
-      "react-dom"
-    ],
-    "linkedPackages": {}
+    "extensions": [
+      "@jupyterlab/apputils-extension",
+      "@jupyterlab/theme-dark-extension",
+      "@jupyterlab/theme-light-extension"
+    ]
   }
 }
