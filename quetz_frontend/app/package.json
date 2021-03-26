@@ -58,7 +58,8 @@
     "extensions": [
       "@jupyterlab/apputils-extension",
       "@jupyterlab/theme-dark-extension",
-      "@jupyterlab/theme-light-extension"
+      "@jupyterlab/theme-light-extension",
+      "@quetz-frontend/application-extension"
     ]
   }
 }
