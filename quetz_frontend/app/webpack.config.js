@@ -70,20 +70,20 @@ module.exports = [
         // Needed for various packages using cwd(), like the path polyfill
         process: { cwd: () => '/' },
         BACKEND_HOST: JSON.stringify(process.env.BACKEND_HOST),
-        REPO_HOST: JSON.stringify(process.env.REPO_HOST)
+        REPO_HOST: JSON.stringify(process.env.REPO_HOST),
       }),
       new CopyPlugin({
         patterns: [
           {
             from: 'public',
-            to: ''
-          }
-        ]
+            to: '',
+          },
+        ],
       }),
       new HtmlWebpackPlugin({
         template: 'templates/index.ejs',
-        inject: false
-      })
+        inject: false,
+      }),
     ],
   },
 ].concat(extensionAssetConfig);
