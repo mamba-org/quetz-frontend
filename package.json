@@ -2,101 +2,38 @@
   "name": "quetz-frontend",
   "version": "0.1.0",
   "private": true,
-  "files": [
-    "lib/**/*.{d.ts,js.map,js}",
-    "style/**/*.{css,svg}",
-    "schema/*.json"
-  ],
-  "sideEffects": [
-    "style/**/*.css"
-  ],
-  "types": "lib/index.d.ts",
-  "style": "style/index.css",
-  "directories": {
-    "lib": "lib/"
+  "workspaces": {
+    "packages": [
+      "quetz_frontend/app",
+      "packages/*"
+    ]
   },
   "scripts": {
-    "build": "tsc && webpack --config webpack.dev.config.js",
-    "build:prod": "tsc && webpack  --config webpack.prod.config.js",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "prepublishOnly": "yarn run build",
-    "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
-    "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
+    "install": "lerna bootstrap",
+    "build": "lerna run build",
+    "build:core": "cd quetz_frontend/app && yarn && yarn run build",
+    "build:packages": "lerna run build",
+    "clean": "yarn run clean:core && yarn run clean:packages",
+    "clean:core": "cd quetz_frontend/app && yarn run clean",
+    "clean:packages": "lerna run clean",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
-    "watch:ts": "tsc -w --listEmittedFiles",
-    "watch:webpack": "webpack --config webpack.dev.config.js --watch",
-    "watch": "npm-run-all --parallel watch:ts watch:webpack"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "@jupyterlab/application": "^3.0.0-rc.10",
-    "@jupyterlab/apputils": "^3.0.0-rc.10",
-    "@jupyterlab/apputils-extension": "^3.0.0-rc.13",
-    "@jupyterlab/mainmenu": "^3.0.0-rc.10",
-    "@jupyterlab/theme-dark-extension": "^3.0.0-rc.10",
-    "@jupyterlab/theme-light-extension": "^3.0.0-rc.10",
-    "@jupyterlab/ui-components": "^3.0.0-rc.10",
-    "@lumino/widgets": "^1.14.0",
-    "@types/moment": "^2.13.0",
-    "animate.css": "^4.1.1",
-    "axios": "^0.21.1",
-    "clsx": "^1.1.1",
-    "es6-promise": "~4.2.8",
-    "fromnow": "^3.0.1",
-    "html-webpack-plugin": "^4.5.1",
-    "lodash": "^4.17.20",
-    "moment": "^2.29.1",
-    "prop-types": "^15.7.2",
-    "query-string": "^6.13.8",
-    "react-notifications-component": "^3.0.3",
-    "react-router-dom": "^5.2.0",
-    "react-table": "^7.6.3",
-    "react-tabs": "^3.1.2",
-    "react-tooltip": "^4.2.11",
-    "webpack-merge": "^5.7.3"
+    "prettier": "prettier --write \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
+    "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\""
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.167",
-    "@types/react-notifications-component": "^2.4.0",
-    "@types/react-router-dom": "^5.1.6",
-    "@types/react-table": "^7.0.27",
-    "@types/react-tabs": "^2.3.2",
-    "@types/styled-components": "^5.1.5",
-    "@typescript-eslint/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/parser": "^4.2.0",
-    "copy-webpack-plugin": "^7.0.0",
-    "css-loader": "~3.2.0",
-    "eslint": "^7.10.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-jsdoc": "^30.6.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.21.5",
-    "file-loader": "~5.0.2",
-    "fs-extra": "^8.1.0",
-    "glob": "~7.1.6",
-    "husky": "^4.3.7",
-    "mini-css-extract-plugin": "~0.9.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^1.19.1",
-    "raw-loader": "~4.0.0",
-    "react-app-polyfill": "^2.0.0",
-    "rimraf": "~3.0.2",
-    "style-loader": "~1.0.1",
-    "svg-url-loader": "~6.0.0",
-    "typescript": "~4.0.3",
-    "url-loader": "~4.1.1",
-    "watch": "~1.0.2",
-    "webpack": "^5.7.0",
-    "webpack-bundle-analyzer": "^4.4.0",
-    "webpack-cli": "^4.2.0",
-    "whatwg-fetch": "^3.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn prettier && yarn eslint && git add -A ."
-    }
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-jest": "^24.3.2",
+    "eslint-plugin-jsdoc": "^32.3.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.23.1",
+    "lerna": "^3.19.0",
+    "lint-staged": "^10.2.13",
+    "prettier": "^2.2.1",
+    "shell-quote": "^1.7.2",
+    "yarn": "1.21.1"
   }
 }

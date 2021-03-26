@@ -3,3 +3,4 @@ node_modules
 **/lib
 **/build
 **/static
+quetz_frontend/themes
