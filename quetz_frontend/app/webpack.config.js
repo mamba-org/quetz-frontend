@@ -1,5 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
+const CopyPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const data = require('./package.json');
 const webpack = require('webpack');
 const Build = require('@jupyterlab/builder').Build;
@@ -67,7 +69,21 @@ module.exports = [
         'process.env': '{}',
         // Needed for various packages using cwd(), like the path polyfill
         process: { cwd: () => '/' },
+        BACKEND_HOST: JSON.stringify(process.env.BACKEND_HOST),
+        REPO_HOST: JSON.stringify(process.env.REPO_HOST)
       }),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: 'public',
+            to: ''
+          }
+        ]
+      }),
+      new HtmlWebpackPlugin({
+        template: 'templates/index.ejs',
+        inject: false
+      })
     ],
   },
 ].concat(extensionAssetConfig);
