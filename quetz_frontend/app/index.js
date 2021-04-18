@@ -19,7 +19,10 @@ async function main() {
     ),
     require('@jupyterlab/theme-light-extension'),
     require('@jupyterlab/theme-dark-extension'),
+    require('@quetz-frontend/about-extension'),
     require('@quetz-frontend/application-extension'),
+    require('@quetz-frontend/download-extension'),
+    require('@quetz-frontend/menu-extension'),
   ];
 
   app.registerPluginModules(mods);

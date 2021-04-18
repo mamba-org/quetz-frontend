@@ -10,7 +10,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import * as React from 'react';
 
-import { ILogInMenu } from './../topbar/tokens';
+import { ILogInMenu } from '@quetz-frontend/menu';
 
 import Jobs from './jobs';
 

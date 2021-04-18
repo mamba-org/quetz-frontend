@@ -1,10 +1,19 @@
-import { IMainMenu } from './tokens';
-
 import { ArrayExt } from '@lumino/algorithm';
 
 import { Widget, Panel } from '@lumino/widgets';
 
 import { Message, MessageLoop, IMessageHandler } from '@lumino/messaging';
+
+import { IMainMenu } from './tokens';
+
+export type Profile = {
+  name: string;
+  avatar_url: string;
+  user: {
+    id: string;
+    username: string;
+  };
+};
 
 /**
  * The main menu.

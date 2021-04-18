@@ -10,7 +10,7 @@ import { Message } from '@lumino/messaging';
 
 import { Widget } from '@lumino/widgets';
 
-import { IMainMenu } from '@quetz-frontend/application-extension/lib/plugins/topbar/tokens';
+import { IMainMenu } from '@quetz-frontend/menu';
 
 import * as React from 'react';
 

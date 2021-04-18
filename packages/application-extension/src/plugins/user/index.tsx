@@ -18,7 +18,7 @@ import { last, capitalize } from 'lodash';
 
 import * as React from 'react';
 
-import { ILogInMenu } from '../topbar/tokens';
+import { ILogInMenu } from '@quetz-frontend/menu';
 import UserAPIKey from './api-key';
 import Breadcrumbs from '../../components/breadcrumbs';
 import UserProfile from './tab-profile';

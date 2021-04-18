@@ -3,7 +3,7 @@ import {
   JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
-import { ILogInMenu, LogInItem } from '../topbar/tokens';
+import { ILogInMenu, LogInItem } from '@quetz-frontend/menu';
 
 import github_logo from '../../../style/img/github-logo.svg';
 

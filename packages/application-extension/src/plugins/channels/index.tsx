@@ -12,7 +12,7 @@ import * as React from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { ILogInMenu } from '../topbar/tokens';
+import { ILogInMenu } from '@quetz-frontend/menu';
 
 import ChannelsList from './list';
 
