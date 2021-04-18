@@ -283,7 +283,6 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
  */
 function toolbar(app: JupyterFrontEnd): IMainMenu {
   const menu = new MainMenu();
-  console.debug("Entra toolbar");
   app.shell.add(menu, 'top', { rank: 10001 });
   return menu;
 }
@@ -294,7 +293,6 @@ function toolbar(app: JupyterFrontEnd): IMainMenu {
  */
 function logInMenu(app: JupyterFrontEnd, router: IRouter): ILogInMenu {
   const login = new LogInMenu(router);
-  console.debug("Entra logInMenu");
   app.shell.add(login, 'top', { rank: 19999 });
   return login;
 }
