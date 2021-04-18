@@ -1,7 +1,6 @@
 import { flatten } from 'lodash';
 
 import channels from './plugins/channels/index';
-import download from './plugins/download/index';
 import jobs from './plugins/jobs/index';
 import login from './plugins/login/index';
 import paths from './plugins/paths/index';
@@ -13,7 +12,6 @@ import user from './plugins/user/index';
 
 export default flatten([
   channels,
-  download,
   jobs,
   login,
   paths,

@@ -4,13 +4,11 @@ import {
   IRouter,
 } from '@jupyterlab/application';
 
-import { DOMUtils } from '@jupyterlab/apputils';
-
-import { ReactWidget } from '@jupyterlab/apputils';
+import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
 import { Widget } from '@lumino/widgets';
 
-import { IMainMenu } from '../topbar/tokens';
+import { IMainMenu } from '@quetz-frontend/application-extension/lib/plugins/topbar/tokens';
 
 import * as React from 'react';
 
