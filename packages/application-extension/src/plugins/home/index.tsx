@@ -1,9 +1,14 @@
-import FetchHoc from '../../components/fetch-hoc';
-import { BACKEND_HOST } from '../../utils/constants';
-import List from '../../components/list';
-import { getChannelsListColumns } from '../../utils/table-configs';
-import * as React from 'react';
+import { List } from '@quetz-frontend/table';
+
 import { Link } from 'react-router-dom';
+
+import * as React from 'react';
+
+import FetchHoc from '../../components/fetch-hoc';
+
+import { BACKEND_HOST } from '../../utils/constants';
+
+import { getChannelsListColumns } from '../../utils/table-configs';
 
 export class Homepage extends React.PureComponent {
   /**

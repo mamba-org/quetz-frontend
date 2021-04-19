@@ -1,13 +1,15 @@
+import InlineLoader from '@quetz-frontend/application-extension/lib/components/loader';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
 
-import InlineLoader from './loader';
+import * as React from 'react';
 
 const Pagination = ({
   pageSize,

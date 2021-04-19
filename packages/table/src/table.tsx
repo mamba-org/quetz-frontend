@@ -1,3 +1,5 @@
+import { ServerConnection } from '@jupyterlab/services';
+
 import {
   useExpanded,
   useTable,
@@ -5,12 +7,13 @@ import {
   useGlobalFilter,
   useAsyncDebounce,
 } from 'react-table';
+
 import clsx from 'clsx';
 
 import PropTypes from 'prop-types';
 
-import React from 'react';
-import { http } from '../utils/http';
+import * as React from 'react';
+
 import Pagination from './pagination';
 
 interface ITableFcProps {
@@ -229,13 +232,19 @@ export const PaginatedTable = ({
       const fetchId = ++fetchIdRef.current;
       setState({ ...state, loading: true });
 
+      const request: RequestInit = {
+        method: 'GET',
+        body: JSON.stringify({
+          skip: pageIndex * pageSize,
+          limit: pageSize,
+          q: query,
+        })
+      };
+      const settings = ServerConnection.makeSettings();
+      
       const {
         data: { pagination, result },
-      }: any = await http.get(url, {
-        skip: pageIndex * pageSize,
-        limit: pageSize,
-        q: query,
-      });
+      }: any = await ServerConnection.makeRequest(url, request, settings);
 
       if (fetchId === fetchIdRef.current) {
         recordPaginationHistory({ pageIndex, pageSize, query });

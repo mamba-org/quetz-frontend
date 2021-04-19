@@ -1,7 +1,11 @@
-import React from 'react';
-import { PaginatedTable } from '../../../components/table';
+import { PaginatedTable } from '@quetz-frontend/table';
+
+import * as React from 'react';
+
 import { API_STATUSES, BACKEND_HOST } from '../../../utils/constants';
+
 import PackageVersions from '../../package-details/versions';
+
 import { getPackageTableColumns } from '../../../utils/table-configs';
 
 type PackagesState = {

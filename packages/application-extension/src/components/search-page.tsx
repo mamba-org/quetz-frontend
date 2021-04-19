@@ -1,9 +1,15 @@
-import * as React from 'react';
+import { Table } from '@quetz-frontend/table';
+
 import { withRouter } from 'react-router-dom';
+
+import * as React from 'react';
+
 import FetchHoc from './fetch-hoc';
+
 import { BACKEND_HOST } from '../utils/constants';
+
 import Breadcrumbs from './breadcrumbs';
-import Table from './table';
+
 import { getPackageSearchTableColumns } from '../utils/table-configs';
 
 class SearchPage extends React.Component<any, any> {

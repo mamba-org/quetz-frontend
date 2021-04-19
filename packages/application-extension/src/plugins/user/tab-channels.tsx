@@ -1,7 +1,10 @@
+import { PaginatedTable } from '@quetz-frontend/table';
+
 import * as React from 'react';
+
 import { BACKEND_HOST } from '../../utils/constants';
+
 import { getUserChannelsTableColumns } from '../../utils/table-configs';
-import { PaginatedTable } from '../../components/table';
 
 class UserChannels extends React.PureComponent<any, any> {
   render(): JSX.Element {

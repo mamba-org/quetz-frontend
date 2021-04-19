@@ -4,16 +4,10 @@
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["src/**/*", "@types"],
+  "include": ["src/**/*"],
   "references": [
     {
-      "path": "../application"
-    },
-    {
-      "path": "../menu"
-    },
-    {
-      "path": "../table"
+      "path": "../application-extension"
     }
   ]
 }

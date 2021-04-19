@@ -1,8 +1,13 @@
+import { Table } from '@quetz-frontend/table';
+
 import * as React from 'react';
+
 import { BACKEND_HOST } from '../utils/constants';
+
 import FetchHoc from './fetch-hoc';
+
 import { getApikeysTableColumns } from '../utils/table-configs';
-import Table from '../components/table';
+
 import { some, filter } from 'lodash';
 
 class ApiKeyComponent extends React.PureComponent<any, any> {

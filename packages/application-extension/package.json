@@ -38,6 +38,7 @@
     "@jupyterlab/ui-components": "^3.0.0",
     "@lumino/widgets": "^1.14.0",
     "@quetz-frontend/menu": "^0.1.0",
+    "@quetz-frontend/table": "^0.1.0",
     "@types/moment": "^2.13.0",
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",

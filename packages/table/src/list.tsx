@@ -1,10 +1,14 @@
-import React from 'react';
-import { useTable, useFlexLayout, usePagination } from 'react-table';
-import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-import Pagination from './pagination';
+import { ServerConnection } from '@jupyterlab/services';
 
-import { http } from '../utils/http';
+import { useTable, useFlexLayout, usePagination } from 'react-table';
+
+import { Link } from 'react-router-dom';
+
+import clsx from 'clsx';
+
+import * as React from 'react';
+
+import Pagination from './pagination';
 
 const headerProps = (props: any, { column }: any) =>
   getStyles(props, column.align);
@@ -179,13 +183,19 @@ export const PaginatedList = ({ url, columns, to, q }: any) => {
     const fetchId = ++fetchIdRef.current;
     setLoading(true);
 
+    const request: RequestInit = {
+      method: 'GET',
+      body: JSON.stringify({
+        ...q,
+        skip: pageIndex * pageSize,
+        limit: pageSize,
+      })
+    };
+    const settings = ServerConnection.makeSettings();
+    
     const {
       data: { pagination, result },
-    }: any = await http.get(url, {
-      ...q,
-      skip: pageIndex * pageSize,
-      limit: pageSize,
-    });
+    }: any = await ServerConnection.makeRequest(url, request, settings);
 
     if (fetchId === fetchIdRef.current) {
       setData(result);

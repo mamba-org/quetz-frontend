@@ -1,8 +1,13 @@
-import React from 'react';
+import { PaginatedList } from '@quetz-frontend/table';
+
+import * as React from 'react';
+
 import { BACKEND_HOST } from '../../../utils/constants';
+
 import SearchBox from '../../../components/search';
+
 import Breadcrumbs from '../../../components/breadcrumbs';
-import { PaginatedList } from '../../../components/list';
+
 import { getChannelsListColumns } from '../../../utils/table-configs';
 
 interface IChannelsApiItem {

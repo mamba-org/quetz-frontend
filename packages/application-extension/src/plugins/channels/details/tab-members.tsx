@@ -1,7 +1,11 @@
+import { List } from '@quetz-frontend/table';
+
 import * as React from 'react';
+
 import { BACKEND_HOST } from '../../../utils/constants';
+
 import FetchHoc from '../../../components/fetch-hoc';
-import List from '../../../components/list';
+
 import { getMembersListColumns } from '../../../utils/table-configs';
 
 class ChannelDetailsMembers extends React.PureComponent<any, any> {

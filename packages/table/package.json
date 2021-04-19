@@ -1,0 +1,51 @@
+{
+  "name": "@quetz-frontend/table",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "styleModule": "style/index.js",
+  "directories": {
+    "lib": "lib/"
+  },
+  "sideEffects": [
+    "style/*.css",
+    "style/index.js"
+  ],
+  "files": [
+    "lib/*.d.ts",
+    "lib/*.js.map",
+    "lib/*.js",
+    "style/*.css",
+    "style/index.js",
+    "style/img/*.{jpg,png,svg}"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "watch": "tsc -b --watch"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@jupyterlab/services": "^6.0.6",
+    "@lumino/algorithm": "^1.3.3",
+    "@lumino/coreutils": "^1.6.0",
+    "@lumino/messaging": "^1.4.3",
+    "@lumino/widgets": "^1.14.0",
+    "@quetz-frontend/application-extension": "^0.1.0",
+    "clsx": "^1.1.1",
+    "prop-types": "^15.7.2",
+    "react-router-dom": "^5.2.0",
+    "react-table": "^7.6.3",
+    "react": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/react-table": "^7.0.27",
+    "rimraf": "~3.0.2",
+    "typescript": "^4.1.5"
+  },
+  "jupyterlab": {
+    "coreDependency": true
+  }
+}
