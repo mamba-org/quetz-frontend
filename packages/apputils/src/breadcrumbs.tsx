@@ -1,6 +1,8 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { reduce, union } from 'lodash';
+
+import { Link } from 'react-router-dom';
+
+import * as React from 'react';
 
 const BreadcrumbChild = ({ data }: any) => {
   if (data.link) {

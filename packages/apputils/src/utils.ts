@@ -1,5 +1,7 @@
 import { round } from 'lodash';
+
 import { GB_SIZE, KB_SIZE, MB_SIZE } from './constants';
+
 import { NOTIFICATION_TYPES, sendNotification } from './notification';
 
 export const formatPlural = (count: number, text: string): string =>

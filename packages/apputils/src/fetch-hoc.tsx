@@ -1,7 +1,11 @@
+import { ServerConnection } from '@jupyterlab/services';
+
 import { get } from 'lodash';
+
 import * as React from 'react';
-import { API_STATUSES } from '../utils/constants';
-import { http } from '../utils/http';
+
+import { API_STATUSES } from './constants';
+
 import InlineLoader from './loader';
 
 const genericErrorForStatus = (status: any) => {
@@ -42,10 +46,14 @@ class FetchHoc extends React.PureComponent<any, any> {
     });
 
     try {
-      const { data } = (await http.get(url, '')) as any;
-
+      const request: RequestInit = {
+        method: 'GET'
+      };
+      const settings = ServerConnection.makeSettings();
+      const { body } = await ServerConnection.makeRequest(url, request, settings);
+      
       this.setState({
-        data,
+        data: body,
         apiStatus: API_STATUSES.SUCCESS,
       });
     } catch (e) {

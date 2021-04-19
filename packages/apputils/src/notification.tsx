@@ -1,6 +1,5 @@
-import * as React from 'react';
-import { store } from 'react-notifications-component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   faTimes,
   faCheckCircle,
@@ -8,7 +7,12 @@ import {
   faInfoCircle,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
+
 import clsx from 'clsx';
+
+import { store } from 'react-notifications-component';
+
+import * as React from 'react';
 
 export const NOTIFICATION_TYPES = {
   SUCCESS: 'success',
