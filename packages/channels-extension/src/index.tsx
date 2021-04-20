@@ -28,7 +28,7 @@ import SearchPage from './search';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const reactRouter = 'quetz:react-router';
+  export const reactRouter = '@quetz-frontend:react-router';
   // export const homeRouter = 'quetz:homepage';
 }
 
@@ -72,7 +72,7 @@ export class RouterWidget extends ReactWidget {
  * The main plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:channels-router',
+  id: '@quetz-frontend:channels-router',
   autoStart: true,
   requires: [IRouter, ILogInMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {

@@ -20,7 +20,7 @@ import Job from './job';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const jobs = 'quetz:jobs';
+  export const jobs = '@quetz-frontend:jobs';
 }
 
 /**

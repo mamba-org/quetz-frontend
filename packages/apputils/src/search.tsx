@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import * as React from 'react';
 
-class SearchBox extends React.PureComponent<any, any> {
+export class SearchBox extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -55,5 +55,3 @@ class SearchBox extends React.PureComponent<any, any> {
     );
   }
 }
-
-export default SearchBox;

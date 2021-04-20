@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-class InlineLoader extends React.PureComponent<any, any> {
+export class InlineLoader extends React.PureComponent<any, any> {
   render() {
     const { text } = this.props;
     return (
@@ -11,5 +11,3 @@ class InlineLoader extends React.PureComponent<any, any> {
     );
   }
 }
-
-export default InlineLoader;

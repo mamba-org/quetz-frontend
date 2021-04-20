@@ -13,7 +13,7 @@ import google_logo from '../style/img/google-logo.svg';
  * The main plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:login',
+  id: '@quetz-frontend:login',
   autoStart: true,
   requires: [ILogInMenu],
   activate: (app: JupyterFrontEnd, logInMenu: ILogInMenu): void => {

@@ -1,4 +1,4 @@
-import InlineLoader from '@quetz-frontend/application-extension/lib/components/loader';
+import InlineLoader from '@quetz-frontend/apputils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -11,7 +11,7 @@ import {
 
 import * as React from 'react';
 
-const Pagination = ({
+export const Pagination = ({
   pageSize,
   pageCount,
   gotoPage,
@@ -102,5 +102,3 @@ const Pagination = ({
     </div>
   </div>
 );
-
-export default Pagination;

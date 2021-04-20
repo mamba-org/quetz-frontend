@@ -22,7 +22,7 @@ const BreadcrumbChild = ({ data }: any) => {
   return data.text;
 };
 
-class Breadcrumbs extends React.PureComponent<any, any> {
+export class Breadcrumbs extends React.PureComponent<any, any> {
   render() {
     const { items } = this.props;
     return (
@@ -47,5 +47,3 @@ class Breadcrumbs extends React.PureComponent<any, any> {
     );
   }
 }
-
-export default Breadcrumbs;

@@ -16,14 +16,14 @@ import * as React from 'react';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const open = 'quetz:download/open';
+  export const open = '@quetz-frontend:download/open';
 }
 
 /**
  * The main menu plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:download',
+  id: '@quetz-frontend:download',
   autoStart: true,
   requires: [IRouter, IMainMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {

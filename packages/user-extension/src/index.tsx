@@ -40,7 +40,7 @@ import UserChannels from './tab-channels';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const user = 'quetz:user';
+  export const user = '@quetz-frontend:user';
 }
 
 /**

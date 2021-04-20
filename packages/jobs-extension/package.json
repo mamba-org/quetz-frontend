@@ -31,9 +31,9 @@
     "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/menu": "^0.1.0",
     "prop-types": "^15.7.2",
+    "react": "^17.0.2",
     "react-router-dom": "^5.2.0",
-    "react-table": "^7.6.3",
-    "react": "^17.0.2"
+    "react-table": "^7.6.3"
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.6",

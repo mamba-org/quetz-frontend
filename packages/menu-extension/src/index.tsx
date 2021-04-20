@@ -14,7 +14,7 @@ import { Widget } from '@lumino/widgets';
 
 import { MainMenu, Profile, IMainMenu, ILogInMenu, LogInItem } from '@quetz-frontend/menu';
 
-//import SearchBox from '../../components/search';
+import { SearchBox } from '@quetz-frontend/apputils';
 
 import * as React from 'react';
 
@@ -26,7 +26,7 @@ import * as avatar_icon from '../style/img/avatar-icon.svg';
  * The main title plugin.
  */
 const title: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:topBar/title',
+  id: '@quetz-frontend:topBar/title',
   autoStart: true,
   requires: [IRouter],
   activate: quetzTitle,
@@ -36,7 +36,7 @@ const title: JupyterFrontEndPlugin<void> = {
  * The main menu plugin.
  */
 const menu: JupyterFrontEndPlugin<IMainMenu> = {
-  id: 'quetz:topBar/menu',
+  id: '@quetz-frontend:topBar/menu',
   autoStart: true,
   provides: IMainMenu,
   activate: toolbar,
@@ -46,7 +46,7 @@ const menu: JupyterFrontEndPlugin<IMainMenu> = {
  * The Login menu plugin.
  */
 const login: JupyterFrontEndPlugin<ILogInMenu> = {
-  id: 'quetz:topBar/login',
+  id: '@quetz-frontend:topBar/login',
   autoStart: true,
   requires: [IRouter],
   provides: ILogInMenu,
@@ -238,7 +238,7 @@ class SearchWidget extends ReactWidget {
   render(): React.ReactElement {
     return (
       <div className="topbar-search-wrapper">
-        {/*<SearchBox onSubmit={this.onSearch} />*/}
+        <SearchBox onSubmit={this.onSearch} />
       </div>
     );
   }

@@ -6,7 +6,7 @@ import * as React from 'react';
 
 import { API_STATUSES } from './constants';
 
-import InlineLoader from './loader';
+import { InlineLoader } from './loader';
 
 const genericErrorForStatus = (status: any) => {
   switch (status) {
@@ -24,7 +24,7 @@ const getErrorMessage = (e: any) => {
   return genericErrorForStatus(e.status) || '';
 };
 
-class FetchHoc extends React.PureComponent<any, any> {
+export class FetchHoc extends React.PureComponent<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -87,5 +87,3 @@ class FetchHoc extends React.PureComponent<any, any> {
     return <>{children(data)}</>;
   }
 }
-
-export default FetchHoc;

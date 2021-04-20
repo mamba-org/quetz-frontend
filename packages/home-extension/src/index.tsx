@@ -1,5 +1,7 @@
 import { URLExt } from '@jupyterlab/coreutils';
 
+import { FetchHoc } from '@quetz-frontend/apputils';
+
 import { List } from '@quetz-frontend/table';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,8 +16,6 @@ import { Link } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
 import * as React from 'react';
-
-import FetchHoc from '../../components/fetch-hoc';
 
 export class Homepage extends React.PureComponent {
   /**

@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 import * as React from 'react';
 
-import Pagination from './pagination';
+import { Pagination } from './pagination';
 
 const headerProps = (props: any, { column }: any) =>
   getStyles(props, column.align);
@@ -27,7 +27,7 @@ const getStyles = (props: any, align = 'left') => [
   },
 ];
 
-const List = ({
+export const List = ({
   columns: userColumns,
   data,
   to,
@@ -218,5 +218,3 @@ export const PaginatedList = ({ url, columns, to, q }: any) => {
     />
   );
 };
-
-export default List;

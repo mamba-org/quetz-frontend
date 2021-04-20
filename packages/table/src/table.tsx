@@ -14,7 +14,7 @@ import PropTypes from 'prop-types';
 
 import * as React from 'react';
 
-import Pagination from './pagination';
+import { Pagination } from './pagination';
 
 interface ITableFcProps {
   columns: any;
@@ -54,7 +54,7 @@ const recordPaginationHistory = ({ pageSize, pageIndex, query }: any) => {
   }
 };
 
-const Table: React.FC<ITableFcProps> = ({
+export const Table: React.FC<ITableFcProps> = ({
   columns: userColumns,
   data,
   dataSize,
@@ -286,5 +286,3 @@ Table.propTypes = {
   renderRowSubComponent: PropTypes.any,
   enableSearch: PropTypes.any,
 };
-
-export default Table;

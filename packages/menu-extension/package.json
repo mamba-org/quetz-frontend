@@ -31,6 +31,7 @@
     "@jupyterlab/ui-components": "^3.0.0",
     "@lumino/messaging": "^1.4.3",
     "@lumino/widgets": "^1.14.0",
+    "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/menu": "^0.1.0"
   },
   "devDependencies": {
