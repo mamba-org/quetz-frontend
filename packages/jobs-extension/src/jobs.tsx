@@ -1,14 +1,10 @@
+import { InlineLoader, Breadcrumbs, API_STATUSES } from '@quetz-frontend/apputils';
+
 import { Link } from 'react-router-dom';
 
 import * as React from 'react';
 
-import { API_STATUSES } from './constants';
-
 import Table from './table';
-
-import InlineLoader from '../../components/loader';
-
-import Breadcrumbs from '../../components/breadcrumbs';
 
 interface IOwner {
   id: string;

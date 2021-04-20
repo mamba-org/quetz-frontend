@@ -2,7 +2,7 @@ import { useExpanded, useTable } from 'react-table';
 
 import PropTypes from 'prop-types';
 
-import React from 'react';
+import * as React from 'react';
 
 interface ITableFcProps {
   columns: any;

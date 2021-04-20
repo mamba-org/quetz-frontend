@@ -6,11 +6,11 @@ import {
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
+import { ILogInMenu } from '@quetz-frontend/menu';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import * as React from 'react';
-
-import { ILogInMenu } from '@quetz-frontend/menu';
 
 import Jobs from './jobs';
 
