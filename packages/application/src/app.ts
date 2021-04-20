@@ -48,7 +48,7 @@ export class App extends JupyterFrontEnd<IShell> {
         app: PageConfig.getOption('appUrl'),
         static: PageConfig.getOption('staticUrl'),
         settings: PageConfig.getOption('settingsUrl'),
-        themes: 'quetz-themes',
+        themes: PageConfig.getOption('themesUrl'),
         doc: PageConfig.getOption('docUrl'),
         translations: PageConfig.getOption('translationsApiUrl'),
         hubHost: PageConfig.getOption('hubHost') || undefined,
@@ -75,6 +75,7 @@ export class App extends JupyterFrontEnd<IShell> {
    * @param mod - The plugin module to register.
    */
   registerPluginModule(mod: App.IPluginModule): void {
+    console.debug("Plugin:", mod);
     let data = mod.default;
     // Handle commonjs exports.
     if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {

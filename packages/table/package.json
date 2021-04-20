@@ -23,9 +23,11 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "clean:all": "yarn run clean && rimraf node_modules",
     "watch": "tsc -b --watch"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@jupyterlab/services": "^6.0.6",

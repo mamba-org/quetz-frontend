@@ -6,7 +6,7 @@ import {
 /**
  * A plugin to stop the kernels, sessions and terminals polling
  */
-const plugin: JupyterFrontEndPlugin<void> = {
+export const sessions: JupyterFrontEndPlugin<void> = {
   id: '@quetz-frontend/application-extension:stop-polling',
   autoStart: true,
   activate: (app: JupyterFrontEnd): void => {
@@ -31,5 +31,3 @@ const plugin: JupyterFrontEndPlugin<void> = {
     */
   },
 };
-
-export default plugin;

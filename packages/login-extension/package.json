@@ -1,5 +1,5 @@
 {
-  "name": "@quetz-frontend/loin-extension",
+  "name": "@quetz-frontend/login-extension",
   "version": "0.1.0",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -23,12 +23,13 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "clean:all": "yarn run clean && rimraf node_modules",
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.0",
+    "@jupyterlab/application": "^3.0.9",
     "@quetz-frontend/menu": "^0.1.0",
-    "react": "^17.0.2",
+    "react": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-tooltip": "^4.2.11"
   },

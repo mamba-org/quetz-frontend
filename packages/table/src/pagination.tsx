@@ -1,4 +1,4 @@
-import InlineLoader from '@quetz-frontend/apputils';
+import { InlineLoader } from '@quetz-frontend/apputils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

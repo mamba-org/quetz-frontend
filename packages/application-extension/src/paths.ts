@@ -8,7 +8,7 @@ import { App } from '@quetz-frontend/application';
 /**
  * The default paths.
  */
-const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
+export const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
   id: '@quetz-frontend/application-extension:paths',
   activate: (
     app: JupyterFrontEnd<JupyterFrontEnd.IShell>
@@ -18,5 +18,3 @@ const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
   autoStart: true,
   provides: JupyterFrontEnd.IPaths,
 };
-
-export default paths;

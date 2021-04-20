@@ -16,6 +16,7 @@
     "clean": "yarn run clean:core && yarn run clean:packages",
     "clean:core": "cd quetz_frontend/app && yarn run clean",
     "clean:packages": "lerna run clean",
+    "clean:all": "lerna run clean:all && rimraf yarn.lock && rimraf node_modules",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
     "prettier": "prettier --write \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",

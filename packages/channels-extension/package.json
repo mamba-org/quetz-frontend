@@ -23,16 +23,18 @@
   "scripts": {
     "build": "tsc -b",
     "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "clean:all": "yarn run clean && rimraf node_modules",
     "watch": "tsc -b --watch"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@jupyterlab/application": "^3.0.0",
-    "@jupyterlab/apputils": "^3.0.0",
+    "@jupyterlab/application": "^3.0.9",
+    "@jupyterlab/apputils": "^3.0.7",
     "@jupyterlab/coreutils": "^5.0.5",
     "@jupyterlab/services": "^6.0.6",
-    "@jupyterlab/ui-components": "^3.0.0",
+    "@jupyterlab/ui-components": "^3.0.6",
     "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/home-extension": "^0.1.0",
     "@quetz-frontend/table": "^0.1.0",

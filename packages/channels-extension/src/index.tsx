@@ -78,6 +78,8 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
     const { commands, shell } = app;
 
+    console.debug("ENTRA CHANNELS");
+
     commands.addCommand(CommandIDs.reactRouter, {
       execute: () => {
         const widget = new RouterWidget();
