@@ -1,14 +1,21 @@
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
+import { FetchHoc } from '@quetz-frontend/apputils';
+
 import * as React from 'react';
-import { BACKEND_HOST } from '../../utils/constants';
-import FetchHoc from '../../components/fetch-hoc';
 
 class PackageMembers extends React.PureComponent<any, any> {
   render() {
     const { channelId, packageId } = this.props;
 
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/channels', channelId, '/packages', packageId, '/members');
+
     return (
       <FetchHoc
-        url={`${BACKEND_HOST}/api/channels/${channelId}/packages/${packageId}/members`}
+        url={url}
         loadingMessage="Fetching list of members"
         genericErrorMessage="Error fetching members list"
       >

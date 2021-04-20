@@ -21,6 +21,7 @@ async function main() {
     require('@jupyterlab/theme-dark-extension'),
     require('@quetz-frontend/about-extension'),
     require('@quetz-frontend/application-extension'),
+    require('@quetz-frontend/channels-extension'),
     require('@quetz-frontend/download-extension'),
     require('@quetz-frontend/home-extension'),
     require('@quetz-frontend/jobs-extension'),

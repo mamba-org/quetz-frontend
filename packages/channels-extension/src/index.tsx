@@ -8,18 +8,21 @@ import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
 import { fileIcon } from '@jupyterlab/ui-components';
 
-import * as React from 'react';
+import { ILogInMenu } from '@quetz-frontend/menu';
+
+import { Homepage } from '@quetz-frontend/home-extension';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { ILogInMenu } from '@quetz-frontend/menu';
+import * as React from 'react';
 
-import ChannelsList from './list';
+import ChannelsList from './channels/list';
 
-import ChannelDetails from './details';
-import PackageDetails from '../package-details';
-import Homepage from '../home';
-import SearchPage from '../../components/search-page';
+import ChannelDetails from './channels/details';
+
+import PackageDetails from './package';
+
+import SearchPage from './search';
 
 /**
  * The command ids used by the main plugin.

@@ -1,11 +1,19 @@
-import React from 'react';
+import { Breadcrumbs } from '@quetz-frontend/apputils';
+
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
+
 import { withRouter } from 'react-router-dom';
-import Breadcrumbs from '../../../components/breadcrumbs';
+
+import 'react-tabs/style/react-tabs.css';
+
+import * as React from 'react';
+
 import TabInfo from './tab-info';
+
 import ChannelDetailsPackages from './tab-packages';
+
 import ChannelDetailsMembers from './tab-members';
+
 import ChannelDetailsApiKeys from './tab-api-keys';
 
 const CHANNEL_TABS = {

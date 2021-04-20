@@ -1,10 +1,17 @@
-import React from 'react';
+import { Breadcrumbs } from '@quetz-frontend/apputils';
+
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
-import PackageInfo from './tab-info';
-import PackageMembers from './tab-members';
-import Breadcrumbs from '../../components/breadcrumbs';
+
 import { withRouter } from 'react-router-dom';
+
+import 'react-tabs/style/react-tabs.css';
+
+import * as React from 'react';
+
+import PackageInfo from './tab-info';
+
+import PackageMembers from './tab-members';
+
 import PackageDetailsApiKeys from './tab-api-keys';
 
 const PACKAGE_TABS = {

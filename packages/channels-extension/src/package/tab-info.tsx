@@ -1,9 +1,16 @@
-import React from 'react';
-import PackageVersions from './versions';
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
+import { FetchHoc } from '@quetz-frontend/apputils';
+
 import { withRouter } from 'react-router-dom';
-import { BACKEND_HOST } from '../../utils/constants';
-import FetchHoc from '../../components/fetch-hoc';
+
 import { ReactElementLike } from 'prop-types';
+
+import * as React from 'react';
+
+import PackageVersions from './versions';
 
 class PackageMainContent extends React.PureComponent<any, any> {
   private _formatPlatform = (platforms: string[]): ReactElementLike => {
@@ -98,10 +105,13 @@ class PackageMainContent extends React.PureComponent<any, any> {
       },
     } = this.props;
 
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/channels', channelId, '/packages', packageId);
+
     return (
       <div className="padding jp-table">
         <FetchHoc
-          url={`${BACKEND_HOST}/api/channels/${channelId}/packages/${packageId}`}
+          url={url}
           loadingMessage="Fetching package information"
           genericErrorMessage="Error fetching package information"
         >

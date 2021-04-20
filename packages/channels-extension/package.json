@@ -1,0 +1,54 @@
+{
+  "name": "@quetz-frontend/channels-extension",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "styleModule": "style/index.js",
+  "directories": {
+    "lib": "lib/"
+  },
+  "sideEffects": [
+    "style/*.css",
+    "style/index.js"
+  ],
+  "files": [
+    "lib/*.d.ts",
+    "lib/*.js.map",
+    "lib/*.js",
+    "style/*.css",
+    "style/index.js",
+    "style/img/*.{jpg,png,svg}"
+  ],
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "watch": "tsc -b --watch"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "@jupyterlab/application": "^3.0.0",
+    "@jupyterlab/apputils": "^3.0.0",
+    "@jupyterlab/coreutils": "^5.0.5",
+    "@jupyterlab/services": "^6.0.6",
+    "@jupyterlab/ui-components": "^3.0.0",
+    "@quetz-frontend/apputils": "^0.1.0",
+    "@quetz-frontend/home-extension": "^0.1.0",
+    "@quetz-frontend/table": "^0.1.0",
+    "fromnow": "^3.0.1",
+    "lodash": "^4.17.20",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-tabs": "^3.1.2",
+    "react-tooltip": "^4.2.11"
+  },
+  "devDependencies": {
+    "rimraf": "~3.0.2",
+    "typescript": "^4.1.5"
+  },
+  "jupyterlab": {
+    "coreDependency": true
+  }
+}

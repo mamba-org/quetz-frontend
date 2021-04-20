@@ -1,10 +1,14 @@
-import React from 'react';
+import { ServerConnection } from '@jupyterlab/services';
 
-import { API_STATUSES, BACKEND_HOST, REPO_HOST } from '../../utils/constants';
-import { formatSize } from '../../utils';
-import fromNow from 'fromnow';
+import { URLExt } from '@jupyterlab/coreutils';
+
+import { FetchHoc, formatSize, API_STATUSES } from '@quetz-frontend/apputils';
+
 import { map } from 'lodash';
-import FetchHoc from '../../components/fetch-hoc';
+
+import fromNow from 'fromnow';
+
+import * as React from 'react';
 
 type PackageVersionProps = {
   channel: string;
@@ -22,9 +26,12 @@ class PackageVersions extends React.PureComponent<
 > {
   render(): JSX.Element {
     const { channel, selectedPackage } = this.props;
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/channels', channel, '/packages', selectedPackage, '/versions');
+
     return (
       <FetchHoc
-        url={`${BACKEND_HOST}/api/channels/${channel}/packages/${selectedPackage}/versions`}
+        url={url}
         loadingMessage={`Loading versions in ${selectedPackage}`}
         genericErrorMessage="Error fetching package versions information"
       >
@@ -94,7 +101,7 @@ class PackageVersions extends React.PureComponent<
                       </td>
                       <td>
                         <a
-                          href={`${REPO_HOST}/${channel}/${version.info.subdir}/${version.filename}`}
+                          href={`${settings.baseUrl}/${channel}/${version.info.subdir}/${version.filename}`}
                           download
                         >
                           {version.filename}

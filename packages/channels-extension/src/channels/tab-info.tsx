@@ -1,19 +1,27 @@
-import * as React from 'react';
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
+import { FetchHoc, formatSize } from '@quetz-frontend/apputils';
+
 import {
   faGlobeAmericas,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { formatSize } from '../../../utils';
-import FetchHoc from '../../../components/fetch-hoc';
-import { BACKEND_HOST } from '../../../utils/constants';
+
+import * as React from 'react';
 
 class ChannelDetailsInfo extends React.PureComponent<any, any> {
   render() {
     const { channelId } = this.props;
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/channels', channelId);
+
     return (
       <FetchHoc
-        url={`${BACKEND_HOST}/api/channels/${channelId}`}
+        url={url}
         loadingMessage="Fetching channel information"
         genericErrorMessage="Error fetching channel information"
       >
