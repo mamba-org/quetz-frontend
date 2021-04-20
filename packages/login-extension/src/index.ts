@@ -5,9 +5,9 @@ import {
 
 import { ILogInMenu, LogInItem } from '@quetz-frontend/menu';
 
-import github_logo from '../../../style/img/github-logo.svg';
+import github_logo from '../style/img/github-logo.svg';
 
-import google_logo from '../../../style/img/google-logo.svg';
+import google_logo from '../style/img/google-logo.svg';
 
 /**
  * The main plugin.

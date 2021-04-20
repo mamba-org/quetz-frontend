@@ -24,6 +24,7 @@ async function main() {
     require('@quetz-frontend/download-extension'),
     require('@quetz-frontend/home-extension'),
     require('@quetz-frontend/jobs-extension'),
+    require('@quetz-frontend/login-extension'),
     require('@quetz-frontend/menu-extension'),
     require('@quetz-frontend/user-extension'),
   ];

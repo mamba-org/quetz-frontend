@@ -52,16 +52,3 @@ body[data-jp-theme-light='false'] #top-panel {
   display: flex;
   min-height: var(--jp-private-topbar-height);
 }
-
-.p-Widget {
-  overflow: unset;
-}
-
-.lm-Widget {
-  overflow: unset;
-}
-
-#main-menu {
-  margin-right: 0;
-  padding-right: 0;
-}
