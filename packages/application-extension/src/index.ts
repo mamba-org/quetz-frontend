@@ -7,7 +7,6 @@ import paths from './plugins/paths/index';
 import router from './plugins/router/index';
 import sessions from './plugins/sessions/index';
 import translator from './plugins/translator/index';
-import user from './plugins/user/index';
 
 export default flatten([
   channels,
@@ -16,6 +15,5 @@ export default flatten([
   paths,
   router,
   sessions,
-  translator,
-  user,
+  translator
 ]);

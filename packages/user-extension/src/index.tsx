@@ -3,9 +3,18 @@ import {
   JupyterFrontEndPlugin,
   IRouter,
 } from '@jupyterlab/application';
-import ReactNotification from 'react-notifications-component';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
+
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
+import { FetchHoc, Breadcrumbs } from '@quetz-frontend/apputils';
+
+import { ILogInMenu } from '@quetz-frontend/menu';
+
+import { last, capitalize } from 'lodash';
 
 import {
   BrowserRouter as Router,
@@ -14,18 +23,17 @@ import {
   Redirect,
   NavLink,
 } from 'react-router-dom';
-import { last, capitalize } from 'lodash';
+
+import ReactNotification from 'react-notifications-component';
 
 import * as React from 'react';
 
-import { ILogInMenu } from '@quetz-frontend/menu';
 import UserAPIKey from './api-key';
-import Breadcrumbs from '../../components/breadcrumbs';
+
 import UserProfile from './tab-profile';
 
-import FetchHoc from '../../components/fetch-hoc';
-import { BACKEND_HOST } from '../../utils/constants';
 import UserPackages from './tab-packages';
+
 import UserChannels from './tab-channels';
 
 /**
@@ -82,6 +90,9 @@ const getBreadcrumbText = () => {
 
 class UserComponent extends React.PureComponent<any, any> {
   render() {
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/me');
+    
     const breadcrumbItems = [
       {
         text: 'Home',
@@ -118,7 +129,7 @@ class UserComponent extends React.PureComponent<any, any> {
             </div>
             <div className="right-section">
               <FetchHoc
-                url={`${BACKEND_HOST}/api/me`}
+                url={url}
                 loadingMessage="Fetching user information"
                 genericErrorMessage="Error fetching user information"
               >

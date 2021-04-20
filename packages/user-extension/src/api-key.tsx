@@ -1,20 +1,16 @@
 import { Dialog, showDialog } from '@jupyterlab/apputils';
 
+import { InlineLoader, API_STATUSES, copyToClipboard } from '@quetz-frontend/apputils';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
 
-import React from 'react';
-
-import InlineLoader from '../../components/loader';
-
-import { API_STATUSES } from '../../utils/constants';
+import * as React from 'react';
 
 import { RequestAPIKeyDialog, APIKeyDialog } from './apiKeyDialog';
 
 import { APIKey, Role } from './types';
-
-import { copyToClipboard } from '../../utils';
 
 type APIKeyState = {
   apiKeys: APIKey[];

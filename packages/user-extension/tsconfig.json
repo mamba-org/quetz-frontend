@@ -7,13 +7,13 @@
   "include": ["src/**/*"],
   "references": [
     {
-      "path": "../application"
+      "path": "../apputils"
     },
     {
       "path": "../menu"
     },
     {
       "path": "../table"
-    }
+    },
   ]
 }

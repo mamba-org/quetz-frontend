@@ -2,17 +2,15 @@ import { Dialog, ReactWidget } from '@jupyterlab/apputils';
 
 import { Button } from '@jupyterlab/ui-components';
 
+import { InlineLoader, API_STATUSES } from '@quetz-frontend/apputils';
+
 import { Message } from '@lumino/messaging';
 
 import moment from 'moment';
 
 import * as React from 'react';
 
-import InlineLoader from '../../components/loader';
-
 import { APIKeyInfo, Role, Channel, Package } from './types';
-
-import { API_STATUSES } from '../../utils/constants';
 
 /**
  * A ReactWidget to edit the dashboard notebook metadata.
