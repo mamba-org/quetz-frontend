@@ -9,7 +9,7 @@ import {
  * The default paths.
  */
 const router: JupyterFrontEndPlugin<IRouter> = {
-  id: 'quetz:router',
+  id: '@quetz-frontend/application-extension:router',
   autoStart: true,
   requires: [JupyterFrontEnd.IPaths],
   provides: IRouter,

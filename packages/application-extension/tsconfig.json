@@ -8,12 +8,6 @@
   "references": [
     {
       "path": "../application"
-    },
-    {
-      "path": "../menu"
-    },
-    {
-      "path": "../table"
     }
   ]
 }

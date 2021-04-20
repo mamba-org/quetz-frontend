@@ -9,9 +9,8 @@ import { ITranslator, TranslationManager } from '@jupyterlab/translation';
  * A simplified Translator
  */
 const plugin: JupyterFrontEndPlugin<ITranslator> = {
-  id: '@quetz/application-extension:translator',
+  id: '@quetz-frontend/application-extension:translator',
   activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
-    console.log('Translator initialized!');
     const translationManager = new TranslationManager();
     return translationManager;
   },

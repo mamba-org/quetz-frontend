@@ -7,7 +7,7 @@ import {
  * A plugin to stop the kernels, sessions and terminals polling
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: 'quetz:stop-polling',
+  id: '@quetz-frontend/application-extension:stop-polling',
   autoStart: true,
   activate: (app: JupyterFrontEnd): void => {
     app.serviceManager.sessions?.ready.then((value) => {

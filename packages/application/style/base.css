@@ -24,6 +24,10 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
   stroke: #111;
 }
 
+body[data-jp-theme-light='false'] #top-panel {
+  color: var(--jp-quetz-primary-color);
+}
+
 button {
   cursor: pointer;
 }
@@ -43,12 +47,9 @@ button {
   /* padding: var(--jp-cell-padding); */
 }
 
-body[data-jp-theme-light='false'] #top-panel {
-  color: var(--jp-quetz-primary-color);
-}
-
 #top-panel {
   background: var(--jp-layout-color1);
+  padding: 10px;
   display: flex;
   min-height: var(--jp-private-topbar-height);
 }
