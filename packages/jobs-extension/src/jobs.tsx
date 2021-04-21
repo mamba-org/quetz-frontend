@@ -46,8 +46,8 @@ class Jobs extends React.Component<any, JobsState> {
   }
 
   async componentDidMount() {
-    const url = URLExt.join('/api/jobs');
     const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/jobs');
     const resp = await ServerConnection.makeRequest(url, {}, settings);
     const jobs = await resp.json();
 

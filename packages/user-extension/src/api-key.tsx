@@ -31,8 +31,8 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
   }
 
   async componentDidMount() {
-    const url = URLExt.join('/api/api-keys');
     const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/api-keys');
     const resp = await ServerConnection.makeRequest(url, {}, settings);
     const data = await resp.json();
     if (data.detail) {
@@ -59,7 +59,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
       }
 
       const settings = ServerConnection.makeSettings();
-      const url = URLExt.join('/api/api-keys');
+      const url = URLExt.join(settings.baseUrl, '/api/api-keys');
       const request: RequestInit = {
         method: 'POST',
         redirect: 'follow',
@@ -99,7 +99,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
 
     if (value.button.accept) {
       const settings = ServerConnection.makeSettings();
-      const url = URLExt.join('/api/api-keys', key);
+      const url = URLExt.join(settings.baseUrl, '/api/api-keys', key);
       const request: RequestInit = {
         method: 'DELETE',
         redirect: 'follow'

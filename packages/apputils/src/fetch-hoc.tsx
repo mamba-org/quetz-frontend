@@ -1,28 +1,10 @@
 import { ServerConnection } from '@jupyterlab/services';
 
-import { get } from 'lodash';
-
 import * as React from 'react';
 
 import { API_STATUSES } from './constants';
 
 import { InlineLoader } from './loader';
-
-const genericErrorForStatus = (status: any) => {
-  switch (status) {
-    case 401:
-      return 'Unauthorized API request. Please login';
-    default:
-      return '';
-  }
-};
-
-const getErrorMessage = (e: any) => {
-  if (get(e, 'detail')) {
-    return e.detail;
-  }
-  return genericErrorForStatus(e.status) || '';
-};
 
 export class FetchHoc extends React.PureComponent<any, any> {
   constructor(props: any) {
@@ -40,28 +22,27 @@ export class FetchHoc extends React.PureComponent<any, any> {
 
   tryFetch = async () => {
     const { url } = this.props;
-
     this.setState({
       apiStatus: API_STATUSES.PENDING,
     });
 
-    try {
-      const request: RequestInit = {
-        method: 'GET'
-      };
-      const settings = ServerConnection.makeSettings();
-      const { body } = await ServerConnection.makeRequest(url, request, settings);
-      
+    const settings = ServerConnection.makeSettings();
+    const resp = await ServerConnection.makeRequest(url, {}, settings);
+
+    if (!resp.ok) {
       this.setState({
-        data: body,
-        apiStatus: API_STATUSES.SUCCESS,
+        error: resp.statusText,
+        apiStatus: API_STATUSES.FAILED
       });
-    } catch (e) {
+
+    } else {
       this.setState({
-        apiStatus: API_STATUSES.FAILED,
-        error: getErrorMessage(e),
+        data: await resp.json(),
+        apiStatus: API_STATUSES.SUCCESS
       });
     }
+    
+    
   };
 
   render(): JSX.Element {

@@ -64,8 +64,8 @@ export class RequestAPIKeyDialog
   }
 
   onAfterAttach(message: Message): void {
-    const url = URLExt.join('/api/me');
     const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/me');
     ServerConnection.makeRequest(url, {}, settings)
     .then( resp => {return resp.json()})
     .then( async (data) => {

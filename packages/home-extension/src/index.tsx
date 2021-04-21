@@ -1,6 +1,8 @@
+import { ServerConnection } from '@jupyterlab/services';
+
 import { URLExt } from '@jupyterlab/coreutils';
 
-import { FetchHoc } from '@quetz-frontend/apputils';
+import { FetchHoc, formatPlural } from '@quetz-frontend/apputils';
 
 import { List } from '@quetz-frontend/table';
 
@@ -28,7 +30,8 @@ export class Homepage extends React.PureComponent {
   }
 
   render(): JSX.Element {
-    const url = URLExt.join('/api/channels');
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/channels');
 
     return (
       <div className="page-contents-width-limit">
@@ -49,6 +52,7 @@ export class Homepage extends React.PureComponent {
             genericErrorMessage="Error fetching list of channels"
           >
             {(channels: any) => {
+              console.debug(channels);
               return channels.length > 0 ? (
                 <List
                   columns={
@@ -68,8 +72,6 @@ export class Homepage extends React.PureComponent {
     );
   }
 }
-
-export default Homepage;
 
 const getChannelsListColumns = (): any => [
   {
@@ -124,6 +126,3 @@ const getChannelsListColumns = (): any => [
     width: 20,
   },
 ];
-
-export const formatPlural = (count: number, text: string): string =>
-  `${count} ${text}${count > 1 ? 's' : ''}`;

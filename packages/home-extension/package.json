@@ -30,6 +30,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@jupyterlab/coreutils": "^5.0.5",
+    "@jupyterlab/services": "^6.0.6",
     "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/table": "^0.1.0",
     "react": "^17.0.1",

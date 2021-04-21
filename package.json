@@ -20,7 +20,10 @@
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
     "prettier": "prettier --write \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
-    "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\""
+    "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
+    "watch": "run-p watch:lib watch:app",
+    "watch:app": "lerna exec --stream --scope \"@quetz-frontend/app\" yarn watch",
+    "watch:lib": "lerna exec --stream --scope @quetz-frontend/metapackage yarn watch"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.19.0",
@@ -33,6 +36,7 @@
     "eslint-plugin-react": "^7.23.1",
     "lerna": "^3.19.0",
     "lint-staged": "^10.2.13",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "shell-quote": "^1.7.2",
     "yarn": "1.21.1"

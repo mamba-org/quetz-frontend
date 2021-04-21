@@ -13,7 +13,7 @@
     "clean": "rimraf build",
     "clean:all": "yarn run clean && rimraf node_modules",
     "prepublishOnly": "npm run build",
-    "watch": "webpack --watch"
+    "watch": "webpack --config ./webpack.config.watch.js"
   },
   "resolutions": {
     "@jupyterlab/application": "^3.0.9",
@@ -67,6 +67,7 @@
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
     "duplicate-package-checker-webpack-plugin": "^3.0.0",
+    "extra-watch-webpack-plugin": "^1.0.3",
     "file-loader": "~6.0.0",
     "fs-extra": "^9.0.1",
     "glob": "~7.1.6",
