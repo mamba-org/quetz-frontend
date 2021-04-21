@@ -10,9 +10,6 @@
       "path": "../apputils"
     },
     {
-      "path": "../home-extension"
-    },
-    {
       "path": "../table"
     }
   ]

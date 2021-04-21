@@ -1,15 +1,16 @@
 import { reduce, union } from 'lodash';
 
-import { Link } from 'react-router-dom';
-
 import * as React from 'react';
 
 const BreadcrumbChild = ({ data }: any) => {
   if (data.link) {
     return (
-      <Link to={data.link} className="breadcrumb-link">
+      <div
+        className="breadcrumb-link"
+        onClick={() => window.location.href = data.link}
+      >
         {data.text}
-      </Link>
+      </div>
     );
   }
   if (data.href) {

@@ -10,8 +10,6 @@ import { fileIcon } from '@jupyterlab/ui-components';
 
 import { ILogInMenu } from '@quetz-frontend/menu';
 
-import { Homepage } from '@quetz-frontend/home-extension';
-
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import * as React from 'react';
@@ -29,7 +27,6 @@ import SearchPage from './search';
  */
 export namespace CommandIDs {
   export const reactRouter = '@quetz-frontend:react-router';
-  // export const homeRouter = 'quetz:homepage';
 }
 
 export class RouterWidget extends ReactWidget {
@@ -44,22 +41,19 @@ export class RouterWidget extends ReactWidget {
   render(): JSX.Element {
     return (
       <div className="page-contents-width-limit">
-        <Router>
+        <Router basename="/channels">
           <Switch>
             <Route path="/search">
               <SearchPage />
             </Route>
-            <Route path="/channels/:channelId/packages/:packageId">
+            <Route path="/:channelId/packages/:packageId">
               <PackageDetails />
             </Route>
-            <Route path="/channels/:channelId">
+            <Route path="/:channelId">
               <ChannelDetails />
             </Route>
-            <Route path="/channels" exact>
-              <ChannelsList />
-            </Route>
             <Route path="" exact>
-              <Homepage />
+              <ChannelsList />
             </Route>
           </Switch>
         </Router>
@@ -78,8 +72,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
     const { commands, shell } = app;
 
-    console.debug("ENTRA CHANNELS");
-
     commands.addCommand(CommandIDs.reactRouter, {
       execute: () => {
         const widget = new RouterWidget();
@@ -92,7 +84,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /.*/,
+      pattern: /channels.*/,
       command: CommandIDs.reactRouter,
     });
 

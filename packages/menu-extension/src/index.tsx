@@ -267,7 +267,7 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
   logo.title.label = 'Downloads';
   logo.title.caption = 'Open Downloads page';
   logo.node.onclick = () => {
-    router.navigate('/');
+    router.navigate('/home');
   };
 
   const spacer = new SearchWidget(router);

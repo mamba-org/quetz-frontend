@@ -2,8 +2,6 @@ import { ServerConnection } from '@jupyterlab/services';
 
 import { useTable, useFlexLayout, usePagination } from 'react-table';
 
-import { Link } from 'react-router-dom';
-
 import clsx from 'clsx';
 
 import * as React from 'react';
@@ -86,7 +84,11 @@ export const List = ({
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
   const showPaginationInformation = dataSize > pageSize;
 
-  const ContentTag: any = to ? Link : 'div';
+  const route = (path: string) => {
+    if (path) {
+      window.location.href = path;
+    }
+  }
 
   return (
     <>
@@ -116,13 +118,13 @@ export const List = ({
           {((paginated ? page : rows) || []).map((row: any) => {
             prepareRow(row);
             return (
-              <ContentTag
+              <div
                 {...row.getRowProps()}
                 key={row.id}
                 className={clsx('tr', 'list-row', {
                   clickable: !!to,
                 })}
-                to={to ? to(row.original) : null}
+                onClick={() => route(to ? to(row.original) : null)}
               >
                 {row.cells.map((cell: any) => {
                   return (
@@ -135,7 +137,7 @@ export const List = ({
                     </div>
                   );
                 })}
-              </ContentTag>
+              </div>
             );
           })}
           <div className="tr">

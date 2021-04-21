@@ -1,3 +1,11 @@
+import {
+  JupyterFrontEnd,
+  JupyterFrontEndPlugin,
+  IRouter,
+} from '@jupyterlab/application';
+
+import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
+
 import { ServerConnection } from '@jupyterlab/services';
 
 import { URLExt } from '@jupyterlab/coreutils';
@@ -13,21 +21,57 @@ import {
   faUnlockAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-import { Link } from 'react-router-dom';
-
 import ReactTooltip from 'react-tooltip';
 
 import * as React from 'react';
 
-export class Homepage extends React.PureComponent {
-  /**
-   * Constructs a new CounterWidget.
-   *
-   * @param props
-   */
-  constructor(props: any) {
-    super(props);
+/**
+ * The command ids used by the main plugin.
+ */
+export namespace CommandIDs {
+  export const home = '@quetz-frontend:home';
+}
+
+/**
+ * The main menu plugin.
+ */
+const plugin: JupyterFrontEndPlugin<void> = {
+  id: CommandIDs.home,
+  autoStart: true,
+  requires: [IRouter],
+  activate: (app: JupyterFrontEnd, router: IRouter): void => {
+    const { shell, commands } = app;
+
+    commands.addCommand(CommandIDs.home, {
+      execute: () => {
+        const widget = new Homepage(router);
+        widget.id = DOMUtils.createDomID();
+        widget.title.label = 'Main page';
+        widget.title.closable = false;
+        shell.add(widget, 'main');
+      },
+    });
+
+    router.register({
+      pattern: /home.*/,
+      command: CommandIDs.home,
+    });
+  },
+};
+
+export default plugin;
+
+class Homepage extends ReactWidget {
+
+  constructor(router: IRouter){
+    super();
+
+    this._router = router;
   }
+
+  private _route(route: string): void {
+    this._router.navigate(route);
+  };
 
   render(): JSX.Element {
     const settings = ServerConnection.makeSettings();
@@ -40,9 +84,9 @@ export class Homepage extends React.PureComponent {
           <h3 className="section-heading">Recently updated channels</h3>
           &emsp;
           <p className="minor-paragraph">
-            <Link className="link" to="/channels">
+            <a className="link" onClick={() => this._route('/channels')}>
               View all
-            </Link>
+            </a>
           </p>
         </div>
         <div className="padding-side">
@@ -52,14 +96,10 @@ export class Homepage extends React.PureComponent {
             genericErrorMessage="Error fetching list of channels"
           >
             {(channels: any) => {
-              console.debug(channels);
               return channels.length > 0 ? (
                 <List
-                  columns={
-                    getChannelsListColumns()
-                    // .slice(0, 2)
-                  }
                   data={channels.slice(0, 5)}
+                  columns={getChannelsListColumns()}
                   to={(rowData: any) => `/channels/${rowData.name}`}
                 />
               ) : (
@@ -71,6 +111,8 @@ export class Homepage extends React.PureComponent {
       </div>
     );
   }
+
+  private _router: IRouter;
 }
 
 const getChannelsListColumns = (): any => [

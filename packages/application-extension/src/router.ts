@@ -18,8 +18,11 @@ export const router: JupyterFrontEndPlugin<IRouter> = {
     const router = new Router({ base: '/', commands });
 
     void app.started.then(() => {
+      if (router.current.path === router.base) {
+        router.navigate("/home", { skipRouting: true });
+      }
       void router.route();
-
+      
       // Route all pop state events.
       window.addEventListener('popstate', () => {
         console.log('State poppped');

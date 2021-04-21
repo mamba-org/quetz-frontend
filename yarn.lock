@@ -1646,7 +1646,6 @@
     "@jupyterlab/services" "^6.0.6"
     "@jupyterlab/ui-components" "^3.0.6"
     "@quetz-frontend/apputils" "^0.1.0"
-    "@quetz-frontend/home-extension" "^0.1.0"
     "@quetz-frontend/table" "^0.1.0"
     fromnow "^3.0.1"
     lodash "^4.17.20"

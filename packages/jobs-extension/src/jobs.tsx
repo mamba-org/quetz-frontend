@@ -1,14 +1,16 @@
+import { IRouter } from '@jupyterlab/application';
+
+import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
+
 import { ServerConnection } from '@jupyterlab/services';
 
 import { URLExt } from '@jupyterlab/coreutils';
 
 import { InlineLoader, Breadcrumbs, API_STATUSES } from '@quetz-frontend/apputils';
 
-import { Link } from 'react-router-dom';
+import { Table } from '@quetz-frontend/table';
 
 import * as React from 'react';
-
-import Table from './table';
 
 interface IOwner {
   id: string;
@@ -28,39 +30,41 @@ interface IJob {
   manifest: string;
 }
 
-type JobsState = {
-  jobs: IJob[];
-  apiStatus: API_STATUSES;
-};
-
 /**
  *
  */
-class Jobs extends React.Component<any, JobsState> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      jobs: new Array<IJob>(),
-      apiStatus: API_STATUSES.PENDING,
-    };
+class Jobs extends ReactWidget {
+  
+  constructor(router: IRouter) {
+    super();
+    this.id = DOMUtils.createDomID();;
+    this.title.label = 'Jobs main page';
+
+    this._router = router;
+    this._data = new Array<IJob>();
+    this._status = API_STATUSES.PENDING;
+
+    this._loadData();
   }
 
-  async componentDidMount() {
+  public _loadData(): void {
     const settings = ServerConnection.makeSettings();
     const url = URLExt.join(settings.baseUrl, '/api/jobs');
-    const resp = await ServerConnection.makeRequest(url, {}, settings);
-    const jobs = await resp.json();
-
-    /* TODO: Support pagination */
-    this.setState({
-      jobs: jobs.result,
-      apiStatus: API_STATUSES.SUCCESS,
+    ServerConnection.makeRequest(url, {}, settings).then( async resp => {
+      resp.json().then( data => {
+        /* TODO: Support pagination */
+        this._data = data.result;
+        this._status = API_STATUSES.SUCCESS;
+        this.update()
+      })
     });
   }
 
-  render(): JSX.Element {
-    const { apiStatus, jobs } = this.state;
+  private _route(route: string): void {
+    this._router.navigate(route);
+  };
 
+  render(): JSX.Element {
     const breadcrumbItems = [
       {
         text: 'Home',
@@ -71,13 +75,13 @@ class Jobs extends React.Component<any, JobsState> {
       },
     ];
 
-    const jobColumns = [
+    const columns = [
       {
         Header: 'Manifest',
         accessor: 'manifest',
         disableFilters: true,
         Cell: ({ row }: { row: { original: IJob; values: IJob } }) => {
-          return <Link to={`/${row.original.id}`}>{row.values.manifest}</Link>;
+          return <div onClick={() => this._route(`/jobs/:${row.original.id}`)}>{row.values.manifest}</div>;
         },
       },
       {
@@ -101,13 +105,23 @@ class Jobs extends React.Component<any, JobsState> {
       <div className="page-contents-width-limit">
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Jobs</h2>
-        {apiStatus === API_STATUSES.PENDING && (
-          <InlineLoader text="Fetching jobs" />
-        )}
-        <Table columns={jobColumns} data={jobs} />
+        {
+          this._status === API_STATUSES.PENDING ? 
+            <InlineLoader text="Fetching jobs" />
+            :
+            <Table
+              data={this._data}
+              columns={columns}
+              enableSearch={true}
+            />
+        }
       </div>
     );
   }
+
+  private _router: IRouter;
+  private _data: Array<IJob>;
+  private _status: API_STATUSES;
 }
 
 export default Jobs;
