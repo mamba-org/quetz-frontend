@@ -232,29 +232,24 @@ export const PaginatedTable = ({
       const fetchId = ++fetchIdRef.current;
       setState({ ...state, loading: true });
 
-      const request: RequestInit = {
-        method: 'GET',
-        body: JSON.stringify({
-          skip: pageIndex * pageSize,
-          limit: pageSize,
-          q: query,
-        })
-      };
+      const params = JSON.stringify({
+        skip: pageIndex * pageSize,
+        limit: pageSize,
+        q: query,
+      });
       const settings = ServerConnection.makeSettings();
-      
-      const {
-        data: { pagination, result },
-      }: any = await ServerConnection.makeRequest(url, request, settings);
+      const resp = await ServerConnection.makeRequest(`${url}?${params}`, {}, settings);
+      const data = await resp.json();
 
-      if (fetchId === fetchIdRef.current) {
+      if (data && fetchId === fetchIdRef.current) {
         recordPaginationHistory({ pageIndex, pageSize, query });
         setState({
-          data: result,
-          dataSize: pagination.all_records_count,
+          data: data.result,
+          dataSize: data.pagination.all_records_count,
           loading: false,
           pageIndex: pageIndex,
           pageSize: pageSize,
-          pageCount: Math.ceil(pagination.all_records_count / pageSize),
+          pageCount: Math.ceil(data.pagination.all_records_count / pageSize),
           query: query,
         });
       }

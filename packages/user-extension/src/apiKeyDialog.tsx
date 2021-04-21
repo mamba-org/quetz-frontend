@@ -1,3 +1,7 @@
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
 import { Dialog, ReactWidget } from '@jupyterlab/apputils';
 
 import { Button } from '@jupyterlab/ui-components';
@@ -60,39 +64,44 @@ export class RequestAPIKeyDialog
   }
 
   onAfterAttach(message: Message): void {
-    fetch('/api/me')
-      .then((resp) => {
-        return resp.json();
-      })
-      .then(async (data) => {
-        if (data.detail) {
-          return console.error(data.detail);
-        }
-        this._username = data.user.username;
-        const respChannels = await fetch(
-          `/api/users/${this._username}/channels`
-        );
-        const channels = await respChannels.json();
-        if (channels.detail) {
-          console.error(channels.detail);
-          this._channels = [];
-        } else {
-          this._channels = channels;
-        }
+    const url = URLExt.join('/api/me');
+    const settings = ServerConnection.makeSettings();
+    ServerConnection.makeRequest(url, {}, settings)
+    .then( resp => {return resp.json()})
+    .then( async (data) => {
+      if (data.detail) {
+        return console.error(data.detail);
+      }
+      this._username = data.user.username;
+      
+      const respChannels = await ServerConnection.makeRequest(
+        `/api/users/${this._username}/channels`,
+        {},
+        settings
+      );
+      const channels = await respChannels.json();
+      if (channels.detail) {
+        console.error(channels.detail);
+        this._channels = [];
+      } else {
+        this._channels = channels;
+      }
 
-        const respPackage = await fetch(
-          `/api/users/${this._username}/packages`
+      const respPackage = await ServerConnection.makeRequest(
+        `/api/users/${this._username}/packages`,
+        {},
+        settings
         );
-        const packages = await respPackage.json();
-        if (packages.detail) {
-          console.error(packages.detail);
-          this._packages = [];
-        } else {
-          this._packages = packages;
-        }
-        this._apiStatus = API_STATUSES.SUCCESS;
-        this.update();
-      });
+      const packages = await respPackage.json();
+      if (packages.detail) {
+        console.error(packages.detail);
+        this._packages = [];
+      } else {
+        this._packages = packages;
+      }
+      this._apiStatus = API_STATUSES.SUCCESS;
+      this.update();
+    });
   }
 
   /**

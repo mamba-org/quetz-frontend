@@ -1,3 +1,7 @@
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
 import { InlineLoader, Breadcrumbs, API_STATUSES } from '@quetz-frontend/apputils';
 
 import { Link } from 'react-router-dom';
@@ -42,9 +46,11 @@ class Jobs extends React.Component<any, JobsState> {
   }
 
   async componentDidMount() {
-    const fetchResponse = await fetch('/api/jobs');
-    const jobs = await fetchResponse.json();
-    console.debug(jobs);
+    const url = URLExt.join('/api/jobs');
+    const settings = ServerConnection.makeSettings();
+    const resp = await ServerConnection.makeRequest(url, {}, settings);
+    const jobs = await resp.json();
+
     /* TODO: Support pagination */
     this.setState({
       jobs: jobs.result,

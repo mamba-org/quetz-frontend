@@ -1,5 +1,9 @@
 import { Dialog, showDialog } from '@jupyterlab/apputils';
 
+import { ServerConnection } from '@jupyterlab/services';
+
+import { URLExt } from '@jupyterlab/coreutils';
+
 import { InlineLoader, API_STATUSES, copyToClipboard } from '@quetz-frontend/apputils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,13 +31,15 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
   }
 
   async componentDidMount() {
-    const fetchResponse = await fetch('/api/api-keys');
-    const resp = await fetchResponse.json();
-    if (resp.detail) {
-      return console.error(resp.detail);
+    const url = URLExt.join('/api/api-keys');
+    const settings = ServerConnection.makeSettings();
+    const resp = await ServerConnection.makeRequest(url, {}, settings);
+    const data = await resp.json();
+    if (data.detail) {
+      return console.error(data.detail);
     }
     this.setState({
-      apiKeys: resp,
+      apiKeys: data,
       apiStatus: API_STATUSES.SUCCESS,
     });
   }
@@ -52,18 +58,20 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
         return;
       }
 
-      const response = await fetch('/api/api-keys', {
+      const settings = ServerConnection.makeSettings();
+      const url = URLExt.join('/api/api-keys');
+      const request: RequestInit = {
         method: 'POST',
         redirect: 'follow',
-        body: JSON.stringify(data.key),
-      });
+        body: JSON.stringify(data.key)
+      };
+      const resp = await ServerConnection.makeRequest(url, request, settings);
+      const response = await resp.json();
 
-      const resp = await response.json();
-
-      if (resp.detail) {
-        return console.error(resp.detail);
+      if (response.detail) {
+        return console.error(response.detail);
       }
-      const apiKeys = [...this.state.apiKeys, resp];
+      const apiKeys = [...this.state.apiKeys, response];
       this.setState({ apiKeys });
     }
   };
@@ -90,10 +98,13 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     });
 
     if (value.button.accept) {
-      const resp = await fetch(`/api/api-keys/${key}`, {
+      const settings = ServerConnection.makeSettings();
+      const url = URLExt.join('/api/api-keys', key);
+      const request: RequestInit = {
         method: 'DELETE',
-        redirect: 'follow',
-      });
+        redirect: 'follow'
+      };
+      const resp = await ServerConnection.makeRequest(url, request, settings);
       if (!resp.ok) {
         return console.error(resp.statusText);
       }

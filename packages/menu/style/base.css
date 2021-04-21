@@ -1,8 +1,15 @@
-.p-Widget {
+#main .p-Widget {
   overflow: unset;
 }
 
-.lm-Widget {
+#main .lm-Widget {
+  overflow: unset;
+}
+#top-panel .p-Widget {
+  overflow: unset;
+}
+
+#top-panel .lm-Widget {
   overflow: unset;
 }
 

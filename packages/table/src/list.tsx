@@ -179,30 +179,26 @@ export const PaginatedList = ({ url, columns, to, q }: any) => {
   const [dataSize, setDataSize] = React.useState(0);
   const fetchIdRef = React.useRef(0);
 
-  const fetchData = React.useCallback(async ({ pageSize, pageIndex }) => {
+  const fetchData = React.useCallback( async ({ pageSize, pageIndex }) => {
     const fetchId = ++fetchIdRef.current;
     setLoading(true);
 
-    const request: RequestInit = {
-      method: 'GET',
-      body: JSON.stringify({
-        ...q,
-        skip: pageIndex * pageSize,
-        limit: pageSize,
-      })
-    };
+    const params = JSON.stringify({
+      ...q,
+      skip: pageIndex * pageSize,
+      limit: pageSize,
+    });
     const settings = ServerConnection.makeSettings();
-    
-    const {
-      data: { pagination, result },
-    }: any = await ServerConnection.makeRequest(url, request, settings);
+    const resp = await ServerConnection.makeRequest(`${url}?${params}`, {}, settings);
+    const data = await resp.json();
 
-    if (fetchId === fetchIdRef.current) {
-      setData(result);
-      setDataSize(pagination.all_records_count);
-      setPageCount(Math.ceil(pagination.all_records_count / pageSize));
+    if (data && fetchId === fetchIdRef.current) {
+      setData(data.result);
+      setDataSize(data.pagination.all_records_count);
+      setPageCount(Math.ceil(data.pagination.all_records_count / pageSize));
       setLoading(false);
     }
+    
   }, []);
 
   return (
