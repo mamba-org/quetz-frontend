@@ -73,9 +73,10 @@ export class RequestAPIKeyDialog
         return console.error(data.detail);
       }
       this._username = data.user.username;
-      
+
+      const urlChannels = URLExt.join(settings.baseUrl, `/api/users/${this._username}/channels`);
       const respChannels = await ServerConnection.makeRequest(
-        `/api/users/${this._username}/channels`,
+        urlChannels,
         {},
         settings
       );
@@ -87,8 +88,9 @@ export class RequestAPIKeyDialog
         this._channels = channels;
       }
 
+      const urlPackages = URLExt.join(settings.baseUrl, `/api/users/${this._username}/packages`);
       const respPackage = await ServerConnection.makeRequest(
-        `/api/users/${this._username}/packages`,
+        urlPackages,
         {},
         settings
         );
