@@ -86,7 +86,8 @@ export const List = ({
 
   const route = (path: string) => {
     if (path) {
-      window.location.href = path;
+      //@ts-ignore
+      window.router.navigate(path);
     }
   }
 

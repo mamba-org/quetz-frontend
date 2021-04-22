@@ -5,15 +5,19 @@ import {
 
 import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
+export namespace CommandIDs {
+  export const plugin = '@quetz-frontend/application-extension:translator';
+}
+
 /**
  * A simplified Translator
  */
 export const translator: JupyterFrontEndPlugin<ITranslator> = {
-  id: '@quetz-frontend/application-extension:translator',
+  id: CommandIDs.plugin,
+  autoStart: true,
+  provides: ITranslator,
   activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
     const translationManager = new TranslationManager();
     return translationManager;
-  },
-  autoStart: true,
-  provides: ITranslator,
+  }
 };

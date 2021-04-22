@@ -22,11 +22,17 @@ import * as quetz_logo from '../style/img/quetz-logo.svg';
 
 import * as avatar_icon from '../style/img/avatar-icon.svg';
 
+export namespace CommandIDs {
+  export const title = '@quetz-frontend/menu-extension:topBar/title';
+  export const menu = '@quetz-frontend/menu-extension:topBar/menu';
+  export const login = '@quetz-frontend/menu-extension:topBar/login';
+}
+
 /**
  * The main title plugin.
  */
 const title: JupyterFrontEndPlugin<void> = {
-  id: '@quetz-frontend:topBar/title',
+  id: CommandIDs.title,
   autoStart: true,
   requires: [IRouter],
   activate: quetzTitle,
@@ -36,7 +42,7 @@ const title: JupyterFrontEndPlugin<void> = {
  * The main menu plugin.
  */
 const menu: JupyterFrontEndPlugin<IMainMenu> = {
-  id: '@quetz-frontend:topBar/menu',
+  id: CommandIDs.menu,
   autoStart: true,
   provides: IMainMenu,
   activate: toolbar,
@@ -46,7 +52,7 @@ const menu: JupyterFrontEndPlugin<IMainMenu> = {
  * The Login menu plugin.
  */
 const login: JupyterFrontEndPlugin<ILogInMenu> = {
-  id: '@quetz-frontend:topBar/login',
+  id: CommandIDs.login,
   autoStart: true,
   requires: [IRouter],
   provides: ILogInMenu,
@@ -225,14 +231,17 @@ export class LogInMenu extends ReactWidget implements ILogInMenu {
 }
 
 class SearchWidget extends ReactWidget {
-  router: any;
+  private _router: IRouter;
 
-  constructor(router: any) {
+  constructor(router: IRouter) {
     super();
-    this.router = router;
+    this.id = DOMUtils.createDomID();
+    this.addClass('topbar-spacer');
+    this._router = router;
   }
+
   onSearch = (searchText: string): void => {
-    this.router.navigate(`/search?q=${searchText}`);
+    this._router.navigate(`/search?q=${searchText}`);
   };
 
   render(): React.ReactElement {
@@ -270,12 +279,8 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
     router.navigate('/home');
   };
 
-  const spacer = new SearchWidget(router);
-  spacer.id = DOMUtils.createDomID();
-  spacer.addClass('topbar-spacer');
-
   app.shell.add(logo, 'top', { rank: 0 });
-  app.shell.add(spacer, 'top', { rank: 10000 });
+  app.shell.add(new SearchWidget(router), 'top', { rank: 10000 });
 }
 
 /**

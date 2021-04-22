@@ -40,36 +40,33 @@ import UserChannels from './tab-channels';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const user = '@quetz-frontend:user';
+  export const plugin = '@quetz-frontend/user-extension:user';
+  export const open = '@quetz-frontend/user-extension:open';
 }
 
 /**
  * The main menu plugin.
  */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: CommandIDs.user,
+  id: CommandIDs.plugin,
   autoStart: true,
   requires: [IRouter, ILogInMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
     const { shell, commands } = app;
 
-    commands.addCommand(CommandIDs.user, {
+    commands.addCommand(CommandIDs.open, {
       execute: () => {
-        const widget = new UserRouter();
-        widget.id = DOMUtils.createDomID();
-        widget.title.label = 'User main page';
-        widget.title.closable = false;
-        shell.add(widget, 'main');
+        shell.add(new UserRouter(), 'main');
       },
     });
 
     router.register({
       pattern: /user.*/,
-      command: CommandIDs.user,
+      command: CommandIDs.open,
     });
 
     menu.addItem({
-      id: CommandIDs.user,
+      id: CommandIDs.open,
       label: 'Profile',
       icon: 'empty',
       api: '/user',
@@ -88,7 +85,13 @@ const getBreadcrumbText = () => {
   return capitalize(currentSection);
 };
 
-class UserComponent extends React.PureComponent<any, any> {
+class UserRouter extends ReactWidget {
+  constructor() {
+    super();
+    this.id = DOMUtils.createDomID();
+    this.title.label = 'User main page';
+  }
+
   render() {
     const settings = ServerConnection.makeSettings();
     const url = URLExt.join(settings.baseUrl, '/api/me');
@@ -106,6 +109,7 @@ class UserComponent extends React.PureComponent<any, any> {
         text: getBreadcrumbText(),
       },
     ];
+
     return (
       <Router basename="/user">
         <ReactNotification />
@@ -158,11 +162,5 @@ class UserComponent extends React.PureComponent<any, any> {
         </div>
       </Router>
     );
-  }
-}
-
-class UserRouter extends ReactWidget {
-  render(): React.ReactElement {
-    return <UserComponent />;
   }
 }

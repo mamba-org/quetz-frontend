@@ -5,11 +5,12 @@ import {
   IRouter,
 } from '@jupyterlab/application';
 
-/**
- * The default paths.
- */
+export namespace CommandIDs {
+  export const plugin = '@quetz-frontend/application-extension:router';
+}
+
 export const router: JupyterFrontEndPlugin<IRouter> = {
-  id: '@quetz-frontend/application-extension:router',
+  id: CommandIDs.plugin,
   autoStart: true,
   requires: [JupyterFrontEnd.IPaths],
   provides: IRouter,
@@ -25,9 +26,17 @@ export const router: JupyterFrontEndPlugin<IRouter> = {
       
       // Route all pop state events.
       window.addEventListener('popstate', () => {
-        console.log('State poppped');
         void router.route();
       });
+
+      router.routed.connect( (router: IRouter, loc: IRouter.ILocation) => {
+        if (loc.path === router.base) {
+          router.navigate("/home");
+        }
+      })
+
+      //@ts-ignore
+      window.router = router;
     });
 
     return router;

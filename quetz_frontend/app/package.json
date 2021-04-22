@@ -41,6 +41,7 @@
     "@quetz-frontend/login-extension": "~0.1.0",
     "@quetz-frontend/menu": "^0.1.0",
     "@quetz-frontend/menu-extension": "~0.1.0",
+    "@quetz-frontend/search-extension": "~0.1.0",
     "@quetz-frontend/table": "^0.1.0",
     "@quetz-frontend/user-extension": "~0.1.0",
     "react": "^17.0.1",
@@ -58,6 +59,7 @@
     "@quetz-frontend/jobs-extension": "~0.1.0",
     "@quetz-frontend/login-extension": "~0.1.0",
     "@quetz-frontend/menu-extension": "~0.1.0",
+    "@quetz-frontend/search-extension": "~0.1.0",
     "@quetz-frontend/user-extension": "~0.1.0"
   },
   "devDependencies": {
@@ -110,6 +112,7 @@
       "@quetz-frontend/jobs-extension",
       "@quetz-frontend/login-extension",
       "@quetz-frontend/menu-extension",
+      "@quetz-frontend/search-extension",
       "@quetz-frontend/user-extension"
     ]
   }

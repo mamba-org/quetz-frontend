@@ -10,10 +10,6 @@
       "path": "../apputils"
     },
     {
-      "path": "../menu"
-    }
-    ,
-    {
       "path": "../table"
     }
   ]

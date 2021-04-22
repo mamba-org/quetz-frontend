@@ -9,11 +9,12 @@ import github_logo from '../style/img/github-logo.svg';
 
 import google_logo from '../style/img/google-logo.svg';
 
-/**
- * The main plugin.
- */
+export namespace CommandIDs {
+  export const plugin = '@quetz-frontend/login-extension:login';
+}
+
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: '@quetz-frontend:login',
+  id: CommandIDs.plugin,
   autoStart: true,
   requires: [ILogInMenu],
   activate: (app: JupyterFrontEnd, logInMenu: ILogInMenu): void => {

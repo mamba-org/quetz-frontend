@@ -20,21 +20,53 @@ import ChannelDetails from './channels/details';
 
 import PackageDetails from './package';
 
-import SearchPage from './search';
-
 /**
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const reactRouter = '@quetz-frontend:react-router';
+  export const plugin = '@quetz-frontend/channels-extension:channels';
+  export const open = '@quetz-frontend:channels/open';
 }
 
-export class RouterWidget extends ReactWidget {
-  /**
-   * Constructs a new CounterWidget.
-   */
+/**
+ * The main plugin.
+ */
+const plugin: JupyterFrontEndPlugin<void> = {
+  id: CommandIDs.plugin,
+  autoStart: true,
+  requires: [IRouter, ILogInMenu],
+  activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
+    const { commands, shell } = app;
+
+    commands.addCommand(CommandIDs.open, {
+      execute: () => {
+        shell.add(new RouterWidget(), 'main');
+      },
+    });
+
+    router.register({
+      pattern: /channels.*/,
+      command: CommandIDs.open,
+    });
+
+    menu.addItem({
+      id: CommandIDs.open,
+      label: 'Channels',
+      icon: 'empty',
+      api: '/channels',
+      loggedIn: true,
+    });
+  },
+};
+
+export default plugin;
+
+class RouterWidget extends ReactWidget {
   constructor() {
     super();
+    this.id = DOMUtils.createDomID();
+    this.title.label = 'Channels main page';
+    this.title.icon = fileIcon;
     this.addClass('jp-ReactWidget');
   }
 
@@ -43,9 +75,6 @@ export class RouterWidget extends ReactWidget {
       <div className="page-contents-width-limit">
         <Router basename="/channels">
           <Switch>
-            <Route path="/search">
-              <SearchPage />
-            </Route>
             <Route path="/:channelId/packages/:packageId">
               <PackageDetails />
             </Route>
@@ -61,41 +90,3 @@ export class RouterWidget extends ReactWidget {
     );
   }
 }
-
-/**
- * The main plugin.
- */
-const plugin: JupyterFrontEndPlugin<void> = {
-  id: '@quetz-frontend:channels-router',
-  autoStart: true,
-  requires: [IRouter, ILogInMenu],
-  activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
-    const { commands, shell } = app;
-
-    commands.addCommand(CommandIDs.reactRouter, {
-      execute: () => {
-        const widget = new RouterWidget();
-        widget.id = DOMUtils.createDomID();
-        widget.title.label = 'React router for channels';
-        widget.title.icon = fileIcon;
-        widget.title.closable = false;
-        shell.add(widget, 'main');
-      },
-    });
-
-    router.register({
-      pattern: /channels.*/,
-      command: CommandIDs.reactRouter,
-    });
-
-    menu.addItem({
-      id: CommandIDs.reactRouter,
-      label: 'Channels',
-      icon: 'empty',
-      api: '/channels',
-      loggedIn: true,
-    });
-  },
-};
-
-export default plugin;

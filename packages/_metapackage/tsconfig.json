@@ -17,6 +17,7 @@
     { "path": "../login-extension" },
     { "path": "../menu" },
     { "path": "../menu-extension" },
+    { "path": "../search-extension" },
     { "path": "../table" },
     { "path": "../user-extension" }
   ]

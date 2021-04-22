@@ -34,8 +34,7 @@
     "clsx": "^1.1.1",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
-    "react-notifications-component": "^3.0.3",
-    "react-router-dom": "^5.2.0"
+    "react-notifications-component": "^3.0.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.167",

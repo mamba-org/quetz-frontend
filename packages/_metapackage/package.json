@@ -22,6 +22,7 @@
     "@quetz-frontend/login-extension": "file:../login-extension",
     "@quetz-frontend/menu": "file:../menu",
     "@quetz-frontend/menu-extension": "file:../menu-extension",
+    "@quetz-frontend/search-extension": "file:../search-extension",
     "@quetz-frontend/table": "file:../table",
     "@quetz-frontend/user-extension": "file:../user-extension"
   },

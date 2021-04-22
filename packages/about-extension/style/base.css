@@ -114,14 +114,20 @@
   position: relative;
 }
 
-.logos-holder img {
+.logos-holder .logos-image {
   width: 500px;
+  height: 300px;
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50% - 250px);
+  background: url(img/logos.svg) no-repeat center center;
+  background-size: cover;
 }
 
 .logos-holder .button {
   position: absolute;
   width: 200px;
-  top: calc(50% - 20px);
+  top: calc(50% + 100px);
   left: calc(50% - 100px);
 }
 

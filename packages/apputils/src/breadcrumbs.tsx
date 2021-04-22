@@ -7,7 +7,8 @@ const BreadcrumbChild = ({ data }: any) => {
     return (
       <div
         className="breadcrumb-link"
-        onClick={() => window.location.href = data.link}
+        //@ts-ignore
+        onClick={() => window.router.navigate(data.link)}
       >
         {data.text}
       </div>

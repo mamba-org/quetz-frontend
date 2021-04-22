@@ -25,36 +25,27 @@ import ReactTooltip from 'react-tooltip';
 
 import * as React from 'react';
 
-/**
- * The command ids used by the main plugin.
- */
 export namespace CommandIDs {
-  export const home = '@quetz-frontend:home';
+  export const plugin = '@quetz-frontend/home-extension:home';
+  export const open = '@quetz-frontend/home-extension:home/open';
 }
 
-/**
- * The main menu plugin.
- */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: CommandIDs.home,
+  id: CommandIDs.plugin,
   autoStart: true,
   requires: [IRouter],
   activate: (app: JupyterFrontEnd, router: IRouter): void => {
     const { shell, commands } = app;
 
-    commands.addCommand(CommandIDs.home, {
+    commands.addCommand(CommandIDs.open, {
       execute: () => {
-        const widget = new Homepage(router);
-        widget.id = DOMUtils.createDomID();
-        widget.title.label = 'Main page';
-        widget.title.closable = false;
-        shell.add(widget, 'main');
+        shell.add(new Homepage(router), 'main');
       },
     });
 
     router.register({
       pattern: /home.*/,
-      command: CommandIDs.home,
+      command: CommandIDs.open,
     });
   },
 };
@@ -65,6 +56,8 @@ class Homepage extends ReactWidget {
 
   constructor(router: IRouter){
     super();
+    this.id = DOMUtils.createDomID();
+    this.title.label = 'Home page';
 
     this._router = router;
   }
@@ -100,7 +93,7 @@ class Homepage extends ReactWidget {
                 <List
                   data={channels.slice(0, 5)}
                   columns={getChannelsListColumns()}
-                  to={(rowData: any) => `/channels/${rowData.name}`}
+                  to={(rowData: any) => this._route(`/channels/${rowData.name}`)}
                 />
               ) : (
                 <p className="paragraph">No channels available</p>

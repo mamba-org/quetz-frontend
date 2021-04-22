@@ -3,11 +3,15 @@ import {
   JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
+export namespace CommandIDs {
+  export const plugin = '@quetz-frontend/application-extension:sessions';
+}
+
 /**
  * A plugin to stop the kernels, sessions and terminals polling
  */
 export const sessions: JupyterFrontEndPlugin<void> = {
-  id: '@quetz-frontend/application-extension:stop-polling',
+  id: CommandIDs.plugin,
   autoStart: true,
   activate: (app: JupyterFrontEnd): void => {
     app.serviceManager.sessions?.ready.then((value) => {

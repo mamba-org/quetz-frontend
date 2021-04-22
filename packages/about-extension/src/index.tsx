@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter,
+  IRouter
 } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
@@ -14,18 +14,13 @@ import { IMainMenu } from '@quetz-frontend/menu';
 
 import * as React from 'react';
 
-/**
- * The command ids used by the main plugin.
- */
 export namespace CommandIDs {
+  export const plugin = '@quetz-frontend:about';
   export const open = '@quetz-frontend:about/open';
 }
 
-/**
- * The main menu plugin.
- */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: '@quetz-frontend:about',
+  id: CommandIDs.plugin,
   autoStart: true,
   requires: [IRouter, IMainMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {
@@ -121,7 +116,6 @@ class About extends ReactWidget {
     // Setup the new requestAnimationFrame()
     this._timeout = window.requestAnimationFrame(() => {
       // Run our scroll functions
-      console.log('debounced');
       const distance = window.innerHeight - 60;
 
       if (event.deltaY > 0) {
@@ -197,7 +191,7 @@ const mamba = (): React.ReactElement => {
             </h3>
           </div>
           <div className="logos-holder">
-            <img src="img/logos.svg" />
+            <div className="logos-image" />
             <a className="button button-yellow">Get Started</a>
           </div>
         </div>

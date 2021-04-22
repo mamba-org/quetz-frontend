@@ -12,18 +12,13 @@ import { IMainMenu } from '@quetz-frontend/menu';
 
 import * as React from 'react';
 
-/**
- * The command ids used by the main plugin.
- */
 export namespace CommandIDs {
-  export const open = '@quetz-frontend:download/open';
+  export const plugin = '@quetz-frontend/download-extension:download';
+  export const open = '@quetz-frontend/download-extension:download/open';
 }
 
-/**
- * The main menu plugin.
- */
 const plugin: JupyterFrontEndPlugin<void> = {
-  id: '@quetz-frontend:download',
+  id: CommandIDs.plugin,
   autoStart: true,
   requires: [IRouter, IMainMenu],
   activate: (app: JupyterFrontEnd, router: IRouter, menu: IMainMenu): void => {
