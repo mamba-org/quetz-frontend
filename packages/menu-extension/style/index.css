@@ -1,0 +1,8 @@
+@import url('~@jupyterlab/application/style/index.css');
+@import url('~@jupyterlab/apputils/style/index.css');
+@import url('~@jupyterlab/ui-components/style/index.css');
+@import url('~@lumino/widgets/style/index.css');
+@import url('~@quetz-frontend/apputils/style/index.css');
+@import url('~@quetz-frontend/menu/style/index.css');
+
+@import url('./base.css');

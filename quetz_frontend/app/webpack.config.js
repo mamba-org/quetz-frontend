@@ -15,7 +15,12 @@ const extensionAssetConfig = Build.ensureAssets({
 
 module.exports = [
   {
-    entry: ['whatwg-fetch', './index.js'],
+    entry: [
+      'whatwg-fetch',
+      'react-app-polyfill/ie9', // Only if you want to support IE 9
+      'react-app-polyfill/stable',
+      './index.js',
+    ],
     output: {
       path: __dirname + '/build',
       filename: 'bundle.js',
@@ -69,8 +74,6 @@ module.exports = [
         'process.env': '{}',
         // Needed for various packages using cwd(), like the path polyfill
         process: { cwd: () => '/' },
-        BACKEND_HOST: JSON.stringify(process.env.BACKEND_HOST),
-        REPO_HOST: JSON.stringify(process.env.REPO_HOST),
       }),
       new CopyPlugin({
         patterns: [

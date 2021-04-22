@@ -1,0 +1,19 @@
+#main .p-Widget {
+  overflow: unset;
+}
+
+#main .lm-Widget {
+  overflow: unset;
+}
+#top-panel .p-Widget {
+  overflow: unset;
+}
+
+#top-panel .lm-Widget {
+  overflow: unset;
+}
+
+#main-menu {
+  margin-right: 0;
+  padding-right: 0;
+}
