@@ -1,5 +1,3 @@
-import { IRouter } from '@jupyterlab/application';
-
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
 import { ServerConnection } from '@jupyterlab/services';
@@ -37,13 +35,12 @@ interface IJob {
 /**
  *
  */
-class Jobs extends ReactWidget {
-  constructor(router: IRouter) {
+export class Jobs extends ReactWidget {
+  constructor() {
     super();
     this.id = DOMUtils.createDomID();
     this.title.label = 'Jobs main page';
 
-    this._router = router;
     this._data = new Array<IJob>();
     this._status = API_STATUSES.PENDING;
 
@@ -63,10 +60,6 @@ class Jobs extends ReactWidget {
     });
   }
 
-  private _route(route: string): void {
-    this._router.navigate(route);
-  }
-
   render(): JSX.Element {
     const breadcrumbItems = [
       {
@@ -78,36 +71,6 @@ class Jobs extends ReactWidget {
       },
     ];
 
-    const columns = [
-      {
-        Header: 'Manifest',
-        accessor: 'manifest',
-        disableFilters: true,
-        Cell: ({ row }: { row: { original: IJob; values: IJob } }) => {
-          return (
-            <div onClick={() => this._route(`/jobs/:${row.original.id}`)}>
-              {row.values.manifest}
-            </div>
-          );
-        },
-      },
-      {
-        Header: 'Created',
-        accessor: 'created',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.created,
-      },
-      {
-        Header: 'Status',
-        accessor: 'status',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.status,
-      },
-      {
-        Header: 'Owner',
-        accessor: 'owner',
-        Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username,
-      },
-    ];
-
     return (
       <div className="page-contents-width-limit">
         <Breadcrumbs items={breadcrumbItems} />
@@ -115,15 +78,42 @@ class Jobs extends ReactWidget {
         {this._status === API_STATUSES.PENDING ? (
           <InlineLoader text="Fetching jobs" />
         ) : (
-          <Table data={this._data} columns={columns} enableSearch={true} />
+          <Table data={this._data} columns={getColumns()} enableSearch={true} />
         )}
       </div>
     );
   }
 
-  private _router: IRouter;
   private _data: Array<IJob>;
   private _status: API_STATUSES;
 }
 
-export default Jobs;
+const getColumns = (): any => [
+  {
+    Header: 'Manifest',
+    accessor: 'manifest',
+    disableFilters: true,
+    Cell: ({ row }: { row: { values: IJob } }) =>
+      (
+        //@ts-ignore
+        <div onClick={() => window.route.navigate(`/jobs/:${row.original.id}`)}>
+          {row.values.manifest}
+        </div>
+      ) as any,
+  },
+  {
+    Header: 'Created',
+    accessor: 'created',
+    Cell: ({ row }: { row: { values: IJob } }) => row.values.created,
+  },
+  {
+    Header: 'Status',
+    accessor: 'status',
+    Cell: ({ row }: { row: { values: IJob } }) => row.values.status,
+  },
+  {
+    Header: 'Owner',
+    accessor: 'owner',
+    Cell: ({ row }: { row: { values: IJob } }) => row.values.owner.username,
+  },
+];

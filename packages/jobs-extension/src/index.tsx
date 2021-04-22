@@ -12,7 +12,7 @@ import { ILogInMenu } from '@quetz-frontend/menu';
 
 //import * as React from 'react';
 
-import Jobs from './jobs';
+import { Jobs } from './jobs';
 
 //import Job from './job';
 
@@ -35,7 +35,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     commands.addCommand(CommandIDs.jobs, {
       execute: () => {
-        shell.add(new Jobs(router), 'main');
+        shell.add(new Jobs(), 'main');
       },
     });
 
