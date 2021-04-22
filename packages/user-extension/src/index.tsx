@@ -95,7 +95,7 @@ class UserRouter extends ReactWidget {
   render() {
     const settings = ServerConnection.makeSettings();
     const url = URLExt.join(settings.baseUrl, '/api/me');
-    
+
     const breadcrumbItems = [
       {
         text: 'Home',

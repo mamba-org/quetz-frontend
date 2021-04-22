@@ -5,11 +5,6 @@ import { router } from './router';
 import { sessions } from './sessions';
 import { translator } from './translator';
 
-const ros: JupyterFrontEndPlugin<any>[] = [
-  paths,
-  router,
-  sessions,
-  translator
-];
+const ros: JupyterFrontEndPlugin<any>[] = [paths, router, sessions, translator];
 
 export default ros;

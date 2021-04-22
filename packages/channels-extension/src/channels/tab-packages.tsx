@@ -8,10 +8,7 @@ import { PaginatedTable } from '@quetz-frontend/table';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {
-  faAngleDown,
-  faAngleRight,
-} from '@fortawesome/free-solid-svg-icons';
+import { faAngleDown, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import { Link } from 'react-router-dom';
 
@@ -37,7 +34,12 @@ class ChannelDetailsPackages extends React.PureComponent<any, PackagesState> {
   render(): JSX.Element {
     const { channelId } = this.props;
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/paginated/channels', channelId, '/packages');
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/paginated/channels',
+      channelId,
+      '/packages'
+    );
 
     return (
       <PaginatedTable

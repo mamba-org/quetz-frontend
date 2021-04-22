@@ -28,7 +28,7 @@ async function main() {
     require('@quetz-frontend/menu-extension'),
     require('@quetz-frontend/search-extension'),
     require('@quetz-frontend/user-extension'),
-    require('@quetz-frontend/home-extension')
+    require('@quetz-frontend/home-extension'),
   ];
 
   app.registerPluginModules(mods);

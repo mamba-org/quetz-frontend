@@ -238,9 +238,13 @@ export const PaginatedTable = ({
         q: query,
       });
       const settings = ServerConnection.makeSettings();
-      const resp = await ServerConnection.makeRequest(`${url}?${params}`, {}, settings);
+      const resp = await ServerConnection.makeRequest(
+        `${url}?${params}`,
+        {},
+        settings
+      );
       const data = await resp.json();
-      
+
       if (data && fetchId === fetchIdRef.current) {
         recordPaginationHistory({ pageIndex, pageSize, query });
         setState({

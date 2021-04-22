@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 //import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
@@ -41,7 +41,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     router.register({
       pattern: /jobs.*/,
-      command: CommandIDs.jobs
+      command: CommandIDs.jobs,
     });
 
     menu.addItem({

@@ -27,7 +27,14 @@ class PackageVersions extends React.PureComponent<
   render(): JSX.Element {
     const { channel, selectedPackage } = this.props;
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/channels', channel, '/packages', selectedPackage, '/versions');
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/channels',
+      channel,
+      '/packages',
+      selectedPackage,
+      '/versions'
+    );
 
     return (
       <FetchHoc

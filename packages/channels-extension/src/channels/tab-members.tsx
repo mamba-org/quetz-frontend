@@ -12,7 +12,12 @@ class ChannelDetailsMembers extends React.PureComponent<any, any> {
   render(): JSX.Element {
     const { channelId } = this.props;
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/channels', channelId, '/members');
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/channels',
+      channelId,
+      '/members'
+    );
 
     return (
       <FetchHoc

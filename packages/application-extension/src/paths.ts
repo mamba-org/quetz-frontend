@@ -1,6 +1,6 @@
 import {
   JupyterFrontEnd,
-  JupyterFrontEndPlugin
+  JupyterFrontEndPlugin,
 } from '@jupyterlab/application';
 
 import { App } from '@quetz-frontend/application';
@@ -20,5 +20,5 @@ export const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
     app: JupyterFrontEnd<JupyterFrontEnd.IShell>
   ): JupyterFrontEnd.IPaths => {
     return (app as App).paths;
-  }
+  },
 };

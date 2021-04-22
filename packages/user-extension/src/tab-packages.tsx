@@ -10,7 +10,12 @@ class UserPackages extends React.PureComponent<any, any> {
   render(): JSX.Element {
     const { username } = this.props;
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/paginated/users', username, '/packages');
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/paginated/users',
+      username,
+      '/packages'
+    );
 
     return (
       <>

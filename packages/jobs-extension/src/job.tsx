@@ -2,7 +2,11 @@ import { ServerConnection } from '@jupyterlab/services';
 
 import { URLExt } from '@jupyterlab/coreutils';
 
-import { InlineLoader, Breadcrumbs, API_STATUSES } from '@quetz-frontend/apputils';
+import {
+  InlineLoader,
+  Breadcrumbs,
+  API_STATUSES,
+} from '@quetz-frontend/apputils';
 
 import * as React from 'react';
 
@@ -54,7 +58,11 @@ class Job extends React.Component<any, JobState> {
 
   async componentDidMount() {
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/jobs', this.state.id.toString());
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/jobs',
+      this.state.id.toString()
+    );
     const resp = await ServerConnection.makeRequest(url, {}, settings);
     const job = await resp.json();
 

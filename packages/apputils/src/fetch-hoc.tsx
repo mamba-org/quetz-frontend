@@ -32,17 +32,14 @@ export class FetchHoc extends React.PureComponent<any, any> {
     if (!resp.ok) {
       this.setState({
         error: resp.statusText,
-        apiStatus: API_STATUSES.FAILED
+        apiStatus: API_STATUSES.FAILED,
       });
-
     } else {
       this.setState({
         data: await resp.json(),
-        apiStatus: API_STATUSES.SUCCESS
+        apiStatus: API_STATUSES.SUCCESS,
       });
     }
-    
-    
   };
 
   render(): JSX.Element {

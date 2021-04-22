@@ -106,7 +106,13 @@ class PackageMainContent extends React.PureComponent<any, any> {
     } = this.props;
 
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/channels', channelId, '/packages', packageId);
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/channels',
+      channelId,
+      '/packages',
+      packageId
+    );
 
     return (
       <div className="padding jp-table">

@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   faGlobeAmericas,
-  faUnlockAlt
+  faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 import ReactTooltip from 'react-tooltip';
@@ -53,8 +53,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 export default plugin;
 
 class Homepage extends ReactWidget {
-
-  constructor(router: IRouter){
+  constructor(router: IRouter) {
     super();
     this.id = DOMUtils.createDomID();
     this.title.label = 'Home page';
@@ -64,7 +63,7 @@ class Homepage extends ReactWidget {
 
   private _route(route: string): void {
     this._router.navigate(route);
-  };
+  }
 
   render(): JSX.Element {
     const settings = ServerConnection.makeSettings();
@@ -93,7 +92,9 @@ class Homepage extends ReactWidget {
                 <List
                   data={channels.slice(0, 5)}
                   columns={getChannelsListColumns()}
-                  to={(rowData: any) => this._route(`/channels/${rowData.name}`)}
+                  to={(rowData: any) =>
+                    this._route(`/channels/${rowData.name}`)
+                  }
                 />
               ) : (
                 <p className="paragraph">No channels available</p>

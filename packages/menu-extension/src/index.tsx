@@ -12,7 +12,13 @@ import { Message } from '@lumino/messaging';
 
 import { Widget } from '@lumino/widgets';
 
-import { MainMenu, Profile, IMainMenu, ILogInMenu, LogInItem } from '@quetz-frontend/menu';
+import {
+  MainMenu,
+  Profile,
+  IMainMenu,
+  ILogInMenu,
+  LogInItem,
+} from '@quetz-frontend/menu';
 
 import { SearchBox } from '@quetz-frontend/apputils';
 

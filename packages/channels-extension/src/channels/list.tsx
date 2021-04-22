@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   faGlobeAmericas,
-  faUnlockAlt
+  faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 import ReactTooltip from 'react-tooltip';

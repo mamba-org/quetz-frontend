@@ -1,7 +1,7 @@
 /**********************
         Loader
  **********************/
- .loader-wrapper {
+.loader-wrapper {
   display: flex;
   align-items: center;
 }
@@ -32,7 +32,7 @@
         Tags
  **********************/
 
- .tag {
+.tag {
   font-size: 12px;
   background-color: #404040;
   color: #e0e0e0;
@@ -94,7 +94,7 @@
 /**********************
         Button
  **********************/
- .btn {
+.btn {
   font-size: 16px;
   line-height: 22px;
   padding: 7px 20px;

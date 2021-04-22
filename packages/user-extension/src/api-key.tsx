@@ -4,7 +4,11 @@ import { ServerConnection } from '@jupyterlab/services';
 
 import { URLExt } from '@jupyterlab/coreutils';
 
-import { InlineLoader, API_STATUSES, copyToClipboard } from '@quetz-frontend/apputils';
+import {
+  InlineLoader,
+  API_STATUSES,
+  copyToClipboard,
+} from '@quetz-frontend/apputils';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -63,7 +67,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
       const request: RequestInit = {
         method: 'POST',
         redirect: 'follow',
-        body: JSON.stringify(data.key)
+        body: JSON.stringify(data.key),
       };
       const resp = await ServerConnection.makeRequest(url, request, settings);
       const response = await resp.json();
@@ -102,7 +106,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
       const url = URLExt.join(settings.baseUrl, '/api/api-keys', key);
       const request: RequestInit = {
         method: 'DELETE',
-        redirect: 'follow'
+        redirect: 'follow',
       };
       const resp = await ServerConnection.makeRequest(url, request, settings);
       if (!resp.ok) {

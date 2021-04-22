@@ -19,7 +19,7 @@ module.exports = [
       'whatwg-fetch',
       'react-app-polyfill/ie9', // Only if you want to support IE 9
       'react-app-polyfill/stable',
-      './index.js'
+      './index.js',
     ],
     output: {
       path: __dirname + '/build',
@@ -73,7 +73,7 @@ module.exports = [
         // Needed for Blueprint. See https://github.com/palantir/blueprint/issues/4393
         'process.env': '{}',
         // Needed for various packages using cwd(), like the path polyfill
-        process: { cwd: () => '/' }
+        process: { cwd: () => '/' },
       }),
       new CopyPlugin({
         patterns: [

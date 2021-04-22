@@ -8,10 +8,7 @@ import { Table } from '@quetz-frontend/table';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {
-  faTrash,
-  faCopy
-} from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
 
 import { some, filter } from 'lodash';
 

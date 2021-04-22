@@ -54,7 +54,7 @@ class SearchPage extends ReactWidget {
 
   constructor(router: IRouter) {
     super();
-    this.id = DOMUtils.createDomID();;
+    this.id = DOMUtils.createDomID();
     this.title.label = 'Search page';
 
     this._router = router;
@@ -62,12 +62,15 @@ class SearchPage extends ReactWidget {
 
   private _route(route: string): void {
     this._router.navigate(route);
-  };
+  }
 
   render(): React.ReactElement {
     const searchText = new URLSearchParams(window.location.search).get('q');
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, `/api/packages/search/?q=${searchText}`);
+    const url = URLExt.join(
+      settings.baseUrl,
+      `/api/packages/search/?q=${searchText}`
+    );
 
     const breadcrumbItems = [
       {
@@ -86,11 +89,23 @@ class SearchPage extends ReactWidget {
         Cell: ({ row }: any) =>
           (
             <>
-              <a className="link" onClick={() => this._route(`/channels/${row.original.channel_name}`)}>
+              <a
+                className="link"
+                onClick={() =>
+                  this._route(`/channels/${row.original.channel_name}`)
+                }
+              >
                 {row.original.channel_name}
               </a>
               &emsp;/&emsp;
-              <a className="link" onClick={() => this._route(`/channels/${row.original.channel_name}/packages/${row.values.name}`)}>
+              <a
+                className="link"
+                onClick={() =>
+                  this._route(
+                    `/channels/${row.original.channel_name}/packages/${row.values.name}`
+                  )
+                }
+              >
                 {row.values.name}
               </a>
             </>
@@ -103,7 +118,8 @@ class SearchPage extends ReactWidget {
       {
         Header: 'Version',
         accessor: 'current_version',
-        Cell: ({ row }: any) => (row.values.current_version || <i>n/a</i>) as any,
+        Cell: ({ row }: any) =>
+          (row.values.current_version || <i>n/a</i>) as any,
       },
     ];
 
@@ -114,15 +130,13 @@ class SearchPage extends ReactWidget {
           <Breadcrumbs items={breadcrumbItems} />
         </div>
         <div className="padding-side">
-        <FetchHoc
+          <FetchHoc
             url={url}
             loadingMessage="Searching for packages"
             genericErrorMessage="Error fetching API keys"
           >
             {(data: any) => {
-              return (
-                <Table columns={columns} data={data || []}/>
-              );
+              return <Table columns={columns} data={data || []} />;
             }}
           </FetchHoc>
         </div>

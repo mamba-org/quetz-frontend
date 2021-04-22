@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin,
-  IRouter
+  IRouter,
 } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';

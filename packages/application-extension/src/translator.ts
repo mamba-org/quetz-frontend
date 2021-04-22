@@ -19,5 +19,5 @@ export const translator: JupyterFrontEndPlugin<ITranslator> = {
   activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
     const translationManager = new TranslationManager();
     return translationManager;
-  }
+  },
 };

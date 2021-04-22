@@ -11,7 +11,14 @@ class PackageMembers extends React.PureComponent<any, any> {
     const { channelId, packageId } = this.props;
 
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/channels', channelId, '/packages', packageId, '/members');
+    const url = URLExt.join(
+      settings.baseUrl,
+      '/api/channels',
+      channelId,
+      '/packages',
+      packageId,
+      '/members'
+    );
 
     return (
       <FetchHoc

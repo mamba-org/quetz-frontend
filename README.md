@@ -30,9 +30,6 @@ conda activate quetz
 # install the dependencies
 yarn
 
-# Set the backend url
-export BACKEND_HOST=http://127.0.0.1:8000
-
 # build the app
 yarn run build
 ```
@@ -50,5 +47,5 @@ Remember to add the path to the frontend build folder in the quetz `config.toml`
 admins = ["github:username"]
 
 [general]
-frontend_dir = "/path/to/quetz-frontend/build/"
+frontend_dir = "/path/to/quetz-frontend/quetz_frontend/app/build"
 ```
