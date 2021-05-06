@@ -100,6 +100,9 @@
   "jupyterlab": {
     "name": "Quetz-Frontend",
     "version": "0.1.0",
+    "outputDir": "..",
+    "buildDir": "./build",
+    "staticDir": "../static",
     "extensions": [
       "@jupyterlab/apputils-extension",
       "@jupyterlab/theme-dark-extension",
@@ -114,6 +117,28 @@
       "@quetz-frontend/menu-extension",
       "@quetz-frontend/search-extension",
       "@quetz-frontend/user-extension"
-    ]
+    ],
+    "mimeExtensions": {},
+    "externalExtensions": {},
+    "singletonPackages": [
+      "@jupyterlab/application",
+      "@jupyterlab/apputils",
+      "@jupyterlab/coreutils",
+      "@jupyterlab/docregistry",
+      "@jupyterlab/services",
+      "@jupyterlab/translation",
+      "@jupyterlab/ui-components",
+      "@lumino/algorithm",
+      "@lumino/coreutils",
+      "@lumino/messaging",
+      "@lumino/widgets",
+      "@quetz-frontend/application",
+      "@quetz-frontend/apputils",
+      "@quetz-frontend/menu",
+      "@quetz-frontend/table",
+      "react",
+      "react-dom"
+    ],
+    "linkedPackages": {}
   }
 }
