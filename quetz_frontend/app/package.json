@@ -100,9 +100,9 @@
   "jupyterlab": {
     "name": "Quetz-Frontend",
     "version": "0.1.0",
-    "outputDir": "..",
+    "outputDir": "./out",
     "buildDir": "./build",
-    "staticDir": "../static",
+    "staticDir": "./static",
     "extensions": [
       "@jupyterlab/apputils-extension",
       "@jupyterlab/theme-dark-extension",
