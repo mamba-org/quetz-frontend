@@ -11,12 +11,10 @@
     "watch": "tsc -b -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@quetz-frontend/about-extension": "file:../about-extension",
     "@quetz-frontend/application": "file:../application",
     "@quetz-frontend/application-extension": "file:../application-extension",
     "@quetz-frontend/apputils": "file:../apputils",
     "@quetz-frontend/channels-extension": "file:../channels-extension",
-    "@quetz-frontend/download-extension": "file:../download-extension",
     "@quetz-frontend/home-extension": "file:../home-extension",
     "@quetz-frontend/jobs-extension": "file:../jobs-extension",
     "@quetz-frontend/login-extension": "file:../login-extension",
