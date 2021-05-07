@@ -13,6 +13,7 @@
     "build": "lerna run build",
     "build:core": "cd quetz_frontend/app && yarn && yarn run build",
     "build:packages": "lerna run build",
+    "build:prod": "yarn run build && cd quetz_frontend/app && yarn run build",
     "clean": "yarn run clean:core && yarn run clean:packages",
     "clean:core": "cd quetz_frontend/app && yarn run clean",
     "clean:packages": "lerna run clean",
