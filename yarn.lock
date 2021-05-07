@@ -1720,6 +1720,19 @@
     "@lumino/messaging" "^1.4.3"
     "@lumino/widgets" "^1.19.0"
 
+"@quetz-frontend/search-extension@file:packages/search-extension":
+  version "0.1.0"
+  dependencies:
+    "@jupyterlab/application" "^3.0.9"
+    "@jupyterlab/apputils" "^3.0.7"
+    "@jupyterlab/coreutils" "^5.0.5"
+    "@jupyterlab/services" "^6.0.6"
+    "@quetz-frontend/apputils" "^0.1.0"
+    "@quetz-frontend/table" "^0.1.0"
+    react "^17.0.1"
+    react-router-dom "^5.2.0"
+    react-tooltip "^4.2.11"
+
 "@quetz-frontend/table@file:packages/table":
   version "0.1.0"
   dependencies:

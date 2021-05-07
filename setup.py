@@ -5,11 +5,11 @@ import sys
 import json
 import os.path
 
-from jupyter_packaging import (
+""" from jupyter_packaging import (
     create_cmdclass, get_version,
     command_for_func, combine_commands, install_npm, run,
     skip_npm, which, log
-)
+) """
 
 from setuptools import setup, find_packages
 from setuptools.command.develop import develop
@@ -17,6 +17,7 @@ from setuptools.command.develop import develop
 NAME = 'quetz-frontend'
 DESCRIPTION = 'Quetz frontend extension.'
 
+"""
 HERE = os.path.abspath(os.path.dirname(__file__))
 staging = os.path.join(HERE, NAME, 'staging')
 npm = ['node', os.path.join(staging, 'yarn.js')]
@@ -54,20 +55,19 @@ cmdclass['jsdeps'] = combine_commands(
     ),
     command_for_func(check_assets)
 )
+"""
 
-setup(
-    name=NAME,
-    version="0.1.0",
-    description=DESCRIPTION,
-    install_requires="quetz",
-    entry_points={
-        "quetz.frontend": ["quetz-frontend = quetz_frontend.app"],
-    },
-    packages=find_packages(),
-    package_data=package_data
-    include_package_data=True
-    cmdclass=cmdclass,
-)
+setup_args = {
+    "name": NAME,
+    "version": "0.1.0",
+    "description": DESCRIPTION,
+    "install_requires": "quetz",
+    "entry_points": {'console_scripts': ['quetz-frontend = quetz_frontend.cli:app']},
+    "packages": find_packages(),
+    #"package_data": package_data,
+    #"include_package_data": True,
+    #"cmdclass": cmdclass
+}
 
 
 if __name__ == '__main__':
