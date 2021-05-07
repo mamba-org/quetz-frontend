@@ -13,17 +13,19 @@ import './build/style.js';
 // Promise.allSettled polyfill, until our supported browsers implement it
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
 if (Promise.allSettled === undefined) {
-  Promise.allSettled = promises =>
+  Promise.allSettled = (promises) =>
     Promise.all(
-      promises.map(promise =>
-        promise
-          .then(value => ({
-            status: "fulfilled",
+      promises.map((promise) =>
+        promise.then(
+          (value) => ({
+            status: 'fulfilled',
             value,
-          }), reason => ({
-            status: "rejected",
+          }),
+          (reason) => ({
+            status: 'rejected',
             reason,
-          }))
+          })
+        )
       )
     );
 }
@@ -32,8 +34,10 @@ async function createModule(scope, module) {
   try {
     const factory = await window._JUPYTERLAB[scope].get(module);
     return factory();
-  } catch(e) {
-    console.warn(`Failed to create module: package: ${scope}; module: ${module}`);
+  } catch (e) {
+    console.warn(
+      `Failed to create module: package: ${scope}; module: ${module}`
+    );
     throw e;
   }
 }
@@ -44,7 +48,6 @@ export async function main() {
   var deferred = [];
   var ignorePlugins = [];
   var register = [];
-
 
   const federatedExtensionPromises = [];
   const federatedMimeExtensionPromises = [];
@@ -72,20 +75,20 @@ export async function main() {
   ];
 
   // Start initializing the federated extensions
-  const extensions = JSON.parse(
-    PageConfig.getOption('federated_extensions')
-  );
+  const extensions = JSON.parse(PageConfig.getOption('federated_extensions'));
 
   const queuedFederated = [];
 
-  extensions.forEach(data => {
+  extensions.forEach((data) => {
     if (data.extension) {
       queuedFederated.push(data.name);
       federatedExtensionPromises.push(createModule(data.name, data.extension));
     }
     if (data.mimeExtension) {
       queuedFederated.push(data.name);
-      federatedMimeExtensionPromises.push(createModule(data.name, data.mimeExtension));
+      federatedMimeExtensionPromises.push(
+        createModule(data.name, data.mimeExtension)
+      );
     }
     if (data.style) {
       federatedStylePromises.push(createModule(data.name, data.style));
@@ -123,9 +126,11 @@ export async function main() {
   }
 
   // Add the federated extensions.
-  const federatedExtensions = await Promise.allSettled(federatedExtensionPromises);
-  federatedExtensions.forEach(p => {
-    if (p.status === "fulfilled") {
+  const federatedExtensions = await Promise.allSettled(
+    federatedExtensionPromises
+  );
+  federatedExtensions.forEach((p) => {
+    if (p.status === 'fulfilled') {
       for (let plugin of activePlugins(p.value)) {
         mods.push(plugin);
       }
@@ -135,9 +140,11 @@ export async function main() {
   });
 
   // Load all federated component styles and log errors for any that do not
-  (await Promise.allSettled(federatedStylePromises)).filter(({status}) => status === "rejected").forEach(({reason}) => {
-    console.error(reason);
-  });
+  (await Promise.allSettled(federatedStylePromises))
+    .filter(({ status }) => status === 'rejected')
+    .forEach(({ reason }) => {
+      console.error(reason);
+    });
 
   app.registerPluginModules(mods);
   await app.start();

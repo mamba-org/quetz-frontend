@@ -15,7 +15,7 @@ const extensions = {};
 const mimeExtensions = {};
 for (const key of jlab.extensions) {
   const {
-    jupyterlab: { extension, mimeExtension }
+    jupyterlab: { extension, mimeExtension },
   } = require(`${key}/package.json`);
   if (extension !== undefined) {
     extensions[key] = extension === true ? '' : extension;
@@ -29,7 +29,7 @@ for (const key of jlab.extensions) {
 // such as setting schema files, theme assets, etc.
 const extensionAssetConfig = Build.ensureAssets({
   packageNames: jlab.extensions,
-  output: './build'
+  output: './build',
 });
 
 /**
@@ -49,7 +49,7 @@ function createShared(packageData) {
   for (let pkg of extensionPackages) {
     if (!shared[pkg]) {
       shared[pkg] = {
-        requiredVersion: require(`${pkg}/package.json`).version
+        requiredVersion: require(`${pkg}/package.json`).version,
       };
     }
   }
@@ -62,7 +62,7 @@ function createShared(packageData) {
     let pkgShared = {};
     let {
       dependencies = {},
-      jupyterlab: { sharedPackages = {} } = {}
+      jupyterlab: { sharedPackages = {} } = {},
     } = require(`${pkg}/package.json`);
     for (let [dep, requiredVersion] of Object.entries(dependencies)) {
       if (!shared[dep]) {
@@ -207,11 +207,11 @@ module.exports = [
       new ModuleFederationPlugin({
         library: {
           type: 'var',
-          name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION']
+          name: ['_JUPYTERLAB', 'CORE_LIBRARY_FEDERATION'],
         },
         name: 'CORE_FEDERATION',
-        shared: createShared(packageData)
-      })
+        shared: createShared(packageData),
+      }),
     ],
   },
 ].concat(extensionAssetConfig);

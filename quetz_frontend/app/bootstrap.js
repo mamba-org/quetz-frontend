@@ -43,23 +43,23 @@ __webpack_public_path__ = getOption('fullStaticUrl') + '/';
 // Promise.allSettled polyfill, until our supported browsers implement it
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
 if (Promise.allSettled === undefined) {
-  Promise.allSettled = promises =>
+  Promise.allSettled = (promises) =>
     Promise.all(
-      promises.map(promise =>
+      promises.map((promise) =>
         promise.then(
-          value => ({
+          (value) => ({
             status: 'fulfilled',
-            value
+            value,
           }),
-          reason => ({
+          (reason) => ({
             status: 'rejected',
-            reason
+            reason,
           })
         )
       )
     );
 }
- 
+
 function loadScript(url) {
   return new Promise((resolve, reject) => {
     const newScript = document.createElement('script');
@@ -93,12 +93,15 @@ void (async function bootstrap() {
   // dependencies are initialized.
   let labExtensionUrl = getOption('fullLabextensionsUrl');
   const extensions = await Promise.allSettled(
-    extension_data.map(async data => {
-      await loadComponent(`${labExtensionUrl}/${data.name}/${data.load}`, data.name);
+    extension_data.map(async (data) => {
+      await loadComponent(
+        `${labExtensionUrl}/${data.name}/${data.load}`,
+        data.name
+      );
     })
   );
 
-  extensions.forEach(p => {
+  extensions.forEach((p) => {
     if (p.status === 'rejected') {
       // There was an error loading the component
       console.error(p.reason);
