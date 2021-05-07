@@ -1593,16 +1593,6 @@
   resolved "https://registry.yarnpkg.com/@polka/url/-/url-1.0.0-next.12.tgz#431ec342a7195622f86688bbda82e3166ce8cb28"
   integrity sha512-6RglhutqrGFMO1MNUXp95RBuYIuc8wTnMAV5MUhLmjTOy78ncwOw7RgeQ/HeymkKXRhZd0s2DNrM1rL7unk3MQ==
 
-"@quetz-frontend/about-extension@file:packages/about-extension":
-  version "0.1.0"
-  dependencies:
-    "@jupyterlab/application" "^3.0.9"
-    "@jupyterlab/apputils" "^3.0.7"
-    "@lumino/messaging" "^1.4.3"
-    "@lumino/widgets" "^1.19.0"
-    "@quetz-frontend/menu" "^0.1.0"
-    react "^17.0.1"
-
 "@quetz-frontend/application-extension@file:packages/application-extension":
   version "0.1.0"
   dependencies:
@@ -1653,15 +1643,6 @@
     react-router-dom "^5.2.0"
     react-tabs "^3.1.2"
     react-tooltip "^4.2.11"
-
-"@quetz-frontend/download-extension@file:packages/download-extension":
-  version "0.1.0"
-  dependencies:
-    "@jupyterlab/application" "^3.0.9"
-    "@jupyterlab/apputils" "^3.0.7"
-    "@lumino/widgets" "^1.19.0"
-    "@quetz-frontend/menu" "^0.1.0"
-    react "^17.0.1"
 
 "@quetz-frontend/home-extension@file:packages/home-extension":
   version "0.1.0"
