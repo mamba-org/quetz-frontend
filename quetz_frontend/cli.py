@@ -12,18 +12,20 @@ app = typer.Typer()
 
 @app.command()
 def build(
-    core_path: str = typer.Argument(None, help="The path of the frontend app"),
-    ext_path: str = typer.Argument('.', help="The path of the extension")
+    core_path: str = typer.Argument(Path(__file__).parent.joinpath('app'), help="The path of the frontend app"),
+    ext_path: str = typer.Argument(Path(), help="The path of the extension"),
+    development: bool = typer.Argument(False, help="Build in development"),
+    source_map: bool = typer.Argument(False, help="Create source map")
 ) -> NoReturn:
     """Build an extension"""
-
-    quetz_app_path = Path(core_path).absolute()
+    # TODO: get sys.path to 'etc/quetz'
+    assert core_path.joinpath('package.json').exists()
+    quetz_app_path = path.realpath(core_path)
     print(f"Frontend path: '{quetz_app_path}'")
-    assert (quetz_app_path / "package.json").exists()
 
-    extension_path = Path(ext_path).absolute()
+    assert ext_path.joinpath('package.json').exists()
+    extension_path = path.realpath(ext_path)
     print(f"Extension path: '{extension_path}'")
-    assert (extension_path / "package.json").exists()
 
     exe = 'node'
     exe_path = find_executable(exe)
@@ -36,11 +38,51 @@ def build(
         exe,
         'node_modules/@jupyterlab/builder/lib/build-labextension.js',
         '--core-path',
-        core_path,
-        '--development',
-        '--source-map',
-        ext_path
+        core_path
     ]
+    if development :
+        command.append('--development')
+    if source_map :
+        command.append('--source-map')
+    command.append(ext_path)
+
+    subprocess.check_call(command)
+
+@app.command()
+def develop(
+    core_path: str = typer.Argument(Path(__file__).parent.joinpath('app'), help="The path of the frontend app"),
+    ext_path: str = typer.Argument(Path(), help="The path of the extension"),
+    development: bool = typer.Argument(False, help="Build in development"),
+    source_map: bool = typer.Argument(False, help="Create source map")
+) -> NoReturn:
+    # TODO: get sys.path to 'etc/quetz'
+    assert core_path.joinpath('package.json').exists()
+    quetz_app_path = path.realpath(core_path)
+    print(f"Frontend path: '{quetz_app_path}'")
+
+    assert ext_path.joinpath('package.json').exists()
+    extension_path = path.realpath(ext_path)
+    print(f"Extension path: '{extension_path}'")
+
+    exe = 'node'
+    exe_path = find_executable(exe)
+
+    if not exe_path:
+        print(f"Could not find {exe}. Install NodeJS.")
+        exit(1)
+    
+    command = [
+        exe,
+        'node_modules/@jupyterlab/builder/lib/build-labextension.js',
+        '--core-path',
+        core_path
+    ]
+    if development :
+        command.append('--development')
+    if source_map :
+        command.append('--source-map')
+    command.append(ext_path)
+    
     subprocess.check_call(command)
 
 if __name__ == '__main__':
