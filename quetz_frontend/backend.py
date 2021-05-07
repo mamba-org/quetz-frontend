@@ -193,6 +193,33 @@ def get_federated_extensions(labextensions_path):
     return federated_extensions
 
 
+@mock_router.get('/static/{resource:path}', include_in_schema=False)
+def static(
+    resource: str,
+    session: dict = Depends(get_session),
+    dao: Dao = Depends(get_dao),
+    auth: authorization.Rules = Depends(get_rules),
+):
+    user_id = auth.get_user()
+    logger.info("STATIC: {!r}, {!r}, {!r}".format(resource, session, user_id))
+    return FileResponse(path=os.path.join(frontend_dir, resource))
+
+    if "." not in resource:
+        if index_template is None or user_id is None:
+            return FileResponse(path=os.path.join(frontend_dir, "index.html"))
+        else:
+            profile = dao.get_profile(user_id)
+            if profile is not None:
+                index_rendered = get_rendered_index(
+                    config_data, profile, index_template
+                )
+                return HTMLResponse(content=index_rendered, status_code=200)
+            else:
+                return FileResponse(path=os.path.join(frontend_dir, "index.html"))
+    elif ".." in resource:  # Don't serve relative paths
+        return FileResponse(path=os.path.join(frontend_dir, "index.html"))
+
+
 def register(app):
     global config_data
     # extensions = get_federated_extensions([extensions_dir])
