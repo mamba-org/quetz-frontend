@@ -40,7 +40,6 @@ package_data = {
 # Representative files that should exist after a successful build
 jstargets = [
     pjoin(staging, 'bundle.js'),
-    pjoin(staging, 'index.html'),
 ]
 
 cmdclass = create_cmdclass('jsdeps', package_data_spec=package_data,

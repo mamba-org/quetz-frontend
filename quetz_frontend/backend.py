@@ -1,33 +1,32 @@
 import sys
 import os
-import logging
 import json
 import glob
-from pathlib import Path
+import logging
+from os.path import join as pjoin
 
 import jinja2
 from itertools import chain
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
-from starlette.staticfiles import StaticFiles
-from quetz.deps import get_dao, get_rules, get_session
-from quetz.dao import Dao
-from quetz import authorization
 
-from quetz.authentication.registry import AuthenticatorRegistry
+from quetz.dao import Dao
 from quetz.config import Config
+from quetz.deps import get_dao, get_rules, get_session
+from quetz.authentication.registry import AuthenticatorRegistry
+from quetz import authorization, rest_models
+
 
 logger = logging.getLogger('quetz.frontend')
 config = Config()
 
-config_data = {}
-
-from os.path import join as pjoin
-
 mock_router = APIRouter()
 catchall_router = APIRouter()
 
+config_data = {}
+index_template = None
+frontend_settings = {}
 federated_extensions = []
 
 GLOBAL_FRONTEND_DIR = pjoin(sys.prefix, '/share/quetz/frontend/')
@@ -45,43 +44,29 @@ else:
 
 logger.info(f"Successfully found frontend in {frontend_dir}")
 
-def render_index(config):
-    global mock_settings_dict
-    global index_template
+@mock_router.get('/api/sessions', include_in_schema=False)
+def mock_sessions():
+    return []
 
-    logger.info("Rendering index.html!")
-    static_dir = Path(frontend_dir)
-    if (static_dir / ".." / "templates").exists():
-        with open(static_dir / "index.html.j2") as fi:
-            index_template = jinja2.Template(fi.read())
+@mock_router.get('/api/kernels', include_in_schema=False)
+def mock_kernels():
+    return []
 
-        with open(static_dir / ".." / "templates" / "settings.json") as fi:
-            settings_template = json.load(fi)
+@mock_router.get('/api/kernelspecs', include_in_schema=False)
+def mock_kernelspecs():
+    return []
 
-        with open(static_dir / ".." / "templates" / "default_settings.json") as fi:
-            default_settings = fi.read()
-
-        for setting in settings_template["settings"]:
-            if setting["id"] == '@jupyterlab/apputils-extension:themes':
-                setting["raw"] = default_settings
-
-        with open(os.path.join(static_dir, "index.html"), "w") as fo:
-            fo.write(index_template.render(page_config=config))
-
-        mock_settings_dict = settings_template
-        with open(static_dir / "settings.json", "w") as fo:
-            fo.write(json.dumps(settings_template))
-
+@mock_router.get('/api/settings', include_in_schema=False)
+def mock_settings():
+    return frontend_settings
 
 @mock_router.get('/themes/{resource:path}', include_in_schema=False)
 def get_theme(resource: str):
-    final_path = os.path.join(frontend_dir, 'themes', resource)
-    logger.info(f"Getting file from {frontend_dir}")
-    logger.info(final_path)
-    if os.path.exists(final_path):
-        return FileResponse(path=final_path)
+    path = pjoin(frontend_dir, 'themes', resource)
+    if os.path.exists(path) and under_frontend_dir(path):
+        return FileResponse(path=path)
     else:
-        raise HTTPException(status_code=404)
+        return HTMLResponse(status_code=404)
 
 @mock_router.get('/extensions/{resource:path}', include_in_schema=False)
 def extensions(
@@ -90,20 +75,24 @@ def extensions(
     dao: Dao = Depends(get_dao),
     auth: authorization.Rules = Depends(get_rules),
 ):
-    # user_id = auth.get_user()
+    path = pjoin(extensions_dir, resource)
+    if os.path.exists(path) and under_frontend_dir(path):
+        return FileResponse(path=path)
+    else:
+        return HTMLResponse(status_code=404)
 
-    logger.info(f"Extension request: {resource}")
-    logger.info(f"Extensions dir: {extensions_dir}")
-    logger.info(f"Extension path: {os.path.join(extensions_dir, resource)}")
-    # "federated_extensions": [{
-    #   "extension": "./extension",
-    #   "load": "static/remoteEntry.a1fe33117f8149d71c15.js",
-    #   "name": "@mamba-org/gator-lab",
-    #   "style": "./style"
-    # }]
-    return FileResponse(path=os.path.join(extensions_dir, resource))
-
-
+@mock_router.get('/static/{resource:path}', include_in_schema=False)
+def static(
+    resource: str,
+    session: dict = Depends(get_session),
+    dao: Dao = Depends(get_dao),
+    auth: authorization.Rules = Depends(get_rules),
+):
+    path = pjoin(frontend_dir, resource)
+    if os.path.exists(path) and under_frontend_dir(path):
+        return FileResponse(path=path)
+    else:
+        raise HTMLResponse(status_code=404)
 
 @catchall_router.get('/{resource:path}', include_in_schema=False)
 def index(
@@ -113,42 +102,63 @@ def index(
     auth: authorization.Rules = Depends(get_rules),
 ):
     user_id = auth.get_user()
-    logger.info("CATCHALL: {!r}, {!r}, {!r}".format(resource, session, user_id))
-
     profile = dao.get_profile(user_id)
 
-    if '.' in resource:
+    if '.' in resource :
         file_name = (
             resource
             if ('icons' in resource or 'logos' in resource or 'page-data' in resource)
             else resource.split('/')[-1]
         )
-        path = os.path.join(frontend_dir, file_name)
-        if os.path.exists(path):
+
+        path = pjoin(frontend_dir, file_name)
+        if os.path.exists(path) and under_frontend_dir(path) :
             return FileResponse(path=path)
         else:
-            raise HTTPException(404)
+            return HTMLResponse(status_code=404)
     else:
-        static_dir = Path(frontend_dir)
-        with open(static_dir / "index.html") as fi:
-            template = jinja2.Template(fi.read())
-        index_rendered = template.render(page_config=config_data)
-        return HTMLResponse(content=index_rendered, status_code=200)
+        if profile :
+            index_rendered = get_rendered_index(config_data, profile, index_template)
+            return HTMLResponse(content=index_rendered, status_code=200)
+        else:
+            return FileResponse(path=pjoin(frontend_dir, "index.html"))
 
-    if profile is not None:
-        logger.info(f"STATIC index: {profile}, {index_template}")
-        index_rendered = get_rendered_index(config_data, profile, index_template)
-        return HTMLResponse(content=index_rendered, status_code=200)
-    else:
-        static_dir = Path(frontend_dir)
-        with open(static_dir / "index.html") as fi:
-            template = jinja2.Template(fi.read())
-        index_rendered = template.render(page_config=config_data)
-        return HTMLResponse(content=index_rendered, status_code=200)
+def under_frontend_dir(path):
+    """
+    Check that path is under frontend_dir
+
+    NOTE: os.path.abspath may seem unnecessary, but os.path.commonpath does not
+    appear to handle relative paths as you would expect.
+    """
+    path = os.path.abspath(path)
+    fdir = os.path.abspath(frontend_dir)
+    return os.path.commonpath([path, fdir]) == fdir
 
 
+def get_rendered_index(config_data, profile, index_template):
+    """Adds profile info to index.html"""
+    config_data["logged_in_user_profile"] = rest_models.Profile.from_orm(profile).json()
+    index_rendered = index_template.render(page_config=config_data)
+    return index_rendered
+
+def render_index(config):
+    """Load the index.html with config and settings"""
+    global index_template, frontend_settings
+
+    path = pjoin(frontend_dir, "..", "templates")
+    if os.path.exists(path) :
+        # Create index.html with config
+        with open(pjoin(frontend_dir, "index.html.j2")) as fi:
+            index_template = jinja2.Template(fi.read())
+        with open(pjoin(frontend_dir, "index.html"), "w") as fo:
+            fo.write(index_template.render(page_config=config))
+
+        # Load settings
+        with open(pjoin(path, "settings.json")) as fi:
+            frontend_settings = json.load(fi)
 
 def load_federated_extensions(federated_extensions):
+    """Load the list of extensions"""
     extensions = []
     for name, data in federated_extensions.items():
         build_info = data['jupyterlab']['_build']
@@ -156,7 +166,6 @@ def load_federated_extensions(federated_extensions):
         extensions.append(build_info)
 
     return extensions
-
 
 def get_federated_extensions(labextensions_path):
     """Get the metadata about federated extensions"""
@@ -190,54 +199,25 @@ def get_federated_extensions(labextensions_path):
                     with open(install_path, encoding='utf-8') as fid:
                         data['install'] = json.load(fid)
                 federated_extensions[data['name']] = data
+
     return federated_extensions
-
-
-@mock_router.get('/static/{resource:path}', include_in_schema=False)
-def static(
-    resource: str,
-    session: dict = Depends(get_session),
-    dao: Dao = Depends(get_dao),
-    auth: authorization.Rules = Depends(get_rules),
-):
-    user_id = auth.get_user()
-    logger.info("STATIC: {!r}, {!r}, {!r}".format(resource, session, user_id))
-    return FileResponse(path=os.path.join(frontend_dir, resource))
-
-    if "." not in resource:
-        if index_template is None or user_id is None:
-            return FileResponse(path=os.path.join(frontend_dir, "index.html"))
-        else:
-            profile = dao.get_profile(user_id)
-            if profile is not None:
-                index_rendered = get_rendered_index(
-                    config_data, profile, index_template
-                )
-                return HTMLResponse(content=index_rendered, status_code=200)
-            else:
-                return FileResponse(path=os.path.join(frontend_dir, "index.html"))
-    elif ".." in resource:  # Don't serve relative paths
-        return FileResponse(path=os.path.join(frontend_dir, "index.html"))
-
 
 def register(app):
     global config_data
-    # extensions = get_federated_extensions([extensions_dir])
-    # federated_extensions = load_federated_extensions(extensions)
 
     app.include_router(mock_router, prefix="/jlabmock")
     app.include_router(catchall_router)
 
+    frontend_dir = config.general_frontend_dir
     extensions_dir = GLOBAL_EXTENSIONS_DIR
 
+    logger.info(f"Configured frontend found: {frontend_dir}")
     logger.info(f"Configured extensions directory: {extensions_dir}")
+
     extensions = get_federated_extensions([extensions_dir])
     federated_extensions = load_federated_extensions(extensions)
 
-    logger.info(f"Found federated extensions: {federated_extensions}")
-
     auth_registry = AuthenticatorRegistry()
-
     google_login_available = auth_registry.is_registered("google")
     github_login_available = auth_registry.is_registered("github")
     gitlab_login_available = auth_registry.is_registered("gitlab")
@@ -273,8 +253,5 @@ def register(app):
         "exposeAppInBrowser": False,
     }
 
-    print(config_data)
-
     render_index(config_data)
-    frontend_dir = config.general_frontend_dir
-    logger.info(f"Configured frontend found: {config.general_frontend_dir}")
+    
