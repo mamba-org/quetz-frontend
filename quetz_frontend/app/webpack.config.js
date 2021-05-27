@@ -203,7 +203,7 @@ module.exports = [
       new HtmlWebpackPlugin({
         template: 'templates/index.ejs',
         inject: false,
-        filename: 'index.html.j2'
+        filename: 'index.html.j2',
       }),
       new ModuleFederationPlugin({
         library: {
