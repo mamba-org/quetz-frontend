@@ -78,7 +78,7 @@ class ChannelDetails extends React.PureComponent<any, any> {
       },
       {
         text: 'Channels',
-        link: '/channels/',
+        link: '/channels',
       },
       {
         text: channelId,
