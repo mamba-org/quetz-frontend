@@ -239,7 +239,7 @@ export const PaginatedTable = ({
       };
 
       let queryString = '';
-      for (let key of Object.keys(params)) {
+      for (const key of Object.keys(params)) {
         if (params[key]) {
           if (queryString.length) {
             queryString += '&';
