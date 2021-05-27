@@ -2,7 +2,7 @@
   "settings": [
     {
       "id": "@jupyterlab/apputils-extension:themes",
-      "raw": "",
+      "raw": "{\n  \"theme\": \"JupyterLab Dark\",  \"theme-scrollbars\": true\n}\n",
       "schema": {
         "title": "Theme",
         "jupyter.lab.setting-icon-label": "Theme Manager",
