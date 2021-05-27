@@ -232,14 +232,25 @@ export const PaginatedTable = ({
       const fetchId = ++fetchIdRef.current;
       setState({ ...state, loading: true });
 
-      const params = JSON.stringify({
+      const params: any = {
         skip: pageIndex * pageSize,
         limit: pageSize,
         q: query,
-      });
+      };
+
+      let queryString = '';
+      for (const key of Object.keys(params)) {
+        if (params[key]) {
+          if (queryString.length) {
+            queryString += '&';
+          }
+          queryString += key + '=' + encodeURIComponent(params[key]);
+        }
+      }
+
       const settings = ServerConnection.makeSettings();
       const resp = await ServerConnection.makeRequest(
-        `${url}?${params}`,
+        `${url}?${queryString}`,
         {},
         settings
       );
