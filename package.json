@@ -40,6 +40,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "shell-quote": "^1.7.2",
-    "yarn": "1.21.1"
+    "yarn": "1.22.0"
   }
 }
