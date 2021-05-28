@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import glob
+import copy
 import logging
 from os.path import join as pjoin
 
@@ -121,7 +122,11 @@ def index(
             index_rendered = get_rendered_index(config_data, profile, index_template)
             return HTMLResponse(content=index_rendered, status_code=200)
         else:
-            return FileResponse(path=pjoin(frontend_dir, "index.html"))
+            index_html_path = pjoin(frontend_dir, "index.html")
+            if os.path.exists(index_html_path):
+                return FileResponse(path=pjoin(frontend_dir, "index.html"))
+            else:
+                render_index(config)
 
 def under_frontend_dir(path):
     """
@@ -137,13 +142,17 @@ def under_frontend_dir(path):
 
 def get_rendered_index(config_data, profile, index_template):
     """Adds profile info to index.html"""
-    config_data["logged_in_user_profile"] = rest_models.Profile.from_orm(profile).json()
-    index_rendered = index_template.render(page_config=config_data)
+    cfg = copy.copy(config_data)
+    cfg["logged_in_user_profile"] = rest_models.Profile.from_orm(profile).json()
+    index_rendered = index_template.render(page_config=cfg)
     return index_rendered
 
-def render_index(config):
+def render_index():
     """Load the index.html with config and settings"""
-    global index_template, frontend_settings
+    global index_template, frontend_settings, config_data
+
+    if "logged_in_user_profile" in config_data:
+        del cfg["logged_in_user_profile"]
 
     path = pjoin(frontend_dir, "..", "templates")
     if os.path.exists(path) :
@@ -151,7 +160,7 @@ def render_index(config):
         with open(pjoin(frontend_dir, "index.html.j2")) as fi:
             index_template = jinja2.Template(fi.read())
         with open(pjoin(frontend_dir, "index.html"), "w") as fo:
-            fo.write(index_template.render(page_config=config))
+            fo.write(index_template.render(page_config=config_data))
 
         # Load settings
         with open(pjoin(path, "settings.json")) as fi:
@@ -253,5 +262,5 @@ def register(app):
         "exposeAppInBrowser": False,
     }
 
-    render_index(config_data)
+    render_index()
     
