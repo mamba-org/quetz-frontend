@@ -123,10 +123,9 @@ def index(
             return HTMLResponse(content=index_rendered, status_code=200)
         else:
             index_html_path = pjoin(frontend_dir, "index.html")
-            if os.path.exists(index_html_path):
-                return FileResponse(path=pjoin(frontend_dir, "index.html"))
-            else:
-                render_index(config)
+            if not os.path.exists(index_html_path):
+                render_index()
+            return FileResponse(path=pjoin(frontend_dir, "index.html"))
 
 def under_frontend_dir(path):
     """
@@ -154,16 +153,16 @@ def render_index():
     if "logged_in_user_profile" in config_data:
         del cfg["logged_in_user_profile"]
 
-    path = pjoin(frontend_dir, "..", "templates")
-    if os.path.exists(path) :
-        # Create index.html with config
-        with open(pjoin(frontend_dir, "index.html.j2")) as fi:
-            index_template = jinja2.Template(fi.read())
-        with open(pjoin(frontend_dir, "index.html"), "w") as fo:
-            fo.write(index_template.render(page_config=config_data))
+    # Create index.html with config
+    with open(pjoin(frontend_dir, "index.html.j2")) as fi:
+        index_template = jinja2.Template(fi.read())
+    with open(pjoin(frontend_dir, "index.html"), "w") as fo:
+        fo.write(index_template.render(page_config=config_data))
 
+    template_path = pjoin(frontend_dir, "..", "templates")
+    if os.path.exists(template_path):
         # Load settings
-        with open(pjoin(path, "settings.json")) as fi:
+        with open(pjoin(template_path, "settings.json")) as fi:
             frontend_settings = json.load(fi)
 
 def load_federated_extensions(federated_extensions):
