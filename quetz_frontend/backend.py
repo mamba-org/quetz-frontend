@@ -66,7 +66,7 @@ def get_theme(resource: str):
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
-        return HTMLResponse(status_code=404)
+        raise HTTPException(status_code=404)
 
 @mock_router.get('/extensions/{resource:path}', include_in_schema=False)
 def extensions(
@@ -79,7 +79,7 @@ def extensions(
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
-        return HTMLResponse(status_code=404)
+        raise HTTPException(status_code=404)
 
 @mock_router.get('/static/{resource:path}', include_in_schema=False)
 def static(
@@ -92,7 +92,7 @@ def static(
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
-        raise HTMLResponse(status_code=404)
+        raise HTTPException(status_code=404)
 
 @catchall_router.get('/{resource:path}', include_in_schema=False)
 def index(
@@ -115,7 +115,7 @@ def index(
         if os.path.exists(path) and under_frontend_dir(path) :
             return FileResponse(path=path)
         else:
-            return HTMLResponse(status_code=404)
+            return HTTPException(status_code=404)
     else:
         if profile :
             index_rendered = get_rendered_index(config_data, profile, index_template)
