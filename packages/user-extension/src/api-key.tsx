@@ -68,6 +68,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
         method: 'POST',
         redirect: 'follow',
         body: JSON.stringify(data.key),
+        headers: { 'Content-Type': 'application/json' },
       };
       const resp = await ServerConnection.makeRequest(url, request, settings);
       const response = await resp.json();
