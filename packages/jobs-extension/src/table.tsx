@@ -15,19 +15,14 @@ const Table: React.FC<ITableFcProps> = ({
   data,
   renderRowSubComponent,
 }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable(
-    {
-      columns: userColumns,
-      data,
-    },
-    useExpanded
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        columns: userColumns,
+        data,
+      },
+      useExpanded
+    );
 
   return (
     <table {...getTableProps()} className="jp-table">
