@@ -53,7 +53,7 @@ cmdclass['jsdeps'] = js_command
 
 setup_args = {
     "name": NAME,
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": DESCRIPTION,
     "install_requires": "quetz",
     "cmdclass": cmdclass,
