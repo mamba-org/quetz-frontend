@@ -40,6 +40,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
 
     commands.addCommand(CommandIDs.open, {
       execute: () => {
+        console.log("This should open channels")
         shell.add(new RouterWidget(), 'main');
       },
     });

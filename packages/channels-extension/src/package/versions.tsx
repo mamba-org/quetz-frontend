@@ -108,7 +108,7 @@ class PackageVersions extends React.PureComponent<
                       </td>
                       <td>
                         <a
-                          href={`${settings.baseUrl}/${channel}/${version.info.subdir}/${version.filename}`}
+                          href={URLExt.join(settings.baseUrl, `/get/${channel}/${version.info.subdir}/${version.filename}`)}
                           download
                         >
                           {version.filename}
