@@ -70,7 +70,7 @@ class PackageDetails extends React.PureComponent<any, any> {
       },
       {
         text: 'packages',
-        link: `/channels/${channelId}#packages`,
+        link: `/channels/${channelId}?tab=packages`,
       },
       {
         text: packageId,
