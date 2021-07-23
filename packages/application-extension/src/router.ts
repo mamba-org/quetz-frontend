@@ -19,9 +19,9 @@ export const router: JupyterFrontEndPlugin<IRouter> = {
     const router = new Router({ base: '/', commands });
 
     void app.started.then(() => {
-      if (router.current.path === router.base) {
-        router.navigate('/home', { skipRouting: true });
-      }
+      // if (router.current.path === router.base) {
+      //   router.navigate('/home', { skipRouting: true });
+      // }
       void router.route();
 
       // Route all pop state events.
@@ -30,9 +30,9 @@ export const router: JupyterFrontEndPlugin<IRouter> = {
       });
 
       router.routed.connect((router: IRouter, loc: IRouter.ILocation) => {
-        if (loc.path === router.base) {
-          router.navigate('/home');
-        }
+        // if (loc.path === router.base) {
+        //   router.navigate('/home');
+        // }
       });
 
       //@ts-ignore
