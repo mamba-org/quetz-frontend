@@ -21,8 +21,7 @@ import { APIKeyInfo, Role, Channel, Package } from './types';
  */
 export class RequestAPIKeyDialog
   extends ReactWidget
-  implements Dialog.IBodyWidget<ReactWidget>
-{
+  implements Dialog.IBodyWidget<ReactWidget> {
   /**
    * Construct a `DashboardMetadataEditor`.
    *
@@ -416,8 +415,7 @@ export class RequestAPIKeyDialog
  */
 export class APIKeyDialog
   extends ReactWidget
-  implements Dialog.IBodyWidget<ReactWidget>
-{
+  implements Dialog.IBodyWidget<ReactWidget> {
   /**
    * Construct a `APIKeyDialog`.
    *
