@@ -47,7 +47,7 @@ button {
   max-height: calc(100vh - var(--jp-private-topbar-height));
   height: calc(100vh - var(--jp-private-topbar-height));
   overflow-y: auto;
-  padding-bottom:  50px;
+  padding-bottom: 50px;
   /* padding: var(--jp-cell-padding); */
 }
 

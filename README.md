@@ -31,7 +31,7 @@ conda activate quetz
 yarn
 
 # build the app
-yarn run build
+pip install -e .
 ```
 
 There is also a watch command to automatically rebuild the application when there are new changes:
