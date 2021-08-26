@@ -18,6 +18,7 @@ from quetz.deps import get_dao, get_rules, get_session
 from quetz.authentication.registry import AuthenticatorRegistry
 from quetz import authorization, rest_models
 
+from .paths import GLOBAL_FRONTEND_DIR, GLOBAL_EXTENSIONS_DIR
 
 logger = logging.getLogger('quetz.frontend')
 config = Config()
@@ -30,8 +31,6 @@ index_template = None
 frontend_settings = {}
 federated_extensions = []
 
-GLOBAL_FRONTEND_DIR = pjoin(sys.prefix, '/share/quetz/frontend/')
-GLOBAL_EXTENSIONS_DIR = pjoin(sys.prefix, '/share/quetz/frontend/extensions/')
 HERE = os.path.abspath(os.path.dirname(__file__))
 LOCAL_FRONTEND_DIR = os.path.join(HERE, "app", "build")
 

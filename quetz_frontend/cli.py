@@ -1,134 +1,93 @@
 import os
-import sys
 import typer
-import importlib
-import subprocess
+import shutil
 
-import os.path as osp
-from pathlib import Path
 from typing import NoReturn
-from setuptools import find_packages
-from distutils.spawn import find_executable
+
+from .paths import (
+    LOCAL_APP_DIR,
+    GLOBAL_QUETZ_DIR,
+    GLOBAL_FRONTEND_DIR,
+    GLOBAL_APP_DIR,
+    GLOBAL_EXTENSIONS_DIR,
+    JUPYTER_LAB_BUILDER
+)
 
 app = typer.Typer()
 
-GLOBAL_EXTENSIONS_DIR = Path(sys.prefix).joinpath('/share/quetz/frontend/extensions/')
+@app.command()
+def install(
+    dev_mode: bool = typer.Option(False, '--dev-mode', help="Whether to install it in dev mode or not")
+) -> NoReturn:
+    """Intall the Quetz-Frontend"""
+    assert LOCAL_APP_DIR.exists()
 
-# node ./node_modules/@jupyterlab/builder/lib/build-labextension.js ext_path
-# '--core-path core_path' '--static-url static_url' '--development' '--source-map'
-# '--watch' '--development' '--source-map'
+    if not GLOBAL_FRONTEND_DIR.exists() :
+        os.mkdir(GLOBAL_FRONTEND_DIR)
+
+    if GLOBAL_APP_DIR.exists() :
+        if os.path.islink(GLOBAL_APP_DIR) :
+            os.remove(GLOBAL_APP_DIR)
+        else:
+            shutil.rmtree(GLOBAL_APP_DIR)
+    
+    if dev_mode :
+        os.symlink(LOCAL_APP_DIR, GLOBAL_APP_DIR)
+        print(f"""Symlink created:
+        Ori:  {LOCAL_APP_DIR}
+        Dest: {GLOBAL_APP_DIR}
+        """)
+    else :
+        shutil.copytree(LOCAL_APP_DIR, GLOBAL_APP_DIR, symlinks = True)
+        print(f"""App directory copied:
+        Ori:  {LOCAL_APP_DIR}
+        Dest: {GLOBAL_APP_DIR}
+        """)
 
 @app.command()
 def build(
-    core_path: str = typer.Argument(Path(__file__).parent.joinpath('app'), help="The path of the frontend app"),
-    ext_path: str = typer.Argument(Path(), help="The path of the extension"),
-    development: bool = typer.Argument(False, help="Build in development"),
-    source_map: bool = typer.Argument(False, help="Create source map")
+    dev_mode: bool = typer.Option(False, '--dev-mode', help="Whether to install it in dev mode or not")
 ) -> NoReturn:
-    """Build an extension"""
-    # TODO: get sys.path to 'etc/quetz'
-    assert core_path.joinpath('package.json').exists()
-    quetz_app_path = osp.realpath(core_path)
-    print(f"Frontend path: '{quetz_app_path}'")
-
-    assert ext_path.joinpath('package.json').exists()
-    extension_path = osp.realpath(ext_path)
-    print(f"Extension path: '{extension_path}'")
-
-    exe = 'node'
-    exe_path = find_executable(exe)
-
-    if not exe_path:
-        print(f"Could not find {exe}. Install NodeJS.")
-        exit(1)
-    
-    command = [
-        exe,
-        'node_modules/@jupyterlab/builder/lib/build-labextension.js',
-        '--core-path',
-        core_path
-    ]
-    if development :
-        command.append('--development')
-    if source_map :
-        command.append('--source-map')
-    command.append(ext_path)
-
-    subprocess.check_call(command)
+    """Build the Quetz-Frontend"""
 
 @app.command()
-def develop(
-    core_path: str = typer.Argument(Path(__file__).parent.joinpath('app'), help="The path of the frontend app"),
-    ext_path: str = typer.Argument(Path(), help="The path of the extension"),
-    development: bool = typer.Argument(True, help="Build in development"),
-    source_map: bool = typer.Argument(True, help="Create source map")
-) -> NoReturn:
-    # TODO: get sys.path to 'etc/quetz'
-    assert core_path.joinpath('package.json').exists()
-    quetz_app_path = osp.realpath(core_path)
-    print(f"Frontend path: '{quetz_app_path}'")
+def watch() -> NoReturn:
+    """Watch the Quetz-Frontend"""
 
-    assert ext_path.joinpath('package.json').exists()
-    extension_path = osp.realpath(ext_path)
-    print(f"Extension path: '{extension_path}'")
+@app.command()
+def clean() -> NoReturn:
+    """Clean the Quetz-Frontend"""
+    if GLOBAL_FRONTEND_DIR.exists() :
+        clean_dir(GLOBAL_FRONTEND_DIR)
+    else :
+        os.mkdir(GLOBAL_FRONTEND_DIR)
 
-    module, metadata = get_extensions_metadata(extension_path)
-    print(module.__name__, metadata)
-    src = Path(extension_path).joinpath(module.__name__, metadata[0]['src'])
-    dest = GLOBAL_EXTENSIONS_DIR.joinpath(metadata[0]['dest'])
-    if dest.exists() :
-        os.remove(dest)
-    
-    print(f"Simbolyc link: '{src}', '{dest}'")
-    os.symlink(src, dest)
+@app.command()
+def paths() -> NoReturn:
+    print(f"""
+    System cofigured paths:
+        Quetz:      {GLOBAL_QUETZ_DIR}
+        Frontend:   {GLOBAL_FRONTEND_DIR}
+        App:        {GLOBAL_APP_DIR}
+        Extensions: {GLOBAL_EXTENSIONS_DIR}
+        Builder:    {JUPYTER_LAB_BUILDER}
+    """)
 
-    exe = 'node'
-    exe_path = find_executable(exe)
+def clean_dir(dir_path):
+    file_list = os.listdir(dir_path)
 
-    if not exe_path:
-        print(f"Could not find {exe}. Install NodeJS.")
-        exit(1)
-    
-    command = [
-        exe,
-        'node_modules/@jupyterlab/builder/lib/build-labextension.js',
-        '--core-path',
-        core_path
-    ]
-    if development :
-        command.append('--development')
-    if source_map :
-        command.append('--source-map')
-    command.append(ext_path)
-    
-    subprocess.check_call(command)
+    for file in file_list:
+        file_path = os.path.join(dir_path, file)
+        
+        if os.path.isfile(file_path) :
+            os.remove(file_path)
+        
+        elif os.path.islink(file_path) :
+            os.remove(file_path)
 
-def get_extensions_metadata(module_path):
-    mod_path = osp.abspath(module_path)
-    if not osp.exists(mod_path):
-        raise FileNotFoundError('The path `{}` does not exist.'.format(mod_path))
-
-    # TODO: Change function name to match lab
-    try:
-        module = importlib.import_module(module_path)
-        if hasattr(module, 'js_plugin_paths') :
-            return module, module.js_plugin_paths()
-        else :
-            module = None
-    except Exception:
-        module = None
-
-    # Looking for modules in the package
-    packages = find_packages(mod_path)
-    for package in packages :
-        try:
-            module = importlib.import_module(package)
-            if hasattr(module, 'js_plugin_paths') :
-                return module, module.js_plugin_paths()
-        except Exception:
-            module = None          
-            
-    raise ModuleNotFoundError('There is not a extension at {}'.format(module_path))
+        elif os.path.isdir(file_path) :
+            clean_dir(file_path)
+            shutil.rmtree(file_path)
 
 if __name__ == '__main__':
     app()

@@ -20,10 +20,12 @@ DESCRIPTION = 'Quetz frontend extension.'
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
+app = os.path.join(HERE, 'quetz_frontend', 'app')
 staging = os.path.join(HERE, 'quetz_frontend', 'app', 'build')
 
 data_files = [
-    ('share/quetz/frontend', staging, '**')
+    ('share/quetz/frontend/app/', app, 'package.json'),
+    ('share/quetz/frontend/app/', staging, '**')
 ]
 
 package_data = {
@@ -58,13 +60,15 @@ setup_args = {
     "install_requires": "quetz",
     "cmdclass": cmdclass,
     "entry_points": {
-        'console_scripts': ['quetz-frontend = quetz_frontend.cli:app'],
+        'console_scripts': [
+            'quetz-frontend = quetz_frontend.cli:app',
+            'quetz-frontend-extensions = quetz_frontend.extensions:app'
+        ],
         'quetz.frontend': ['quetz-frontend = quetz_frontend.backend']
     },
     "packages": find_packages(),
     "include_package_data": True
 }
-
 
 if __name__ == '__main__':
     setup(**setup_args)
