@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 import glob
 import copy
@@ -18,7 +17,7 @@ from quetz.deps import get_dao, get_rules, get_session
 from quetz.authentication.registry import AuthenticatorRegistry
 from quetz import authorization, rest_models
 
-from .paths import GLOBAL_FRONTEND_DIR, GLOBAL_EXTENSIONS_DIR
+from .paths import LOCAL_APP_DIR, GLOBAL_FRONTEND_DIR, GLOBAL_EXTENSIONS_DIR
 
 logger = logging.getLogger('quetz.frontend')
 config = Config()
@@ -31,16 +30,13 @@ index_template = None
 frontend_settings = {}
 federated_extensions = []
 
-HERE = os.path.abspath(os.path.dirname(__file__))
-LOCAL_FRONTEND_DIR = os.path.join(HERE, "app", "build")
-
-if os.path.exists(LOCAL_FRONTEND_DIR):
-    frontend_dir = LOCAL_FRONTEND_DIR
+if os.path.exists(LOCAL_APP_DIR):
+    frontend_dir = LOCAL_APP_DIR
     logger.info("Using local DEVELOPMENT frontend directory.")
 elif os.path.exists(GLOBAL_FRONTEND_DIR):
     frontend_dir = GLOBAL_FRONTEND_DIR
 else:
-    raise RuntimeException(f"Could not find frontend files in:\n- {LOCAL_FRONTEND_DIR}\n- {GLOBAL_FRONTEND_DIR}")
+    raise RuntimeException(f"Could not find frontend files in:\n- {LOCAL_APP_DIR}\n- {GLOBAL_FRONTEND_DIR}")
 
 logger.info(f"Successfully found frontend in {frontend_dir}")
 
@@ -88,7 +84,7 @@ def static(
     dao: Dao = Depends(get_dao),
     auth: authorization.Rules = Depends(get_rules),
 ):
-    path = pjoin(frontend_dir, resource)
+    path = pjoin(frontend_dir, 'static', resource)
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
@@ -111,7 +107,7 @@ def index(
             else resource.split('/')[-1]
         )
 
-        path = pjoin(frontend_dir, file_name)
+        path = pjoin(frontend_dir, 'static', file_name)
         if os.path.exists(path) and under_frontend_dir(path) :
             return FileResponse(path=path)
         else:
@@ -121,10 +117,10 @@ def index(
             index_rendered = get_rendered_index(config_data, profile, index_template)
             return HTMLResponse(content=index_rendered, status_code=200)
         else:
-            index_html_path = pjoin(frontend_dir, "index.html")
+            index_html_path = pjoin(frontend_dir, 'static', "index.html")
             if not os.path.exists(index_html_path):
                 render_index()
-            return FileResponse(path=pjoin(frontend_dir, "index.html"))
+            return FileResponse(path=pjoin(frontend_dir, 'static', "index.html"))
 
 def under_frontend_dir(path):
     """
@@ -153,12 +149,12 @@ def render_index():
         del cfg["logged_in_user_profile"]
 
     # Create index.html with config
-    with open(pjoin(frontend_dir, "index.html.j2")) as fi:
+    with open(pjoin(frontend_dir, 'static', "index.html.j2")) as fi:
         index_template = jinja2.Template(fi.read())
-    with open(pjoin(frontend_dir, "index.html"), "w") as fo:
+    with open(pjoin(frontend_dir, 'static', "index.html"), "w") as fo:
         fo.write(index_template.render(page_config=config_data))
 
-    template_path = pjoin(frontend_dir, "..", "templates")
+    template_path = pjoin(frontend_dir, "templates")
     if os.path.exists(template_path):
         # Load settings
         with open(pjoin(template_path, "settings.json")) as fi:

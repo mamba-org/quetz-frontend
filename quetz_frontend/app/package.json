@@ -10,7 +10,7 @@
     "build:prod:release": "webpack --config webpack.prod.release.config.js",
     "build:prod:stats": "webpack --profile --config webpack.prod.minimize.config.js --json > stats.json",
     "build:stats": "webpack --profile --json > stats.json",
-    "clean": "rimraf build",
+    "clean": "rimraf build && rimraf static && rimraf schemas && rimraf themes && rimraf style.js",
     "clean:all": "yarn run clean && rimraf node_modules",
     "prepublishOnly": "npm run build",
     "watch": "webpack --config ./webpack.config.watch.js"
@@ -96,7 +96,7 @@
   "jupyterlab": {
     "name": "Quetz-Frontend",
     "version": "0.1.0",
-    "outputDir": "./out",
+    "outputDir": ".",
     "buildDir": "./build",
     "staticDir": "./static",
     "extensions": [

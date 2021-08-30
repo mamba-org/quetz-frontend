@@ -8,7 +8,7 @@ import { App } from '@quetz-frontend/application';
 
 import { PageConfig } from '@jupyterlab/coreutils';
 
-import './build/style.js';
+import './style.js';
 
 // Promise.allSettled polyfill, until our supported browsers implement it
 // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled

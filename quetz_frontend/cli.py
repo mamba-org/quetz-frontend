@@ -57,10 +57,10 @@ def watch() -> NoReturn:
 @app.command()
 def clean() -> NoReturn:
     """Clean the Quetz-Frontend"""
-    if GLOBAL_FRONTEND_DIR.exists() :
-        clean_dir(GLOBAL_FRONTEND_DIR)
+    if GLOBAL_APP_DIR.exists() :
+        clean_dir(GLOBAL_APP_DIR)
     else :
-        os.mkdir(GLOBAL_FRONTEND_DIR)
+        os.mkdir(GLOBAL_APP_DIR)
 
 @app.command()
 def paths() -> NoReturn:
