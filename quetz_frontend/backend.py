@@ -229,11 +229,10 @@ def register(app):
     google_login_available = auth_registry.is_registered("google")
     github_login_available = auth_registry.is_registered("github")
     gitlab_login_available = auth_registry.is_registered("gitlab")
+    azuread_login_available = auth_registry.is_registered("azuread")
 
     config_data = {
         "appName": "Quetz – the fast conda package server!",
-        "github_login_available": github_login_available,
-        "google_login_available": google_login_available,
         "baseUrl": "/",
         "wsUrl": "",
         "appUrl": "/jlabmock",
@@ -251,6 +250,7 @@ def register(app):
         "github_login_available": github_login_available,
         "gitlab_login_available": gitlab_login_available,
         "google_login_available": google_login_available,
+        "azuread_login_available" : azuread_login_available,
         "cacheFiles": False,
         "devMode": False,
         "mode": "multiple-document",
