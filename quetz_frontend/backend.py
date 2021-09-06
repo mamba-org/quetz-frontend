@@ -116,7 +116,7 @@ def index(
         if os.path.exists(path) and under_frontend_dir(path) :
             return FileResponse(path=path)
         else:
-            return HTTPException(status_code=404)
+            raise HTTPException(status_code=404)
     else:
         if profile :
             index_rendered = get_rendered_index(config_data, profile, index_template)
