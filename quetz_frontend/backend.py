@@ -84,9 +84,9 @@ def extensions(
     auth: authorization.Rules = Depends(get_rules),
 ):
     path = pjoin(extensions_dir, resource)
-    logger.error(path)
-    logger.error(os.path.exists(path))
-    logger.error(under_frontend_dir(path))
+    logger.warn(path)
+    logger.warn(os.path.exists(path))
+    logger.warn(under_frontend_dir(path))
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
@@ -112,6 +112,7 @@ def index(
     dao: Dao = Depends(get_dao),
     auth: authorization.Rules = Depends(get_rules),
 ):
+    global config_data
     user_id = auth.get_user()
     profile = dao.get_profile(user_id)
 
@@ -128,6 +129,10 @@ def index(
         else:
             raise HTTPException(status_code=404)
     else:
+        extensions = get_federated_extensions([extensions_dir])
+        federated_extensions = load_federated_extensions(extensions)
+        config_data['federated_extensions'] = federated_extensions
+        
         if profile :
             index_rendered = get_rendered_index(config_data, profile, index_template)
             return HTMLResponse(content=index_rendered, status_code=200)

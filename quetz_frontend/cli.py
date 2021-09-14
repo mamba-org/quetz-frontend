@@ -1,11 +1,13 @@
 import os
 import json
+import glob
 import shutil
 import importlib
 import subprocess
 
 import os.path as osp
 from pathlib import Path
+from itertools import chain
 from typing import NoReturn
 from typer import Typer, Argument, Option
 from setuptools import find_packages
@@ -28,7 +30,7 @@ app = Typer()
 
 @app.command()
 def link_frontend(
-    dev_mode: bool = Option(False, '--dev-mode', help="Whether to install it in dev mode or not")
+    dev_mode: bool = Option(False, '--development', help="Whether to install it in dev mode or not")
 ) -> NoReturn:
     """Intall the Quetz-Frontend"""
     assert LOCAL_APP_DIR.exists()
@@ -56,6 +58,20 @@ def link_frontend(
         """)
 
 @app.command()
+def clean_frontend() -> NoReturn:
+    """Clean the Quetz-Frontend"""
+    if GLOBAL_APP_DIR.exists() :
+        if osp.isfile(GLOBAL_APP_DIR) :
+            os.remove(GLOBAL_APP_DIR)
+        
+        elif osp.islink(GLOBAL_APP_DIR) :
+            os.remove(GLOBAL_APP_DIR)
+
+        elif osp.isdir(GLOBAL_APP_DIR) :
+            clean_dir(GLOBAL_APP_DIR)
+            shutil.rmtree(GLOBAL_APP_DIR)
+
+@app.command()
 def install(
     ext_path: str = Argument(Path(), help="The path of the extension")
 ) -> NoReturn:
@@ -73,11 +89,16 @@ def install(
     src = Path(extension_path).joinpath(module.__name__, metadata[0]['src'])
     dest = GLOBAL_EXTENSIONS_DIR.joinpath(metadata[0]['dest'])
     
-    if dest.exists() and os.path.isdir(dest) :
-        clean_dir(dest)
-        shutil.rmtree(dest)
-    elif dest.exists() :
-        os.remove(dest)
+    if dest.exists():
+        if osp.isfile(dest) :
+            os.remove(dest)
+        
+        elif osp.islink(dest) :
+            os.remove(dest)
+
+        elif osp.isdir(dest) :
+            clean_dir(dest)
+            shutil.rmtree(dest)
     
     shutil.copytree(src, dest, symlinks = True)
     print(f"""
@@ -98,29 +119,14 @@ def develop(
     extension_path = Path(osp.realpath(ext_path))
     assert extension_path.joinpath('package.json').exists()
 
-    _build_extension(ext_path, True, False)
+    _build_extension(extension_path, True, False)
 
-    module, metadata = _get_extensions_metadata(extension_path)
-    src = Path(extension_path).joinpath(module.__name__, metadata[0]['src'])
-    dest = GLOBAL_EXTENSIONS_DIR.joinpath(metadata[0]['dest'])
-    
-    if dest.exists() and os.path.isdir(dest) :
-        clean_dir(dest)
-        shutil.rmtree(dest)
-    elif dest.exists() :
-        os.remove(dest)
-    
-    os.symlink(src, dest)
-    print(f"""
-    Symlink created:
-        Ori:  {src}
-        Dest: {dest}
-    """)
+    _develop_extension(extension_path)
 
 @app.command()
 def build(
     ext_path: str = Argument(Path(), help="The path of the extension"),
-    dev_mode: bool = Option(False, '--dev-mode', help="Build in development")
+    dev_mode: bool = Option(False, '--development', help="Build in development")
 ) -> NoReturn:
     """Build an extension"""
 
@@ -144,7 +150,8 @@ def watch(
     extension_path = Path(osp.realpath(ext_path))
     assert extension_path.joinpath('package.json').exists()
 
-    _build_extension(ext_path, True, True)
+    _develop_extension(extension_path)
+    _build_extension(extension_path, True, True)
 
 @app.command()
 def list() -> NoReturn:
@@ -170,17 +177,10 @@ def list() -> NoReturn:
 
 @app.command()
 def clean() -> NoReturn:
-    """Clean the Quetz-Frontend"""
-    if GLOBAL_APP_DIR.exists() :
-        if os.path.isfile(GLOBAL_APP_DIR) :
-            os.remove(GLOBAL_APP_DIR)
-        
-        elif os.path.islink(GLOBAL_APP_DIR) :
-            os.remove(GLOBAL_APP_DIR)
-
-        elif os.path.isdir(GLOBAL_APP_DIR) :
-            clean_dir(GLOBAL_APP_DIR)
-            shutil.rmtree(GLOBAL_APP_DIR)
+    """Clean the extensions directory"""
+    if GLOBAL_EXTENSIONS_DIR.exists() :
+        clean_dir(GLOBAL_EXTENSIONS_DIR)
+        shutil.rmtree(GLOBAL_EXTENSIONS_DIR)
 
 @app.command()
 def paths() -> NoReturn:
@@ -190,6 +190,32 @@ def paths() -> NoReturn:
         Frontend:   {GLOBAL_FRONTEND_DIR}
         App:        {GLOBAL_APP_DIR}
         Extensions: {GLOBAL_EXTENSIONS_DIR}
+    """)
+
+def _develop_extension(ext_path):
+    with open(Path(ext_path, 'package.json')) as fid:
+        ext_data = json.load(fid)
+    
+    _, metadata = _get_extensions_metadata(ext_path)
+    src = osp.join(ext_path, ext_data['jupyterlab'].get('outputDir', metadata[0]['src']))
+    dest = GLOBAL_EXTENSIONS_DIR.joinpath(ext_data['name'])
+    
+    if dest.exists():
+        if osp.isfile(dest) :
+            os.remove(dest)
+        
+        elif osp.islink(dest) :
+            os.remove(dest)
+
+        elif osp.isdir(dest) :
+            clean_dir(dest)
+            shutil.rmtree(dest)
+
+    os.symlink(src, dest)
+    print(f"""
+    Symlink created:
+        Ori:  {src}
+        Dest: {dest}
     """)
 
 def _build_extension(ext_path, dev_mode=False, watch=False):
@@ -266,10 +292,8 @@ def _get_extensions_metadata(module_path):
     # Looking for modules in the package
     packages = find_packages(mod_path)
     for package in packages :
-        print("_get_extensions_metadata", package)
         try:
             module = importlib.import_module(package)
-            print("module", module)
             if hasattr(module, 'js_plugin_paths') :
                 return module, module.js_plugin_paths()
         except Exception:
