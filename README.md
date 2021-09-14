@@ -63,6 +63,9 @@ extensions_dir = "path/to/extensions/folder"
 ```bash
 # build the app
 pip install -e .
+
+# Create a link to the quetz folder
+quetz-frontend link-frontend --development
 ```
 
 #### Useful commands
@@ -78,4 +81,28 @@ yarn run build
 yarn run watch
 ```
 
-There is also a watch command to automatically rebuild the application when there are new changes:
+### Command line tool
+
+Quetz fronted also comes with a cli to manage extensions
+
+```bash
+Usage: quetz-frontend [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --install-completion  Install completion for the current shell.
+  --show-completion     Show completion for the current shell, to copy it or
+                        customize the installation.
+  --help                Show this message and exit.
+
+Commands:
+  build           Build an extension
+  clean           Clean the extensions directory
+  clean-frontend  Clean the Quetz-Frontend
+  develop         Build and install an extension in dev mode
+  install         Build and install an extension
+  link-frontend   Intall the Quetz-Frontend
+  list            List of extensions
+  paths
+  watch           Watch an extension
+
+```
