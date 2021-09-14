@@ -11,6 +11,3 @@ GLOBAL_FRONTEND_DIR = Path(GLOBAL_QUETZ_DIR, 'frontend')
 GLOBAL_APP_DIR = Path(GLOBAL_FRONTEND_DIR, 'app')
 GLOBAL_BUILD_DIR = Path(GLOBAL_APP_DIR, 'build')
 GLOBAL_EXTENSIONS_DIR = Path(GLOBAL_FRONTEND_DIR, 'extensions')
-
-# TOOLS
-JUPYTER_LAB_BUILDER = Path(GLOBAL_APP_DIR, '/node_modules/@jupyterlab/builder/lib/build-labextension.js')

@@ -30,15 +30,27 @@ index_template = None
 frontend_settings = {}
 federated_extensions = []
 
+frontend_dir = None
+extensions_dir = None
+
 if os.path.exists(LOCAL_APP_DIR):
     frontend_dir = LOCAL_APP_DIR
     logger.info("Using local DEVELOPMENT frontend directory.")
 elif os.path.exists(GLOBAL_FRONTEND_DIR):
     frontend_dir = GLOBAL_FRONTEND_DIR
+    logger.info("Using global frontend directory.")
 else:
     raise RuntimeException(f"Could not find frontend files in:\n- {LOCAL_APP_DIR}\n- {GLOBAL_FRONTEND_DIR}")
 
+if os.path.exists(GLOBAL_EXTENSIONS_DIR):
+    extensions_dir = GLOBAL_EXTENSIONS_DIR
+    logger.info("Using global frontend extensions directory.")
+else :
+    os.mkdir(GLOBAL_EXTENSIONS_DIR)
+    logger.info("Creating a global frontend extensions directory.")
+
 logger.info(f"Successfully found frontend in {frontend_dir}")
+logger.info(f"Successfully found frontend extensions in {extensions_dir}")
 
 @mock_router.get('/api/sessions', include_in_schema=False)
 def mock_sessions():
@@ -72,6 +84,9 @@ def extensions(
     auth: authorization.Rules = Depends(get_rules),
 ):
     path = pjoin(extensions_dir, resource)
+    logger.error(path)
+    logger.error(os.path.exists(path))
+    logger.error(under_frontend_dir(path))
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
@@ -131,7 +146,8 @@ def under_frontend_dir(path):
     """
     path = os.path.abspath(path)
     fdir = os.path.abspath(frontend_dir)
-    return os.path.commonpath([path, fdir]) == fdir
+    globalDir = os.path.abspath(GLOBAL_FRONTEND_DIR)
+    return os.path.commonpath([path, fdir]) == fdir or os.path.commonpath([path, globalDir]) == globalDir
 
 
 def get_rendered_index(config_data, profile, index_template):
@@ -212,7 +228,7 @@ def register(app):
     app.include_router(catchall_router)
 
     frontend_dir = config.general_frontend_dir
-    extensions_dir = GLOBAL_EXTENSIONS_DIR
+    #extensions_dir = config.general_extensions_dir
 
     logger.info(f"Configured frontend found: {frontend_dir}")
     logger.info(f"Configured extensions directory: {extensions_dir}")

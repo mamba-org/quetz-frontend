@@ -22,6 +22,7 @@
 [![Github Actions Status](https://github.com/mamba-org/quetz-frontend/workflows/Build/badge.svg)](https://github.com/mamba-org/quetz-frontend/actions)
 
 ### Development
+
 First of all, clone quetz and quetz-frontend, create a conda environment using the `environment.yml` in quetz, run quetz and modify its config file.
 
 ```bash
@@ -32,6 +33,7 @@ mamba install -c conda-forge nodejs=14 yarn
 ```
 
 #### Install Quetz in dev mode
+
 ```bash
 cd quetz
 pip install -e .
@@ -57,12 +59,14 @@ extensions_dir = "path/to/extensions/folder"
 ```
 
 #### Install Quetz-Frontend in dev mode
+
 ```bash
 # build the app
 pip install -e .
 ```
 
 #### Useful commands
+
 ```bash
 # Start an already configured quetz deployment in dev mode:
 quetz start test_quetz --reload

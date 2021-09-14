@@ -11,7 +11,7 @@ factory = "jupyter_packaging.npm_builder"
 
 [tool.jupyter-packaging.build-args]
 build_cmd = "build:prod"
-npm = ["jlpm"]
+npm = ["yarn"]
 
 [tool.check-manifest]
 ignore = ["quetz_frontend/app/build/**", "yarn.lock", ".*", "package-lock.json"]

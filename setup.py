@@ -21,6 +21,7 @@ LOCAL_APP_DIR = os.path.join(HERE, 'quetz_frontend', 'app')
 GLOBAL_APP_DIR = 'share/quetz/frontend/app'
 
 data_files = [
+    (GLOBAL_APP_DIR, LOCAL_APP_DIR, 'node_modules/**'),
     (GLOBAL_APP_DIR, LOCAL_APP_DIR, 'static/**'),
     (GLOBAL_APP_DIR, LOCAL_APP_DIR, 'themes/**'),
     (GLOBAL_APP_DIR, LOCAL_APP_DIR, 'schemas/**'),
@@ -70,7 +71,6 @@ setup_args = {
     "entry_points": {
         'console_scripts': [
             'quetz-frontend = quetz_frontend.cli:app',
-            'quetz-frontend-extensions = quetz_frontend.extensions:app'
         ],
         'quetz.frontend': ['quetz-frontend = quetz_frontend.backend']
     },
