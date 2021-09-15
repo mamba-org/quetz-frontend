@@ -60,16 +60,16 @@ def link_frontend(
 @app.command()
 def clean_frontend() -> NoReturn:
     """Clean the Quetz-Frontend"""
-    if GLOBAL_APP_DIR.exists() :
-        if osp.isfile(GLOBAL_APP_DIR) :
-            os.remove(GLOBAL_APP_DIR)
-        
-        elif osp.islink(GLOBAL_APP_DIR) :
-            os.remove(GLOBAL_APP_DIR)
+    
+    if osp.isfile(GLOBAL_APP_DIR) :
+        os.remove(GLOBAL_APP_DIR)
+    
+    elif osp.islink(GLOBAL_APP_DIR) :
+        os.remove(GLOBAL_APP_DIR)
 
-        elif osp.isdir(GLOBAL_APP_DIR) :
-            clean_dir(GLOBAL_APP_DIR)
-            shutil.rmtree(GLOBAL_APP_DIR)
+    elif osp.isdir(GLOBAL_APP_DIR) :
+        clean_dir(GLOBAL_APP_DIR)
+        shutil.rmtree(GLOBAL_APP_DIR)
 
 @app.command()
 def install(
@@ -89,16 +89,15 @@ def install(
     src = Path(extension_path).joinpath(module.__name__, metadata[0]['src'])
     dest = GLOBAL_EXTENSIONS_DIR.joinpath(metadata[0]['dest'])
     
-    if dest.exists():
-        if osp.isfile(dest) :
-            os.remove(dest)
-        
-        elif osp.islink(dest) :
-            os.remove(dest)
+    if osp.isfile(dest) :
+        os.remove(dest)
+    
+    elif osp.islink(dest) :
+        os.remove(dest)
 
-        elif osp.isdir(dest) :
-            clean_dir(dest)
-            shutil.rmtree(dest)
+    elif osp.isdir(dest) :
+        clean_dir(dest)
+        shutil.rmtree(dest)
     
     shutil.copytree(src, dest, symlinks = True)
     print(f"""
@@ -154,6 +153,27 @@ def watch(
     _build_extension(extension_path, True, True)
 
 @app.command()
+def uninstall(
+    ext_name: str = Argument("", help="The name of the extension")
+) -> NoReturn:
+    """Uninstall an extension"""
+
+    if not GLOBAL_EXTENSIONS_DIR.exists() :
+        os.mkdir(GLOBAL_EXTENSIONS_DIR)
+
+    extension_path = Path(GLOBAL_EXTENSIONS_DIR, ext_name)
+    if osp.isfile(extension_path) :
+        os.remove(extension_path)
+    
+    elif osp.islink(extension_path) :
+        os.remove(extension_path)
+
+    elif osp.isdir(extension_path) :
+        clean_dir(extension_path)
+        shutil.rmtree(extension_path)
+    
+
+@app.command()
 def list() -> NoReturn:
     """List of extensions"""
 
@@ -184,6 +204,8 @@ def clean() -> NoReturn:
 
 @app.command()
 def paths() -> NoReturn:
+    """Quetz installation paths"""
+
     print(f"""
     System cofigured paths:
         Quetz:      {GLOBAL_QUETZ_DIR}
@@ -200,16 +222,15 @@ def _develop_extension(ext_path):
     src = osp.join(ext_path, ext_data['jupyterlab'].get('outputDir', metadata[0]['src']))
     dest = GLOBAL_EXTENSIONS_DIR.joinpath(ext_data['name'])
     
-    if dest.exists():
-        if osp.isfile(dest) :
-            os.remove(dest)
-        
-        elif osp.islink(dest) :
-            os.remove(dest)
+    if osp.isfile(dest) :
+        os.remove(dest)
+    
+    elif osp.islink(dest) :
+        os.remove(dest)
 
-        elif osp.isdir(dest) :
-            clean_dir(dest)
-            shutil.rmtree(dest)
+    elif osp.isdir(dest) :
+        clean_dir(dest)
+        shutil.rmtree(dest)
 
     os.symlink(src, dest)
     print(f"""
