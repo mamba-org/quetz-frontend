@@ -40,7 +40,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
       icon: github_logo,
       api: '/auth/azuread/login',
       loggedIn: false,
-    }
+    };
 
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
