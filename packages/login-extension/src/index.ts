@@ -9,6 +9,8 @@ import github_logo from '../style/img/github-logo.svg';
 
 import google_logo from '../style/img/google-logo.svg';
 
+import azure_logo from '../style/img/azure-logo.svg';
+
 export namespace CommandIDs {
   export const plugin = '@quetz-frontend/login-extension:login';
 }
@@ -37,7 +39,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
     const azuread: LogInItem = {
       id: 'azuread',
       label: 'AzureAD LogIn',
-      icon: github_logo,
+      icon: azure_logo,
       api: '/auth/azuread/login',
       loggedIn: false,
     };
