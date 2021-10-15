@@ -9,6 +9,8 @@ import github_logo from '../style/img/github-logo.svg';
 
 import google_logo from '../style/img/google-logo.svg';
 
+import azure_logo from '../style/img/azure-logo.svg';
+
 export namespace CommandIDs {
   export const plugin = '@quetz-frontend/login-extension:login';
 }
@@ -34,6 +36,14 @@ const plugin: JupyterFrontEndPlugin<void> = {
       loggedIn: false,
     };
 
+    const azuread: LogInItem = {
+      id: 'azuread',
+      label: 'AzureAD LogIn',
+      icon: azure_logo,
+      api: '/auth/azuread/login',
+      loggedIn: false,
+    };
+
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
       try {
@@ -44,11 +54,15 @@ const plugin: JupyterFrontEndPlugin<void> = {
         if (data.google_login_available) {
           logInMenu.addItem(google);
         }
+        if (data.azuread_login_available) {
+          logInMenu.addItem(azuread);
+        }
       } catch (err) {
         console.error(err.message);
         // add both if cannot parse data
         logInMenu.addItem(gitHub);
         logInMenu.addItem(google);
+        logInMenu.addItem(azuread);
       }
     }
   },
