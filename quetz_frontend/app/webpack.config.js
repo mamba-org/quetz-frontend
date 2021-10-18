@@ -1,13 +1,20 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
+const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { ModuleFederationPlugin } = webpack.container;
+const WPPlugin = require('@jupyterlab/builder').WPPlugin;
 const Build = require('@jupyterlab/builder').Build;
 
 const packageData = require('./package.json');
 const jlab = packageData.jupyterlab;
+
+// Directories
+const staticDir = path.resolve(jlab.staticDir);
+const outputDir = path.resolve(jlab.outputDir);
+const buildDir = path.resolve(jlab.buildDir);
 
 // Create a list of application extensions and mime extensions from
 // jlab.extensions
@@ -29,7 +36,7 @@ for (const key of jlab.extensions) {
 // such as setting schema files, theme assets, etc.
 const extensionAssetConfig = Build.ensureAssets({
   packageNames: jlab.extensions,
-  output: './build',
+  output: outputDir,
 });
 
 /**
@@ -139,7 +146,7 @@ module.exports = [
       './bootstrap.js',
     ],
     output: {
-      path: __dirname + '/build',
+      path: buildDir,
       filename: 'bundle.js',
     },
     bail: false,
@@ -205,6 +212,8 @@ module.exports = [
         inject: false,
         filename: 'index.html.j2',
       }),
+      // custom plugin that copies the assets to the static directory
+      new WPPlugin.FrontEndPlugin(buildDir, staticDir),
       new ModuleFederationPlugin({
         library: {
           type: 'var',

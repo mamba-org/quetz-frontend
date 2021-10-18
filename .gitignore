@@ -4,13 +4,11 @@ MANIFEST
 build
 dist
 lib
-quetz_frontend/static
-quetz_frontend/schemas
-quetz_frontend/themes
-quetz_frontend/style.js
-dev_mode/static
-dev_mode/schemas
-dev_mode/themes
+quetz_frontend/app/build
+quetz_frontend/app/static
+quetz_frontend/app/schemas
+quetz_frontend/app/themes
+quetz_frontend/app/style.js
 
 # local env files
 .env.local

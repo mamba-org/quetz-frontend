@@ -1,5 +1,4 @@
 import os
-import sys
 import json
 import glob
 import copy
@@ -18,6 +17,7 @@ from quetz.deps import get_dao, get_rules, get_session
 from quetz.authentication.registry import AuthenticatorRegistry
 from quetz import authorization, rest_models
 
+from .paths import LOCAL_APP_DIR, GLOBAL_FRONTEND_DIR, GLOBAL_EXTENSIONS_DIR
 
 logger = logging.getLogger('quetz.frontend')
 config = Config()
@@ -30,20 +30,27 @@ index_template = None
 frontend_settings = {}
 federated_extensions = []
 
-GLOBAL_FRONTEND_DIR = pjoin(sys.prefix, '/share/quetz/frontend/')
-GLOBAL_EXTENSIONS_DIR = pjoin(sys.prefix, '/share/quetz/frontend/extensions/')
-HERE = os.path.abspath(os.path.dirname(__file__))
-LOCAL_FRONTEND_DIR = os.path.join(HERE, "app", "build")
+frontend_dir = None
+extensions_dir = None
 
-if os.path.exists(LOCAL_FRONTEND_DIR):
-    frontend_dir = LOCAL_FRONTEND_DIR
+if os.path.exists(LOCAL_APP_DIR):
+    frontend_dir = LOCAL_APP_DIR
     logger.info("Using local DEVELOPMENT frontend directory.")
 elif os.path.exists(GLOBAL_FRONTEND_DIR):
     frontend_dir = GLOBAL_FRONTEND_DIR
+    logger.info("Using global frontend directory.")
 else:
-    raise RuntimeException(f"Could not find frontend files in:\n- {LOCAL_FRONTEND_DIR}\n- {GLOBAL_FRONTEND_DIR}")
+    raise RuntimeException(f"Could not find frontend files in:\n- {LOCAL_APP_DIR}\n- {GLOBAL_FRONTEND_DIR}")
+
+if os.path.exists(GLOBAL_EXTENSIONS_DIR):
+    extensions_dir = GLOBAL_EXTENSIONS_DIR
+    logger.info("Using global frontend extensions directory.")
+else :
+    os.mkdir(GLOBAL_EXTENSIONS_DIR)
+    logger.info("Creating a global frontend extensions directory.")
 
 logger.info(f"Successfully found frontend in {frontend_dir}")
+logger.info(f"Successfully found frontend extensions in {extensions_dir}")
 
 @mock_router.get('/api/sessions', include_in_schema=False)
 def mock_sessions():
@@ -77,6 +84,9 @@ def extensions(
     auth: authorization.Rules = Depends(get_rules),
 ):
     path = pjoin(extensions_dir, resource)
+    logger.warn(path)
+    logger.warn(os.path.exists(path))
+    logger.warn(under_frontend_dir(path))
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
@@ -89,7 +99,7 @@ def static(
     dao: Dao = Depends(get_dao),
     auth: authorization.Rules = Depends(get_rules),
 ):
-    path = pjoin(frontend_dir, resource)
+    path = pjoin(frontend_dir, 'static', resource)
     if os.path.exists(path) and under_frontend_dir(path):
         return FileResponse(path=path)
     else:
@@ -102,6 +112,7 @@ def index(
     dao: Dao = Depends(get_dao),
     auth: authorization.Rules = Depends(get_rules),
 ):
+    global config_data
     user_id = auth.get_user()
     profile = dao.get_profile(user_id)
 
@@ -112,20 +123,24 @@ def index(
             else resource.split('/')[-1]
         )
 
-        path = pjoin(frontend_dir, file_name)
+        path = pjoin(frontend_dir, 'static', file_name)
         if os.path.exists(path) and under_frontend_dir(path) :
             return FileResponse(path=path)
         else:
             raise HTTPException(status_code=404)
     else:
+        extensions = get_federated_extensions([extensions_dir])
+        federated_extensions = load_federated_extensions(extensions)
+        config_data['federated_extensions'] = federated_extensions
+        
         if profile :
             index_rendered = get_rendered_index(config_data, profile, index_template)
             return HTMLResponse(content=index_rendered, status_code=200)
         else:
-            index_html_path = pjoin(frontend_dir, "index.html")
+            index_html_path = pjoin(frontend_dir, 'static', "index.html")
             if not os.path.exists(index_html_path):
                 render_index()
-            return FileResponse(path=pjoin(frontend_dir, "index.html"))
+            return FileResponse(path=pjoin(frontend_dir, 'static', "index.html"))
 
 def under_frontend_dir(path):
     """
@@ -136,7 +151,8 @@ def under_frontend_dir(path):
     """
     path = os.path.abspath(path)
     fdir = os.path.abspath(frontend_dir)
-    return os.path.commonpath([path, fdir]) == fdir
+    globalDir = os.path.abspath(GLOBAL_FRONTEND_DIR)
+    return os.path.commonpath([path, fdir]) == fdir or os.path.commonpath([path, globalDir]) == globalDir
 
 
 def get_rendered_index(config_data, profile, index_template):
@@ -154,12 +170,12 @@ def render_index():
         del cfg["logged_in_user_profile"]
 
     # Create index.html with config
-    with open(pjoin(frontend_dir, "index.html.j2")) as fi:
+    with open(pjoin(frontend_dir, 'static', "index.html.j2")) as fi:
         index_template = jinja2.Template(fi.read())
-    with open(pjoin(frontend_dir, "index.html"), "w") as fo:
+    with open(pjoin(frontend_dir, 'static', "index.html"), "w") as fo:
         fo.write(index_template.render(page_config=config_data))
 
-    template_path = pjoin(frontend_dir, "..", "templates")
+    template_path = pjoin(frontend_dir, "templates")
     if os.path.exists(template_path):
         # Load settings
         with open(pjoin(template_path, "settings.json")) as fi:
@@ -217,7 +233,7 @@ def register(app):
     app.include_router(catchall_router)
 
     frontend_dir = config.general_frontend_dir
-    extensions_dir = GLOBAL_EXTENSIONS_DIR
+    #extensions_dir = config.general_extensions_dir
 
     logger.info(f"Configured frontend found: {frontend_dir}")
     logger.info(f"Configured extensions directory: {extensions_dir}")
