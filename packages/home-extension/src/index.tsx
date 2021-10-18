@@ -158,7 +158,7 @@ const getChannelsListColumns = (): any => [
   {
     Header: '',
     accessor: 'role',
-    Cell: ({ row }: any) => formatPlural(row.original.packages_count, 'member'),
+    Cell: ({ row }: any) => formatPlural(row.original.members_count, 'member'),
     width: 20,
   },
 ];
