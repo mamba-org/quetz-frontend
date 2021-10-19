@@ -52,10 +52,6 @@ client_secret = "secret"
 
 [users]
 admins = ["github:username"]
-
-[general]
-frontend_dir = "/path/to/quetz/frontend/quetz_frontend/app/build"
-extensions_dir = "path/to/extensions/folder"
 ```
 
 #### Install Quetz-Frontend in dev mode
