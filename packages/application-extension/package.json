@@ -1,17 +1,16 @@
 {
   "name": "@quetz-frontend/application-extension",
   "version": "0.1.0",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "style": "style/index.css",
-  "styleModule": "style/index.js",
-  "directories": {
-    "lib": "lib/"
-  },
   "sideEffects": [
     "style/*.css",
     "style/index.js"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "directories": {
+    "lib": "lib/"
+  },
   "files": [
     "lib/*.d.ts",
     "lib/*.js.map",
@@ -26,8 +25,8 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.9",
-    "@jupyterlab/translation": "^3.0.7",
+    "@jupyterlab/application": "^3.2.0",
+    "@jupyterlab/translation": "^3.2.0",
     "@quetz-frontend/application": "^0.1.0"
   },
   "devDependencies": {
@@ -36,5 +35,6 @@
   },
   "jupyterlab": {
     "coreDependency": true
-  }
+  },
+  "styleModule": "style/index.js"
 }

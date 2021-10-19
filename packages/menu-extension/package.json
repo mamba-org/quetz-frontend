@@ -1,17 +1,16 @@
 {
   "name": "@quetz-frontend/menu-extension",
   "version": "0.1.0",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "style": "style/index.css",
-  "styleModule": "style/index.js",
-  "directories": {
-    "lib": "lib/"
-  },
   "sideEffects": [
     "style/*.css",
     "style/index.js"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "directories": {
+    "lib": "lib/"
+  },
   "files": [
     "lib/*.d.ts",
     "lib/*.js.map",
@@ -27,9 +26,9 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@jupyterlab/application": "^3.0.9",
-    "@jupyterlab/apputils": "^3.0.7",
-    "@jupyterlab/ui-components": "^3.0.6",
+    "@jupyterlab/application": "^3.2.0",
+    "@jupyterlab/apputils": "^3.2.0",
+    "@jupyterlab/ui-components": "^3.2.0",
     "@lumino/messaging": "^1.4.3",
     "@lumino/widgets": "^1.19.0",
     "@quetz-frontend/apputils": "^0.1.0",
@@ -41,5 +40,6 @@
   },
   "jupyterlab": {
     "coreDependency": true
-  }
+  },
+  "styleModule": "style/index.js"
 }

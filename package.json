@@ -9,24 +9,26 @@
     ]
   },
   "scripts": {
-    "install": "lerna bootstrap",
     "build": "lerna run build",
     "build:core": "cd quetz_frontend/app && yarn && yarn run build",
     "build:packages": "lerna run build",
     "build:prod": "yarn run build && cd quetz_frontend/app && yarn run build",
     "clean": "yarn run clean:core && yarn run clean:packages",
+    "clean:all": "lerna run clean:all && rimraf yarn.lock && rimraf node_modules",
     "clean:core": "cd quetz_frontend/app && yarn run clean",
     "clean:packages": "lerna run clean",
-    "clean:all": "lerna run clean:all && rimraf yarn.lock && rimraf node_modules",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
+    "install": "lerna bootstrap",
     "prettier": "prettier --write \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
+    "update:dependency": "node ./node_modules/@jupyterlab/buildutils/lib/update-dependency.js --lerna",
     "watch": "run-p watch:lib watch:app",
     "watch:app": "lerna exec --stream --scope \"@quetz-frontend/app\" yarn watch",
     "watch:lib": "lerna exec --stream --scope @quetz-frontend/metapackage yarn watch"
   },
   "devDependencies": {
+    "@jupyterlab/buildutils": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
     "@typescript-eslint/parser": "^4.28.5",
     "eslint": "^7.32.0",
