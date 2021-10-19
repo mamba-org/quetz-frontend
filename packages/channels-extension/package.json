@@ -1,17 +1,16 @@
 {
   "name": "@quetz-frontend/channels-extension",
   "version": "0.1.0",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "style": "style/index.css",
-  "styleModule": "style/index.js",
-  "directories": {
-    "lib": "lib/"
-  },
   "sideEffects": [
     "style/*.css",
     "style/index.js"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "directories": {
+    "lib": "lib/"
+  },
   "files": [
     "lib/*.d.ts",
     "lib/*.js.map",
@@ -30,11 +29,11 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@jupyterlab/application": "^3.0.9",
-    "@jupyterlab/apputils": "^3.0.7",
-    "@jupyterlab/coreutils": "^5.0.5",
-    "@jupyterlab/services": "^6.0.6",
-    "@jupyterlab/ui-components": "^3.0.6",
+    "@jupyterlab/application": "^3.2.0",
+    "@jupyterlab/apputils": "^3.2.0",
+    "@jupyterlab/coreutils": "^5.2.0",
+    "@jupyterlab/services": "^6.2.0",
+    "@jupyterlab/ui-components": "^3.2.0",
     "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/table": "^0.1.0",
     "fromnow": "^3.0.1",
@@ -54,5 +53,6 @@
   },
   "jupyterlab": {
     "coreDependency": true
-  }
+  },
+  "styleModule": "style/index.js"
 }
