@@ -43,7 +43,6 @@ async function createModule(scope, module) {
 }
 
 export async function main() {
-  const app = new App();
   var disabled = [];
   var deferred = [];
   var ignorePlugins = [];
@@ -53,7 +52,7 @@ export async function main() {
   const federatedMimeExtensionPromises = [];
   const federatedStylePromises = [];
 
-  const mods = [
+  const register = [
     require('@jupyterlab/apputils-extension').default.filter(({ id }) =>
       [
         '@jupyterlab/apputils-extension:settings',
@@ -129,7 +128,19 @@ export async function main() {
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (let plugin of activePlugins(p.value)) {
-        mods.push(plugin);
+        register.push(plugin);
+      }
+    } else {
+      console.error(p.reason);
+    }
+  });
+
+  // Add the federated mime extensions.
+  const federatedMimeExtensions = await Promise.allSettled(federatedMimeExtensionPromises);
+  federatedMimeExtensions.forEach(p => {
+    if (p.status === "fulfilled") {
+      for (let plugin of activePlugins(p.value)) {
+        mimeExtensions.push(plugin);
       }
     } else {
       console.error(p.reason);
@@ -138,11 +149,24 @@ export async function main() {
 
   // Load all federated component styles and log errors for any that do not
   (await Promise.allSettled(federatedStylePromises))
-    .filter(({ status }) => status === 'rejected')
-    .forEach(({ reason }) => {
-      console.error(reason);
-    });
+  .filter(({ status }) => status === 'rejected')
+  .forEach(({ reason }) => {
+    console.error(reason);
+  });
 
-  app.registerPluginModules(mods);
-  await app.start();
+  const app = new App({
+    mimeExtensions,
+    disabled: {
+      matches: disabled,
+      patterns: PageConfig.Extension.disabled
+        .map(function (val) { return val.raw; })
+    },
+    deferred: {
+      matches: deferred,
+      patterns: PageConfig.Extension.deferred
+        .map(function (val) { return val.raw; })
+    }
+  });
+  app.registerPluginModules(register);
+  await app.start({ ignorePlugins });
 }

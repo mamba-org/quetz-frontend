@@ -123,11 +123,12 @@ def index(
             raise HTTPException(status_code=404)
     else:
         logging.warn(resource)
-        extensions = get_federated_extensions([extensions_dir])
+        extensions, disabled_extensions = get_federated_extensions([extensions_dir])
         federated_extensions = load_federated_extensions(extensions)
-        config_data["federated_extensions"] = federated_extensions
-
-        if profile:
+        config_data['federated_extensions'] = federated_extensions
+        config_data['disabledExtensions'] = disabled_extensions
+        
+        if profile :
             index_rendered = get_rendered_index(config_data, profile, index_template)
             return HTMLResponse(content=index_rendered, status_code=200)
         else:
@@ -189,7 +190,6 @@ def load_federated_extensions(federated_extensions: dict) -> list:
 
     return extensions
 
-
 def register(app):
     global config_data
 
@@ -204,7 +204,7 @@ def register(app):
     logger.info(f"Configured frontend found: {frontend_dir!s}")
     logger.info(f"Configured extensions directory: {extensions_dir!s}")
 
-    extensions = get_federated_extensions([extensions_dir])
+    extensions, disabled_extensions = get_federated_extensions([extensions_dir])
     federated_extensions = load_federated_extensions(extensions)
 
     auth_registry = AuthenticatorRegistry()
@@ -229,6 +229,7 @@ def register(app):
         "fullSettingsUrl": f"/{ROUTE_PREFIX}/api/settings",
         "fullListingsUrl": "",
         "federated_extensions": federated_extensions,
+        "disabledExtensions": disabled_extensions,
         "github_login_available": github_login_available,
         "gitlab_login_available": gitlab_login_available,
         "google_login_available": google_login_available,

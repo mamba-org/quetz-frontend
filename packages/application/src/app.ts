@@ -1,8 +1,14 @@
 import {
   JupyterFrontEnd,
+<<<<<<< HEAD
   JupyterFrontEndContextMenu,
 } from '@jupyterlab/application';
 import { CommandLinker } from '@jupyterlab/apputils';
+=======
+  JupyterLab,
+  createRendermimePlugins
+} from '@jupyterlab/application';
+>>>>>>> f266891 (Adds support for disabling extensions)
 import { PageConfig } from '@jupyterlab/coreutils';
 import { ServiceManager } from '@jupyterlab/services';
 import { ContextMenuSvg } from '@jupyterlab/ui-components';
@@ -23,7 +29,14 @@ export type QuetzFrontEndPlugin<T> = IPlugin<QuetzFrontEnd, T>;
 /**
  * App is the main application class. It is instantiated once and shared.
  */
+<<<<<<< HEAD
 export class App extends Application<Shell> {
+=======
+export class App extends JupyterFrontEnd<IShell> {
+
+  private _info: JupyterLab.IInfo = JupyterLab.defaultInfo;
+
+>>>>>>> f266891 (Adds support for disabling extensions)
   /**
    * Construct a new App object.
    *
@@ -31,6 +44,7 @@ export class App extends Application<Shell> {
    */
   constructor(options: App.IOptions = {}) {
     super({
+<<<<<<< HEAD
       ...options,
       shell: options.shell ?? new Shell(),
     });
@@ -58,22 +72,59 @@ export class App extends Application<Shell> {
     this.restored =
       options.restored ||
       this.started.then(() => restored).catch(() => restored);
+=======
+      shell: options.shell,
+      // TODO: uncomment when JupyterLab 4.0 is released
+      //serviceManager: new ServiceManager({
+      //  standby: () => true
+      //})
+    });
+
+    // Create an IInfo dictionary from the options to override the defaults.
+    const info = Object.keys(JupyterLab.defaultInfo).reduce((acc, val) => {
+      if (val in options) {
+        (acc as any)[val] = JSON.parse(JSON.stringify((options as any)[val]));
+      }
+      return acc;
+    }, {} as Partial<JupyterLab.IInfo>);
+
+    // Populate application info.
+    this._info = { ...JupyterLab.defaultInfo, ...info };
+
+    if (options.mimeExtensions) {
+      for (const plugin of createRendermimePlugins(options.mimeExtensions)) {
+        this.registerPlugin(plugin);
+      }
+    }
+>>>>>>> f266891 (Adds support for disabling extensions)
   }
 
   /**
-   * The name of the application.
+   * The name of the JupyterLab application.
    */
-  readonly name = 'Quetz';
+  readonly name = PageConfig.getOption('appName') || 'Quetz';
 
   /**
-   * A namespace/prefix plugins may use to denote their provenance.
-   */
-  readonly namespace = this.name;
+  * A namespace/prefix plugins may use to denote their provenance.
+  */
+  readonly namespace = PageConfig.getOption('appNamespace') || this.name;
 
   /**
-   * The version of the application.
+  * A list of all errors encountered when registering plugins.
+  */
+  readonly registerPluginErrors: Array<Error> = [];
+
+  /**
+  * The version of the JupyterLab application.
+  */
+  readonly version = PageConfig.getOption('appVersion') || '0.1.0';
+
+  /**
+   * The JupyterLab application information dictionary.
    */
-  readonly version = 'unknown';
+  get info(): JupyterLab.IInfo {
+    return this._info;
+  }
 
   /**
    * The command linker used by the application.
@@ -120,6 +171,7 @@ export class App extends Application<Shell> {
    * The Quetz application paths dictionary.
    */
   get paths(): JupyterFrontEnd.IPaths {
+<<<<<<< HEAD
     return {
       urls: {
         base: PageConfig.getOption('baseUrl'),
@@ -142,6 +194,9 @@ export class App extends Application<Shell> {
         workspaces: '',
       },
     };
+=======
+    return JupyterLab.defaultPaths;
+>>>>>>> f266891 (Adds support for disabling extensions)
   }
 
   /**
@@ -222,7 +277,7 @@ export class App extends Application<Shell> {
   registerPluginModule(mod: App.IPluginModule): void {
     let data = mod.default;
     // Handle commonjs exports.
-    if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {
+    if (!mod.hasOwnProperty('__esModule')) {
       data = mod as any;
     }
     if (!Array.isArray(data)) {
@@ -232,7 +287,7 @@ export class App extends Application<Shell> {
       try {
         this.registerPlugin(item);
       } catch (error) {
-        console.error(error);
+        this.registerPluginErrors.push(error);
       }
     });
   }
@@ -260,16 +315,24 @@ export namespace App {
   /**
    * The instantiation options for an App application.
    */
+<<<<<<< HEAD
   export type IOptions = Partial<JupyterFrontEnd.IOptions<IShell>>;
+=======
+  export interface IOptions extends JupyterFrontEnd.IOptions<IShell>, Partial<JupyterLab.IInfo> {};
+>>>>>>> f266891 (Adds support for disabling extensions)
 
   /**
    * The interface for a module that exports a plugin or plugins as
    * the default value.
    */
+<<<<<<< HEAD
   export interface IPluginModule {
     /**
      * The default export.
      */
     default: QuetzFrontEndPlugin<any> | QuetzFrontEndPlugin<any>[];
   }
+=======
+  export type IPluginModule = JupyterLab.IPluginModule;
+>>>>>>> f266891 (Adds support for disabling extensions)
 }
