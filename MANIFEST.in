@@ -3,7 +3,6 @@ include README.md
 include pyproject.toml
 
 include package.json
-# include install.json
 include ts*.json
 include yarn.lock
 include lerna.json
