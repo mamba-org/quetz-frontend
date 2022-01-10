@@ -175,6 +175,8 @@ jobs:
 
       - name: Set up Python
         uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
 
       - name: Check Release
         uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v1
