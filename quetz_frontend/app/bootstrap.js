@@ -40,26 +40,6 @@ function getOption(name) {
 // eslint-disable-next-line no-undef
 __webpack_public_path__ = getOption('fullStaticUrl') + '/';
 
-// Promise.allSettled polyfill, until our supported browsers implement it
-// See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-if (Promise.allSettled === undefined) {
-  Promise.allSettled = (promises) =>
-    Promise.all(
-      promises.map((promise) =>
-        promise.then(
-          (value) => ({
-            status: 'fulfilled',
-            value,
-          }),
-          (reason) => ({
-            status: 'rejected',
-            reason,
-          })
-        )
-      )
-    );
-}
-
 function loadScript(url) {
   return new Promise((resolve, reject) => {
     const newScript = document.createElement('script');
@@ -76,7 +56,7 @@ async function loadComponent(url, scope) {
 
   // From https://webpack.js.org/concepts/module-federation/#dynamic-remote-containers
   await __webpack_init_sharing__('default');
-  const container = window._JUPYTERLAB[scope];
+  const container = window._QUETZ[scope];
   // Initialize the container, it may provide shared modules and may need ours
   await container.init(__webpack_share_scopes__.default);
 }
@@ -91,7 +71,7 @@ void (async function bootstrap() {
   // components should be actually used. We have to do this before importing
   // and using the module that actually uses these components so that all
   // dependencies are initialized.
-  let labExtensionUrl = getOption('fullLabextensionsUrl');
+  let labExtensionUrl = getOption('fullQuetzextensionsUrl');
   const extensions = await Promise.allSettled(
     extension_data.map(async (data) => {
       await loadComponent(
@@ -110,6 +90,6 @@ void (async function bootstrap() {
 
   // Now that all federated containers are initialized with the main
   // container, we can import the main function.
-  let main = (await import('./index.js')).main;
+  let main = (await import('./index.out.js')).main;
   window.addEventListener('load', main);
 })();

@@ -47,8 +47,6 @@
   },
   "dependencies": {
     "@jupyterlab/apputils-extension": "^3.2.0",
-    "@jupyterlab/theme-dark-extension": "^3.2.0",
-    "@jupyterlab/theme-light-extension": "^3.2.0",
     "@quetz-frontend/application-extension": "~0.1.0",
     "@quetz-frontend/channels-extension": "~0.1.0",
     "@quetz-frontend/home-extension": "~0.1.0",
@@ -56,11 +54,12 @@
     "@quetz-frontend/login-extension": "~0.1.0",
     "@quetz-frontend/menu-extension": "~0.1.0",
     "@quetz-frontend/search-extension": "~0.1.0",
-    "@quetz-frontend/user-extension": "~0.1.0"
+    "@quetz-frontend/user-extension": "~0.1.0",
+    "quetz-theme": "/home/fcollonval/projects/quetz-theme"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.2.0",
     "@jupyterlab/buildutils": "^3.2.0",
+    "@quetz-frontend/builder": "^3.2.0",
     "chokidar": "^3.4.0",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
@@ -93,27 +92,28 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "jupyterlab": {
+  "quetz": {
     "name": "Quetz-Frontend",
     "version": "0.1.0",
     "outputDir": ".",
     "buildDir": "./build",
     "staticDir": "./static",
-    "extensions": [
-      "@jupyterlab/apputils-extension",
-      "@jupyterlab/theme-dark-extension",
-      "@jupyterlab/theme-light-extension",
-      "@quetz-frontend/application-extension",
-      "@quetz-frontend/channels-extension",
-      "@quetz-frontend/home-extension",
-      "@quetz-frontend/jobs-extension",
-      "@quetz-frontend/login-extension",
-      "@quetz-frontend/menu-extension",
-      "@quetz-frontend/search-extension",
-      "@quetz-frontend/user-extension"
-    ],
-    "mimeExtensions": {},
-    "externalExtensions": {},
+    "extensions": {
+      "@quetz-frontend/application-extension": "",
+      "@quetz-frontend/channels-extension": "",
+      "@quetz-frontend/home-extension": "",
+      "@quetz-frontend/jobs-extension": "",
+      "@quetz-frontend/login-extension": "",
+      "@quetz-frontend/menu-extension": "",
+      "@quetz-frontend/search-extension": "",
+      "@quetz-frontend/user-extension": "",
+      "quetz-theme": ""
+    },
+    "externalExtensions": {
+      "@jupyterlab/apputils-extension": "",
+      "@jupyterlab/theme-dark-extension": "",
+      "@jupyterlab/theme-light-extension": ""
+    },
     "singletonPackages": [
       "@jupyterlab/application",
       "@jupyterlab/apputils",

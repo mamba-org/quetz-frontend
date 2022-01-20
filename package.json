@@ -4,6 +4,7 @@
   "private": true,
   "workspaces": {
     "packages": [
+      "builder",
       "quetz_frontend/app",
       "packages/*"
     ]

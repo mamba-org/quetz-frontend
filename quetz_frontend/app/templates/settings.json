@@ -2,7 +2,7 @@
   "settings": [
     {
       "id": "@jupyterlab/apputils-extension:themes",
-      "raw": "{\n  \"theme\": \"JupyterLab Dark\",  \"theme-scrollbars\": true\n}\n",
+      "raw": "{\n  \"theme\": \"Quetz\",  \"theme-scrollbars\": true\n}\n",
       "schema": {
         "title": "Theme",
         "jupyter.lab.setting-icon-label": "Theme Manager",
@@ -35,7 +35,7 @@
             "type": "string",
             "title": "Selected Theme",
             "description": "Application-level visual styling theme",
-            "default": "JupyterLab Dark"
+            "default": "Quetz"
           },
           "theme-scrollbars": {
             "type": "boolean",

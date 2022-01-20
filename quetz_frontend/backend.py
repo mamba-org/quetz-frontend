@@ -185,7 +185,7 @@ def load_federated_extensions(federated_extensions):
     """Load the list of extensions"""
     extensions = []
     for name, data in federated_extensions.items():
-        build_info = data['jupyterlab']['_build']
+        build_info = data['quetz']['_build']
         build_info['name'] = name
         extensions.append(build_info)
 
@@ -216,7 +216,7 @@ def get_federated_extensions(labextensions_path):
                     ext_path=os.path.dirname(ext_path),
                     is_local=False,
                     dependencies=pkgdata.get('dependencies', dict()),
-                    jupyterlab=pkgdata.get('jupyterlab', dict()),
+                    quetz=pkgdata.get('quetz', dict()),
                 )
                 install_path = pjoin(os.path.dirname(ext_path), 'install.json')
                 if os.path.exists(install_path):
@@ -258,7 +258,7 @@ def register(app):
         "listingsUrl": pjoin('/jlabmock/', 'api', 'listings'),
         "fullAppUrl": "/jlabmock",
         "fullStaticUrl": pjoin('/jlabmock/', 'static'),
-        "fullLabextensionsUrl": pjoin('/jlabmock/', 'extensions'),
+        "fullQuetzextensionsUrl": pjoin('/jlabmock/', 'extensions'),
         "fullThemesUrl": pjoin('/jlabmock/', 'themes'),
         "fullSettingsUrl": pjoin('/jlabmock/', 'api', 'settings'),
         "fullListingsUrl": pjoin('/jlabmock/', 'api', 'listings'),

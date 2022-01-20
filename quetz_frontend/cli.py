@@ -23,7 +23,7 @@ from .paths import (
 
 app = Typer()
 
-# node ./node_modules/@jupyterlab/builder/lib/build-labextension.js ext_path
+# node ./node_modules/@quetz-frontend/builder/lib/build-quetzextension.js ext_path
 # '--core-path core_path' '--static-url static_url' '--development' '--source-map'
 # '--watch' '--development' '--source-map'
 
@@ -218,7 +218,7 @@ def _develop_extension(ext_path):
         ext_data = json.load(fid)
     
     _, metadata = _get_extensions_metadata(ext_path)
-    src = osp.join(ext_path, ext_data['jupyterlab'].get('outputDir', metadata[0]['src']))
+    src = osp.join(ext_path, ext_data['quetz'].get('outputDir', metadata[0]['src']))
     dest = GLOBAL_EXTENSIONS_DIR.joinpath(ext_data['name'])
     
     if osp.isfile(dest) :
@@ -244,8 +244,8 @@ def _build_extension(ext_path, dev_mode=False, watch=False):
 
     builder_path = _find_builder(ext_path)
     if builder_path == None :
-        print(f"Could not find @jupyterlab/builder at {ext_path}")
-        print(f"Extensions require a devDependency '@jupyterlab/builder'")
+        print(f"Could not find @quetz-frontend/builder at {ext_path}")
+        print(f"Extensions require a devDependency '@quetz-frontend/builder'")
         return
 
     exe = 'node'
@@ -275,24 +275,24 @@ def _build_extension(ext_path, dev_mode=False, watch=False):
     subprocess.check_call(command)
 
 def _find_builder(ext_path):
-    """Find the package '@jupyterlab/builder' in the extension dependencies"""
+    """Find the package '@quetz-frontend/builder' in the extension dependencies"""
     
     with open(osp.join(ext_path, 'package.json')) as fid:
         ext_data = json.load(fid)
 
-    depVersion2 = ext_data.get('devDependencies', dict()).get('@jupyterlab/builder')
-    depVersion2 = depVersion2 or ext_data.get('dependencies', dict()).get('@jupyterlab/builder')
+    depVersion2 = ext_data.get('devDependencies', dict()).get('@quetz-frontend/builder')
+    depVersion2 = depVersion2 or ext_data.get('dependencies', dict()).get('@quetz-frontend/builder')
     if depVersion2 is None:
         return None
 
-    # Find @jupyterlab/builder in the node_modules directory
+    # Find @quetz-frontend/builder in the node_modules directory
     target = ext_path
-    while not osp.exists(osp.join(target, 'node_modules', '@jupyterlab', 'builder')):
+    while not osp.exists(osp.join(target, 'node_modules', '@quetz-frontend', 'builder')):
         if osp.dirname(target) == target:
             return None
         target = osp.dirname(target)
 
-    return osp.join(target, 'node_modules', '@jupyterlab', 'builder', 'lib', 'build-labextension.js')
+    return osp.join(target, 'node_modules', '@quetz-frontend', 'builder', 'lib', 'build-quetzextension.js')
 
 def _get_extensions_metadata(module_path):
     mod_path = osp.abspath(module_path)
