@@ -1,20 +1,20 @@
-From cba94fc47bc05dac90c87696ff2082665727f3ad Mon Sep 17 00:00:00 2001
+From 6a7d0eda620f02810eec46e61fa392769b5329ab Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Collonval?= <fcollonval@gmail.com>
-Date: Thu, 20 Jan 2022 12:07:30 +0100
-Subject: [PATCH] Apply renaming on builder
+Date: Thu, 20 Jan 2022 17:33:33 +0100
+Subject: [PATCH] Apply quetz modifications
 
 ---
  builder/README.md                             |  6 +--
  builder/metadata_schema.json                  | 12 ++---
- builder/package.json                          | 14 +++---
+ builder/package.json                          | 14 ++---
  ...abextension.ts => build-quetzextension.ts} |  1 +
- builder/src/build.ts                          | 50 ++++++-------------
+ builder/src/build.ts                          | 51 ++++++-------------
  builder/src/extensionConfig.ts                | 27 ++++------
  builder/src/index.ts                          |  1 +
  builder/src/webpack-plugins.ts                |  3 +-
- builder/src/webpack.config.base.ts            | 30 -----------
+ builder/src/webpack.config.base.ts            | 32 +-----------
  builder/tsconfig.json                         |  7 +--
- 10 files changed, 41 insertions(+), 110 deletions(-)
+ 10 files changed, 43 insertions(+), 111 deletions(-)
  rename builder/src/{build-labextension.ts => build-quetzextension.ts} (99%)
 
 diff --git a/builder/README.md b/builder/README.md
@@ -61,14 +61,14 @@ index a6666e4..a04d092 100644
        "default": false
      },
 diff --git a/builder/package.json b/builder/package.json
-index ea617dd..9519d1b 100644
+index f374873..23a4d2c 100644
 --- a/builder/package.json
 +++ b/builder/package.json
 @@ -1,21 +1,21 @@
  {
 -  "name": "@jupyterlab/builder",
 +  "name": "@quetz-frontend/builder",
-   "version": "3.2.7",
+   "version": "3.2.8",
 -  "description": "JupyterLab - Extension Builder",
 -  "homepage": "https://github.com/jupyterlab/jupyterlab",
 +  "description": "Quetz - Extension Builder",
@@ -108,10 +108,16 @@ index b3ac22a..a2ad331 100644
  | Distributed under the terms of the Modified BSD License.
  |----------------------------------------------------------------------------*/
 diff --git a/builder/src/build.ts b/builder/src/build.ts
-index 6a0ec77..6a70994 100644
+index 6a0ec77..69059a8 100644
 --- a/builder/src/build.ts
 +++ b/builder/src/build.ts
-@@ -12,12 +12,12 @@ import * as path from 'path';
+@@ -1,4 +1,5 @@
+ /* -----------------------------------------------------------------------------
++| Copyright (c) QuantStack.
+ | Copyright (c) Jupyter Development Team.
+ | Distributed under the terms of the Modified BSD License.
+ |----------------------------------------------------------------------------*/
+@@ -12,12 +13,12 @@ import * as path from 'path';
  import { readJSONFile } from '@jupyterlab/buildutils';
  
  /**
@@ -126,7 +132,7 @@ index 6a0ec77..6a70994 100644
     */
    export interface IEnsureOptions {
      /**
-@@ -47,33 +47,18 @@ export namespace Build {
+@@ -47,33 +48,18 @@ export namespace Build {
    }
  
    /**
@@ -163,7 +169,7 @@ index 6a0ec77..6a70994 100644
      /**
       * The local schema file path in the extension package.
       */
-@@ -90,9 +75,9 @@ export namespace Build {
+@@ -90,9 +76,9 @@ export namespace Build {
     */
    export interface IModule {
      /**
@@ -175,7 +181,7 @@ index 6a0ec77..6a70994 100644
  
      /**
       * The main entry point in a module.
-@@ -249,28 +234,21 @@ ${cssImports.map(x => `import '${x}';`).join('\n')}
+@@ -249,28 +235,21 @@ ${cssImports.map(x => `import '${x}';`).join('\n')}
    }
  
    /**
@@ -309,12 +315,12 @@ index 0b0db09..40293a5 100644
        filename: 'remoteEntry.[contenthash].js',
        exposes,
 diff --git a/builder/src/index.ts b/builder/src/index.ts
-index 5bf662c..2939988 100644
+index 5bf662c..42c857b 100644
 --- a/builder/src/index.ts
 +++ b/builder/src/index.ts
 @@ -1,4 +1,5 @@
  /* -----------------------------------------------------------------------------
-+| Copyright (c) Quetz.
++| Copyright (c) QuantStack.
  | Copyright (c) Jupyter Development Team.
  | Distributed under the terms of the Modified BSD License.
  |----------------------------------------------------------------------------*/
@@ -338,9 +344,18 @@ index 0c97ce0..fcad715 100644
     * any core files or extensions.
     *
 diff --git a/builder/src/webpack.config.base.ts b/builder/src/webpack.config.base.ts
-index e110f8c..15f695b 100644
+index e110f8c..b119339 100644
 --- a/builder/src/webpack.config.base.ts
 +++ b/builder/src/webpack.config.base.ts
+@@ -1,7 +1,7 @@
++// Copyright (c) QuantStack.
+ // Copyright (c) Jupyter Development Team.
+ // Distributed under the terms of the Modified BSD License.
+ 
+-import * as path from 'path';
+ import * as webpack from 'webpack';
+ import crypto from 'crypto';
+ 
 @@ -65,42 +65,12 @@ const rules = [
    }
  ];
