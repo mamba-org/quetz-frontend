@@ -2,7 +2,7 @@
 from copy import copy
 import sys
 from pathlib import Path
-from shutil import which, copytree
+from shutil import which, copytree, rmtree
 from tempfile import TemporaryDirectory
 from subprocess import check_call
 
@@ -14,7 +14,7 @@ app = Typer()
 HERE = Path(__file__).parent.resolve()
 JUPYTERLAB_BUILDER_PATH = "builder"
 QUETZ_BUILDER_PATH = HERE.parent / "builder"
-QUETZ_BUILDER_PATCHES = HERE / "builder_patch"
+QUETZ_BUILDER_PATCHES = HERE / "builder-patches"
 
 
 @app.command()
@@ -45,13 +45,16 @@ def generate_builder(
 
         check_call([git_exec, "clone", "--depth", "1", "-b", git_ref, git_repository], cwd=tmpdir)
 
-        # check_call([git_exec, "checkout", git_ref], cwd=tmpdir)
+        repo = Path(tmpdir)/ "jupyterlab"
+
+        for patch in QUETZ_BUILDER_PATCHES.glob("*.patch"):
+            check_call([git_exec, "apply", "--recount", str(patch)], cwd=str(repo))
 
         if QUETZ_BUILDER_PATH.exists():
-            QUETZ_BUILDER_PATH.rmdir()
+            rmtree(QUETZ_BUILDER_PATH)
         QUETZ_BUILDER_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-        copytree(str(Path(tmpdir)/ "jupyterlab" / JUPYTERLAB_BUILDER_PATH), QUETZ_BUILDER_PATH)
+        copytree(str(repo / JUPYTERLAB_BUILDER_PATH), QUETZ_BUILDER_PATH)
 
 
 if __name__ == "__main__":
