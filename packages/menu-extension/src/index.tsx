@@ -1,32 +1,23 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-  IRouter,
-} from '@jupyterlab/application';
-
+import { IRouter } from '@jupyterlab/application';
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
-
 import { LabIcon } from '@jupyterlab/ui-components';
-
 import { Message } from '@lumino/messaging';
-
 import { Widget } from '@lumino/widgets';
-
 import {
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
+import { SearchBox } from '@quetz-frontend/apputils';
+import {
+  ILogInMenu,
+  IMainMenu,
+  LogInItem,
   MainMenu,
   Profile,
-  IMainMenu,
-  ILogInMenu,
-  LogInItem,
 } from '@quetz-frontend/menu';
-
-import { SearchBox } from '@quetz-frontend/apputils';
-
 import * as React from 'react';
-
-import * as quetz_logo from '../style/img/quetz-logo.svg';
-
 import * as avatar_icon from '../style/img/avatar-icon.svg';
+import * as quetz_logo from '../style/img/quetz-logo.svg';
 
 export namespace CommandIDs {
   export const title = '@quetz-frontend/menu-extension:topBar/title';
@@ -37,7 +28,7 @@ export namespace CommandIDs {
 /**
  * The main title plugin.
  */
-const title: JupyterFrontEndPlugin<void> = {
+const title: QuetzFrontEndPlugin<void> = {
   id: CommandIDs.title,
   autoStart: true,
   requires: [IRouter],
@@ -47,7 +38,7 @@ const title: JupyterFrontEndPlugin<void> = {
 /**
  * The main menu plugin.
  */
-const menu: JupyterFrontEndPlugin<IMainMenu> = {
+const menu: QuetzFrontEndPlugin<IMainMenu> = {
   id: CommandIDs.menu,
   autoStart: true,
   provides: IMainMenu,
@@ -57,7 +48,7 @@ const menu: JupyterFrontEndPlugin<IMainMenu> = {
 /**
  * The Login menu plugin.
  */
-const login: JupyterFrontEndPlugin<ILogInMenu> = {
+const login: QuetzFrontEndPlugin<ILogInMenu> = {
   id: CommandIDs.login,
   autoStart: true,
   requires: [IRouter],
@@ -65,7 +56,7 @@ const login: JupyterFrontEndPlugin<ILogInMenu> = {
   activate: logInMenu,
 };
 
-const plugins: JupyterFrontEndPlugin<any>[] = [title, menu, login];
+const plugins: QuetzFrontEndPlugin<any>[] = [title, menu, login];
 
 export default plugins;
 
@@ -263,7 +254,7 @@ class SearchWidget extends ReactWidget {
  * @param app
  * @param router
  */
-function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
+function quetzTitle(app: QuetzFrontEnd, router: IRouter): void {
   const link = document.createElement('a');
   const logo = new Widget({ node: link });
   const logo_icon = new LabIcon({
@@ -292,7 +283,7 @@ function quetzTitle(app: JupyterFrontEnd, router: IRouter): void {
 /**
  * @param app
  */
-function toolbar(app: JupyterFrontEnd): IMainMenu {
+function toolbar(app: QuetzFrontEnd): IMainMenu {
   const menu = new MainMenu();
   app.shell.add(menu, 'top', { rank: 10001 });
   return menu;
@@ -302,7 +293,7 @@ function toolbar(app: JupyterFrontEnd): IMainMenu {
  * @param app
  * @param router
  */
-function logInMenu(app: JupyterFrontEnd, router: IRouter): ILogInMenu {
+function logInMenu(app: QuetzFrontEnd, router: IRouter): ILogInMenu {
   const login = new LogInMenu(router);
   app.shell.add(login, 'top', { rank: 19999 });
   return login;
