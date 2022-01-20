@@ -8,10 +8,9 @@ import subprocess
 import os.path as osp
 from pathlib import Path
 from itertools import chain
-from typing import NoReturn
 from typer import Typer, Argument, Option
 from setuptools import find_packages
-from distutils.spawn import find_executable
+from shutil import which
 
 from .utils import clean_dir
 from .paths import (
@@ -31,7 +30,7 @@ app = Typer()
 @app.command()
 def link_frontend(
     dev_mode: bool = Option(False, '--development', help="Whether to install it in dev mode or not")
-) -> NoReturn:
+) -> None:
     """Intall the Quetz-Frontend"""
     assert LOCAL_APP_DIR.exists()
 
@@ -58,7 +57,7 @@ def link_frontend(
         """)
 
 @app.command()
-def clean_frontend() -> NoReturn:
+def clean_frontend() -> None:
     """Clean the Quetz-Frontend"""
     
     if osp.isfile(GLOBAL_APP_DIR) :
@@ -74,7 +73,7 @@ def clean_frontend() -> NoReturn:
 @app.command()
 def install(
     ext_path: str = Argument(Path(), help="The path of the extension")
-) -> NoReturn:
+) -> None:
     """Build and install an extension"""
 
     if not GLOBAL_EXTENSIONS_DIR.exists() :
@@ -109,7 +108,7 @@ def install(
 @app.command()
 def develop(
     ext_path: str = Argument(Path(), help="The path of the extension")
-) -> NoReturn:
+) -> None:
     """Build and install an extension in dev mode"""
 
     if not GLOBAL_EXTENSIONS_DIR.exists() :
@@ -126,7 +125,7 @@ def develop(
 def build(
     ext_path: str = Argument(Path(), help="The path of the extension"),
     dev_mode: bool = Option(False, '--development', help="Build in development")
-) -> NoReturn:
+) -> None:
     """Build an extension"""
 
     if not GLOBAL_EXTENSIONS_DIR.exists() :
@@ -140,7 +139,7 @@ def build(
 @app.command()
 def watch(
     ext_path: str = Argument(Path(), help="The path of the extension")
-) -> NoReturn:
+) -> None:
     """Watch an extension"""
 
     if not GLOBAL_EXTENSIONS_DIR.exists() :
@@ -155,7 +154,7 @@ def watch(
 @app.command()
 def uninstall(
     ext_name: str = Argument("", help="The name of the extension")
-) -> NoReturn:
+) -> None:
     """Uninstall an extension"""
 
     if not GLOBAL_EXTENSIONS_DIR.exists() :
@@ -174,7 +173,7 @@ def uninstall(
     
 
 @app.command()
-def list() -> NoReturn:
+def list() -> None:
     """List of extensions"""
 
     print(f"Installed extensions:")
@@ -196,14 +195,14 @@ def list() -> NoReturn:
     print()
 
 @app.command()
-def clean() -> NoReturn:
+def clean() -> None:
     """Clean the extensions directory"""
     if GLOBAL_EXTENSIONS_DIR.exists() :
         clean_dir(GLOBAL_EXTENSIONS_DIR)
         shutil.rmtree(GLOBAL_EXTENSIONS_DIR)
 
 @app.command()
-def paths() -> NoReturn:
+def paths() -> None:
     """Quetz installation paths"""
 
     print(f"""
@@ -250,7 +249,7 @@ def _build_extension(ext_path, dev_mode=False, watch=False):
         return
 
     exe = 'node'
-    exe_path = find_executable(exe)
+    exe_path = which(exe)
 
     if not exe_path:
         print(f"Could not find {exe}. Install NodeJS.")
