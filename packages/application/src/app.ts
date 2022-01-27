@@ -2,20 +2,14 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndContextMenu,
 } from '@jupyterlab/application';
-
-import { Application, IPlugin } from '@lumino/application';
-
 import { CommandLinker } from '@jupyterlab/apputils';
-
-import { ServiceManager } from '@jupyterlab/services';
-
-import { ContextMenuSvg } from '@jupyterlab/ui-components';
-
-import { ISignal, Signal } from '@lumino/signaling';
-
-import { IShell, Shell } from './shell';
-import { QuetzServiceManager } from './servicemanager';
 import { PageConfig } from '@jupyterlab/coreutils';
+import { ServiceManager } from '@jupyterlab/services';
+import { ContextMenuSvg } from '@jupyterlab/ui-components';
+import { Application, IPlugin } from '@lumino/application';
+import { ISignal, Signal } from '@lumino/signaling';
+import { QuetzServiceManager } from './servicemanager';
+import { IShell, Shell } from './shell';
 
 export type QuetzFrontEnd = Application<JupyterFrontEnd.IShell>;
 
