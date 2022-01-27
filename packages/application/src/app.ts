@@ -7,11 +7,15 @@ import { Application, IPlugin } from '@lumino/application';
 
 import { CommandLinker } from '@jupyterlab/apputils';
 
+import { ServiceManager } from '@jupyterlab/services';
+
 import { ContextMenuSvg } from '@jupyterlab/ui-components';
 
 import { ISignal, Signal } from '@lumino/signaling';
 
 import { IShell, Shell } from './shell';
+import { QuetzServiceManager } from './servicemanager';
+import { PageConfig } from '@jupyterlab/coreutils';
 
 export type QuetzFrontEnd = Application<JupyterFrontEnd.IShell>;
 
@@ -31,11 +35,13 @@ export class App extends Application<Shell> {
    *
    * @param options The instantiation options for an application.
    */
-  constructor(options: App.IOptions) {
+  constructor(options: App.IOptions = {}) {
     super({
       ...options,
       shell: options.shell ?? new Shell(),
     });
+
+    this.serviceManager = new QuetzServiceManager();
 
     // render context menu/submenus with inline svg icon tweaks
     this.contextMenu = new ContextMenuSvg({
@@ -91,6 +97,11 @@ export class App extends Application<Shell> {
   readonly restored: Promise<void>;
 
   /**
+   * The service manager used by the application.
+   */
+  readonly serviceManager: ServiceManager.IManager;
+
+  /**
    * The application form factor, e.g., `desktop` or `mobile`.
    */
   get format(): 'desktop' | 'mobile' {
@@ -109,6 +120,34 @@ export class App extends Application<Shell> {
    */
   get formatChanged(): ISignal<this, 'desktop' | 'mobile'> {
     return this._formatChanged;
+  }
+
+  /**
+   * The Quetz application paths dictionary.
+   */
+  get paths(): JupyterFrontEnd.IPaths {
+    return {
+      urls: {
+        base: PageConfig.getOption('baseUrl'),
+        notFound: PageConfig.getOption('notFoundUrl'),
+        app: PageConfig.getOption('appUrl'),
+        static: PageConfig.getOption('staticUrl'),
+        settings: PageConfig.getOption('settingsUrl'),
+        themes: PageConfig.getOption('themesUrl'),
+        doc: PageConfig.getOption('docUrl'),
+        translations: PageConfig.getOption('translationsApiUrl'),
+      },
+      directories: {
+        appSettings: PageConfig.getOption('appSettingsDir'),
+        schemas: PageConfig.getOption('schemasDir'),
+        static: PageConfig.getOption('staticDir'),
+        templates: PageConfig.getOption('templatesDir'),
+        themes: PageConfig.getOption('themesDir'),
+        userSettings: PageConfig.getOption('userSettingsDir'),
+        serverRoot: PageConfig.getOption('serverRoot'),
+        workspaces: '',
+      },
+    };
   }
 
   /**
@@ -155,13 +194,12 @@ export class App extends Application<Shell> {
 
   /**
    * A method invoked on a document `'contextmenu'` event.
+   *
+   * @param event mouse event
    */
   protected evtContextMenu(event: MouseEvent): void {
     this._contextMenuEvent = event;
-    if (
-      event.shiftKey ||
-      Private.suppressContextMenu(event.target as HTMLElement)
-    ) {
+    if (event.shiftKey) {
       return;
     }
     const opened = this.contextMenu.open(event);
@@ -229,7 +267,7 @@ export namespace App {
   /**
    * The instantiation options for an App application.
    */
-  export type IOptions = JupyterFrontEnd.IOptions<IShell>;
+  export type IOptions = Partial<JupyterFrontEnd.IOptions<IShell>>;
 
   /**
    * The interface for a module that exports a plugin or plugins as
@@ -240,17 +278,5 @@ export namespace App {
      * The default export.
      */
     default: QuetzFrontEndPlugin<any> | QuetzFrontEndPlugin<any>[];
-  }
-}
-
-/**
- * A namespace for module-private functionality.
- */
-namespace Private {
-  /**
-   * Returns whether the element is itself, or a child of, an element with the `jp-suppress-context-menu` data attribute.
-   */
-  export function suppressContextMenu(element: HTMLElement): boolean {
-    return element.closest('[data-jp-suppress-context-menu]') !== null;
   }
 }

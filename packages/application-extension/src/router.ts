@@ -1,15 +1,11 @@
+import { Router, IRouter } from '@jupyterlab/application';
 import {
-  Router,
-  IRouter,
-} from '@jupyterlab/application';
-import { QuetzFrontEnd, QuetzFrontEndPlugin } from '@quetz-frontend/application';
-
-export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/application-extension:router';
-}
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
 
 export const router: QuetzFrontEndPlugin<IRouter> = {
-  id: CommandIDs.plugin,
+  id: '@quetz-frontend/application-extension:router',
   autoStart: true,
   provides: IRouter,
   activate: (app: QuetzFrontEnd) => {
