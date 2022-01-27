@@ -552,24 +552,6 @@
     react "^17.0.1"
     typestyle "^2.0.4"
 
-"@jupyterlab/theme-dark-extension@^3.2.0":
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/theme-dark-extension/-/theme-dark-extension-3.2.8.tgz#5de41af2088808cab76c0ff8d409b776c820f557"
-  integrity sha512-VXAO1XKmHuDMqIDDEhT1j3jJDrx19smCh2T07YdrMO+G6+8mhUHIpvfhPBBHhpWA31k4rtwKfJwXDIQZYJVYAA==
-  dependencies:
-    "@jupyterlab/application" "^3.2.8"
-    "@jupyterlab/apputils" "^3.2.8"
-    "@jupyterlab/translation" "^3.2.8"
-
-"@jupyterlab/theme-light-extension@^3.2.0":
-  version "3.2.8"
-  resolved "https://registry.yarnpkg.com/@jupyterlab/theme-light-extension/-/theme-light-extension-3.2.8.tgz#9886d955be41f185b95b3c624896763fe2810048"
-  integrity sha512-7TqqrwPjnPI/kdAKgSL6XL0njNz8ewWvZUJJZGvEkGAx4slL3eCD3QKVNO4rPkbyr5lLcpMTdAfl/uwEVD1CAw==
-  dependencies:
-    "@jupyterlab/application" "^3.2.8"
-    "@jupyterlab/apputils" "^3.2.8"
-    "@jupyterlab/translation" "^3.2.8"
-
 "@jupyterlab/translation@^3.2.0", "@jupyterlab/translation@^3.2.8":
   version "3.2.8"
   resolved "https://registry.yarnpkg.com/@jupyterlab/translation/-/translation-3.2.8.tgz#62607ae1d204b35ff888112d2770629b9102ffba"
@@ -7818,7 +7800,7 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
+regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7, regenerator-runtime@^0.13.9:
   version "0.13.9"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
   integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==

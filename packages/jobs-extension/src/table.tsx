@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import * as React from 'react';
 
+import 'regenerator-runtime/runtime';
+
 interface ITableFcProps {
   columns: any;
   data: any;
