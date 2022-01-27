@@ -1,22 +1,18 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-} from '@jupyterlab/application';
-
 import { ITranslator, TranslationManager } from '@jupyterlab/translation';
 
-export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/application-extension:translator';
-}
+import {
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
 
 /**
  * A simplified Translator
  */
-export const translator: JupyterFrontEndPlugin<ITranslator> = {
-  id: CommandIDs.plugin,
+export const translator: QuetzFrontEndPlugin<ITranslator> = {
+  id: '@quetz-frontend/application-extension:translator',
   autoStart: true,
   provides: ITranslator,
-  activate: (app: JupyterFrontEnd<JupyterFrontEnd.IShell>): ITranslator => {
+  activate: (app: QuetzFrontEnd): ITranslator => {
     const translationManager = new TranslationManager();
     return translationManager;
   },

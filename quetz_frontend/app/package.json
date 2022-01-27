@@ -20,12 +20,10 @@
     "@jupyterlab/apputils": "^3.2.0",
     "@jupyterlab/apputils-extension": "^3.2.0",
     "@jupyterlab/coreutils": "^5.2.0",
-    "@jupyterlab/docregistry": "^3.2.0",
     "@jupyterlab/services": "^6.2.0",
-    "@jupyterlab/theme-dark-extension": "^3.2.0",
-    "@jupyterlab/theme-light-extension": "^3.2.0",
     "@jupyterlab/translation": "^3.2.0",
     "@jupyterlab/ui-components": "^3.2.0",
+    "@lumino/application": "^1.25.0",
     "@lumino/algorithm": "^1.3.3",
     "@lumino/coreutils": "^1.5.3",
     "@lumino/messaging": "^1.4.3",
@@ -47,8 +45,6 @@
   },
   "dependencies": {
     "@jupyterlab/apputils-extension": "^3.2.0",
-    "@jupyterlab/theme-dark-extension": "^3.2.0",
-    "@jupyterlab/theme-light-extension": "^3.2.0",
     "@quetz-frontend/application-extension": "~0.1.0",
     "@quetz-frontend/channels-extension": "~0.1.0",
     "@quetz-frontend/home-extension": "~0.1.0",
@@ -56,11 +52,12 @@
     "@quetz-frontend/login-extension": "~0.1.0",
     "@quetz-frontend/menu-extension": "~0.1.0",
     "@quetz-frontend/search-extension": "~0.1.0",
-    "@quetz-frontend/user-extension": "~0.1.0"
+    "@quetz-frontend/user-extension": "~0.1.0",
+    "quetz-theme": "^0.2.0"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "^3.2.0",
     "@jupyterlab/buildutils": "^3.2.0",
+    "@quetz-frontend/builder": "^3.2.0",
     "chokidar": "^3.4.0",
     "copy-webpack-plugin": "^7.0.0",
     "css-loader": "^5.0.1",
@@ -75,6 +72,7 @@
     "mini-css-extract-plugin": "~1.3.2",
     "raw-loader": "~4.0.0",
     "react-app-polyfill": "^2.0.0",
+    "regenerator-runtime": "^0.13.9",
     "rimraf": "~3.0.0",
     "sort-package-json": "~1.44.0",
     "source-map-loader": "~1.0.2",
@@ -93,35 +91,34 @@
   "engines": {
     "node": ">=12.0.0"
   },
-  "jupyterlab": {
+  "quetz": {
     "name": "Quetz-Frontend",
     "version": "0.1.0",
     "outputDir": ".",
     "buildDir": "./build",
     "staticDir": "./static",
-    "extensions": [
-      "@jupyterlab/apputils-extension",
-      "@jupyterlab/theme-dark-extension",
-      "@jupyterlab/theme-light-extension",
-      "@quetz-frontend/application-extension",
-      "@quetz-frontend/channels-extension",
-      "@quetz-frontend/home-extension",
-      "@quetz-frontend/jobs-extension",
-      "@quetz-frontend/login-extension",
-      "@quetz-frontend/menu-extension",
-      "@quetz-frontend/search-extension",
-      "@quetz-frontend/user-extension"
-    ],
-    "mimeExtensions": {},
-    "externalExtensions": {},
+    "extensions": {
+      "@quetz-frontend/application-extension": "",
+      "@quetz-frontend/channels-extension": "",
+      "@quetz-frontend/home-extension": "",
+      "@quetz-frontend/jobs-extension": "",
+      "@quetz-frontend/login-extension": "",
+      "@quetz-frontend/menu-extension": "",
+      "@quetz-frontend/search-extension": "",
+      "@quetz-frontend/user-extension": "",
+      "quetz-theme": ""
+    },
+    "externalExtensions": {
+      "@jupyterlab/apputils-extension": ""
+    },
     "singletonPackages": [
       "@jupyterlab/application",
       "@jupyterlab/apputils",
       "@jupyterlab/coreutils",
-      "@jupyterlab/docregistry",
       "@jupyterlab/services",
       "@jupyterlab/translation",
       "@jupyterlab/ui-components",
+      "@lumino/application",
       "@lumino/algorithm",
       "@lumino/coreutils",
       "@lumino/messaging",

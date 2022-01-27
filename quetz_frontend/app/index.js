@@ -32,7 +32,7 @@ if (Promise.allSettled === undefined) {
 
 async function createModule(scope, module) {
   try {
-    const factory = await window._JUPYTERLAB[scope].get(module);
+    const factory = await window._QUETZ[scope].get(module);
     return factory();
   } catch (e) {
     console.warn(
@@ -60,8 +60,6 @@ export async function main() {
         '@jupyterlab/apputils-extension:themes',
       ].includes(id)
     ),
-    require('@jupyterlab/theme-light-extension'),
-    require('@jupyterlab/theme-dark-extension'),
     require('@quetz-frontend/application-extension'),
     require('@quetz-frontend/channels-extension'),
     require('@quetz-frontend/jobs-extension'),
@@ -70,6 +68,7 @@ export async function main() {
     require('@quetz-frontend/search-extension'),
     require('@quetz-frontend/user-extension'),
     require('@quetz-frontend/home-extension'),
+    require('quetz-theme')
   ];
 
   // Start initializing the federated extensions

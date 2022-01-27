@@ -1,0 +1,417 @@
+From 6a7d0eda620f02810eec46e61fa392769b5329ab Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Collonval?= <fcollonval@gmail.com>
+Date: Thu, 20 Jan 2022 17:33:33 +0100
+Subject: [PATCH] Apply quetz modifications
+
+---
+ builder/README.md                             |  6 +--
+ builder/metadata_schema.json                  | 12 ++---
+ builder/package.json                          | 14 ++---
+ ...abextension.ts => build-quetzextension.ts} |  1 +
+ builder/src/build.ts                          | 51 ++++++-------------
+ builder/src/extensionConfig.ts                | 27 ++++------
+ builder/src/index.ts                          |  1 +
+ builder/src/webpack-plugins.ts                |  3 +-
+ builder/src/webpack.config.base.ts            | 32 +-----------
+ builder/tsconfig.json                         |  7 +--
+ 10 files changed, 43 insertions(+), 111 deletions(-)
+ rename builder/src/{build-labextension.ts => build-quetzextension.ts} (99%)
+
+diff --git a/builder/README.md b/builder/README.md
+index 8fee10a..becc594 100644
+--- a/builder/README.md
++++ b/builder/README.md
+@@ -1,6 +1,6 @@
+-# @jupyterlab/builder
++# @quetz-frontend/builder
+ 
+-A JupyterLab package which provides functions that are used to compile
+-and build JupyterLab extensions.
++A quetz package which provides functions that are used to compile
++and build Quetz frontend extensions.
+ 
+ This package is only intended for use within Node.js environments.
+diff --git a/builder/metadata_schema.json b/builder/metadata_schema.json
+index a6666e4..a04d092 100644
+--- a/builder/metadata_schema.json
++++ b/builder/metadata_schema.json
+@@ -1,7 +1,7 @@
+ {
+-  "title": "JupyterLab Package Metadata",
++  "title": "Quetz Package Metadata",
+   "version": "0.1.0",
+-  "description": "JupyterLab package.json settings.",
++  "description": "Quetz package.json settings.",
+   "definitions": {
+     "extension": {
+       "type": ["boolean", "string"]
+@@ -63,13 +63,7 @@
+   "properties": {
+     "extension": {
+       "title": "Extension",
+-      "description": "Presence of or relative path to a standard JupyterLab extension",
+-      "$ref": "#/definitions/extension",
+-      "default": false
+-    },
+-    "mimeExtension": {
+-      "title": "Mime extension",
+-      "description": "Presence of or relative path to a JupyterLab MIME renderer extension",
++      "description": "Presence of or relative path to a standard Quetz extension",
+       "$ref": "#/definitions/extension",
+       "default": false
+     },
+diff --git a/builder/package.json b/builder/package.json
+index f374873..23a4d2c 100644
+--- a/builder/package.json
++++ b/builder/package.json
+@@ -1,21 +1,21 @@
+ {
+-  "name": "@jupyterlab/builder",
++  "name": "@quetz-frontend/builder",
+   "version": "3.2.8",
+-  "description": "JupyterLab - Extension Builder",
+-  "homepage": "https://github.com/jupyterlab/jupyterlab",
++  "description": "Quetz - Extension Builder",
++  "homepage": "https://github.com/mamba-org/quetz-frontend",
+   "bugs": {
+-    "url": "https://github.com/jupyterlab/jupyterlab/issues"
++    "url": "https://github.com/mamba-org/quetz-frontend/issues"
+   },
+   "repository": {
+     "type": "git",
+-    "url": "https://github.com/jupyterlab/jupyterlab.git"
++    "url": "https://github.com/mamba-org/quetz-frontend.git"
+   },
+   "license": "BSD-3-Clause",
+-  "author": "Project Jupyter",
++  "author": "Project Jupyter & QuantStack",
+   "main": "lib/index.js",
+   "types": "lib/index.d.ts",
+   "bin": {
+-    "build-labextension": "./lib/build-labextension.js"
++    "build-quetzextension": "./lib/build-quetzextension.js"
+   },
+   "directories": {
+     "lib": "lib/"
+diff --git a/builder/src/build-labextension.ts b/builder/src/build-quetzextension.ts
+similarity index 99%
+rename from builder/src/build-labextension.ts
+rename to builder/src/build-quetzextension.ts
+index b3ac22a..a2ad331 100644
+--- a/builder/src/build-labextension.ts
++++ b/builder/src/build-quetzextension.ts
+@@ -1,5 +1,6 @@
+ #!/usr/bin/env node
+ /* -----------------------------------------------------------------------------
++| Copyright (c) QuantStack.
+ | Copyright (c) Jupyter Development Team.
+ | Distributed under the terms of the Modified BSD License.
+ |----------------------------------------------------------------------------*/
+diff --git a/builder/src/build.ts b/builder/src/build.ts
+index 6a0ec77..69059a8 100644
+--- a/builder/src/build.ts
++++ b/builder/src/build.ts
+@@ -1,4 +1,5 @@
+ /* -----------------------------------------------------------------------------
++| Copyright (c) QuantStack.
+ | Copyright (c) Jupyter Development Team.
+ | Distributed under the terms of the Modified BSD License.
+ |----------------------------------------------------------------------------*/
+@@ -12,12 +13,12 @@ import * as path from 'path';
+ import { readJSONFile } from '@jupyterlab/buildutils';
+ 
+ /**
+- *  A namespace for JupyterLab build utilities.
++ *  A namespace for Quetz build utilities.
+  */
+ export namespace Build {
+   /**
+    * The options used to ensure a root package has the appropriate
+-   * assets for its JupyterLab extension packages.
++   * assets for its Quetz extension packages.
+    */
+   export interface IEnsureOptions {
+     /**
+@@ -47,33 +48,18 @@ export namespace Build {
+   }
+ 
+   /**
+-   * The JupyterLab extension attributes in a module.
++   * The Quetz frontend extension attributes in a module.
+    */
+-  export interface ILabExtension {
++  export interface IQuetzExtension {
+     /**
+      * Indicates whether the extension is a standalone extension.
+      *
+      * #### Notes
+      * If `true`, the `main` export of the package is used. If set to a string
+-     * path, the export from that path is loaded as a JupyterLab extension. It
+-     * is possible for one package to have both an `extension` and a
+-     * `mimeExtension` but they cannot be identical (i.e., the same export
+-     * cannot be declared both an `extension` and a `mimeExtension`).
++     * path, the export from that path is loaded as a Quetz extension.
+      */
+     readonly extension?: boolean | string;
+ 
+-    /**
+-     * Indicates whether the extension is a MIME renderer extension.
+-     *
+-     * #### Notes
+-     * If `true`, the `main` export of the package is used. If set to a string
+-     * path, the export from that path is loaded as a JupyterLab extension. It
+-     * is possible for one package to have both an `extension` and a
+-     * `mimeExtension` but they cannot be identical (i.e., the same export
+-     * cannot be declared both an `extension` and a `mimeExtension`).
+-     */
+-    readonly mimeExtension?: boolean | string;
+-
+     /**
+      * The local schema file path in the extension package.
+      */
+@@ -90,9 +76,9 @@ export namespace Build {
+    */
+   export interface IModule {
+     /**
+-     * The JupyterLab metadata/
++     * The Quetz metadata/
+      */
+-    jupyterlab?: ILabExtension;
++    quetz?: IQuetzExtension;
+ 
+     /**
+      * The main entry point in a module.
+@@ -249,28 +235,21 @@ ${cssImports.map(x => `import '${x}';`).join('\n')}
+   }
+ 
+   /**
+-   * Returns JupyterLab extension metadata from a module.
++   * Returns Quetz extension metadata from a module.
+    */
+-  export function normalizeExtension(module: IModule): ILabExtension {
+-    let { jupyterlab, main, name } = module;
++  export function normalizeExtension(module: IModule): IQuetzExtension {
++    let { quetz, main, name } = module;
+ 
+     main = main || 'index.js';
+ 
+-    if (!jupyterlab) {
+-      throw new Error(`Module ${name} does not contain JupyterLab metadata.`);
++    if (!quetz) {
++      throw new Error(`Module ${name} does not contain Quetz metadata.`);
+     }
+ 
+-    let { extension, mimeExtension, schemaDir, themePath } = jupyterlab;
++    let { extension, schemaDir, themePath } = quetz;
+ 
+     extension = extension === true ? main : extension;
+-    mimeExtension = mimeExtension === true ? main : mimeExtension;
+-
+-    if (extension && mimeExtension && extension === mimeExtension) {
+-      const message = 'extension and mimeExtension cannot be the same export.';
+-
+-      throw new Error(message);
+-    }
+ 
+-    return { extension, mimeExtension, schemaDir, themePath };
++    return { extension, schemaDir, themePath };
+   }
+ }
+diff --git a/builder/src/extensionConfig.ts b/builder/src/extensionConfig.ts
+index 0b0db09..40293a5 100644
+--- a/builder/src/extensionConfig.ts
++++ b/builder/src/extensionConfig.ts
+@@ -1,3 +1,4 @@
++// Copyright (c) QuantStack.
+ // Copyright (c) Jupyter Development Team.
+ // Distributed under the terms of the Modified BSD License.
+ 
+@@ -35,13 +36,13 @@ function generateConfig({
+ 
+   const ajv = new Ajv({ useDefaults: true });
+   const validate = ajv.compile(require('../metadata_schema.json'));
+-  let valid = validate(data.jupyterlab ?? {});
++  let valid = validate(data.quetz ?? {});
+   if (!valid) {
+     console.error(validate.errors);
+     process.exit(1);
+   }
+ 
+-  const outputPath = path.join(packagePath, data.jupyterlab['outputDir']);
++  const outputPath = path.join(packagePath, data.quetz['outputDir']);
+   const staticPath = path.join(outputPath, 'static');
+ 
+   // Handle the extension entry point and the lib entry point, if different
+@@ -50,20 +51,13 @@ function generateConfig({
+     './index': index
+   };
+ 
+-  const extension = data.jupyterlab.extension;
++  const extension = data.quetz.extension;
+   if (extension === true) {
+     exposes['./extension'] = index;
+   } else if (typeof extension === 'string') {
+     exposes['./extension'] = path.join(packagePath, extension);
+   }
+ 
+-  const mimeExtension = data.jupyterlab.mimeExtension;
+-  if (mimeExtension === true) {
+-    exposes['./mimeExtension'] = index;
+-  } else if (typeof mimeExtension === 'string') {
+-    exposes['./mimeExtension'] = path.join(packagePath, mimeExtension);
+-  }
+-
+   if (typeof data.styleModule === 'string') {
+     exposes['./style'] = path.join(packagePath, data.styleModule);
+   } else if (typeof data.style === 'string') {
+@@ -99,7 +93,7 @@ function generateConfig({
+   });
+ 
+   // Set core packages as singletons that are not bundled.
+-  coreData.jupyterlab.singletonPackages.forEach((element: string) => {
++  coreData.quetz.singletonPackages.forEach((element: string) => {
+     if (!shared[element]) {
+       shared[element] = {};
+     }
+@@ -109,7 +103,7 @@ function generateConfig({
+ 
+   // Now we merge in the sharedPackages configuration provided by the extension.
+ 
+-  const sharedPackages = data.jupyterlab.sharedPackages ?? {};
++  const sharedPackages = data.quetz.sharedPackages ?? {};
+ 
+   // Delete any modules that are explicitly not shared
+   Object.keys(sharedPackages).forEach(pkg => {
+@@ -196,20 +190,17 @@ function generateConfig({
+         if (exposes['./extension'] !== undefined) {
+           _build.extension = './extension';
+         }
+-        if (exposes['./mimeExtension'] !== undefined) {
+-          _build.mimeExtension = './mimeExtension';
+-        }
+         if (exposes['./style'] !== undefined) {
+           _build.style = './style';
+         }
+-        data.jupyterlab._build = _build;
++        data.quetz._build = _build;
+         writeJSONFile(path.join(outputPath, 'package.json'), data);
+       });
+     }
+   }
+ 
+   // Allow custom webpack config
+-  let webpackConfigPath = data.jupyterlab['webpackConfig'];
++  let webpackConfigPath = data.quetz['webpackConfig'];
+   let webpackConfig = {};
+ 
+   // Use the custom webpack config only if the path to the config
+@@ -226,7 +217,7 @@ function generateConfig({
+       name: data.name,
+       library: {
+         type: 'var',
+-        name: ['_JUPYTERLAB', data.name]
++        name: ['_QUETZ', data.name]
+       },
+       filename: 'remoteEntry.[contenthash].js',
+       exposes,
+diff --git a/builder/src/index.ts b/builder/src/index.ts
+index 5bf662c..42c857b 100644
+--- a/builder/src/index.ts
++++ b/builder/src/index.ts
+@@ -1,4 +1,5 @@
+ /* -----------------------------------------------------------------------------
++| Copyright (c) QuantStack.
+ | Copyright (c) Jupyter Development Team.
+ | Distributed under the terms of the Modified BSD License.
+ |----------------------------------------------------------------------------*/
+diff --git a/builder/src/webpack-plugins.ts b/builder/src/webpack-plugins.ts
+index 0c97ce0..fcad715 100644
+--- a/builder/src/webpack-plugins.ts
++++ b/builder/src/webpack-plugins.ts
+@@ -1,4 +1,5 @@
+ /* -----------------------------------------------------------------------------
++| Copyright (c) QuantStack.
+ | Copyright (c) Jupyter Development Team.
+ | Distributed under the terms of the Modified BSD License.
+ |----------------------------------------------------------------------------*/
+@@ -210,7 +211,7 @@ export namespace WPPlugin {
+    * A well-known filename for third-party license information.
+    *
+    * ### Note
+-   * If an alternate JupyterLab-based ecosystem wanted to implement a different
++   * If an alternate Quetz-based ecosystem wanted to implement a different
+    * name, they may _still_ need to handle the presence of this file if reusing
+    * any core files or extensions.
+    *
+diff --git a/builder/src/webpack.config.base.ts b/builder/src/webpack.config.base.ts
+index e110f8c..b119339 100644
+--- a/builder/src/webpack.config.base.ts
++++ b/builder/src/webpack.config.base.ts
+@@ -1,7 +1,7 @@
++// Copyright (c) QuantStack.
+ // Copyright (c) Jupyter Development Team.
+ // Distributed under the terms of the Modified BSD License.
+ 
+-import * as path from 'path';
+ import * as webpack from 'webpack';
+ import crypto from 'crypto';
+ 
+@@ -65,42 +65,12 @@ const rules = [
+   }
+ ];
+ 
+-// Map Phosphor files to Lumino files.
+-const stylePath = path.join(
+-  path.dirname(require.resolve('@lumino/widgets/package.json')),
+-  'style'
+-);
+-
+-let phosphorAlias = {};
+-
+-try {
+-  phosphorAlias = {
+-    '@phosphor/algorithm$': require.resolve('@lumino/algorithm'),
+-    '@phosphor/application$': require.resolve('@lumino/application'),
+-    '@phosphor/commands$': require.resolve('@lumino/commands'),
+-    '@phosphor/coreutils$': require.resolve('@lumino/coreutils'),
+-    '@phosphor/disposable$': require.resolve('@lumino/disposable'),
+-    '@phosphor/domutils$': require.resolve('@lumino/domutils'),
+-    '@phosphor/dragdrop$': require.resolve('@lumino/dragdrop'),
+-    '@phosphor/dragdrop/style': stylePath,
+-    '@phosphor/messaging$': require.resolve('@lumino/messaging'),
+-    '@phosphor/properties$': require.resolve('@lumino/properties'),
+-    '@phosphor/signaling': require.resolve('@lumino/signaling'),
+-    '@phosphor/widgets/style': stylePath,
+-    '@phosphor/virtualdom$': require.resolve('@lumino/virtualdom'),
+-    '@phosphor/widgets$': require.resolve('@lumino/widgets')
+-  };
+-} catch (e) {
+-  // no Phosphor shims required
+-}
+-
+ const watch = process.argv.includes('--watch');
+ 
+ module.exports = {
+   bail: !watch,
+   module: { rules },
+   resolve: {
+-    alias: phosphorAlias,
+     fallback: {
+       url: false,
+       buffer: false,
+diff --git a/builder/tsconfig.json b/builder/tsconfig.json
+index 900a22c..f3f3e9b 100644
+--- a/builder/tsconfig.json
++++ b/builder/tsconfig.json
+@@ -5,10 +5,5 @@
+     "rootDir": "src",
+     "module": "commonjs"
+   },
+-  "include": ["src/*"],
+-  "references": [
+-    {
+-      "path": "../buildutils"
+-    }
+-  ]
++  "include": ["src/*"]
+ }

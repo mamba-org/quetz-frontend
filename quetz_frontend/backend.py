@@ -25,6 +25,8 @@ config = Config()
 mock_router = APIRouter()
 catchall_router = APIRouter()
 
+ROUTE_PREFIX = "jlabmock"
+
 config_data = {}
 index_template = None
 frontend_settings = {}
@@ -51,18 +53,6 @@ else :
 
 logger.info(f"Successfully found frontend in {frontend_dir}")
 logger.info(f"Successfully found frontend extensions in {extensions_dir}")
-
-@mock_router.get('/api/sessions', include_in_schema=False)
-def mock_sessions():
-    return []
-
-@mock_router.get('/api/kernels', include_in_schema=False)
-def mock_kernels():
-    return []
-
-@mock_router.get('/api/kernelspecs', include_in_schema=False)
-def mock_kernelspecs():
-    return []
 
 @mock_router.get('/api/settings', include_in_schema=False)
 def mock_settings():
@@ -185,7 +175,7 @@ def load_federated_extensions(federated_extensions):
     """Load the list of extensions"""
     extensions = []
     for name, data in federated_extensions.items():
-        build_info = data['jupyterlab']['_build']
+        build_info = data['quetz']['_build']
         build_info['name'] = name
         extensions.append(build_info)
 
@@ -216,7 +206,7 @@ def get_federated_extensions(labextensions_path):
                     ext_path=os.path.dirname(ext_path),
                     is_local=False,
                     dependencies=pkgdata.get('dependencies', dict()),
-                    jupyterlab=pkgdata.get('jupyterlab', dict()),
+                    quetz=pkgdata.get('quetz', dict()),
                 )
                 install_path = pjoin(os.path.dirname(ext_path), 'install.json')
                 if os.path.exists(install_path):
@@ -229,7 +219,7 @@ def get_federated_extensions(labextensions_path):
 def register(app):
     global config_data
 
-    app.include_router(mock_router, prefix="/jlabmock")
+    app.include_router(mock_router, prefix=f"/{ROUTE_PREFIX}")
     app.include_router(catchall_router)
 
     frontend_dir = config.general_frontend_dir
@@ -251,17 +241,17 @@ def register(app):
         "appName": "Quetz – the fast conda package server!",
         "baseUrl": "/",
         "wsUrl": "",
-        "appUrl": "/jlabmock",
-        "labextensionsUrl": pjoin('/jlabmock/', 'extensions'),
-        "themesUrl": pjoin('/jlabmock/', 'themes'),
-        "settingsUrl": pjoin('/jlabmock/', 'api', 'settings'),
-        "listingsUrl": pjoin('/jlabmock/', 'api', 'listings'),
-        "fullAppUrl": "/jlabmock",
-        "fullStaticUrl": pjoin('/jlabmock/', 'static'),
-        "fullLabextensionsUrl": pjoin('/jlabmock/', 'extensions'),
-        "fullThemesUrl": pjoin('/jlabmock/', 'themes'),
-        "fullSettingsUrl": pjoin('/jlabmock/', 'api', 'settings'),
-        "fullListingsUrl": pjoin('/jlabmock/', 'api', 'listings'),
+        "appUrl": f"/{ROUTE_PREFIX}",
+        "labextensionsUrl": pjoin(f'/{ROUTE_PREFIX}/', 'extensions'),
+        "themesUrl": pjoin(f'/{ROUTE_PREFIX}/', 'themes'),
+        "settingsUrl": pjoin(f'/{ROUTE_PREFIX}/', 'api', 'settings'),
+        "listingsUrl": '',
+        "fullAppUrl": f"/{ROUTE_PREFIX}",
+        "fullStaticUrl": pjoin(f'/{ROUTE_PREFIX}/', 'static'),
+        "fullQuetzextensionsUrl": pjoin(f'/{ROUTE_PREFIX}/', 'extensions'),
+        "fullThemesUrl": pjoin(f'/{ROUTE_PREFIX}/', 'themes'),
+        "fullSettingsUrl": pjoin(f'/{ROUTE_PREFIX}/', 'api', 'settings'),
+        "fullListingsUrl": '',
         "federated_extensions": federated_extensions,
         "github_login_available": github_login_available,
         "gitlab_login_available": gitlab_login_available,

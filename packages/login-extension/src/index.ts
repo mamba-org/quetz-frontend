@@ -1,7 +1,4 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-} from '@jupyterlab/application';
+import { QuetzFrontEnd, QuetzFrontEndPlugin } from '@quetz-frontend/application';
 
 import { ILogInMenu, LogInItem } from '@quetz-frontend/menu';
 
@@ -15,11 +12,11 @@ export namespace CommandIDs {
   export const plugin = '@quetz-frontend/login-extension:login';
 }
 
-const plugin: JupyterFrontEndPlugin<void> = {
+const plugin: QuetzFrontEndPlugin<void> = {
   id: CommandIDs.plugin,
   autoStart: true,
   requires: [ILogInMenu],
-  activate: (app: JupyterFrontEnd, logInMenu: ILogInMenu): void => {
+  activate: (app: QuetzFrontEnd, logInMenu: ILogInMenu): void => {
     const gitHub: LogInItem = {
       id: 'gitHub',
       label: 'GitHub LogIn',

@@ -26,10 +26,13 @@
   },
   "dependencies": {
     "@jupyterlab/application": "^3.2.0",
+    "@jupyterlab/apputils": "^3.2.0",
     "@jupyterlab/coreutils": "^5.2.0",
     "@jupyterlab/docregistry": "^3.2.0",
+    "@jupyterlab/services": "^6.2.0",
     "@jupyterlab/ui-components": "^3.2.0",
     "@lumino/algorithm": "^1.3.3",
+    "@lumino/application": "^1.25.0",
     "@lumino/messaging": "^1.4.3",
     "@lumino/widgets": "^1.19.0"
   },
@@ -37,7 +40,7 @@
     "rimraf": "~3.0.2",
     "typescript": "^4.1.5"
   },
-  "jupyterlab": {
+  "quetz": {
     "coreDependency": true
   },
   "styleModule": "style/index.js"

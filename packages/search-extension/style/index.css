@@ -1,5 +1,6 @@
 @import url('~@jupyterlab/application/style/index.css');
 @import url('~@jupyterlab/apputils/style/index.css');
+@import url('~@quetz-frontend/application/style/index.css');
 @import url('~@quetz-frontend/apputils/style/index.css');
 @import url('~@quetz-frontend/table/style/index.css');
 

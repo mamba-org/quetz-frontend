@@ -1,18 +1,20 @@
 import { ServerConnection } from '@jupyterlab/services';
 
-import {
-  useExpanded,
-  useTable,
-  usePagination,
-  useGlobalFilter,
-  useAsyncDebounce,
-} from 'react-table';
-
 import clsx from 'clsx';
 
 import PropTypes from 'prop-types';
 
 import * as React from 'react';
+
+import {
+  useAsyncDebounce,
+  useExpanded,
+  useGlobalFilter,
+  usePagination,
+  useTable,
+} from 'react-table';
+
+import 'regenerator-runtime/runtime';
 
 import { Pagination } from './pagination';
 

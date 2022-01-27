@@ -1,8 +1,4 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-  IRouter,
-} from '@jupyterlab/application';
+import { IRouter } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
@@ -21,6 +17,11 @@ import {
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
+import {
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
+
 import ReactTooltip from 'react-tooltip';
 
 import * as React from 'react';
@@ -30,11 +31,11 @@ export namespace CommandIDs {
   export const open = '@quetz-frontend/home-extension:home/open';
 }
 
-const plugin: JupyterFrontEndPlugin<void> = {
+const plugin: QuetzFrontEndPlugin<void> = {
   id: CommandIDs.plugin,
   autoStart: true,
   requires: [IRouter],
-  activate: (app: JupyterFrontEnd, router: IRouter): void => {
+  activate: (app: QuetzFrontEnd, router: IRouter): void => {
     const { shell, commands } = app;
 
     commands.addCommand(CommandIDs.open, {

@@ -1,14 +1,15 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-  IRouter,
-} from '@jupyterlab/application';
+import { IRouter } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
 import { ServerConnection } from '@jupyterlab/services';
 
 import { URLExt } from '@jupyterlab/coreutils';
+
+import {
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
 
 import { FetchHoc, Breadcrumbs } from '@quetz-frontend/apputils';
 
@@ -47,11 +48,11 @@ export namespace CommandIDs {
 /**
  * The main menu plugin.
  */
-const plugin: JupyterFrontEndPlugin<void> = {
+const plugin: QuetzFrontEndPlugin<void> = {
   id: CommandIDs.plugin,
   autoStart: true,
   requires: [IRouter, ILogInMenu],
-  activate: (app: JupyterFrontEnd, router: IRouter, menu: ILogInMenu): void => {
+  activate: (app: QuetzFrontEnd, router: IRouter, menu: ILogInMenu): void => {
     const { shell, commands } = app;
 
     commands.addCommand(CommandIDs.open, {
