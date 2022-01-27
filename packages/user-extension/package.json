@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.167",
+    "@types/react": "^17.0.0",
     "@types/react-notifications-component": "^2.4.0",
     "@types/react-router-dom": "^5.1.6",
     "rimraf": "~3.0.2",

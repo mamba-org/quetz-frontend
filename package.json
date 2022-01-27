@@ -5,6 +5,7 @@
   "workspaces": {
     "packages": [
       "builder",
+      "examples/*",
       "quetz_frontend/app",
       "packages/*"
     ]
