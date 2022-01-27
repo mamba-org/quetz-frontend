@@ -6386,7 +6386,7 @@ mv@2.1.1:
     ncp "~2.0.0"
     rimraf "~2.4.0"
 
-nanoid@^3.1.28:
+nanoid@^3.1.28, nanoid@^3.1.30:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.2.0.tgz#62667522da6673971cca916a6d3eff3f415ff80c"
   integrity sha512-fmsZYa9lpn69Ad5eDn7FMcnnSR+8R34W9qJEijxYhTbfOWzr22n1QxCMzXLK+ODyW2973V3Fux959iQoUxzUIA==
@@ -7493,8 +7493,10 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
-"quetz-theme@file:../quetz-theme":
-  version "0.1.2"
+quetz-theme@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/quetz-theme/-/quetz-theme-0.2.0.tgz#0fc9c9439ce5c6cdeea3cf10f2dee6c9852eaea0"
+  integrity sha512-UlWIMSlLY3TyGXrzhBvb3C0on8k/z7AVsk2jNFCJ8hmKo6q92s+jmTmzbndS6vmis5kT5o/nXAWZYlPBjuZ+5A==
   dependencies:
     "@jupyterlab/apputils" "^3.0.0"
     "@lumino/application" "^1.25.0"
