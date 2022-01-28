@@ -20,14 +20,14 @@ runs:
 
     - uses: conda-incubator/setup-miniconda@v2
       with:
-        mamba-version: '*'
+        # mamba-version: '*'
         activate-environment: quetz
         environment-file: ${{ inputs.server_folder }}/environment.yml
 
     - name: Install Node.js
       shell: bash -l {0}
       run: |
-        mamba install nodejs=14 yarn
+        conda install nodejs=14 yarn
 
     - name: Install the server
       shell: bash -l {0}
