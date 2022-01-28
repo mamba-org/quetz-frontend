@@ -10,8 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          path: frontend
+
       - name: Base Setup
-        uses: ./.github/actions/base-setup
+        uses: ./frontend/.github/actions/base-setup
+        with:
+          frontend_folder: frontend
 
       - name: Lint
         run: |
@@ -22,8 +28,14 @@ jobs:
     name: Test Quetz frontend extension examples
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          path: frontend
+
       - name: Base Setup
-        uses: ./.github/actions/base-setup
+        uses: ./frontend/.github/actions/base-setup
+        with:
+          frontend_folder: frontend
 
       - name: Install
         working-directory: frontend/examples/light_theme
