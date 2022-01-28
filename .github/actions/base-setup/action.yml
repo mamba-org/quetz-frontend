@@ -25,19 +25,19 @@ runs:
         environment-file: ${{ inputs.server_folder }}/environment.yml
 
     - name: Install Node.js
-      shell: bash
+      shell: bash -l {0}
       run: |
         mamba install nodejs=14 yarn
 
     - name: Install the server
-      shell: bash
+      shell: bash -l {0}
       run: |
-        pip install -e .
+        python -m pip install -e .
       working-directory: ${{ inputs.server_folder }}
 
     - name: Install the frontend
       shell: bash
       run: |
-        pip install -e .
+        python -m pip install -e .
         quetz-frontend link-frontend -- development
       working-directory: ${{ inputs.frontend_folder }}
