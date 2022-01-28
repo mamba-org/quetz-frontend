@@ -36,10 +36,9 @@ runs:
       working-directory: ${{ inputs.server_folder }}
 
     - name: Install the frontend
-      shell: bash
+      shell: bash -l {0}
       run: |
-        which python
-        conda activate quetz
+        conda info
         which python
         python -m pip install -e .
         quetz-frontend link-frontend -- development
