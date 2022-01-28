@@ -25,7 +25,7 @@ runs:
         channels: conda-forge,defaults
         channel-priority: true
         activate-environment: quetz
-        environment-file: server/example-environment.yml
+        environment-file: ${{ inputs.server_folder }}/environment.yml
 
     - name: Install Node.js
       shell: bash
