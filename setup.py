@@ -41,10 +41,8 @@ jstargets = [
     pjoin(LOCAL_APP_DIR, 'templates'),
     pjoin(LOCAL_APP_DIR, 'static'),
     pjoin(LOCAL_APP_DIR, 'themes'),
-    pjoin(LOCAL_APP_DIR, 'schemas'),
     pjoin(LOCAL_APP_DIR, 'package.json'),
-    pjoin(LOCAL_APP_DIR, 'style.js'),
-    pjoin(LOCAL_APP_DIR, 'static/bundle.js')
+    pjoin(LOCAL_APP_DIR, 'style.js')
 ]
 
 cmdclass = create_cmdclass(

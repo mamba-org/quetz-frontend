@@ -1,5 +1,5 @@
 {
-  "name": "@quetz-frontend/app",
+  "name": "@quetz-frontend/main-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {

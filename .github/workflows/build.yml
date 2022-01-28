@@ -2,27 +2,37 @@ name: Build
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - name: Base Setup
+        uses: ./.github/actions/base-setup
 
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
+      - name: Lint
+        run: |
+          yarn run eslint:check
+          yarn run prettier:check
 
-    - name: Build
-      run: |
-        yarn
-        yarn run build
+  example:
+    name: Test Quetz frontend extension examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Base Setup
+        uses: ./.github/actions/base-setup
 
-    - name: Lint
-      run: |
-        yarn run eslint:check
-        yarn run prettier:check
+      - name: Install
+        working-directory: frontend/examples/light_theme
+        run: |
+          yarn
+          # Build first so it link with local version of @quetz-frontend packages
+          yarn build
+
+          pip install -e .
+
+          quetz-frontend list
+          quetz-frontend list 2>&1 | grep -ie "@quetz-example/light-theme"

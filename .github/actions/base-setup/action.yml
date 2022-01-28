@@ -1,0 +1,41 @@
+name: Setup environment
+description: Setup base environment for Quetz frontend
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: mamba-org/quetz
+        ref: master
+        path: server
+
+    - uses: actions/checkout@v2
+      with:
+        path: frontend
+
+    - uses: conda-incubator/setup-miniconda@v2
+      with:
+        python-version: 3.9
+        mamba-version: '*'
+        channels: conda-forge,defaults
+        channel-priority: true
+        activate-environment: quetz
+        environment-file: server/example-environment.yml
+
+    - name: Install Node.js
+      shell: bash
+      run: |
+        mamba install nodejs=14 yarn
+
+    - name: Install the server
+      shell: bash
+      run: |
+        pip install -e .
+      working-directory: server
+
+    - name: Install the frontend
+      shell: bash
+      run: |
+        pip install -e .
+        quetz-frontend link-frontend -- development
