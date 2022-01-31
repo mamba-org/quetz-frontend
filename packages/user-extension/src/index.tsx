@@ -25,7 +25,7 @@ import {
   NavLink,
 } from 'react-router-dom';
 
-import ReactNotification from 'react-notifications-component';
+import { ReactNotifications } from 'react-notifications-component';
 
 import * as React from 'react';
 
@@ -113,7 +113,7 @@ class UserRouter extends ReactWidget {
 
     return (
       <Router basename="/user">
-        <ReactNotification />
+        <ReactNotifications />
         <div className="page-contents-width-limit">
           <Breadcrumbs items={breadcrumbItems} />
           <h2 className="heading2">User details</h2>

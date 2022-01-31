@@ -39,7 +39,7 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.16.7":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.7.tgz#03ff99f64106588c9c403c6ecb8c3bafbbdff1fa"
   integrity sha512-9E9FJowqAsytyOY6LG+1KuueckRL+aQW+mKvXRXnuFGyRAyepJPmEo9vgMfXUA6O9u3IeEdv9MAkppFcaQwogQ==
@@ -1601,7 +1601,7 @@
     lodash "^4.17.20"
     minimist "~1.2.0"
     react "^17.0.1"
-    react-notifications-component "^3.0.3"
+    react-notifications-component "^3.3.0"
 
 "@quetz-frontend/channels-extension@file:packages/channels-extension":
   version "0.1.0"
@@ -1733,7 +1733,7 @@
     lodash "^4.17.20"
     moment "^2.29.1"
     react "^17.0.1"
-    react-notifications-component "^3.0.3"
+    react-notifications-component "^3.3.0"
     react-router-dom "^5.2.0"
 
 "@sindresorhus/is@^0.14.0":
@@ -1848,13 +1848,6 @@
   version "15.7.4"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
   integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
-
-"@types/react-notifications-component@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@types/react-notifications-component/-/react-notifications-component-2.4.0.tgz#b70516a7f17d83ee86843a8940866153735412a0"
-  integrity sha512-MT+QOXgoskK76oRFTj8cO5ImWhE7KuSvmHj96dOgSSmJfiACZnaOOPoYPFuXr5rGBXVwYNE9o5iWMv115uGlkw==
-  dependencies:
-    "@types/react" "*"
 
 "@types/react-router-dom@^5.1.6":
   version "5.3.3"
@@ -7567,10 +7560,10 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-notifications-component@^3.0.3:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-3.3.2.tgz#060be460b3ed998dda7989b9d69ff6aca51dc622"
-  integrity sha512-C63Jrfu2K7yEMhWj80sOVVrR3eN9lxj0zOvjv1VH2V/0GTooK22bW4i2E6b/aPlLi3dd9Dvvper54OFipizFDA==
+react-notifications-component@^3.3.0:
+  version "3.3.11"
+  resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-3.3.11.tgz#b1bbfd0ecf88d2e6344ce4ff31ff6aab1a965f3c"
+  integrity sha512-czkbOomxkiNWt0VRjxRzNgbS/iaX2dWvZwrGc3Xx+OfcTVR1XVJ7Ih71u+h0eTkUFIz1bXPV2PL9dUcnG71kng==
 
 react-popper@^1.3.7:
   version "1.3.11"
