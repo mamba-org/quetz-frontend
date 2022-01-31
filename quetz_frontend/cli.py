@@ -33,7 +33,7 @@ def link_frontend(
     assert LOCAL_APP_DIR.exists()
 
     if not GLOBAL_FRONTEND_DIR.exists():
-        os.mkdir(GLOBAL_FRONTEND_DIR)
+        GLOBAL_FRONTEND_DIR.mkdir(parents=True, exist_ok=True)
 
     if GLOBAL_APP_DIR.exists():
         if os.path.islink(GLOBAL_APP_DIR):
