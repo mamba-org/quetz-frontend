@@ -1,7 +1,8 @@
+import { IRouter } from '@jupyterlab/application';
 import {
-  IRouter,
-} from '@jupyterlab/application';
-import { QuetzFrontEnd, QuetzFrontEndPlugin } from '@quetz-frontend/application';
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
 
 //import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 

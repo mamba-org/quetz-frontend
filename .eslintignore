@@ -2,3 +2,5 @@ node_modules
 dist
 coverage
 **/*.d.ts
+examples/light_theme
+builder/

@@ -1,4 +1,7 @@
-import { QuetzFrontEnd, QuetzFrontEndPlugin } from '@quetz-frontend/application';
+import {
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
 
 import { ILogInMenu, LogInItem } from '@quetz-frontend/menu';
 

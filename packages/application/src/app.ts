@@ -151,7 +151,6 @@ export class App extends Application<Shell> {
    *
    * @param fn - a function that takes an `HTMLElement` and returns a
    *   boolean for whether it is the element the requester is seeking.
-   *
    * @returns an HTMLElement or undefined, if none is found.
    */
   contextMenuHitTest(
