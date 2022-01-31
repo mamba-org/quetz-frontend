@@ -20,6 +20,7 @@ jobs:
           frontend_folder: frontend
 
       - name: Lint
+        working-directory: frontend
         run: |
           yarn run eslint:check
           yarn run prettier:check
