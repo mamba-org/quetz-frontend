@@ -1,5 +1,6 @@
 import os
 import json
+import glob
 import shutil
 import importlib
 import subprocess
@@ -182,16 +183,17 @@ def list() -> None:
     print(f"  Installation path: '{GLOBAL_EXTENSIONS_DIR}'\n")
 
     if not GLOBAL_EXTENSIONS_DIR.exists():
-        os.mkdir(GLOBAL_EXTENSIONS_DIR)
+        GLOBAL_EXTENSIONS_DIR.mkdir(parents=True, exist_ok=True)
         print("No installed extensions yet")
         return
 
-    ext_list = os.listdir(GLOBAL_EXTENSIONS_DIR)
-    if len(ext_list) == 0:
+    ext_list = glob.glob(f"{GLOBAL_EXTENSIONS_DIR!s}/**/package.json", recursive=True)
+
+    if not ext_list:
         print("No installed extensions yet")
 
     for ext in ext_list:
-        print(f"\t-  {ext}")
+        print(f"\t-  {Path(ext).relative_to(GLOBAL_EXTENSIONS_DIR).parent}")
 
     print()
 
@@ -236,6 +238,9 @@ def _develop_extension(ext_path):
     elif osp.isdir(dest):
         clean_dir(dest)
         shutil.rmtree(dest)
+
+    # Create parent directory if extension name is scoped
+    dest.parent.mkdir(parents=True, exist_ok=True)
 
     os.symlink(src, dest)
     print(

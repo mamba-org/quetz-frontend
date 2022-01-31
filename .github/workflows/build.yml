@@ -51,6 +51,7 @@ jobs:
           yarn build
 
           pip install -e .
+          quetz-frontend develop .
 
           quetz-frontend list
           quetz-frontend list 2>&1 | grep -ie "@quetz-example/light-theme"

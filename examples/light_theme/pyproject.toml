@@ -3,8 +3,8 @@ requires = ["jupyter_packaging~=0.10,<2", "quetz-frontend"]
 build-backend = "jupyter_packaging.build_api"
 
 [tool.jupyter-packaging.options]
-skip-if-exists = ["light_theme/labextension/static/style.js"]
-ensured-targets = ["light_theme/labextension/static/style.js", "light_theme/labextension/package.json"]
+skip-if-exists = ["quetz_light_theme/labextension/static/style.js"]
+ensured-targets = ["quetz_light_theme/labextension/static/style.js", "quetz_light_theme/labextension/package.json"]
 
 [tool.jupyter-packaging.builder]
 factory = "jupyter_packaging.npm_builder"
@@ -14,4 +14,4 @@ build_cmd = "build:prod"
 npm = ["yarn"]
 
 [tool.check-manifest]
-ignore = ["light_theme/labextension/**", "yarn.lock", ".*", "package-lock.json"]
+ignore = ["quetz_light_theme/labextension/**", "yarn.lock", ".*", "package-lock.json"]

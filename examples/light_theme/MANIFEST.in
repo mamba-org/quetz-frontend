@@ -7,7 +7,7 @@ include install.json
 include ts*.json
 include yarn.lock
 
-graft light_theme/quetzextension
+graft quetz_light_theme/quetzextension
 
 # Javascript files
 graft src
