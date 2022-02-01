@@ -187,7 +187,10 @@ def list() -> None:
         print("No installed extensions yet")
         return
 
-    ext_list = glob.glob(f"{GLOBAL_EXTENSIONS_DIR!s}/**/package.json", recursive=True)
+    # extensions are either top-level directories, or two-deep in @org directories
+    ext_list = glob.glob(
+        str(GLOBAL_EXTENSIONS_DIR / "[!@]*" / "package.json")
+    ) + glob.glob(str(GLOBAL_EXTENSIONS_DIR / "@*" / "*" / "package.json"))
 
     if not ext_list:
         print("No installed extensions yet")
