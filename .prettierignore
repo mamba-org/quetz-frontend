@@ -4,3 +4,5 @@ node_modules
 **/build
 **/static
 quetz_frontend/app/themes
+builder
+examples/light_theme
