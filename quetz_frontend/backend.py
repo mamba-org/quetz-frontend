@@ -71,11 +71,11 @@ def extensions(
     session: dict = Depends(get_session),
     dao: Dao = Depends(get_dao),
     auth: authorization.Rules = Depends(get_rules),
-    frontend_dir: Path = Depends(get_frontend_dir),
+    # frontend_dir: Path = Depends(get_frontend_dir),
     extensions_dir: Path = Depends(get_extensions_dir),
 ):
     path = extensions_dir / resource
-    if path.exists() and under_frontend_dir(frontend_dir, path):
+    if path.exists():
         return FileResponse(path=path)
     else:
         raise HTTPException(status_code=404)
