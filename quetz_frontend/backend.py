@@ -133,7 +133,7 @@ def index(
         else:
             index_html_path = frontend_dir / "static" / "index.html"
             if not index_html_path.exists():
-                render_index()
+                render_index(frontend_dir)
             return FileResponse(path=index_html_path)
 
 
@@ -175,7 +175,7 @@ def render_index(frontend_dir: Path):
     template_path = frontend_dir / "templates"
     if template_path.exists():
         # Load settings
-        with template_path / "settings.json".open() as fi:
+        with (template_path / "settings.json").open() as fi:
             frontend_settings = json.load(fi)
 
 
@@ -196,12 +196,13 @@ def register(app):
     app.include_router(router, prefix=f"/{ROUTE_PREFIX}")
     app.include_router(catchall_router)
 
-    frontend_dir = config.general_frontend_dir
+    # frontend_dir = config.general_frontend_dir
     # extensions_dir = config.general_extensions_dir
+    frontend_dir = get_frontend_dir()
     extensions_dir = get_extensions_dir()
 
-    logger.info(f"Configured frontend found: {frontend_dir}")
-    logger.info(f"Configured extensions directory: {extensions_dir}")
+    logger.info(f"Configured frontend found: {frontend_dir!s}")
+    logger.info(f"Configured extensions directory: {extensions_dir!s}")
 
     extensions = get_federated_extensions([extensions_dir])
     federated_extensions = load_federated_extensions(extensions)
@@ -242,4 +243,4 @@ def register(app):
         "exposeAppInBrowser": False,
     }
 
-    render_index()
+    render_index(frontend_dir)
