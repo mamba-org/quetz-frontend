@@ -10,7 +10,7 @@ import {
 
 import clsx from 'clsx';
 
-import { store } from 'react-notifications-component';
+import { Store } from 'react-notifications-component';
 
 import * as React from 'react';
 
@@ -45,7 +45,7 @@ class NotificationComponent extends React.PureComponent<any, any> {
         <button className="notification-close">
           <FontAwesomeIcon
             icon={faTimes}
-            onClick={() => store.removeNotification(id)}
+            onClick={() => Store.removeNotification(id)}
           />
         </button>
       </div>
@@ -59,7 +59,7 @@ export const sendNotification = ({
   message,
   duration,
 }: any) => {
-  const notifId = store.addNotification({
+  const notifId = Store.addNotification({
     content: ({ id }: any) =>
       (
         <NotificationComponent
@@ -81,7 +81,7 @@ export const sendNotification = ({
   // TODO: Find out why the notifiaction is not automatically disappearing
   if (duration) {
     setTimeout(() => {
-      store.removeNotification(notifId);
+      Store.removeNotification(notifId);
     }, duration);
   }
 };

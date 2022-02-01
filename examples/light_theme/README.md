@@ -1,4 +1,4 @@
-# light_theme
+# Quetz Light Theme
 
 [![Github Actions Status](https://github.com/mamba-org/quetz-frontend/tree/main/examples/light-theme/workflows/Build/badge.svg)](https://github.com/mamba-org/quetz-frontend/tree/main/examples/light-theme/actions/workflows/build.yml)
 
@@ -14,7 +14,7 @@ A light theme extension for Quetz.
 To install the extension, execute:
 
 ```bash
-pip install light_theme
+pip install quetz_light_theme
 ```
 
 ## Uninstall
@@ -22,7 +22,7 @@ pip install light_theme
 To remove the extension, execute:
 
 ```bash
-pip uninstall light_theme
+pip uninstall quetz_light_theme
 ```
 
 ## Contributing

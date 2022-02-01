@@ -68,7 +68,7 @@ export async function main() {
     require('@quetz-frontend/search-extension'),
     require('@quetz-frontend/user-extension'),
     require('@quetz-frontend/home-extension'),
-    require('quetz-theme')
+    require('quetz-theme'),
   ];
 
   // Start initializing the federated extensions

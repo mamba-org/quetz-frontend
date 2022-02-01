@@ -10,7 +10,7 @@ import setuptools
 HERE = Path(__file__).parent.resolve()
 
 # The name of the project
-name = "light_theme"
+name = "quetz_light_theme"
 
 quetz_path = (HERE / name.replace("-", "_") / "quetzextension")
 

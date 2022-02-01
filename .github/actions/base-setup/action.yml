@@ -1,0 +1,42 @@
+name: Setup environment
+description: Setup base environment for Quetz frontend
+inputs:
+  frontend_folder:
+    description: Folder in which the frontend repository is checked out
+    required: true
+  server_folder:
+    description: Folder in which the server will be checked out
+    required: false
+    default: "server"
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: mamba-org/quetz
+        ref: master
+        path: ${{ inputs.server_folder }}
+
+    - uses: mamba-org/provision-with-micromamba@main
+      with:
+        environment-name: quetz
+        environment-file: ${{ inputs.server_folder }}/environment.yml
+
+    - name: Install Node.js
+      shell: bash -l {0}
+      run: |
+        conda install nodejs=14 yarn
+
+    - name: Install the server
+      shell: bash -l {0}
+      run: |
+        python -m pip install -e .
+      working-directory: ${{ inputs.server_folder }}
+
+    - name: Install the frontend
+      shell: bash -l {0}
+      run: |
+        python -m pip install -e .
+        quetz-frontend link-frontend --development
+      working-directory: ${{ inputs.frontend_folder }}

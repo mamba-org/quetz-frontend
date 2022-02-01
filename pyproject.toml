@@ -4,7 +4,7 @@ build-backend = "jupyter_packaging.build_api"
 
 [tool.jupyter-packaging.options]
 skip-if-exists = ["quetz_frontend/app/style.js"]
-ensured-targets = ["quetz_frontend/app/style.js"]
+ensured-targets = ["quetz_frontend/app/style.js", "quetz_frontend/app/package.json"]
 
 [tool.jupyter-packaging.builder]
 factory = "jupyter_packaging.npm_builder"
