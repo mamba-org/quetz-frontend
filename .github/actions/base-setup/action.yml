@@ -18,10 +18,9 @@ runs:
         ref: master
         path: ${{ inputs.server_folder }}
 
-    - uses: conda-incubator/setup-miniconda@v2
+    - uses: mamba-org/provision-with-micromamba@main
       with:
-        mamba-version: '*'
-        activate-environment: quetz
+        environment-name: quetz
         environment-file: ${{ inputs.server_folder }}/environment.yml
 
     - name: Install Node.js
