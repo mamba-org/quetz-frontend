@@ -46,7 +46,6 @@ export async function main() {
   var disabled = [];
   var deferred = [];
   var ignorePlugins = [];
-  var register = [];
 
   const federatedExtensionPromises = [];
   const federatedMimeExtensionPromises = [];
@@ -72,7 +71,8 @@ export async function main() {
 
   // Start initializing the federated extensions
   const extensions = JSON.parse(PageConfig.getOption('federated_extensions'));
-
+  const mimeExtensions = [];
+  
   const queuedFederated = [];
 
   extensions.forEach((data) => {
