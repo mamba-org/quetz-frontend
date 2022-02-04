@@ -1,7 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndContextMenu,
-  JupyterLab
+  JupyterLab,
 } from '@jupyterlab/application';
 import { CommandLinker } from '@jupyterlab/apputils';
 import { PageConfig } from '@jupyterlab/coreutils';
@@ -25,7 +25,6 @@ export type QuetzFrontEndPlugin<T> = IPlugin<QuetzFrontEnd, T>;
  * App is the main application class. It is instantiated once and shared.
  */
 export class App extends Application<Shell> {
-
   private _info: JupyterLab.IInfo = JupyterLab.defaultInfo;
 
   /**
@@ -91,18 +90,18 @@ export class App extends Application<Shell> {
   readonly name = PageConfig.getOption('appName') || 'Quetz';
 
   /**
-  * A namespace/prefix plugins may use to denote their provenance.
-  */
+   * A namespace/prefix plugins may use to denote their provenance.
+   */
   readonly namespace = PageConfig.getOption('appNamespace') || this.name;
 
   /**
-  * A list of all errors encountered when registering plugins.
-  */
+   * A list of all errors encountered when registering plugins.
+   */
   readonly registerPluginErrors: Array<Error> = [];
 
   /**
-  * The version of the JupyterLab application.
-  */
+   * The version of the JupyterLab application.
+   */
   readonly version = PageConfig.getOption('appVersion') || 'unknown';
 
   /**
@@ -238,7 +237,7 @@ export class App extends Application<Shell> {
   registerPluginModule(mod: App.IPluginModule): void {
     let data = mod.default;
     // Handle commonjs exports.
-    if (!mod.hasOwnProperty('__esModule')) {
+    if (!Object.prototype.hasOwnProperty.call(mod, '__esModule')) {
       data = mod as any;
     }
     if (!Array.isArray(data)) {
@@ -276,16 +275,16 @@ export namespace App {
   /**
    * The instantiation options for an App application.
    */
-   export type IOptions = Partial<JupyterFrontEnd.IOptions<IShell>>;
+  export type IOptions = Partial<JupyterFrontEnd.IOptions<IShell>>;
 
-   /**
-    * The interface for a module that exports a plugin or plugins as
-    * the default value.
-    */
-   export interface IPluginModule {
-     /**
-      * The default export.
-      */
-     default: QuetzFrontEndPlugin<any> | QuetzFrontEndPlugin<any>[];
-   }
+  /**
+   * The interface for a module that exports a plugin or plugins as
+   * the default value.
+   */
+  export interface IPluginModule {
+    /**
+     * The default export.
+     */
+    default: QuetzFrontEndPlugin<any> | QuetzFrontEndPlugin<any>[];
+  }
 }

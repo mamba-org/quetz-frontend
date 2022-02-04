@@ -72,7 +72,7 @@ export async function main() {
   // Start initializing the federated extensions
   const extensions = JSON.parse(PageConfig.getOption('federated_extensions'));
   const mimeExtensions = [];
-  
+
   const queuedFederated = [];
 
   extensions.forEach((data) => {
@@ -136,9 +136,11 @@ export async function main() {
   });
 
   // Add the federated mime extensions.
-  const federatedMimeExtensions = await Promise.allSettled(federatedMimeExtensionPromises);
-  federatedMimeExtensions.forEach(p => {
-    if (p.status === "fulfilled") {
+  const federatedMimeExtensions = await Promise.allSettled(
+    federatedMimeExtensionPromises
+  );
+  federatedMimeExtensions.forEach((p) => {
+    if (p.status === 'fulfilled') {
       for (let plugin of activePlugins(p.value)) {
         mimeExtensions.push(plugin);
       }
@@ -149,23 +151,25 @@ export async function main() {
 
   // Load all federated component styles and log errors for any that do not
   (await Promise.allSettled(federatedStylePromises))
-  .filter(({ status }) => status === 'rejected')
-  .forEach(({ reason }) => {
-    console.error(reason);
-  });
+    .filter(({ status }) => status === 'rejected')
+    .forEach(({ reason }) => {
+      console.error(reason);
+    });
 
   const app = new App({
     mimeExtensions,
     disabled: {
       matches: disabled,
-      patterns: PageConfig.Extension.disabled
-        .map(function (val) { return val.raw; })
+      patterns: PageConfig.Extension.disabled.map(function (val) {
+        return val.raw;
+      }),
     },
     deferred: {
       matches: deferred,
-      patterns: PageConfig.Extension.deferred
-        .map(function (val) { return val.raw; })
-    }
+      patterns: PageConfig.Extension.deferred.map(function (val) {
+        return val.raw;
+      }),
+    },
   });
   app.registerPluginModules(register);
   await app.start({ ignorePlugins });
