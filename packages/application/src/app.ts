@@ -25,14 +25,13 @@ export type QuetzFrontEndPlugin<T> = IPlugin<QuetzFrontEnd, T>;
  * App is the main application class. It is instantiated once and shared.
  */
 export class App extends Application<Shell> {
-  private _info: JupyterLab.IInfo = JupyterLab.defaultInfo;
 
   /**
    * Construct a new App object.
    *
    * @param options The instantiation options for an application.
    */
-  constructor(options: App.IOptions = { shell: new Shell() }) {
+  constructor(options: App.IOptions = {}) {
     super({
       ...options,
       shell: options.shell ?? new Shell(),
@@ -61,17 +60,6 @@ export class App extends Application<Shell> {
     this.restored =
       options.restored ||
       this.started.then(() => restored).catch(() => restored);
-
-    // Create an IInfo dictionary from the options to override the defaults.
-    const info = Object.keys(JupyterLab.defaultInfo).reduce((acc, val) => {
-      if (val in options) {
-        (acc as any)[val] = JSON.parse(JSON.stringify((options as any)[val]));
-      }
-      return acc;
-    }, {} as Partial<JupyterLab.IInfo>);
-
-    // Populate application info.
-    this._info = { ...JupyterLab.defaultInfo, ...info };
   }
 
   /**
@@ -93,13 +81,6 @@ export class App extends Application<Shell> {
    * The version of the JupyterLab application.
    */
   readonly version = PageConfig.getOption('appVersion') || 'unknown';
-
-  /**
-   * The JupyterLab application information dictionary.
-   */
-  get info(): JupyterLab.IInfo {
-    return this._info;
-  }
 
   /**
    * The command linker used by the application.
