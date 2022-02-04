@@ -77,6 +77,17 @@ yarn run build
 yarn run watch
 ```
 
+### Disabling extensions
+
+```json
+"quetz": {
+    "extension": true,
+    "outputDir": "quetz_light_theme/quetzextension",
+    "themePath": "style/index.css",
+    "disabledExtensions": ["quetz-theme"]
+  },
+```
+
 ### Command line tool
 
 Quetz fronted also comes with a cli to manage extensions

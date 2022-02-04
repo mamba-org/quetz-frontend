@@ -159,13 +159,18 @@ def list() -> None:
     print(f"---------------------")
     print(f"  Installation path: '{GLOBAL_EXTENSIONS_DIR}'\n")
 
-    extensions = get_federated_extensions([get_extensions_dir()])
+    extensions, disabled_extensions = get_federated_extensions([get_extensions_dir()])
 
     if not extensions:
         print("No installed extensions yet")
-
+    
     for ext in extensions.values():
         print(f'\t-  {Path(ext["ext_path"]).relative_to(GLOBAL_EXTENSIONS_DIR)}')
+    
+    print(f"Disabled extensions:")
+    print(f"---------------------")
+    for ext in disabled_extensions:
+        print(f'\t-  {ext}')
 
     print()
 

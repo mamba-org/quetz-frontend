@@ -44,7 +44,7 @@
     "@types/react-router-dom": "^5.1.6",
     "@types/react-table": "^7.0.27",
     "rimraf": "~3.0.2",
-    "typescript": "^4.1.5"
+    "typescript": "~4.1.3"
   },
   "quetz": {
     "coreDependency": true

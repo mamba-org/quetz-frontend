@@ -1,6 +1,7 @@
 import {
   JupyterFrontEnd,
   JupyterFrontEndContextMenu,
+  JupyterLab,
 } from '@jupyterlab/application';
 import { CommandLinker } from '@jupyterlab/apputils';
 import { PageConfig } from '@jupyterlab/coreutils';
@@ -61,19 +62,24 @@ export class App extends Application<Shell> {
   }
 
   /**
-   * The name of the application.
+   * The name of the JupyterLab application.
    */
-  readonly name = 'Quetz';
+  readonly name = PageConfig.getOption('appName') || 'Quetz';
 
   /**
    * A namespace/prefix plugins may use to denote their provenance.
    */
-  readonly namespace = this.name;
+  readonly namespace = PageConfig.getOption('appNamespace') || this.name;
 
   /**
-   * The version of the application.
+   * A list of all errors encountered when registering plugins.
    */
-  readonly version = 'unknown';
+  readonly registerPluginErrors: Array<Error> = [];
+
+  /**
+   * The version of the JupyterLab application.
+   */
+  readonly version = PageConfig.getOption('appVersion') || 'unknown';
 
   /**
    * The command linker used by the application.
@@ -120,28 +126,7 @@ export class App extends Application<Shell> {
    * The Quetz application paths dictionary.
    */
   get paths(): JupyterFrontEnd.IPaths {
-    return {
-      urls: {
-        base: PageConfig.getOption('baseUrl'),
-        notFound: PageConfig.getOption('notFoundUrl'),
-        app: PageConfig.getOption('appUrl'),
-        static: PageConfig.getOption('staticUrl'),
-        settings: PageConfig.getOption('settingsUrl'),
-        themes: PageConfig.getOption('themesUrl'),
-        doc: PageConfig.getOption('docUrl'),
-        translations: PageConfig.getOption('translationsApiUrl'),
-      },
-      directories: {
-        appSettings: PageConfig.getOption('appSettingsDir'),
-        schemas: PageConfig.getOption('schemasDir'),
-        static: PageConfig.getOption('staticDir'),
-        templates: PageConfig.getOption('templatesDir'),
-        themes: PageConfig.getOption('themesDir'),
-        userSettings: PageConfig.getOption('userSettingsDir'),
-        serverRoot: PageConfig.getOption('serverRoot'),
-        workspaces: '',
-      },
-    };
+    return JupyterLab.defaultPaths;
   }
 
   /**
@@ -232,7 +217,7 @@ export class App extends Application<Shell> {
       try {
         this.registerPlugin(item);
       } catch (error) {
-        console.error(error);
+        this.registerPluginErrors.push(error);
       }
     });
   }

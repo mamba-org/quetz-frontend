@@ -43,17 +43,14 @@ async function createModule(scope, module) {
 }
 
 export async function main() {
-  const app = new App();
   var disabled = [];
   var deferred = [];
   var ignorePlugins = [];
-  var register = [];
 
   const federatedExtensionPromises = [];
-  const federatedMimeExtensionPromises = [];
   const federatedStylePromises = [];
 
-  const mods = [
+  const register = [
     require('@jupyterlab/apputils-extension').default.filter(({ id }) =>
       [
         '@jupyterlab/apputils-extension:settings',
@@ -80,12 +77,6 @@ export async function main() {
     if (data.extension) {
       queuedFederated.push(data.name);
       federatedExtensionPromises.push(createModule(data.name, data.extension));
-    }
-    if (data.mimeExtension) {
-      queuedFederated.push(data.name);
-      federatedMimeExtensionPromises.push(
-        createModule(data.name, data.mimeExtension)
-      );
     }
     if (data.style) {
       federatedStylePromises.push(createModule(data.name, data.style));
@@ -129,7 +120,7 @@ export async function main() {
   federatedExtensions.forEach((p) => {
     if (p.status === 'fulfilled') {
       for (let plugin of activePlugins(p.value)) {
-        mods.push(plugin);
+        register.push(plugin);
       }
     } else {
       console.error(p.reason);
@@ -143,6 +134,20 @@ export async function main() {
       console.error(reason);
     });
 
-  app.registerPluginModules(mods);
-  await app.start();
+  const app = new App({
+    disabled: {
+      matches: disabled,
+      patterns: PageConfig.Extension.disabled.map(function (val) {
+        return val.raw;
+      }),
+    },
+    deferred: {
+      matches: deferred,
+      patterns: PageConfig.Extension.deferred.map(function (val) {
+        return val.raw;
+      }),
+    },
+  });
+  app.registerPluginModules(register);
+  await app.start({ ignorePlugins });
 }

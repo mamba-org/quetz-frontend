@@ -30,6 +30,17 @@ def get_extensions_dir() -> Path:
 
     return GLOBAL_EXTENSIONS_DIR
 
+def get_package_url(data):
+    """Get the url from the extension data
+    """
+    # homepage, repository  are optional
+    if 'homepage' in data:
+        url = data['homepage']
+    elif 'repository' in data and isinstance(data['repository'], dict):
+        url = data['repository'].get('url', '')
+    else:
+        url = ''
+    return url
 
 def get_federated_extensions(quetzextensions_path: List[Path]) -> dict:
     """Get the metadata about federated extensions"""
@@ -54,7 +65,7 @@ def get_federated_extensions(quetzextensions_path: List[Path]) -> dict:
                     name=pkgdata["name"],
                     version=pkgdata["version"],
                     description=pkgdata.get("description", ""),
-                    # url=get_package_url(pkgdata),
+                    url=get_package_url(pkgdata),
                     ext_dir=str(ext_dir),
                     ext_path=str(ext_path.parent),
                     is_local=False,
@@ -66,14 +77,20 @@ def get_federated_extensions(quetzextensions_path: List[Path]) -> dict:
                     with install_path.open(encoding="utf-8") as fid:
                         data["install"] = json.load(fid)
 
+                # Check if this extension disables another extension
+                for disabled in data['quetz'].get('disabledExtensions', []):
+                    if disabled not in disabled_extensions:
+                        disabled_extensions.append(disabled)
+                
                 datas.append(data)
 
         return datas
 
     federated_extensions = dict()
+    disabled_extensions = []
     for ext_dir in quetzextensions_path:
         datas = get_metadata(ext_dir)
         for data in datas:
             federated_extensions[data["name"]] = data
 
-    return federated_extensions
+    return (federated_extensions, disabled_extensions)
