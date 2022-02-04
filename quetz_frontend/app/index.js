@@ -48,7 +48,6 @@ export async function main() {
   var ignorePlugins = [];
 
   const federatedExtensionPromises = [];
-  const federatedMimeExtensionPromises = [];
   const federatedStylePromises = [];
 
   const register = [
@@ -71,7 +70,6 @@ export async function main() {
 
   // Start initializing the federated extensions
   const extensions = JSON.parse(PageConfig.getOption('federated_extensions'));
-  const mimeExtensions = [];
 
   const queuedFederated = [];
 
@@ -79,12 +77,6 @@ export async function main() {
     if (data.extension) {
       queuedFederated.push(data.name);
       federatedExtensionPromises.push(createModule(data.name, data.extension));
-    }
-    if (data.mimeExtension) {
-      queuedFederated.push(data.name);
-      federatedMimeExtensionPromises.push(
-        createModule(data.name, data.mimeExtension)
-      );
     }
     if (data.style) {
       federatedStylePromises.push(createModule(data.name, data.style));
@@ -135,20 +127,6 @@ export async function main() {
     }
   });
 
-  // Add the federated mime extensions.
-  const federatedMimeExtensions = await Promise.allSettled(
-    federatedMimeExtensionPromises
-  );
-  federatedMimeExtensions.forEach((p) => {
-    if (p.status === 'fulfilled') {
-      for (let plugin of activePlugins(p.value)) {
-        mimeExtensions.push(plugin);
-      }
-    } else {
-      console.error(p.reason);
-    }
-  });
-
   // Load all federated component styles and log errors for any that do not
   (await Promise.allSettled(federatedStylePromises))
     .filter(({ status }) => status === 'rejected')
@@ -157,7 +135,6 @@ export async function main() {
     });
 
   const app = new App({
-    mimeExtensions,
     disabled: {
       matches: disabled,
       patterns: PageConfig.Extension.disabled.map(function (val) {

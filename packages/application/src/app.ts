@@ -36,10 +36,6 @@ export class App extends Application<Shell> {
     super({
       ...options,
       shell: options.shell ?? new Shell(),
-      // TODO: uncomment when JupyterLab 4.0 is released
-      //serviceManager: new ServiceManager({
-      //  standby: () => true
-      //})
     });
 
     this.serviceManager = new QuetzServiceManager();
@@ -76,12 +72,6 @@ export class App extends Application<Shell> {
 
     // Populate application info.
     this._info = { ...JupyterLab.defaultInfo, ...info };
-
-    /* if (options.mimeExtensions) {
-      for (const plugin of createRendermimePlugins(options.mimeExtensions)) {
-        this.registerPlugin(plugin);
-      }
-    } */
   }
 
   /**
