@@ -169,7 +169,7 @@ def list() -> None:
     
     print(f"Disabled extensions:")
     print(f"---------------------")
-    for ext in disabled_extensions.values():
+    for ext in disabled_extensions:
         print(f'\t-  {ext}')
 
     print()
