@@ -25,7 +25,6 @@ export type QuetzFrontEndPlugin<T> = IPlugin<QuetzFrontEnd, T>;
  * App is the main application class. It is instantiated once and shared.
  */
 export class App extends Application<Shell> {
-
   /**
    * Construct a new App object.
    *
