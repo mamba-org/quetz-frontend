@@ -78,7 +78,7 @@ def get_federated_extensions(quetzextensions_path: List[Path]) -> dict:
                         data["install"] = json.load(fid)
 
                 # Check if this extension disables another extension
-                for disabled in data['jupyterlab'].get('disabledExtensions', []):
+                for disabled in data['quetz'].get('disabledExtensions', []):
                     if disabled not in disabled_extensions:
                         disabled_extensions.append(disabled)
                 
