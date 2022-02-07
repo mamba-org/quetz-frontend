@@ -3,12 +3,11 @@ import json
 import logging
 import os
 from functools import lru_cache
-from itertools import chain
 from pathlib import Path
-from typing import List
+from typing import Optional
 
 import jinja2
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
 from quetz import authorization, rest_models
 from quetz.authentication.registry import AuthenticatorRegistry
@@ -104,6 +103,7 @@ def index(
     auth: authorization.Rules = Depends(get_rules),
     frontend_dir: Path = Depends(get_frontend_dir),
     extensions_dir: Path = Depends(get_extensions_dir),
+    cache_control: Optional[str] = Header(None),
 ):
     global config_data
     user_id = auth.get_user()
@@ -117,7 +117,7 @@ def index(
         )
 
         path = frontend_dir / "static" / file_name
-        if path.exists() and under_frontend_dir(frontend_dir, path):
+        if path.exists():
             return FileResponse(path=path)
         else:
             raise HTTPException(status_code=404)
@@ -125,15 +125,17 @@ def index(
         logging.warn(resource)
         extensions, disabled_extensions = get_federated_extensions([extensions_dir])
         federated_extensions = load_federated_extensions(extensions)
-        config_data['federated_extensions'] = federated_extensions
-        config_data['disabledExtensions'] = disabled_extensions
-        
-        if profile :
+        config_data["federated_extensions"] = federated_extensions
+        config_data["disabledExtensions"] = disabled_extensions
+
+        if profile:
             index_rendered = get_rendered_index(config_data, profile, index_template)
             return HTMLResponse(content=index_rendered, status_code=200)
         else:
             index_html_path = frontend_dir / "static" / "index.html"
-            if not index_html_path.exists():
+            if not index_html_path.exists() or "no-cache" in map(
+                lambda p: p.strip(), (cache_control or "").split(",")
+            ):
                 render_index(frontend_dir)
             return FileResponse(path=index_html_path)
 
@@ -189,6 +191,7 @@ def load_federated_extensions(federated_extensions: dict) -> list:
         extensions.append(build_info)
 
     return extensions
+
 
 def register(app):
     global config_data
