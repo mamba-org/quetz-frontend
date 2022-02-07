@@ -28,7 +28,7 @@
     "prettier:check": "prettier --list-different \"**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}\"",
     "update:dependency": "node ./node_modules/@jupyterlab/buildutils/lib/update-dependency.js --lerna",
     "watch": "run-p watch:lib watch:app",
-    "watch:app": "lerna exec --stream --scope \"@quetz-frontend/app\" yarn watch",
+    "watch:app": "lerna exec --stream --scope \"@quetz-frontend/main-app\" yarn watch",
     "watch:lib": "lerna exec --stream --scope @quetz-frontend/metapackage yarn watch"
   },
   "devDependencies": {
