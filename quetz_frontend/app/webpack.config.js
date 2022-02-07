@@ -314,7 +314,6 @@ module.exports = [
 ].concat(extensionAssetConfig);
 
 // Needed to watch changes in linked extensions in node_modules
-// (jupyter lab --watch)
 // See https://github.com/webpack/webpack/issues/11612
 if (watchNodeModules) {
   module.exports[0].snapshot = { managedPaths: [] };
