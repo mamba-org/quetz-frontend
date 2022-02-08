@@ -2,7 +2,7 @@ import { Breadcrumbs } from '@quetz-frontend/apputils';
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import { withRouter } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import 'react-tabs/style/react-tabs.css';
 
@@ -13,6 +13,7 @@ import PackageInfo from './tab-info';
 import PackageMembers from './tab-members';
 
 import PackageDetailsApiKeys from './tab-api-keys';
+import { IRouter } from '@jupyterlab/application';
 
 const PACKAGE_TABS = {
   INFO: 0,
@@ -32,8 +33,19 @@ const INDEX_TO_HASH: Record<number, string> = {
   2: 'api_keys',
 };
 
-class PackageDetails extends React.PureComponent<any, any> {
-  constructor(props: any) {
+export interface IPackageDetailsState {
+  selectedTabIndex: number;
+}
+
+export interface IPackageDetailsProps extends RouteComponentProps {
+  router: IRouter;
+}
+
+class PackageDetails extends React.PureComponent<
+  IPackageDetailsProps,
+  IPackageDetailsState
+> {
+  constructor(props: IPackageDetailsProps) {
     super(props);
     const locationHash = (window.location.hash || '#info').substring(1);
     this.state = {
@@ -51,26 +63,36 @@ class PackageDetails extends React.PureComponent<any, any> {
   render(): JSX.Element {
     const { selectedTabIndex } = this.state;
     const {
-      match: {
-        params: { channelId, packageId },
-      },
+      match: { params },
     } = this.props;
+    const { channelId, packageId } = params as {
+      channelId: string;
+      packageId: string;
+    };
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'Channels',
-        link: '/channels',
+        onClick: () => {
+          this.props.router.navigate('/channels');
+        },
       },
       {
         text: channelId,
-        link: `/channels/${channelId}`,
+        onClick: () => {
+          this.props.router.navigate(`/channels/${channelId}`);
+        },
       },
       {
         text: 'packages',
-        link: `/channels/${channelId}?tab=packages`,
+        onClick: () => {
+          this.props.router.navigate(`/channels/${channelId}?tab=packages`);
+        },
       },
       {
         text: packageId,

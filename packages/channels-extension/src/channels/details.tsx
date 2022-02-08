@@ -1,20 +1,13 @@
+import { IRouter } from '@jupyterlab/application';
 import { Breadcrumbs } from '@quetz-frontend/apputils';
-
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
-import { withRouter } from 'react-router-dom';
-
-import 'react-tabs/style/react-tabs.css';
-
 import * as React from 'react';
-
-import TabInfo from './tab-info';
-
-import ChannelDetailsPackages from './tab-packages';
-
-import ChannelDetailsMembers from './tab-members';
-
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import ChannelDetailsApiKeys from './tab-api-keys';
+import TabInfo from './tab-info';
+import ChannelDetailsMembers from './tab-members';
+import ChannelDetailsPackages from './tab-packages';
 
 const CHANNEL_TABS = {
   INFO: 0,
@@ -37,8 +30,19 @@ const INDEX_TO_HASH: Record<number, string> = {
   3: 'api_keys',
 };
 
-class ChannelDetails extends React.PureComponent<any, any> {
-  constructor(props: any) {
+export interface IChannelDetailsState {
+  selectedTabIndex: number;
+}
+
+export interface IChannelDetailProps extends RouteComponentProps {
+  router: IRouter;
+}
+
+class ChannelDetails extends React.PureComponent<
+  IChannelDetailProps,
+  IChannelDetailsState
+> {
+  constructor(props: IChannelDetailProps) {
     super(props);
     const urlParams = new URLSearchParams(window.location.search);
     const currentTab = urlParams.get('tab') || 'info';
@@ -67,18 +71,22 @@ class ChannelDetails extends React.PureComponent<any, any> {
   render(): JSX.Element {
     const { selectedTabIndex } = this.state;
     const {
-      match: {
-        params: { channelId },
-      },
+      match: { params },
     } = this.props;
+    const { channelId } = params as { channelId: string };
+
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'Channels',
-        link: '/channels',
+        onClick: () => {
+          this.props.router.navigate('/channels');
+        },
       },
       {
         text: channelId,

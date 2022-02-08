@@ -182,23 +182,5 @@
       Breadcrumbs
  **********************/
 .breadcrumbs {
-  display: flex;
   margin-bottom: 12px;
-}
-
-.breadcrumb-item {
-  font-size: 14px;
-}
-
-.breadcrumb-separator {
-}
-
-.breadcrumb-link {
-  color: var(--jp-quetz-primary-color);
-  text-decoration: none;
-}
-
-.breadcrumb-link:hover {
-  color: var(--jp-quetz-primary-color);
-  text-decoration: underline;
 }

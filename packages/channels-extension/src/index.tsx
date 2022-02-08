@@ -49,7 +49,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     commands.addCommand(CommandIDs.open, {
       label: 'Open Channels Panel',
       execute: () => {
-        shell.add(new RouterWidget(), 'main');
+        shell.add(new RouterWidget(router), 'main');
       },
     });
 
@@ -76,7 +76,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
 export default plugin;
 
 class RouterWidget extends ReactWidget {
-  constructor() {
+  constructor(private _router: IRouter) {
     super();
     this.id = DOMUtils.createDomID();
     this.title.label = 'Channels main page';
@@ -90,13 +90,13 @@ class RouterWidget extends ReactWidget {
         <Router basename="/channels">
           <Switch>
             <Route path="/:channelId/packages/:packageId">
-              <PackageDetails />
+              <PackageDetails router={this._router} />
             </Route>
             <Route path="/:channelId">
-              <ChannelDetails />
+              <ChannelDetails router={this._router} />
             </Route>
             <Route path="" exact>
-              <ChannelsList />
+              <ChannelsList router={this._router} />
             </Route>
           </Switch>
         </Router>

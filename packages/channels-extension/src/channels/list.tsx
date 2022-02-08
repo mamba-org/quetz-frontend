@@ -16,6 +16,7 @@ import {
 import ReactTooltip from 'react-tooltip';
 
 import * as React from 'react';
+import { IRouter } from '@jupyterlab/application';
 
 interface IChannelsApiItem {
   name: string;
@@ -28,13 +29,20 @@ interface IChannelsApiItem {
   packages_count: number;
 }
 
+export interface IChannelsListProps {
+  router: IRouter;
+}
+
 type ChannelsAppState = {
   channels: null | IChannelsApiItem[];
   searchText: string;
 };
 
-class ChannelsList extends React.Component<any, ChannelsAppState> {
-  constructor(props: any) {
+class ChannelsList extends React.PureComponent<
+  IChannelsListProps,
+  ChannelsAppState
+> {
+  constructor(props: IChannelsListProps) {
     super(props);
     this.state = {
       channels: null,
@@ -42,7 +50,7 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
     };
   }
 
-  onSearch = (searchText: string) => {
+  onSearch = (searchText: string): void => {
     this.setState({ searchText });
   };
 
@@ -52,7 +60,9 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'Channels',

@@ -1,53 +1,49 @@
-import { reduce, union } from 'lodash';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Button,
+} from '@jupyter-notebook/react-components';
 
 import * as React from 'react';
+export interface IBreadcrumbsProps {
+  items: {
+    /**
+     * href
+     */
+    href?: string;
+    /**
+     * on click callback
+     *
+     * It will shadow href if defined
+     */
+    onClick?: (event: React.MouseEvent) => void;
+    /**
+     * Item content
+     */
+    text: string;
+  }[];
+}
 
-const BreadcrumbChild = ({ data }: any) => {
-  if (data.link) {
-    return (
-      <div
-        className="breadcrumb-link"
-        //@ts-ignore
-        onClick={() => window.router.navigate(data.link)}
-      >
-        {data.text}
-      </div>
-    );
-  }
-  if (data.href) {
-    return (
-      <a href={data.href} className="breadcrumb-link">
-        {data.text}
-      </a>
-    );
-  }
-  return data.text;
-};
-
-export class Breadcrumbs extends React.PureComponent<any, any> {
-  render() {
+export class Breadcrumbs extends React.PureComponent<IBreadcrumbsProps> {
+  render(): JSX.Element {
     const { items } = this.props;
     return (
-      <div className="breadcrumbs">
-        {(
-          reduce(
-            items,
-            (unionArray: Array<any>, item: any) =>
-              union(unionArray, [
-                <div className="breadcrumb-item" key={item.text}>
-                  <BreadcrumbChild data={item} />
-                </div>,
-                <div
-                  className="breadcrumb-separator"
-                  key={`${item.text}-separator`}
-                >
-                  &emsp;/&emsp;
-                </div>,
-              ]),
-            []
-          ) as Array<any>
-        ).slice(0, -1)}
-      </div>
+      <Breadcrumb>
+        {items.map((item) =>
+          item.onClick ? (
+            <BreadcrumbItem key={item.text}>
+              {/* @ts-expect-error appearance lightweight type missing */}
+              <Button appearance="lightweight" onClick={item.onClick}>
+                {item.text}
+              </Button>
+            </BreadcrumbItem>
+          ) : (
+            <BreadcrumbItem key={item.text} href={item.href}>
+              {item.text}
+            </BreadcrumbItem>
+          )
+        )}
+      </Breadcrumb>
     );
   }
 }
