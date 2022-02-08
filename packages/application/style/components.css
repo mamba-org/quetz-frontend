@@ -10,10 +10,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  font-family: 'Open Sans', sans-serif;
-}
-
 .table-small {
   font-size: 14px;
   border-collapse: collapse;
@@ -194,111 +190,19 @@ body {
 /**********************
         Topbar
  **********************/
+
 .topbar-item {
   height: 100%;
   margin: auto;
   margin-right: 10px;
   display: flex;
   align-items: center;
+
+  font-weight: bold;
+  padding: 0 20px;
 }
 
 .topbar-item-content {
   margin: auto;
   margin-right: 10px;
-}
-
-.topbar-spacer {
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
-.topbar-search-wrapper {
-  max-width: 400px;
-  margin: 0 10px;
-}
-
-.topbar-item {
-  font-weight: bold;
-  padding: 0 20px;
-}
-
-/**********************
-        Tabs
- **********************/
-.react-tabs__tab-list {
-  padding: 0 5px !important;
-  border-bottom: 1px solid #404040 !important;
-  margin: 0 !important;
-}
-
-.react-tabs__tab {
-  padding: 10px 30px !important;
-  color: #aaaaaa;
-  font-size: 16px;
-  font-family: 'Open Sans', sans-serif;
-  background-color: transparent;
-  border: 0 !important;
-}
-
-.react-tabs__tab:hover {
-  color: var(--jp-quetz-primary-color);
-}
-
-.react-tabs__tab.react-tabs__tab--selected {
-  background-color: #404040;
-  color: var(--jp-quetz-primary-color);
-}
-
-/**********************
-        Leftbar
- **********************/
-.leftbar {
-  width: 200px;
-  border-radius: 6px;
-  background-color: #404040;
-  flex-grow: 0;
-  padding: 4px 0;
-  position: relative;
-}
-
-.leftbar-item {
-  text-align: left;
-  border: 0;
-  background-color: transparent;
-  width: 100%;
-  padding: 7px 20px;
-  border-radius: 0;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  margin: 8px 0;
-  position: relative;
-  display: block;
-}
-
-.leftbar-item.active {
-  color: var(--jp-quetz-primary-color);
-  font-weight: bold;
-}
-
-.leftbar-item.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: var(--jp-quetz-primary-color);
-}
-
-.left-right {
-  display: flex;
-  align-items: flex-start;
-}
-
-.right-section {
-  flex-grow: 1;
-  padding-left: 76px;
-  display: flex;
-  flex-direction: column;
 }

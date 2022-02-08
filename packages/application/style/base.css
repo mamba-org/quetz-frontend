@@ -45,3 +45,5 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
   display: flex;
   min-height: var(--jp-private-topbar-height);
 }
+
+@import url('./components.css');

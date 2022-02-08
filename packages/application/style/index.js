@@ -10,4 +10,3 @@ import '@jupyterlab/docregistry/style/index.js';
 import '@jupyterlab/application/style/index.js';
 
 import './base.css';
-import './components.css';
