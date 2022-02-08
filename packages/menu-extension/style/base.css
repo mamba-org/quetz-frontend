@@ -21,6 +21,10 @@
   margin: 0 10px;
 }
 
+.topbar-search-wrapper jp-search {
+  width: 100%;
+}
+
 .user-img {
   margin: auto;
   width: 30px;

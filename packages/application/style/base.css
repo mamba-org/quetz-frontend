@@ -3,14 +3,11 @@
   --jp-quetz-primary-color: #ffff00;
 }
 
-html {
-  font-family: 'Open Sans', sans-serif;
-}
-
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-ui-font-size1);
 }
 
 /* Logo dark style */
@@ -22,14 +19,6 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl {
 body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
   fill: #111;
   stroke: #111;
-}
-
-body[data-jp-theme-light='false'] #top-panel {
-  color: var(--jp-quetz-primary-color);
-}
-
-button {
-  cursor: pointer;
 }
 
 #main {
@@ -48,7 +37,6 @@ button {
   height: calc(100vh - var(--jp-private-topbar-height));
   overflow-y: auto;
   padding-bottom: 50px;
-  /* padding: var(--jp-cell-padding); */
 }
 
 #top-panel {

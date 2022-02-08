@@ -1,8 +1,10 @@
 import { ServerConnection } from '@jupyterlab/services';
 
+import { Search } from '@jupyter-notebook/react-components';
+
 import { URLExt } from '@jupyterlab/coreutils';
 
-import { Breadcrumbs, SearchBox, formatPlural } from '@quetz-frontend/apputils';
+import { Breadcrumbs, formatPlural } from '@quetz-frontend/apputils';
 
 import { PaginatedList } from '@quetz-frontend/table';
 
@@ -76,9 +78,13 @@ class ChannelsList extends React.PureComponent<
       <>
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Channels</h2>
-        <div className="channels-search">
-          <SearchBox onTextUpdate={this.onSearch} />
-        </div>
+        <Search
+          className="channels-search"
+          onInput={(event) => {
+            this.onSearch((event.target as HTMLInputElement).value);
+          }}
+          placeholder="Search"
+        />
         <PaginatedList
           url={url}
           params={{ q: searchText }}

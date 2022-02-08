@@ -9,6 +9,7 @@ import {
 import { SearchBox } from '@quetz-frontend/apputils';
 import * as React from 'react';
 import * as quetz_logo from '../style/img/quetz-logo.svg';
+import { quetzIcon } from './icons';
 
 /**
  * The main title plugin.
@@ -51,27 +52,27 @@ class SearchWidget extends ReactWidget {
  * @param router Application router object
  */
 function activateTitle(app: QuetzFrontEnd, router: IRouter): void {
-  const link = document.createElement('a');
-  const logo = new Widget({ node: link });
-  const logo_icon = new LabIcon({
-    name: 'quetz_logo',
-    svgstr: quetz_logo.default,
-  });
-  logo_icon.element({
-    container: logo.node,
-    elementPosition: 'center',
-    margin: '2px 2px 2px 8px',
-    height: 'auto',
-    width: '80px',
-  });
-  logo.id = 'jupyter-logo';
-  logo.addClass('topbar-item');
-  logo.title.label = 'Downloads';
-  logo.title.caption = 'Open Downloads page';
-  logo.node.onclick = () => {
-    router.navigate('/home');
-  };
+  const logo = createLogo();
 
   app.shell.add(logo, 'top', { rank: 0 });
   app.shell.add(new SearchWidget(router), 'top', { rank: 10000 });
+
+  function createLogo(): Widget {
+    const link = document.createElement('a');
+    const logo = new Widget({ node: link });
+    quetzIcon.element({
+      container: logo.node,
+      elementPosition: 'center',
+      margin: '2px 2px 2px 8px',
+      height: 'auto',
+      width: '80px',
+    });
+    logo.id = 'jupyter-logo';
+    logo.addClass('topbar-item');
+    logo.node.title = 'Quetz';
+    logo.node.onclick = () => {
+      router.navigate('/home');
+    };
+    return logo;
+  }
 }

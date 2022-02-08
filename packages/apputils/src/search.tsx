@@ -3,55 +3,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import * as React from 'react';
+import { Button, Search } from '@jupyter-notebook/react-components';
 
-export class SearchBox extends React.PureComponent<any, any> {
-  constructor(props: any) {
+/**
+ * Search box properties
+ */
+export interface ISearchBoxProps {
+  /**
+   * Callback on search term submission
+   */
+  onSubmit: (input: string) => void;
+}
+
+export class SearchBox extends React.PureComponent<ISearchBoxProps> {
+  constructor(props: ISearchBoxProps) {
     super(props);
-    this.state = {
-      input: '',
-    };
+    this._searchRef = React.createRef();
   }
 
-  updateInput = (e: any) => {
-    const { onTextUpdate } = this.props;
-    this.setState({
-      input: e.target.value,
-    });
-    if (onTextUpdate) {
-      onTextUpdate(e.target.value);
-    }
-  };
-
-  onSubmit = (e: any) => {
-    const { onSubmit } = this.props;
-    const { input } = this.state;
-    e.preventDefault();
-    if (onSubmit) {
-      onSubmit(input);
-    }
-  };
-
   render(): JSX.Element {
-    const { input } = this.state;
-    const { onSubmit } = this.props;
-
     return (
-      <form onSubmit={this.onSubmit}>
+      <form
+        onSubmit={(event: React.FormEvent) => {
+          event.preventDefault();
+          const value = (
+            this._searchRef.current?.querySelector('input') as HTMLInputElement
+          )?.value;
+
+          if (value) {
+            this.props.onSubmit(value);
+          }
+        }}
+      >
         <div className="btn-group">
-          <input
-            className="input search-input"
-            value={input}
-            type="text"
-            onChange={this.updateInput}
-            placeholder="Search"
-          />
-          {onSubmit && (
-            <button className="btn btn-default" type="submit">
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
-          )}
+          <Search ref={this._searchRef} placeholder="Search"></Search>
+          <Button appearance="neutral" type="submit">
+            <FontAwesomeIcon icon={faSearch} />
+          </Button>
         </div>
       </form>
     );
   }
+
+  private _searchRef: React.RefObject<HTMLElement>;
 }

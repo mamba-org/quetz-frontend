@@ -9,7 +9,7 @@ import {
 } from '@quetz-frontend/application';
 import { IMenu, Profile } from '@quetz-frontend/menu';
 import * as React from 'react';
-import * as avatar_icon from '../style/img/avatar-icon.svg';
+import { avatarIcon } from './icons';
 
 namespace CommandIDs {
   /**
@@ -145,15 +145,10 @@ export class MenuButton extends ReactWidget {
               </div>
             );
           } else {
-            const avatar = new LabIcon({
-              name: 'avatar_icon',
-              svgstr: avatar_icon.default,
-            });
-
             return (
               <div>
                 <a onClick={this._onClick}>
-                  <avatar.react
+                  <avatarIcon.react
                     className="user-img"
                     tag="span"
                     width="28px"

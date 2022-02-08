@@ -1,8 +1,5 @@
-.search-input {
-  flex-grow: 1;
-}
-
-.channels-search .search-input {
+.channels-search {
+  width: 100%;
   margin: 0 0 20px;
 }
 
