@@ -89,7 +89,9 @@ class ChannelsList extends React.PureComponent<
           url={url}
           params={{ q: searchText }}
           columns={getChannelsListColumns()}
-          to={(rowData: any) => `/channels/${rowData.name}`}
+          to={(rowData: any) => {
+            this.props.router.navigate(`/channels/${rowData.name}`);
+          }}
         />
       </>
     );
