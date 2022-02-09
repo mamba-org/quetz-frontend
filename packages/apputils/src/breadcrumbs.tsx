@@ -32,7 +32,6 @@ export class Breadcrumbs extends React.PureComponent<IBreadcrumbsProps> {
         {items.map((item) =>
           item.onClick ? (
             <BreadcrumbItem key={item.text}>
-              {/* @ts-expect-error appearance lightweight type missing */}
               <Button appearance="lightweight" onClick={item.onClick}>
                 {item.text}
               </Button>
