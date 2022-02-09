@@ -62,7 +62,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /channels.*/,
+      pattern: /^\/channels.*/,
       command: CommandIDs.open,
     });
 

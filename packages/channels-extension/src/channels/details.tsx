@@ -1,37 +1,22 @@
+import { Tab, TabPanel, Tabs } from '@jupyter-notebook/react-components';
 import { IRouter } from '@jupyterlab/application';
 import { Breadcrumbs } from '@quetz-frontend/apputils';
 import * as React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import 'react-tabs/style/react-tabs.css';
 import ChannelDetailsApiKeys from './tab-api-keys';
 import TabInfo from './tab-info';
 import ChannelDetailsMembers from './tab-members';
 import ChannelDetailsPackages from './tab-packages';
 
-const CHANNEL_TABS = {
-  INFO: 0,
-  PACKAGES: 1,
-  MEMBERS: 2,
-  API_KEYS: 3,
-};
-
-const HASH_TO_INDEX: Record<string, number> = {
-  info: 0,
-  packages: 1,
-  members: 2,
-  api_keys: 3,
-};
-
-const INDEX_TO_HASH: Record<number, string> = {
-  0: 'info',
-  1: 'packages',
-  2: 'members',
-  3: 'api_keys',
-};
+export enum ChannelTabs {
+  Info = 'info',
+  Packages = 'packages',
+  Members = 'members',
+  ApiKeys = 'api-keys',
+}
 
 export interface IChannelDetailsState {
-  selectedTabIndex: number;
+  selectedTabId: string;
 }
 
 export interface IChannelDetailProps extends RouteComponentProps {
@@ -45,16 +30,16 @@ class ChannelDetails extends React.PureComponent<
   constructor(props: IChannelDetailProps) {
     super(props);
     const urlParams = new URLSearchParams(window.location.search);
-    const currentTab = urlParams.get('tab') || 'info';
-    console.log('Current Tab: ', currentTab);
+    const currentTab = urlParams.get('tab') ?? 'info';
+
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[currentTab] || CHANNEL_TABS.INFO,
+      selectedTabId: currentTab ?? ChannelTabs.Info,
     };
   }
 
-  setTabIndex = (selectedTabIndex: any) => {
+  setTabId = (selectedTabId: string) => {
     this.setState({
-      selectedTabIndex,
+      selectedTabId,
     });
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -63,13 +48,12 @@ class ChannelDetails extends React.PureComponent<
     urlParams.delete('index');
     urlParams.delete('query');
     urlParams.delete('size');
-    urlParams.append('tab', INDEX_TO_HASH[selectedTabIndex]);
+    urlParams.append('tab', selectedTabId);
     history.pushState(null, '', '?' + urlParams.toString());
-    // history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
   };
 
   render(): JSX.Element {
-    const { selectedTabIndex } = this.state;
+    const { selectedTabId: selectedTabIndex } = this.state;
     const {
       match: { params },
     } = this.props;
@@ -97,13 +81,19 @@ class ChannelDetails extends React.PureComponent<
         <Breadcrumbs items={breadcrumbItems} />
 
         <h2 className="heading2">{channelId}</h2>
-        <Tabs selectedIndex={selectedTabIndex} onSelect={this.setTabIndex}>
-          <TabList>
-            <Tab>Info</Tab>
-            <Tab>Packages</Tab>
-            <Tab>Members</Tab>
-            <Tab>API keys</Tab>
-          </TabList>
+        <Tabs
+          activeid={`channel-${selectedTabIndex}`}
+          onChange={(event) => {
+            this.setTabId(
+              // Remove head `channel-`
+              ((event.target as any).activeid as string).slice(8)
+            );
+          }}
+        >
+          <Tab id={`channel-${ChannelTabs.Info}`}>Info</Tab>
+          <Tab id={`channel-${ChannelTabs.Packages}`}>Packages</Tab>
+          <Tab id={`channel-${ChannelTabs.Members}`}>Members</Tab>
+          <Tab id={`channel-${ChannelTabs.ApiKeys}`}>API keys</Tab>
           <TabPanel>
             <TabInfo channelId={channelId} />
           </TabPanel>

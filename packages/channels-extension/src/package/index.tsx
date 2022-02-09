@@ -1,40 +1,19 @@
+import { Tab, TabPanel, Tabs } from '@jupyter-notebook/react-components';
+import { IRouter } from '@jupyterlab/application';
 import { Breadcrumbs } from '@quetz-frontend/apputils';
-
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-
-import 'react-tabs/style/react-tabs.css';
-
 import * as React from 'react';
-
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import PackageDetailsApiKeys from './tab-api-keys';
 import PackageInfo from './tab-info';
-
 import PackageMembers from './tab-members';
 
-import PackageDetailsApiKeys from './tab-api-keys';
-import { IRouter } from '@jupyterlab/application';
-
-const PACKAGE_TABS = {
-  INFO: 0,
-  MEMBERS: 1,
-  API_KEYS: 2,
-};
-
-const HASH_TO_INDEX: Record<string, number> = {
-  info: 0,
-  members: 1,
-  api_keys: 2,
-};
-
-const INDEX_TO_HASH: Record<number, string> = {
-  0: 'info',
-  1: 'members',
-  2: 'api_keys',
-};
-
+export enum PackageTabs {
+  Info = 'info',
+  Members = 'members',
+  ApiKeys = 'api-keys',
+}
 export interface IPackageDetailsState {
-  selectedTabIndex: number;
+  selectedTabId: string;
 }
 
 export interface IPackageDetailsProps extends RouteComponentProps {
@@ -47,21 +26,23 @@ class PackageDetails extends React.PureComponent<
 > {
   constructor(props: IPackageDetailsProps) {
     super(props);
-    const locationHash = (window.location.hash || '#info').substring(1);
+    const locationHash = (
+      window.location.hash || `#${PackageTabs.Info}`
+    ).substring(1);
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[locationHash] || PACKAGE_TABS.INFO,
+      selectedTabId: locationHash ?? PackageTabs.Info,
     };
   }
 
-  setTabIndex = (selectedTabIndex: any) => {
+  setTabId = (selectedTabId: any) => {
     this.setState({
-      selectedTabIndex,
+      selectedTabId,
     });
-    history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
+    history.pushState(null, '', `#${selectedTabId}`);
   };
 
   render(): JSX.Element {
-    const { selectedTabIndex } = this.state;
+    const { selectedTabId } = this.state;
     const {
       match: { params },
     } = this.props;
@@ -105,12 +86,18 @@ class PackageDetails extends React.PureComponent<
         <h2 className="heading2">
           {channelId}/{packageId}
         </h2>
-        <Tabs selectedIndex={selectedTabIndex} onSelect={this.setTabIndex}>
-          <TabList>
-            <Tab>Info</Tab>
-            <Tab>Members</Tab>
-            <Tab>API keys</Tab>
-          </TabList>
+        <Tabs
+          activeid={`package-${selectedTabId}`}
+          onChange={(event) => {
+            this.setTabId(
+              // Remove head `package-`
+              ((event.target as any).activeid as string).slice(8)
+            );
+          }}
+        >
+          <Tab id={`package-${PackageTabs.Info}`}>Info</Tab>
+          <Tab id={`package-${PackageTabs.Members}`}>Members</Tab>
+          <Tab id={`package-${PackageTabs.ApiKeys}`}>API keys</Tab>
           <TabPanel>
             <PackageInfo />
           </TabPanel>
