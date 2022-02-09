@@ -42,3 +42,7 @@
 .quetz-main-menu > .lm-Menu-content {
   width: 100%;
 }
+
+.anonymous-icon > svg {
+  transform: translateY(2px);
+}

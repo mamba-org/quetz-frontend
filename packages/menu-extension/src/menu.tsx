@@ -1,6 +1,7 @@
+import { Avatar, Button } from '@jupyter-notebook/react-components';
 import { IRouter } from '@jupyterlab/application';
 import { ReactWidget, UseSignal } from '@jupyterlab/apputils';
-import { IRankedMenu, LabIcon, RankedMenu } from '@jupyterlab/ui-components';
+import { IRankedMenu, RankedMenu } from '@jupyterlab/ui-components';
 import { JSONExt } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import {
@@ -132,32 +133,35 @@ export class MenuButton extends ReactWidget {
     return (
       <UseSignal signal={this._menu.profileChanged}>
         {() => {
-          if (this._menu.profile) {
-            return (
-              <div>
-                <a onClick={this._onClick}>
-                  <img
-                    className="user-img"
-                    src={this._menu.profile.avatar_url}
-                    alt="avatar"
-                  />
-                </a>
-              </div>
-            );
-          } else {
-            return (
-              <div>
-                <a onClick={this._onClick}>
+          const isAnonymous = !this._menu.profile;
+          const profile = this._menu.profile ?? {
+            name: 'Anonymous',
+            avatar_url: '',
+          };
+          return (
+            <div>
+              <Button
+                appearance="stealth"
+                aria-label={`User Menu: ${profile.name}`}
+                onClick={this._onClick}
+              >
+                {isAnonymous ? (
                   <avatarIcon.react
-                    className="user-img"
+                    className="anonymous-icon"
                     tag="span"
                     width="28px"
                     height="28px"
                   />
-                </a>
-              </div>
-            );
-          }
+                ) : (
+                  <Avatar
+                    src={profile.avatar_url}
+                    shape="circle"
+                    alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
+                  ></Avatar>
+                )}
+              </Button>
+            </div>
+          );
         }}
       </UseSignal>
     );
