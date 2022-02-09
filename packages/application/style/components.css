@@ -20,12 +20,12 @@
 }
 
 .link {
-  color: var(--jp-quetz-primary-color);
+  color: var(--jp-brand-color1);
   text-decoration: none;
 }
 
-.link:hover {
-  color: var(--jp-quetz-primary-color);
+.link:hover,
+.link:focus {
   text-decoration: underline;
 }
 
@@ -84,101 +84,101 @@
  **********************/
 /* TODO: Letter spacing for text */
 .heading1 {
-  font-size: 54px;
+  font-size: var(--jp-content-font-size5);
   line-height: 68px;
   margin-top: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .heading2 {
-  font-size: 40px;
+  font-size: var(--jp-content-font-size4);
   line-height: 50px;
   margin-top: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .heading3 {
-  font-size: 28px;
+  font-size: var(--jp-content-font-size3);
   line-height: 36px;
   margin-top: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .paragraph {
-  font-size: 16px;
+  font-size: var(--jp-content-font-size1);
   line-height: 22px;
   margin-top: 0;
   margin-bottom: 24px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
   position: relative;
 }
 
 .text {
-  font-size: 16px;
+  font-size: var(--jp-content-font-size1);
   line-height: 22px;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
   position: relative;
 }
 
 .minor-paragraph {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 22px;
   margin-top: 0;
   margin-bottom: 24px;
   color: #bdbdbd;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .minor-text {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 20px;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .caption {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 20px;
   margin-bottom: 10px;
   text-transform: uppercase;
   margin-top: 0;
-  color: var(--jp-quetz-primary-color);
-  font-family: 'Source Sans Pro', sans-serif;
+  color: var(--jp-brand-color1);
+  font-family: var(--jp-content-font-family);
 }
 
 .caption-inline {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 20px;
   margin-top: 0;
   margin-bottom: 6px;
   text-transform: uppercase;
   color: inherit;
   font-weight: bold;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .section-heading {
-  font-size: 18px;
+  font-size: var(--jp-content-font-size2);
   line-height: 20px;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 6px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .annotation {
-  font-size: 12px;
+  font-size: var(--jp-content-font-size0);
   line-height: 17px;
   margin-bottom: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .annotation-text {
-  font-size: 12px;
+  font-size: var(--jp-content-font-size0);
   line-height: 17px;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .profile-icon {

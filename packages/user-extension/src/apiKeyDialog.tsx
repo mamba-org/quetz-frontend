@@ -4,7 +4,7 @@ import { URLExt } from '@jupyterlab/coreutils';
 
 import { Dialog, ReactWidget } from '@jupyterlab/apputils';
 
-import { Button } from '@jupyterlab/ui-components';
+import { Button } from '@jupyter-notebook/react-components';
 
 import { InlineLoader, API_STATUSES } from '@quetz-frontend/apputils';
 

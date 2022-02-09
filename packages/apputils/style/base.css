@@ -41,7 +41,6 @@
   font-size: 16px;
   line-height: 22px;
   padding: 7px 20px;
-  font-family: 'Open Sans', sans-serif;
   border: 0;
   border-radius: 6px;
   color: #ffffff;
@@ -80,7 +79,6 @@
   font-size: 16px;
   line-height: 22px;
   padding: 7px 20px;
-  font-family: 'Open Sans', sans-serif;
   cursor: pointer;
   border: 0;
   border-radius: 6px;
@@ -99,7 +97,7 @@
 }
 
 .btn-transparent:hover {
-  background-color: #404040;
+  background-color: var(--jp-layout-color2);
   color: inherit;
 }
 
@@ -108,7 +106,7 @@
   padding: 0;
   margin: 0;
   background-color: transparent;
-  color: var(--jp-quetz-primary-color);
+  color: var(--jp-brand-color1);
 }
 
 .btn-inline:hover {
@@ -116,23 +114,23 @@
 }
 
 .btn-default {
-  color: #ffffff;
-  background-color: #404040;
+  color: var(--jp-ui-font-color1);
+  background-color: var(--jp-layout-color1);
 }
 
 .btn-default:hover {
-  color: #222222;
-  background-color: #ffffff;
+  color: var(--jp-ui-font-color2);
+  background-color: var(--jp-layout-color2);
 }
 
 .btn-primary {
-  color: #000000;
-  background-color: var(--jp-quetz-primary-color);
+  color: var(--jp-ui-inverse-font-color1);
+  background-color: var(--jp-brand-color1);
 }
 
 .btn-primary:hover {
-  color: var(--jp-quetz-primary-color);
-  background-color: #404040;
+  color: var(--jp-ui-inverse-font-color2);
+  background-color: var(--jp-brand-color2);
 }
 
 .btn-group {
@@ -147,7 +145,7 @@
 .btn-group .btn,
 .btn-group .input {
   border-radius: 0;
-  border-right: 1px solid #212121;
+  border-right: 1px solid transparent;
 }
 
 .btn-group .btn:first-child,
