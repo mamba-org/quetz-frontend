@@ -101,18 +101,6 @@
   color: inherit;
 }
 
-.btn-inline {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
-  color: var(--jp-brand-color1);
-}
-
-.btn-inline:hover {
-  text-decoration: underline;
-}
-
 .btn-default {
   color: var(--jp-ui-font-color1);
   background-color: var(--jp-layout-color1);

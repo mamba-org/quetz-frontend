@@ -1679,7 +1679,6 @@
     "@quetz-frontend/table" "^0.1.0"
     fromnow "^3.0.1"
     lodash "^4.17.20"
-    prop-types "^15.7.2"
     react "^17.0.1"
     react-router-dom "^5.2.0"
     react-tooltip "^4.2.11"
@@ -1695,7 +1694,6 @@
     "@quetz-frontend/apputils" "^0.1.0"
     "@quetz-frontend/table" "^0.1.0"
     react "^17.0.1"
-    react-router-dom "^5.2.0"
     react-tooltip "^4.2.11"
 
 "@quetz-frontend/jobs-extension@file:packages/jobs-extension":
@@ -1709,7 +1707,6 @@
     "@quetz-frontend/apputils" "^0.1.0"
     "@quetz-frontend/menu" "^0.1.0"
     "@quetz-frontend/table" "^0.1.0"
-    prop-types "^15.7.2"
     react "^17.0.1"
     react-router-dom "^5.2.0"
     react-table "^7.6.3"
@@ -1721,8 +1718,6 @@
     "@quetz-frontend/application" "^0.1.0"
     "@quetz-frontend/menu" "^0.1.0"
     react "^17.0.1"
-    react-router-dom "^5.2.0"
-    react-tooltip "^4.2.11"
 
 "@quetz-frontend/menu-extension@file:packages/menu-extension":
   version "0.1.0"
@@ -1755,8 +1750,6 @@
     "@quetz-frontend/apputils" "^0.1.0"
     "@quetz-frontend/table" "^0.1.0"
     react "^17.0.1"
-    react-router-dom "^5.2.0"
-    react-tooltip "^4.2.11"
 
 "@quetz-frontend/table@file:packages/table":
   version "0.1.0"
@@ -1768,9 +1761,7 @@
     "@jupyterlab/services" "^6.2.0"
     "@quetz-frontend/apputils" "^0.1.0"
     clsx "^1.1.1"
-    prop-types "^15.7.2"
     react "^17.0.1"
-    react-router-dom "^5.2.0"
     react-table "^7.6.3"
     regenerator-runtime "^0.13.9"
 
@@ -1791,11 +1782,8 @@
     "@quetz-frontend/apputils" "^0.1.0"
     "@quetz-frontend/menu" "^0.1.0"
     "@quetz-frontend/table" "^0.1.0"
-    lodash "^4.17.20"
     moment "^2.29.1"
     react "^17.0.1"
-    react-notifications-component "^3.3.0"
-    react-router-dom "^5.2.0"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
