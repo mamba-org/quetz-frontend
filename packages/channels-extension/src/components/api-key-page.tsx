@@ -13,13 +13,16 @@ import { faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { some, filter } from 'lodash';
 
 import * as React from 'react';
+import { Button } from '@jupyter-notebook/react-components';
 
 class ApiKeyComponent extends React.PureComponent<any, any> {
   onCopy = (key: string) => {
+    // TODO
     console.log('Copied key: ', key);
   };
 
   onDelete = (key: string) => {
+    // TODO
     console.log('Deleted key: ', key);
   };
 
@@ -31,18 +34,13 @@ class ApiKeyComponent extends React.PureComponent<any, any> {
       ? filter(apiKeyList, (key) => some(key.roles, filters))
       : apiKeyList;
     return (
-      <>
-        <div className="padding-bottom">
-          <button className="btn btn-default">Request API key</button>
-        </div>
-        <Table
-          columns={getApikeysTableColumns({
-            onCopy: this.onCopy,
-            onDelete: this.onDelete,
-          })}
-          data={filteredList || []}
-        />
-      </>
+      <Table
+        columns={getApikeysTableColumns({
+          onCopy: this.onCopy,
+          onDelete: this.onDelete,
+        })}
+        data={filteredList || []}
+      />
     );
   }
 }
@@ -54,15 +52,23 @@ class ApiKeyPage extends React.PureComponent<any, any> {
     const url = URLExt.join(settings.baseUrl, 'api/api-keys');
 
     return (
-      <FetchHoc
-        url={url}
-        loadingMessage="Fetching list of API keys"
-        genericErrorMessage="Error fetching API keys"
-      >
-        {(apiKeyList: any) => (
-          <ApiKeyComponent apiKeyList={apiKeyList} filters={filters} />
-        )}
-      </FetchHoc>
+      <>
+        {
+          // TODO
+          /* <div className="padding-bottom">
+            <Button appearance="neutral">Request API key</Button>
+          </div> */
+        }
+        <FetchHoc
+          url={url}
+          loadingMessage="Fetching list of API keys"
+          genericErrorMessage="Error fetching API keys"
+        >
+          {(apiKeyList: any) => (
+            <ApiKeyComponent apiKeyList={apiKeyList} filters={filters} />
+          )}
+        </FetchHoc>
+      </>
     );
   }
 }
@@ -87,20 +93,24 @@ const getApikeysTableColumns = ({ onCopy, onDelete }: any): any => [
     accessor: 'actions',
     Cell: ({ row }: any) =>
       (
-        <p className="text">
-          <button
-            className="btn btn-transparent"
+        <>
+          <Button
+            aria-label="Copy API key"
+            title="Copy API key"
+            appearance="stealth"
             onClick={() => onCopy(row.original.key)}
           >
             <FontAwesomeIcon icon={faCopy} />
-          </button>
-          <button
-            className="btn btn-transparent"
+          </Button>
+          <Button
+            aria-label="Delete API key"
+            title="Delete API key"
+            appearance="stealth"
             onClick={() => onDelete(row.original.key)}
           >
             <FontAwesomeIcon icon={faTrash} />
-          </button>
-        </p>
+          </Button>
+        </>
       ) as any,
   },
 ];

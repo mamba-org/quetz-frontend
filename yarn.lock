@@ -1722,6 +1722,7 @@
 "@quetz-frontend/menu-extension@file:packages/menu-extension":
   version "0.1.0"
   dependencies:
+    "@jupyter-notebook/react-components" "~0.3.0"
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/ui-components" "^3.2.0"
