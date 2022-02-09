@@ -169,19 +169,19 @@
     gud "^1.0.0"
     warning "^4.0.3"
 
-"@jupyter-notebook/react-components@~0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@jupyter-notebook/react-components/-/react-components-0.2.0.tgz#e8bca93cb41ec334337985d744cae6e2d5dd1178"
-  integrity sha512-NW8UWBxXPq1qbzL/CVqGocJdjGw35RKTCU4m4wSQvapEYqmkmiRWTbPK9L7vVS52g0JZ/4cTpyoGdUsmRtboZw==
+"@jupyter-notebook/react-components@~0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@jupyter-notebook/react-components/-/react-components-0.3.0.tgz#b00eadb1be758a879e64901be1798d571fa119e2"
+  integrity sha512-xI1kLxIRd9+uZTBEF4um6FxhCC7bwjpBdb+mEo9f9hQia3mX2RIzJS2uKScB9TgV/6OVEO4UCQ05yDKK3zWRtw==
   dependencies:
-    "@jupyter-notebook/web-components" "^0.2.0"
+    "@jupyter-notebook/web-components" "^0.3.0"
     "@microsoft/fast-react-wrapper" "^0.1.17"
     react "^17.0.0"
 
-"@jupyter-notebook/web-components@^0.2.0", "@jupyter-notebook/web-components@~0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@jupyter-notebook/web-components/-/web-components-0.2.0.tgz#af98bfe1cb33119b2b02031426be14a3fe6aa986"
-  integrity sha512-HTl1LidhCvqRzBf9qb+3TkPTz7f1T2oTJa3gsTwCVc3gtqwmcZ8mpulbBx13mNLfertfUwMyWB3ldncK68cAYw==
+"@jupyter-notebook/web-components@^0.3.0", "@jupyter-notebook/web-components@~0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@jupyter-notebook/web-components/-/web-components-0.3.0.tgz#05f5eb4296b0f7eecb9810725aaec77a11afe1db"
+  integrity sha512-6fbHTL6EYRQ/XU3QAfcO5HnUbpNvgkF41x3XYB6qapnx5P6cfsDhve3JiLTchm8j+bTiESwlP7LyA8gSpIPRoA==
   dependencies:
     "@microsoft/fast-colors" "^5.1.4"
     "@microsoft/fast-components" "^2.17.1"
@@ -1653,8 +1653,8 @@
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
     "@fortawesome/react-fontawesome" "^0.1.14"
-    "@jupyter-notebook/react-components" "~0.2.0"
-    "@jupyter-notebook/web-components" "~0.2.0"
+    "@jupyter-notebook/react-components" "~0.3.0"
+    "@jupyter-notebook/web-components" "~0.3.0"
     "@jupyterlab/services" "^6.2.0"
     clsx "^1.1.1"
     lodash "^4.17.20"
@@ -1668,6 +1668,7 @@
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
     "@fortawesome/react-fontawesome" "^0.1.14"
+    "@jupyter-notebook/react-components" "~0.3.0"
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/coreutils" "^5.2.0"
@@ -1681,7 +1682,6 @@
     prop-types "^15.7.2"
     react "^17.0.1"
     react-router-dom "^5.2.0"
-    react-tabs "^3.1.2"
     react-tooltip "^4.2.11"
 
 "@quetz-frontend/home-extension@file:packages/home-extension":
@@ -1764,6 +1764,7 @@
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
     "@fortawesome/react-fontawesome" "^0.1.14"
+    "@jupyter-notebook/react-components" "~0.3.0"
     "@jupyterlab/services" "^6.2.0"
     "@quetz-frontend/apputils" "^0.1.0"
     clsx "^1.1.1"
@@ -1779,6 +1780,7 @@
     "@fortawesome/fontawesome-svg-core" "^1.2.32"
     "@fortawesome/free-solid-svg-icons" "^5.15.1"
     "@fortawesome/react-fontawesome" "^0.1.14"
+    "@jupyter-notebook/react-components" "~0.3.0"
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/coreutils" "^5.2.0"
@@ -1929,13 +1931,6 @@
   version "7.7.9"
   resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.9.tgz#ea82875775fc6ee71a28408dcc039396ae067c92"
   integrity sha512-ejP/J20Zlj9VmuLh73YgYkW2xOSFTW39G43rPH93M4mYWdMmqv66lCCr+axZpkdtlNLGjvMG2CwzT4S6abaeGQ==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-tabs@^2.3.2":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@types/react-tabs/-/react-tabs-2.3.4.tgz#b63662ee52e59a86ec33b78b9721d8163a46394c"
-  integrity sha512-HQzhKW+RF/7h14APw/2cu4Nnt+GmsTvfBKbFdn/NbYpb8Q+iB65wIkPHz4VRKDxWtOpNFpOUtzt5r0LRmQMfOA==
   dependencies:
     "@types/react" "*"
 
@@ -2929,7 +2924,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-clsx@^1.1.0, clsx@^1.1.1:
+clsx@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188"
   integrity sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==
@@ -7335,7 +7330,7 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
-prop-types@^15.5.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7589,14 +7584,6 @@ react-table@^7.6.3:
   version "7.7.0"
   resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.7.0.tgz#e2ce14d7fe3a559f7444e9ecfe8231ea8373f912"
   integrity sha512-jBlj70iBwOTvvImsU9t01LjFjy4sXEtclBovl3mTiqjz23Reu0DKnRza4zlLtOPACx6j2/7MrQIthIK1Wi+LIA==
-
-react-tabs@^3.1.2:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-3.2.3.tgz#ccbb3e1241ad3f601047305c75db661239977f2f"
-  integrity sha512-jx325RhRVnS9DdFbeF511z0T0WEqEoMl1uCE3LoZ6VaZZm7ytatxbum0B8bCTmaiV0KsU+4TtLGTGevCic7SWg==
-  dependencies:
-    clsx "^1.1.0"
-    prop-types "^15.5.0"
 
 react-tooltip@^4.2.11:
   version "4.2.21"
