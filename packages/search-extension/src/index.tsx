@@ -51,18 +51,12 @@ const plugin: QuetzFrontEndPlugin<void> = {
 export default plugin;
 
 class SearchPage extends ReactWidget {
-  private _router: IRouter;
-
   constructor(router: IRouter) {
     super();
     this.id = DOMUtils.createDomID();
     this.title.label = 'Search page';
 
     this._router = router;
-  }
-
-  private _route(route: string): void {
-    this._router.navigate(route);
   }
 
   render(): React.ReactElement {
@@ -76,7 +70,9 @@ class SearchPage extends ReactWidget {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this._route('/home');
+        },
       },
       {
         text: `Search for "${searchText}"`,
@@ -144,4 +140,10 @@ class SearchPage extends ReactWidget {
       </div>
     );
   }
+
+  private _route(route: string): void {
+    this._router.navigate(route);
+  }
+
+  private _router: IRouter;
 }

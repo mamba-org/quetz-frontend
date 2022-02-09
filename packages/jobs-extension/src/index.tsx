@@ -43,7 +43,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     commands.addCommand(CommandIDs.jobs, {
       label: 'Open Jobs Panel',
       execute: () => {
-        shell.add(new Jobs(), 'main');
+        shell.add(new Jobs(router), 'main');
       },
     });
 
@@ -68,24 +68,3 @@ const plugin: QuetzFrontEndPlugin<void> = {
 };
 
 export default plugin;
-
-/*class JobsRouter extends ReactWidget {
-  
-  constructor() {
-    super();
-    this.id = DOMUtils.createDomID();;
-    this.title.label = 'Jobs main page';
-  }
-
-  render(): React.ReactElement {
-    return (
-      <Router basename="/jobs">
-        <Switch>
-          <Route path="/:jobId" render={(props) => <Job {...props} />} />
-          <Route path="" component={Jobs} />
-          <Route path="*" component={Jobs} />
-        </Switch>
-      </Router>
-    );
-  }
-} */
