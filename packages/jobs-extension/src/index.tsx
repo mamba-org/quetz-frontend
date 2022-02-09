@@ -56,7 +56,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /jobs.*/,
+      pattern: /^\/jobs.*/,
       command: CommandIDs.jobs,
     });
 

@@ -45,7 +45,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /home.*/,
+      pattern: /^\/home.*/,
       command: CommandIDs.open,
     });
   },

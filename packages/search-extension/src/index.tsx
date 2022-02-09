@@ -42,7 +42,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /search.*/,
+      pattern: /^\/search.*/,
       command: CommandIDs.open,
     });
   },
