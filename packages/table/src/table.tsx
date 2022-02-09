@@ -4,8 +4,6 @@ import { ServerConnection } from '@jupyterlab/services';
 
 import clsx from 'clsx';
 
-import PropTypes from 'prop-types';
-
 import * as React from 'react';
 
 import {
@@ -291,11 +289,4 @@ export const PaginatedTable = ({
       query={state.query}
     />
   );
-};
-
-Table.propTypes = {
-  columns: PropTypes.any,
-  data: PropTypes.any,
-  renderRowSubComponent: PropTypes.any,
-  enableSearch: PropTypes.any,
 };

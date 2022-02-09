@@ -6,14 +6,12 @@ import { FetchHoc } from '@quetz-frontend/apputils';
 
 import { withRouter } from 'react-router-dom';
 
-import { ReactElementLike } from 'prop-types';
-
 import * as React from 'react';
 
 import PackageVersions from './versions';
 
 class PackageMainContent extends React.PureComponent<any, any> {
-  private _formatPlatform = (platforms: string[]): ReactElementLike => {
+  private _formatPlatform = (platforms: string[]): React.ReactNode => {
     const linux: string[] = [];
     const osx: string[] = [];
     const win: string[] = [];

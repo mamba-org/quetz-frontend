@@ -1,7 +1,5 @@
 import { useExpanded, useTable } from 'react-table';
 
-import PropTypes from 'prop-types';
-
 import * as React from 'react';
 
 import 'regenerator-runtime/runtime';
@@ -68,12 +66,6 @@ const Table: React.FC<ITableFcProps> = ({
       </tbody>
     </table>
   );
-};
-
-Table.propTypes = {
-  columns: PropTypes.any,
-  data: PropTypes.any,
-  renderRowSubComponent: PropTypes.any,
 };
 
 export default Table;
