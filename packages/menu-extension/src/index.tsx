@@ -10,9 +10,7 @@ import {
 import { SearchBox } from '@quetz-frontend/apputils';
 import {
   ILogInMenu,
-  IMainMenu,
   LogInItem,
-  MainMenu,
   Profile,
 } from '@quetz-frontend/menu';
 import * as React from 'react';
@@ -278,15 +276,6 @@ function quetzTitle(app: QuetzFrontEnd, router: IRouter): void {
 
   app.shell.add(logo, 'top', { rank: 0 });
   app.shell.add(new SearchWidget(router), 'top', { rank: 10000 });
-}
-
-/**
- * @param app
- */
-function toolbar(app: QuetzFrontEnd): IMainMenu {
-  const menu = new MainMenu();
-  app.shell.add(menu, 'top', { rank: 10001 });
-  return menu;
 }
 
 /**
