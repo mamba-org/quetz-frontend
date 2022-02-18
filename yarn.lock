@@ -7421,10 +7421,10 @@ querystringify@^2.1.1:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.2.0.tgz#3345941b4153cb9d082d8eee4cda2016a9aef7f6"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
-quetz-theme@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/quetz-theme/-/quetz-theme-0.2.0.tgz#0fc9c9439ce5c6cdeea3cf10f2dee6c9852eaea0"
-  integrity sha512-UlWIMSlLY3TyGXrzhBvb3C0on8k/z7AVsk2jNFCJ8hmKo6q92s+jmTmzbndS6vmis5kT5o/nXAWZYlPBjuZ+5A==
+quetz-theme@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/quetz-theme/-/quetz-theme-0.2.1.tgz#2d163386e3e1669179a2faaa231f6f35fc6f5b1d"
+  integrity sha512-9RSP4xArVHKsE9ISJR1ie3UGIqk09+XVqRtKOiBoBUrlrI2kdL/8O0wM0GfytcxEmC0TzGHVxAsjyHoosPhDng==
   dependencies:
     "@jupyterlab/apputils" "^3.0.0"
     "@lumino/application" "^1.25.0"
