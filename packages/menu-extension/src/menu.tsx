@@ -201,7 +201,7 @@ function activateMenu(app: QuetzFrontEnd): IMenu {
     },
   });
 
-  app.shell.add(menuButton, 'top', { rank: 19999 });
+  app.shell.add(menuButton, 'top', { rank: 100 });
 
   menu.addItem({ type: 'separator', rank: 500 });
   menu.addItem({ type: 'separator', rank: 1000 });

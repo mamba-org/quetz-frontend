@@ -26,7 +26,7 @@ class SearchWidget extends ReactWidget {
   constructor(router: IRouter) {
     super();
     this.id = DOMUtils.createDomID();
-    this.addClass('topbar-spacer');
+    this.addClass('topbar-search-wrapper');
     this._router = router;
   }
 
@@ -35,11 +35,7 @@ class SearchWidget extends ReactWidget {
   };
 
   render(): React.ReactElement {
-    return (
-      <div className="topbar-search-wrapper">
-        <SearchBox onSubmit={this.onSearch} />
-      </div>
-    );
+    return <SearchBox onSubmit={this.onSearch} />;
   }
 
   private _router: IRouter;
@@ -53,7 +49,10 @@ function activateTitle(app: QuetzFrontEnd, router: IRouter): void {
   const logo = createLogo();
 
   app.shell.add(logo, 'top', { rank: 0 });
-  app.shell.add(new SearchWidget(router), 'top', { rank: 10000 });
+  app.shell.add(new SearchWidget(router), 'top', { rank: 20 });
+  const spacer = new Widget();
+  spacer.addClass('topbar-spacer');
+  app.shell.add(spacer, 'top', { rank: 50 });
 
   function createLogo(): Widget {
     const link = document.createElement('a');

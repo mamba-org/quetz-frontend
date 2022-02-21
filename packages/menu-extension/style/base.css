@@ -5,7 +5,8 @@
 
 .topbar-search-wrapper {
   max-width: 400px;
-  margin: 0 10px;
+  margin: auto 10px;
+  overflow: visible;
 }
 
 .topbar-search-wrapper jp-search {
@@ -24,11 +25,6 @@
 .topbar-item {
   font-weight: bold;
   padding: 0 20px;
-}
-
-#top-panel {
-  padding: 10px;
-  overflow: visible;
 }
 
 .quetz-main-menu {
