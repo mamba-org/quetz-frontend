@@ -1,7 +1,7 @@
 import { Avatar, Button } from '@jupyter-notebook/react-components';
 import { IRouter } from '@jupyterlab/application';
 import { ReactWidget, UseSignal } from '@jupyterlab/apputils';
-import { IRankedMenu, RankedMenu } from '@jupyterlab/ui-components';
+import { IRankedMenu, MenuSvg, RankedMenu } from '@jupyterlab/ui-components';
 import { JSONExt } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import {
@@ -174,7 +174,10 @@ export class MenuButton extends ReactWidget {
  */
 function activateMenu(app: QuetzFrontEnd): IMenu {
   // Add menu
-  const menu = new MainMenu({ commands: app.commands });
+  const menu = new MainMenu({
+    commands: app.commands,
+    renderer: MenuSvg.defaultRenderer,
+  });
   menu.addClass('quetz-main-menu');
   const menuButton = new MenuButton(menu);
 

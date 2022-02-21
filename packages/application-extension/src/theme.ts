@@ -1,4 +1,5 @@
 import { IThemeManager } from '@jupyterlab/apputils';
+import { MenuSvg } from '@jupyterlab/ui-components';
 import {
   QuetzFrontEnd,
   QuetzFrontEndPlugin,
@@ -25,7 +26,10 @@ export const theme: QuetzFrontEndPlugin<void> = {
     app.started.then(() => {
       // Add a theme submenu if there are more than one theme
       if (manager.themes.length > 1) {
-        const themeMenu = new Menu({ commands });
+        const themeMenu = new Menu({
+          commands,
+          renderer: MenuSvg.defaultRenderer,
+        });
         themeMenu.title.label = 'Theme';
 
         menu.addItem({
