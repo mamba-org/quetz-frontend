@@ -5,10 +5,10 @@
 
 .list-row {
   display: flex;
-  color: #ffffff;
+  color: var(--jp-ui-font-color1);
   padding: 12px 20px;
   align-items: center;
-  border-bottom: 1px solid #404040;
+  border-bottom: 1px solid var(--jp-layout-color2);
 }
 
 .list-row.clickable {
@@ -16,12 +16,12 @@
 }
 
 .list-row.clickable:hover {
-  background-color: #404040;
+  background-color: var(--jp-layout-color2);
 }
 
 .channel-list-description {
   margin: 5px 0 0;
-  color: #aaaaaa;
+  color: var(--jp-ui-font-color2);
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
@@ -41,26 +41,6 @@
 
 .channel-members-column {
   width: 20%;
-}
-
-.page-heading {
-  font-size: 24px;
-  font-weight: 800;
-  margin: 11px 42px;
-}
-
-.outline-button {
-  align-self: flex-end;
-  background-color: transparent;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  height: 33px;
-  padding: 0 30px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  font-size: 14px;
 }
 
 .api-key-table {
@@ -88,10 +68,4 @@
 }
 .member-role-column {
   width: 20%;
-}
-
-.user-avatar {
-  width: 200px;
-  height: 200px;
-  border-radius: 8px;
 }

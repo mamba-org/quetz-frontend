@@ -5,3 +5,9 @@ tbody.qs-scrollable-Table {
 tr.qs-clickable-Row:hover {
   cursor: pointer;
 }
+
+.user-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+}

@@ -126,7 +126,7 @@
   line-height: 22px;
   margin-top: 0;
   margin-bottom: 24px;
-  color: #bdbdbd;
+  color: var(--jp-ui-font-color2);
   font-family: var(--jp-content-font-family);
 }
 
