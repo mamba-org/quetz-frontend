@@ -1,14 +1,15 @@
-import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin,
-} from '@jupyterlab/application';
+import { JupyterFrontEnd } from '@jupyterlab/application';
 
-import { App, QuetzFrontEnd } from '@quetz-frontend/application';
+import {
+  App,
+  QuetzFrontEnd,
+  QuetzFrontEndPlugin,
+} from '@quetz-frontend/application';
 
 /**
  * The default paths.
  */
-export const paths: JupyterFrontEndPlugin<JupyterFrontEnd.IPaths> = {
+export const paths: QuetzFrontEndPlugin<JupyterFrontEnd.IPaths> = {
   id: '@quetz-frontend/application-extension:paths',
   autoStart: true,
   provides: JupyterFrontEnd.IPaths,

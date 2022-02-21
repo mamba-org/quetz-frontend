@@ -1,6 +1,5 @@
 import { IRouter } from '@jupyterlab/application';
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
-import { LabIcon } from '@jupyterlab/ui-components';
 import { Widget } from '@lumino/widgets';
 import {
   QuetzFrontEnd,
@@ -8,7 +7,6 @@ import {
 } from '@quetz-frontend/application';
 import { SearchBox } from '@quetz-frontend/apputils';
 import * as React from 'react';
-import * as quetz_logo from '../style/img/quetz-logo.svg';
 import { quetzIcon } from './icons';
 
 /**

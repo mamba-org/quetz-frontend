@@ -1,4 +1,5 @@
 import copy
+import glob
 import json
 import logging
 import os
@@ -8,7 +9,7 @@ from pathlib import Path
 from typing import Optional
 
 import jinja2
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Body, Depends, Header, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
 from quetz import authorization, rest_models
 from quetz.authentication.registry import AuthenticatorRegistry
@@ -17,7 +18,13 @@ from quetz.dao import Dao
 from quetz.deps import get_dao, get_rules, get_session
 
 from .utils import get_extensions_dir, get_federated_extensions
-from .paths import GLOBAL_FRONTEND_DIR, LOCAL_APP_DIR
+from .paths import GLOBAL_FRONTEND_DIR
+from .resources import (
+    Settings,
+    get_frontend_dir,
+    get_frontend_settings,
+    get_index_template,
+)
 
 logger = logging.getLogger("quetz.frontend")
 config = Config()
@@ -30,7 +37,6 @@ ROUTE_PREFIX = "ui"
 config_data = {}
 federated_extensions = []
 
-# Resources getters
 
 @lru_cache(maxsize=1)
 def is_dev_mode() -> bool:
@@ -42,53 +48,54 @@ def is_dev_mode() -> bool:
     return "--reload" in sys.argv
 
 
-@lru_cache(maxsize=1)
-def get_frontend_dir() -> Path:
-    """Get the frontend directory."""
-    if LOCAL_APP_DIR.exists():
-        logger.info("Using local DEVELOPMENT frontend directory.")
-        return LOCAL_APP_DIR
-    elif GLOBAL_FRONTEND_DIR.exists():
-        logger.info("Using global frontend directory.")
-        return GLOBAL_FRONTEND_DIR
-    else:
-        raise RuntimeException(
-            f"Could not find frontend files in:\n- {LOCAL_APP_DIR!s}\n- {GLOBAL_FRONTEND_DIR!s}"
-        )
-
-
-@lru_cache(maxsize=1)
-def get_frontend_settings() -> dict:
-    """Get the frontend settings."""
-    template_path = get_frontend_dir() / "templates"
-    if template_path.exists():
-        # Load settings
-        with (template_path / "settings.json").open() as fi:
-            return json.load(fi)
-    else:
-        return {}
-
-
-@lru_cache(maxsize=1)
-def get_index_template(frontend_dir: Path) -> "jinja2.Template":
-    """Get the Jinja template for index.html"""
-    return jinja2.Template((frontend_dir / "static" / "index.html.j2").read_text())
-
-
 # Endpoint handlers
 
+
 @router.get("/api/settings", include_in_schema=False)
-def get_settings(frontend_settings: dict = Depends(get_frontend_settings)):
-    return frontend_settings
+def get_settings(frontend_settings: Settings = Depends(get_frontend_settings)):
+    return frontend_settings.to_json()
+
+
+@router.get("/api/settings/{extension:path}", include_in_schema=False)
+def get_settings(
+    extension: str, frontend_settings: Settings = Depends(get_frontend_settings)
+):
+    return frontend_settings[extension]
+
+
+@router.put("/api/settings/{extension:path}", include_in_schema=False, status_code=204)
+def put_settings(
+    extension: str,
+    settings: str = Body(...),
+    frontend_settings: Settings = Depends(get_frontend_settings),
+):
+    logger.warn(settings)
+    # Override the settings
+    frontend_settings[extension] = json.loads(settings)["raw"]
+    return {"success": True}
 
 
 @router.get("/themes/{resource:path}", include_in_schema=False)
-def get_theme(resource: str, frontend_dir: Path = Depends(get_frontend_dir)):
+def get_theme(
+    resource: str,
+    frontend_dir: Path = Depends(get_frontend_dir),
+    extensions_dir: Path = get_extensions_dir(),
+):
+    logger.warn(resource)
     path = frontend_dir / "themes" / resource
     if path.exists():
         return FileResponse(path=path)
     else:
-        raise HTTPException(status_code=404)
+        logger.warn(str(extensions_dir))
+        # Path.glob does not follow symlinks
+        for theme_extension in glob.glob(str(extensions_dir) + "/**/themes", recursive=True):
+            # TODO Replace local paths with mangled paths; e.g. `url('../foo.css')`, `url('images/foo.png')`
+            path = Path(theme_extension) / resource
+            logger.warn(str(path))
+            if path.exists():
+                return FileResponse(path)
+
+    raise HTTPException(status_code=404)
 
 
 @router.get("/extensions/{resource:path}", include_in_schema=False)

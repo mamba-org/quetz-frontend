@@ -28,6 +28,7 @@
 
 #top-panel {
   padding: 10px;
+  overflow: visible;
 }
 
 .quetz-main-menu {

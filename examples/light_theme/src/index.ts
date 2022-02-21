@@ -14,7 +14,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
   requires: [IThemeManager],
   activate: (app: QuetzFrontEnd, manager: IThemeManager) => {
     console.log('Quetz Light Theme is activated!');
-    const style = 'light-theme/index.css';
+    const style = '@quetz-example/light-theme/index.css';
 
     manager.register({
       name: 'Quetz Light Theme',
