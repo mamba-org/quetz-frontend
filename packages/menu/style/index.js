@@ -3,6 +3,4 @@
 | Distributed under the terms of the Modified BSD License.
 |----------------------------------------------------------------------------*/
 
-import '@lumino/widgets/style/index.js';
-
-import './base.css';
+import '@jupyterlab/ui-components/style/index.js';

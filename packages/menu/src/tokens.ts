@@ -1,24 +1,31 @@
+import { IRankedMenu } from '@jupyterlab/ui-components';
 import { Token } from '@lumino/coreutils';
+import { ISignal } from '@lumino/signaling';
 
-export type LogInItem = {
-  id: string;
-  label: string;
-  icon: string;
-  api: string;
-  loggedIn: boolean;
+export type Profile = {
+  name: string;
+  avatar_url: string;
+  user: {
+    id: string;
+    username: string;
+  };
 };
 
 /**
  * The main menu token.
  */
-export const ILogInMenu = new Token<ILogInMenu>('quetz/topBar:ILogInMenu');
+export const IMenu = new Token<IMenu>('@quetz-frontend/menu:IMenu');
 
 /**
  * The login menu interface.
  */
-export interface ILogInMenu {
+export interface IMenu extends Omit<IRankedMenu, 'menu'> {
   /**
-   * Add a new menu to the main menu bar.
+   * Logged user profile.
    */
-  addItem(item: LogInItem): void;
+  readonly profile: Profile | null;
+  /**
+   * User profile changed signal.
+   */
+  readonly profileChanged: ISignal<IMenu, Profile | null>;
 }

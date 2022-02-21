@@ -9,7 +9,7 @@ import {
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
 
-import { ILogInMenu } from '@quetz-frontend/menu';
+import { IMenu } from '@quetz-frontend/menu';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -22,27 +22,42 @@ import ChannelDetails from './channels/details';
 import PackageDetails from './package';
 
 /**
- * The command ids used by the main plugin.
+ * The command ids used by the channel plugin.
  */
 export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/channels-extension:channels';
-  export const open = '@quetz-frontend:channels/open';
+  /**
+   * Open channels page
+   */
+  export const open = '@quetz-frontend/channels-extension:open';
+  /**
+   * Go to channels page
+   */
+  export const gotoChannels =
+    '@quetz-frontend/channels-extension:navigate-to-channels';
 }
 
 /**
  * The main plugin.
  */
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: CommandIDs.plugin,
+  id: '@quetz-frontend/channels-extension:plugin',
   autoStart: true,
-  requires: [IRouter, ILogInMenu],
-  activate: (app: QuetzFrontEnd, router: IRouter, menu: ILogInMenu): void => {
+  requires: [IRouter, IMenu],
+  activate: (app: QuetzFrontEnd, router: IRouter, menu: IMenu): void => {
     const { commands, shell } = app;
 
     commands.addCommand(CommandIDs.open, {
+      label: 'Open Channels Panel',
       execute: () => {
-        console.log('This should open channels');
         shell.add(new RouterWidget(), 'main');
+      },
+    });
+
+    commands.addCommand(CommandIDs.gotoChannels, {
+      label: 'Channels',
+      isVisible: () => menu.profile !== null,
+      execute: () => {
+        router.navigate('/channels');
       },
     });
 
@@ -52,11 +67,8 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     menu.addItem({
-      id: CommandIDs.open,
-      label: 'Channels',
-      icon: 'empty',
-      api: '/channels',
-      loggedIn: true,
+      command: CommandIDs.gotoChannels,
+      rank: 200,
     });
   },
 };

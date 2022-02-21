@@ -6,7 +6,7 @@ import {
 
 //import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 
-import { ILogInMenu } from '@quetz-frontend/menu';
+import { IMenu } from '@quetz-frontend/menu';
 
 //import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -20,22 +20,38 @@ import { Jobs } from './jobs';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
+  /**
+   * Open jobs widget
+   */
   export const jobs = '@quetz-frontend:jobs';
+  /**
+   * Go to jobs page
+   */
+  export const goToJobs = '@quetz-frontend:navigate-to-jobs';
 }
 
 /**
  * The main menu plugin.
  */
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: CommandIDs.jobs,
+  id: '@quetz-frontend/jobs-extension:plugin',
   autoStart: true,
-  requires: [IRouter, ILogInMenu],
-  activate: (app: QuetzFrontEnd, router: IRouter, menu: ILogInMenu): void => {
+  requires: [IRouter, IMenu],
+  activate: (app: QuetzFrontEnd, router: IRouter, menu: IMenu): void => {
     const { shell, commands } = app;
 
     commands.addCommand(CommandIDs.jobs, {
+      label: 'Open Jobs Panel',
       execute: () => {
         shell.add(new Jobs(), 'main');
+      },
+    });
+
+    commands.addCommand(CommandIDs.goToJobs, {
+      label: 'Jobs',
+      isVisible: () => menu.profile !== null,
+      execute: () => {
+        router.navigate('/jobs');
       },
     });
 
@@ -45,11 +61,8 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     menu.addItem({
-      id: CommandIDs.jobs,
-      label: 'Jobs',
-      icon: 'empty',
-      api: '/jobs',
-      loggedIn: true,
+      command: CommandIDs.goToJobs,
+      rank: 100,
     });
   },
 };
