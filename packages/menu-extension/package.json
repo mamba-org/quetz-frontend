@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "build": "tsc -b",
-    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "clean:all": "yarn run clean && rimraf node_modules",
     "watch": "tsc -b --watch"
   },
@@ -29,11 +29,14 @@
     "@jupyterlab/application": "^3.2.0",
     "@jupyterlab/apputils": "^3.2.0",
     "@jupyterlab/ui-components": "^3.2.0",
-    "@lumino/messaging": "^1.4.3",
+    "@lumino/commands": "^1.12.0",
+    "@lumino/coreutils": "^1.5.3",
+    "@lumino/signaling": "^1.4.3",
     "@lumino/widgets": "^1.19.0",
     "@quetz-frontend/application": "^0.1.0",
     "@quetz-frontend/apputils": "^0.1.0",
-    "@quetz-frontend/menu": "^0.1.0"
+    "@quetz-frontend/menu": "^0.1.0",
+    "react": "^17.0.1"
   },
   "devDependencies": {
     "rimraf": "~3.0.2",

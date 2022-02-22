@@ -21,11 +21,12 @@
   ],
   "scripts": {
     "build": "tsc -b",
-    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "clean:all": "yarn run clean && rimraf node_modules",
     "watch": "tsc -b --watch"
   },
   "dependencies": {
+    "@jupyterlab/ui-components": "^3.2.0",
     "@quetz-frontend/application": "^0.1.0",
     "@quetz-frontend/menu": "^0.1.0",
     "react": "^17.0.1",

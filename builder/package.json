@@ -29,7 +29,7 @@
   "scripts": {
     "build": "tsc",
     "build:all": "npm run build",
-    "clean": "rimraf lib && rimraf tsconfig.tsbuildinfo",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "watch": "tsc -w --listEmittedFiles"
   },
   "dependencies": {

@@ -1,68 +1,56 @@
+import { IRankedMenu } from '@jupyterlab/ui-components';
 import {
   QuetzFrontEnd,
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
 
-import { ILogInMenu, LogInItem } from '@quetz-frontend/menu';
-
-import github_logo from '../style/img/github-logo.svg';
-
-import google_logo from '../style/img/google-logo.svg';
-
-import azure_logo from '../style/img/azure-logo.svg';
-
-export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/login-extension:login';
-}
+import { IMenu } from '@quetz-frontend/menu';
 
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: CommandIDs.plugin,
+  id: '@quetz-frontend/login-extension:login',
   autoStart: true,
-  requires: [ILogInMenu],
-  activate: (app: QuetzFrontEnd, logInMenu: ILogInMenu): void => {
-    const gitHub: LogInItem = {
-      id: 'gitHub',
-      label: 'GitHub LogIn',
-      icon: github_logo,
-      api: '/auth/github/login',
-      loggedIn: false,
-    };
-
-    const google: LogInItem = {
-      id: 'google',
-      label: 'Google LogIn ',
-      icon: google_logo,
-      api: '/auth/google/login',
-      loggedIn: false,
-    };
-
-    const azuread: LogInItem = {
-      id: 'azuread',
-      label: 'AzureAD LogIn',
-      icon: azure_logo,
-      api: '/auth/azuread/login',
-      loggedIn: false,
+  requires: [IMenu],
+  activate: (app: QuetzFrontEnd, mainMenu: IMenu): void => {
+    const logins: { [k: string]: IRankedMenu.IItemOptions } = {
+      github_login_available: {
+        command: 'menu:login',
+        args: {
+          provider: 'GitHub',
+          api: 'github',
+        },
+      },
+      google_login_available: {
+        command: 'menu:login',
+        args: {
+          provider: 'Google',
+          api: 'google',
+        },
+      },
+      azuread_login_available: {
+        command: 'menu:login',
+        args: {
+          provider: 'AzureAD',
+          api: 'azuread',
+        },
+      },
     };
 
     const config_data = document.getElementById('jupyter-config-data');
     if (config_data) {
+      let rank = 200;
       try {
         const data = JSON.parse(config_data.innerHTML);
-        if (data.github_login_available) {
-          logInMenu.addItem(gitHub);
-        }
-        if (data.google_login_available) {
-          logInMenu.addItem(google);
-        }
-        if (data.azuread_login_available) {
-          logInMenu.addItem(azuread);
+        for (const name in logins) {
+          if (data[name]) {
+            mainMenu.addItem({ ...logins[name], rank: rank++ });
+          }
         }
       } catch (err) {
         console.error(err.message);
         // add both if cannot parse data
-        logInMenu.addItem(gitHub);
-        logInMenu.addItem(google);
-        logInMenu.addItem(azuread);
+        for (const name in logins) {
+          mainMenu.addItem({ ...logins[name], rank: rank++ });
+        }
       }
     }
   },

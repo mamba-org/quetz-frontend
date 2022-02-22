@@ -13,7 +13,7 @@ import {
 
 import { FetchHoc, Breadcrumbs } from '@quetz-frontend/apputils';
 
-import { ILogInMenu } from '@quetz-frontend/menu';
+import { IMenu } from '@quetz-frontend/menu';
 
 import { last, capitalize } from 'lodash';
 
@@ -38,26 +38,41 @@ import UserPackages from './tab-packages';
 import UserChannels from './tab-channels';
 
 /**
- * The command ids used by the main plugin.
+ * The command ids used by the user plugin.
  */
 export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/user-extension:user';
+  /**
+   * Open user page
+   */
   export const open = '@quetz-frontend/user-extension:open';
+  /**
+   * Go to user page
+   */
+  export const gotoUser = '@quetz-frontend/user-extension:navigate-to-user';
 }
 
 /**
- * The main menu plugin.
+ * The user plugin.
  */
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: CommandIDs.plugin,
+  id: '@quetz-frontend/user-extension:plugin',
   autoStart: true,
-  requires: [IRouter, ILogInMenu],
-  activate: (app: QuetzFrontEnd, router: IRouter, menu: ILogInMenu): void => {
+  requires: [IRouter, IMenu],
+  activate: (app: QuetzFrontEnd, router: IRouter, menu: IMenu): void => {
     const { shell, commands } = app;
 
     commands.addCommand(CommandIDs.open, {
+      label: 'Open User Panel',
       execute: () => {
         shell.add(new UserRouter(), 'main');
+      },
+    });
+
+    commands.addCommand(CommandIDs.gotoUser, {
+      label: 'Profile',
+      isVisible: () => menu.profile !== null,
+      execute: () => {
+        router.navigate('/user');
       },
     });
 
@@ -67,11 +82,8 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     menu.addItem({
-      id: CommandIDs.open,
-      label: 'Profile',
-      icon: 'empty',
-      api: '/user',
-      loggedIn: true,
+      command: CommandIDs.gotoUser,
+      rank: 501,
     });
   },
 };
