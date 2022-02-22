@@ -32,8 +32,7 @@
     "@quetz-frontend/application": "^0.1.0",
     "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/table": "^0.1.0",
-    "react": "^17.0.1",
-    "react-tooltip": "^4.2.11"
+    "react": "^17.0.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",

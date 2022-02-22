@@ -26,11 +26,13 @@ export class SearchBox extends React.PureComponent<ISearchBoxProps> {
       <form
         onSubmit={(event: React.FormEvent) => {
           event.preventDefault();
-          const value = (
-            this._searchRef.current?.querySelector('input') as HTMLInputElement
-          )?.value;
+          const input = this._searchRef.current?.querySelector(
+            'input'
+          ) as HTMLInputElement;
+          const value = input?.value;
 
           if (value) {
+            (this._searchRef.current! as any).value = '';
             this.props.onSubmit(value);
           }
         }}

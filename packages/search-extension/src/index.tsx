@@ -1,20 +1,18 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  Button,
+} from '@jupyter-notebook/react-components';
 import { IRouter } from '@jupyterlab/application';
-
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
-
-import { ServerConnection } from '@jupyterlab/services';
-
 import { URLExt } from '@jupyterlab/coreutils';
-
+import { ServerConnection } from '@jupyterlab/services';
 import {
   QuetzFrontEnd,
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
-
-import { FetchHoc, Breadcrumbs } from '@quetz-frontend/apputils';
-
+import { Breadcrumbs, FetchHoc } from '@quetz-frontend/apputils';
 import { Table } from '@quetz-frontend/table';
-
 import * as React from 'react';
 
 /**
@@ -85,28 +83,31 @@ class SearchPage extends ReactWidget {
         accessor: 'name',
         Cell: ({ row }: any) =>
           (
-            <>
-              <a
-                className="link"
-                onClick={() =>
-                  this._route(`/channels/${row.original.channel_name}`)
-                }
-              >
-                {row.original.channel_name}
-              </a>
-              &emsp;/&emsp;
-              <a
-                className="link"
-                onClick={() =>
-                  this._route(
-                    `/channels/${row.original.channel_name}/packages/${row.values.name}`
-                  )
-                }
-              >
-                {row.values.name}
-              </a>
-            </>
-          ) as any,
+            <Breadcrumb>
+              <BreadcrumbItem>
+                <Button
+                  appearance="lightweight"
+                  onClick={() =>
+                    this._route(`/channels/${row.original.channel_name}`)
+                  }
+                >
+                  {row.original.channel_name}
+                </Button>
+              </BreadcrumbItem>
+              <BreadcrumbItem>
+                <Button
+                  appearance="lightweight"
+                  onClick={() =>
+                    this._route(
+                      `/channels/${row.original.channel_name}/packages/${row.values.name}`
+                    )
+                  }
+                >
+                  {row.values.name}
+                </Button>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          ) as JSX.Element,
       },
       {
         Header: 'Summary',

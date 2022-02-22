@@ -1,29 +1,19 @@
-import { IRouter } from '@jupyterlab/application';
-
-import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
-
-import { ServerConnection } from '@jupyterlab/services';
-
-import { URLExt } from '@jupyterlab/coreutils';
-
-import { FetchHoc, formatPlural } from '@quetz-frontend/apputils';
-
-import { List } from '@quetz-frontend/table';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {
   faGlobeAmericas,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tooltip } from '@jupyter-notebook/react-components';
+import { IRouter } from '@jupyterlab/application';
+import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
+import { URLExt } from '@jupyterlab/coreutils';
+import { ServerConnection } from '@jupyterlab/services';
 import {
   QuetzFrontEnd,
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
-
-import ReactTooltip from 'react-tooltip';
-
+import { FetchHoc, formatPlural } from '@quetz-frontend/apputils';
+import { List } from '@quetz-frontend/table';
 import * as React from 'react';
 
 export namespace CommandIDs {
@@ -114,25 +104,25 @@ const getChannelsListColumns = (): any => [
   {
     Header: '',
     accessor: 'name',
-    Cell: ({ row }: any) =>
-      (
+    Cell: ({ row }: any) => {
+      const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+      return (
         <>
           <span
-            data-for={`tooltip-${row.original.name}`}
-            data-tip={row.original.private ? 'Private' : 'Public'}
+            ref={(element) => {
+              setAnchor(element);
+            }}
           >
             <FontAwesomeIcon
               icon={row.original.private ? faUnlockAlt : faGlobeAmericas}
             />
           </span>
-          <ReactTooltip
-            id={`tooltip-${row.original.name}`}
-            place="right"
-            type="dark"
-            effect="solid"
-          />
+          <Tooltip anchorElement={anchor} position="right">
+            {row.original.private ? 'Private' : 'Public'}
+          </Tooltip>
         </>
-      ) as any,
+      ) as any;
+    },
     width: 5,
   },
   {

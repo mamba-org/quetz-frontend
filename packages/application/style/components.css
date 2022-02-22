@@ -110,7 +110,6 @@
   margin-top: 0;
   margin-bottom: 24px;
   font-family: var(--jp-content-font-family);
-  position: relative;
 }
 
 .text {
@@ -118,7 +117,6 @@
   line-height: 22px;
   margin: 0;
   font-family: var(--jp-content-font-family);
-  position: relative;
 }
 
 .minor-paragraph {
