@@ -1,14 +1,17 @@
-import { InlineLoader } from '@quetz-frontend/apputils';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {
   faAngleDoubleLeft,
   faAngleDoubleRight,
   faAngleLeft,
   faAngleRight,
 } from '@fortawesome/free-solid-svg-icons';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  Button,
+  NumberField,
+  Option,
+  Select,
+} from '@jupyter-notebook/react-components';
+import { InlineLoader } from '@quetz-frontend/apputils';
 import * as React from 'react';
 
 export const Pagination = ({
@@ -27,34 +30,38 @@ export const Pagination = ({
   <div className="jp-table-controls">
     <div className="jp-table-controls-left">
       <div className="btn-group">
-        <button
-          className="btn btn-default"
+        <Button
+          title="Go to first page"
+          appearance="stealth"
           onClick={() => gotoPage(0)}
           disabled={!canPreviousPage}
         >
           <FontAwesomeIcon icon={faAngleDoubleLeft} />
-        </button>
-        <button
-          className="btn btn-default"
+        </Button>
+        <Button
+          title="Go to previous page"
+          appearance="stealth"
           onClick={() => previousPage()}
           disabled={!canPreviousPage}
         >
           <FontAwesomeIcon icon={faAngleLeft} />
-        </button>
-        <button
-          className="btn btn-default"
+        </Button>
+        <Button
+          title="Go to next page"
+          appearance="stealth"
           onClick={() => nextPage()}
           disabled={!canNextPage}
         >
           <FontAwesomeIcon icon={faAngleRight} />
-        </button>
-        <button
-          className="btn btn-default"
+        </Button>
+        <Button
+          title="Go to last page"
+          appearance="stealth"
           onClick={() => gotoPage(pageCount - 1)}
           disabled={!canNextPage}
         >
           <FontAwesomeIcon icon={faAngleDoubleRight} />
-        </button>
+        </Button>
       </div>
       <div className="jp-table-controls-text">
         {loading ? (
@@ -73,11 +80,10 @@ export const Pagination = ({
     <div className="jp-table-controls-right jp-table-controls-text">
       <p className="paragraph padding-side">
         Go to page: &emsp;
-        <input
-          className="input"
-          type="number"
+        <NumberField
           value={pageIndex + 1}
           onChange={(e) => {
+            // @ts-expect-error target has value
             const page = e.target.value ? Number(e.target.value) - 1 : 0;
             gotoPage(page);
           }}
@@ -85,19 +91,24 @@ export const Pagination = ({
         />
       </p>
       <p className="paragraph padding-side">
-        <select
-          className="btn btn-default"
+        <Select
+          // @ts-expect-error unknown value in typing
           value={pageSize}
           onChange={(e) => {
+            // @ts-expect-error target has value
             setPageSize(Number(e.target.value));
           }}
         >
           {[25, 50, 100].map((pageSize) => (
-            <option key={pageSize} value={pageSize} defaultValue="25">
+            <Option
+              key={pageSize}
+              value={pageSize.toString()}
+              defaultValue="25"
+            >
               Show {pageSize}
-            </option>
+            </Option>
           ))}
-        </select>
+        </Select>
       </p>
     </div>
   </div>

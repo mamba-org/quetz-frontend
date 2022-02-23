@@ -20,6 +20,7 @@ class PackageMembers extends React.PureComponent<any, any> {
       '/members'
     );
 
+    // TODO use a proper table
     return (
       <FetchHoc
         url={url}

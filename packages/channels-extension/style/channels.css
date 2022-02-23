@@ -27,36 +27,6 @@
   width: 100%;
 }
 
-.channel-icon-column {
-  width: 5%;
-}
-
-.channel-name-column {
-  width: 45%;
-}
-
-.channel-packages-column {
-  width: 35%;
-}
-
-.channel-members-column {
-  width: 20%;
-}
-
-.api-key-table {
-  width: 100%;
-}
-
-.api-key-row {
-  display: flex;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.api-key-row:first-child {
-  border-bottom: 1px solid #ffffff;
-}
-
 .member-icon-column {
   width: 10%;
 }

@@ -13,16 +13,13 @@
   width: 100%;
 }
 
-.user-img {
-  margin: auto;
-  width: 30px;
-  height: 30px;
-  border-radius: 90px;
-  fill: var(--jp-quetz-primary-color);
-  color: var(--jp-quetz-primary-color);
-}
-
 .topbar-item {
+  height: 100%;
+  margin: auto;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+
   font-weight: bold;
   padding: 0 20px;
 }

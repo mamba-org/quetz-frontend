@@ -10,18 +10,6 @@
   align-items: center;
 }
 
-.package-files-text {
-  padding-left: 80px;
-}
-
-.package-people-name-column {
-  width: 65%;
-}
-
-.package-people-role-column {
-  width: 20%;
-}
-
 .package-platform-noarch {
   padding-right: 25px;
   display: flex;
