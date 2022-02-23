@@ -75,52 +75,6 @@
 /**********************
         Button
  **********************/
-.btn {
-  font-size: 16px;
-  line-height: 22px;
-  padding: 7px 20px;
-  cursor: pointer;
-  border: 0;
-  border-radius: 6px;
-  transition: background-color 0.5s ease;
-}
-
-.btn:disabled,
-.btn[disabled] {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.btn-transparent {
-  background-color: transparent;
-  color: inherit;
-}
-
-.btn-transparent:hover {
-  background-color: var(--jp-layout-color2);
-  color: inherit;
-}
-
-.btn-default {
-  color: var(--jp-ui-font-color1);
-  background-color: var(--jp-layout-color1);
-}
-
-.btn-default:hover {
-  color: var(--jp-ui-font-color2);
-  background-color: var(--jp-layout-color2);
-}
-
-.btn-primary {
-  color: var(--jp-ui-inverse-font-color1);
-  background-color: var(--jp-brand-color1);
-}
-
-.btn-primary:hover {
-  color: var(--jp-ui-inverse-font-color2);
-  background-color: var(--jp-brand-color2);
-}
-
 .btn-group {
   display: flex;
   align-items: center;
@@ -128,32 +82,4 @@
 
 .btn-group jp-button {
   margin: 0 4px;
-}
-
-.btn-group .btn,
-.btn-group .input {
-  border-radius: 0;
-  border-right: 1px solid transparent;
-}
-
-.btn-group .btn:first-child,
-.btn-group .input:first-child {
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  /*border-radius: 6px 0 0 6px;*/
-}
-
-.btn-group .btn:last-child,
-.btn-group .input:last-child {
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  /*border-radius: 0 6px 6px 0;*/
-  border-right: 0;
-}
-
-/**********************
-      Breadcrumbs
- **********************/
-.breadcrumbs {
-  margin-bottom: 12px;
 }

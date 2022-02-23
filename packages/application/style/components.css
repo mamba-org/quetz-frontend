@@ -49,19 +49,6 @@
   padding: 20px;
 }
 
-.margin-bottom {
-  margin-bottom: 20px;
-}
-
-.margin-side {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.margin {
-  margin: 20px;
-}
-
 .page-contents-width-limit {
   width: 100%;
   max-width: 1100px;
@@ -69,10 +56,6 @@
   padding-top: 60px;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.half-width {
-  width: 50%;
 }
 
 .full-width {
@@ -83,13 +66,6 @@
       Text styles
  **********************/
 /* TODO: Letter spacing for text */
-.heading1 {
-  font-size: var(--jp-content-font-size5);
-  line-height: 68px;
-  margin-top: 0;
-  font-family: var(--jp-content-font-family);
-}
-
 .heading2 {
   font-size: var(--jp-content-font-size4);
   line-height: 50px;
@@ -128,23 +104,6 @@
   font-family: var(--jp-content-font-family);
 }
 
-.minor-text {
-  font-size: var(--jp-content-font-size0);
-  line-height: 20px;
-  margin: 0;
-  font-family: var(--jp-content-font-family);
-}
-
-.caption {
-  font-size: var(--jp-content-font-size0);
-  line-height: 20px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  margin-top: 0;
-  color: var(--jp-brand-color1);
-  font-family: var(--jp-content-font-family);
-}
-
 .caption-inline {
   font-size: var(--jp-content-font-size0);
   line-height: 20px;
@@ -165,42 +124,8 @@
   font-family: var(--jp-content-font-family);
 }
 
-.annotation {
-  font-size: var(--jp-content-font-size0);
-  line-height: 17px;
-  margin-bottom: 0;
-  font-family: var(--jp-content-font-family);
-}
-
-.annotation-text {
-  font-size: var(--jp-content-font-size0);
-  line-height: 17px;
-  margin: 0;
-  font-family: var(--jp-content-font-family);
-}
-
 .profile-icon {
   width: 34px;
   height: 34px;
   border-radius: 50%;
-}
-
-/**********************
-        Topbar
- **********************/
-
-.topbar-item {
-  height: 100%;
-  margin: auto;
-  margin-right: 10px;
-  display: flex;
-  align-items: center;
-
-  font-weight: bold;
-  padding: 0 20px;
-}
-
-.topbar-item-content {
-  margin: auto;
-  margin-right: 10px;
 }

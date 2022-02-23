@@ -8,5 +8,3 @@ import '@jupyterlab/apputils/style/index.js';
 import '@quetz-frontend/application/style/index.js';
 import '@quetz-frontend/apputils/style/index.js';
 import '@quetz-frontend/table/style/index.js';
-
-import './base.css';

@@ -19,15 +19,14 @@ import * as React from 'react';
  * The command ids used by the main plugin.
  */
 export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/search-extension:search';
-  export const open = '@quetz-frontend/search-extension:search/open';
+  export const open = '@quetz-frontend/search-extension:open';
 }
 
 /**
  * The main menu plugin.
  */
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: CommandIDs.plugin,
+  id: '@quetz-frontend/search-extension:plugin',
   autoStart: true,
   requires: [IRouter],
   activate: (app: QuetzFrontEnd, router: IRouter): void => {

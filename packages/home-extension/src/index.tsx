@@ -17,12 +17,11 @@ import { List } from '@quetz-frontend/table';
 import * as React from 'react';
 
 export namespace CommandIDs {
-  export const plugin = '@quetz-frontend/home-extension:home';
-  export const open = '@quetz-frontend/home-extension:home/open';
+  export const open = '@quetz-frontend/home-extension:open';
 }
 
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: CommandIDs.plugin,
+  id: '@quetz-frontend/home-extension:plugin',
   autoStart: true,
   requires: [IRouter],
   activate: (app: QuetzFrontEnd, router: IRouter): void => {

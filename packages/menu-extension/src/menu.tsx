@@ -16,18 +16,18 @@ namespace CommandIDs {
   /**
    * Login using a given provider
    */
-  export const login = 'menu:login';
+  export const login = '@quetz-frontend/menu-extension:login';
   /**
    * Logout the current user
    */
-  export const logout = 'menu:logout';
+  export const logout = '@quetz-frontend/menu-extension:logout';
 }
 
 /**
  * The menu plugin.
  */
 export const menu: QuetzFrontEndPlugin<IMenu> = {
-  id: '@quetz-frontend/menu-extension:topBar/menu',
+  id: '@quetz-frontend/menu-extension:menu',
   autoStart: true,
   requires: [IRouter],
   provides: IMenu,
