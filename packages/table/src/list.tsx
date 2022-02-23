@@ -84,13 +84,6 @@ export const List = ({
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
   const showPaginationInformation = dataSize > pageSize;
 
-  const route = (path: string) => {
-    if (path) {
-      //@ts-ignore
-      window.router.navigate(path);
-    }
-  };
-
   return (
     <>
       <div {...getTableProps()} className="table">
@@ -125,7 +118,11 @@ export const List = ({
                 className={clsx('tr', 'list-row', {
                   clickable: !!to,
                 })}
-                onClick={() => route(to ? to(row.original) : null)}
+                onClick={() => {
+                  if (to) {
+                    to(row.original);
+                  }
+                }}
               >
                 {row.cells.map((cell: any) => {
                   return (

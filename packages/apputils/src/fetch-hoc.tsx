@@ -1,13 +1,27 @@
+import { Button } from '@jupyter-notebook/react-components';
 import { ServerConnection } from '@jupyterlab/services';
-
 import * as React from 'react';
-
 import { API_STATUSES } from './constants';
-
 import { InlineLoader } from './loader';
 
-export class FetchHoc extends React.PureComponent<any, any> {
-  constructor(props: any) {
+export interface IFetchHocProps<T> {
+  url: string;
+  children: (data: T) => React.ReactNode;
+  loadingMessage: string;
+  genericErrorMessage: string;
+}
+
+export interface IFetchHocState {
+  data: any | null;
+  apiStatus: API_STATUSES;
+  error: string;
+}
+
+export class FetchHoc<T> extends React.PureComponent<
+  IFetchHocProps<T>,
+  IFetchHocState
+> {
+  constructor(props: IFetchHocProps<T>) {
     super(props);
     this.state = {
       data: null,
@@ -53,11 +67,11 @@ export class FetchHoc extends React.PureComponent<any, any> {
     if (apiStatus === API_STATUSES.FAILED) {
       return (
         <p className="paragraph padding">
-          {error || genericErrorMessage || 'Error occured while fetching data'}
+          {error || genericErrorMessage || 'Error occurred while fetching data'}
           &emsp;
-          <button className="btn btn-inline" onClick={this.tryFetch}>
+          <Button appearance="lightweight" onClick={this.tryFetch}>
             Try again
-          </button>
+          </Button>
         </p>
       );
     }

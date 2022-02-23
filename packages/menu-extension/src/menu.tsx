@@ -1,6 +1,7 @@
+import { Avatar, Button } from '@jupyter-notebook/react-components';
 import { IRouter } from '@jupyterlab/application';
 import { ReactWidget, UseSignal } from '@jupyterlab/apputils';
-import { IRankedMenu, LabIcon, RankedMenu } from '@jupyterlab/ui-components';
+import { IRankedMenu, MenuSvg, RankedMenu } from '@jupyterlab/ui-components';
 import { JSONExt } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import {
@@ -9,7 +10,7 @@ import {
 } from '@quetz-frontend/application';
 import { IMenu, Profile } from '@quetz-frontend/menu';
 import * as React from 'react';
-import * as avatar_icon from '../style/img/avatar-icon.svg';
+import { avatarIcon } from './icons';
 
 namespace CommandIDs {
   /**
@@ -132,37 +133,35 @@ export class MenuButton extends ReactWidget {
     return (
       <UseSignal signal={this._menu.profileChanged}>
         {() => {
-          if (this._menu.profile) {
-            return (
-              <div>
-                <a onClick={this._onClick}>
-                  <img
-                    className="user-img"
-                    src={this._menu.profile.avatar_url}
-                    alt="avatar"
-                  />
-                </a>
-              </div>
-            );
-          } else {
-            const avatar = new LabIcon({
-              name: 'avatar_icon',
-              svgstr: avatar_icon.default,
-            });
-
-            return (
-              <div>
-                <a onClick={this._onClick}>
-                  <avatar.react
-                    className="user-img"
+          const isAnonymous = !this._menu.profile;
+          const profile = this._menu.profile ?? {
+            name: 'Anonymous',
+            avatar_url: '',
+          };
+          return (
+            <div>
+              <Button
+                appearance="stealth"
+                aria-label={`User Menu: ${profile.name}`}
+                onClick={this._onClick}
+              >
+                {isAnonymous ? (
+                  <avatarIcon.react
+                    className="anonymous-icon"
                     tag="span"
                     width="28px"
                     height="28px"
                   />
-                </a>
-              </div>
-            );
-          }
+                ) : (
+                  <Avatar
+                    src={profile.avatar_url}
+                    shape="circle"
+                    alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
+                  ></Avatar>
+                )}
+              </Button>
+            </div>
+          );
         }}
       </UseSignal>
     );
@@ -175,7 +174,10 @@ export class MenuButton extends ReactWidget {
  */
 function activateMenu(app: QuetzFrontEnd): IMenu {
   // Add menu
-  const menu = new MainMenu({ commands: app.commands });
+  const menu = new MainMenu({
+    commands: app.commands,
+    renderer: MenuSvg.defaultRenderer,
+  });
   menu.addClass('quetz-main-menu');
   const menuButton = new MenuButton(menu);
 
@@ -199,7 +201,7 @@ function activateMenu(app: QuetzFrontEnd): IMenu {
     },
   });
 
-  app.shell.add(menuButton, 'top', { rank: 19999 });
+  app.shell.add(menuButton, 'top', { rank: 100 });
 
   menu.addItem({ type: 'separator', rank: 500 });
   menu.addItem({ type: 'separator', rank: 1000 });

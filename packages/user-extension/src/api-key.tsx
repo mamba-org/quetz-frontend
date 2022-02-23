@@ -19,6 +19,7 @@ import * as React from 'react';
 import { RequestAPIKeyDialog, APIKeyDialog } from './apiKeyDialog';
 
 import { APIKey, Role } from './types';
+import { Button } from '@jupyter-notebook/react-components';
 
 type APIKeyState = {
   apiKeys: APIKey[];
@@ -132,11 +133,25 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
               </td>
               <td>{item.time_created}</td>
               <td>{item.expire_at}</td>
-              <td onClick={() => copyToClipboard(item.key, 'API key')}>
-                <FontAwesomeIcon icon={faCopy} />
-              </td>
-              <td onClick={() => this._removeAPIKey(item.key)}>
-                <FontAwesomeIcon icon={faTrash} />
+              <td>
+                <Button
+                  aria-label="Copy API key"
+                  title="Copy API key"
+                  appearance="stealth"
+                  minimal
+                  onClick={() => copyToClipboard(item.key, 'API key')}
+                >
+                  <FontAwesomeIcon icon={faCopy} />
+                </Button>
+                <Button
+                  aria-label="Delete API key"
+                  title="Delete API key"
+                  appearance="stealth"
+                  minimal
+                  onClick={() => this._removeAPIKey(item.key)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
               </td>
             </tr>
           );
@@ -170,9 +185,9 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
     return (
       <div>
         <div className="padding-bottom">
-          <button className="btn btn-default" onClick={this._requestApiKey}>
+          <Button appearance="neutral" onClick={this._requestApiKey}>
             Request API key
-          </button>
+          </Button>
         </div>
         <h3 className="heading3">API keys</h3>
         {apiStatus === API_STATUSES.PENDING && (
@@ -186,8 +201,7 @@ class UserAPIKey extends React.PureComponent<any, APIKeyState> {
                 <th>Description</th>
                 <th>Created</th>
                 <th>Expires</th>
-                <th></th>
-                <th></th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>

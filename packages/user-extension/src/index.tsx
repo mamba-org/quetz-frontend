@@ -1,3 +1,5 @@
+import { Tabs, Tab, TabPanel } from '@jupyter-notebook/react-components';
+
 import { IRouter } from '@jupyterlab/application';
 
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
@@ -14,18 +16,6 @@ import {
 import { FetchHoc, Breadcrumbs } from '@quetz-frontend/apputils';
 
 import { IMenu } from '@quetz-frontend/menu';
-
-import { last, capitalize } from 'lodash';
-
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-  NavLink,
-} from 'react-router-dom';
-
-import { ReactNotifications } from 'react-notifications-component';
 
 import * as React from 'react';
 
@@ -61,10 +51,27 @@ const plugin: QuetzFrontEndPlugin<void> = {
   activate: (app: QuetzFrontEnd, router: IRouter, menu: IMenu): void => {
     const { shell, commands } = app;
 
+    const connectionSettings = ServerConnection.makeSettings();
+    const url = URLExt.join(connectionSettings.baseUrl, '/api/me');
+
     commands.addCommand(CommandIDs.open, {
       label: 'Open User Panel',
       execute: () => {
-        shell.add(new UserRouter(), 'main');
+        const userWidget = ReactWidget.create(
+          <FetchHoc
+            url={url}
+            loadingMessage="Fetching user information"
+            genericErrorMessage="Error fetching user information"
+          >
+            {(userData: any) => (
+              <UserDetails router={router} userData={userData}></UserDetails>
+            )}
+          </FetchHoc>
+        );
+        userWidget.id = DOMUtils.createDomID();
+        userWidget.title.label = 'User main page';
+
+        shell.add(userWidget, 'main');
       },
     });
 
@@ -77,7 +84,7 @@ const plugin: QuetzFrontEndPlugin<void> = {
     });
 
     router.register({
-      pattern: /user.*/,
+      pattern: /^\/user.*/,
       command: CommandIDs.open,
     });
 
@@ -90,90 +97,110 @@ const plugin: QuetzFrontEndPlugin<void> = {
 
 export default plugin;
 
-const getBreadcrumbText = () => {
-  const currentSection = last(window.location.pathname.split('/'));
-  if (currentSection === 'api-keys') {
-    return 'API keys';
-  }
-  return capitalize(currentSection);
-};
+enum UserTabs {
+  Profile = 'profile',
+  Channels = 'channels',
+  Packages = 'packages',
+  ApiKeys = 'api-keys',
+}
+interface IUserDetailsState {
+  selectedTabId: string;
+}
 
-class UserRouter extends ReactWidget {
-  constructor() {
-    super();
-    this.id = DOMUtils.createDomID();
-    this.title.label = 'User main page';
+interface IUserDetailsProps {
+  router: IRouter;
+  userData: any;
+}
+
+class UserDetails extends React.PureComponent<
+  IUserDetailsProps,
+  IUserDetailsState
+> {
+  constructor(props: IUserDetailsProps) {
+    super(props);
+
+    const pathFragments = window.location.pathname.split('/');
+    const target =
+      pathFragments.length > 0
+        ? pathFragments[pathFragments.length - 1]
+        : UserTabs.Profile;
+
+    this.state = {
+      selectedTabId: target ?? UserTabs.Profile,
+    };
   }
 
-  render() {
-    const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/me');
+  setTabId = (selectedTabId: any) => {
+    this.setState({
+      selectedTabId,
+    });
+    const pathFragments = window.location.pathname.split('/');
+    if (
+      !Object.values(UserTabs).includes(
+        pathFragments[pathFragments.length - 1] as UserTabs
+      )
+    ) {
+      pathFragments.push(selectedTabId);
+    } else {
+      pathFragments[pathFragments.length - 1] = selectedTabId;
+    }
+    history.pushState(null, '', pathFragments.join('/'));
+  };
+
+  render(): JSX.Element {
+    const { selectedTabId } = this.state;
+    const { userData } = this.props;
 
     const breadcrumbItems = [
       {
         text: 'Home',
-        href: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'User details',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/user');
+        },
       },
       {
-        text: getBreadcrumbText(),
+        text: selectedTabId,
       },
     ];
 
     return (
-      <Router basename="/user">
-        <ReactNotifications />
-        <div className="page-contents-width-limit">
-          <Breadcrumbs items={breadcrumbItems} />
-          <h2 className="heading2">User details</h2>
-          <div className="left-right">
-            <div className="leftbar">
-              <NavLink className="leftbar-item" to="/profile">
-                Profile
-              </NavLink>
-              <NavLink className="leftbar-item" to="/api-keys">
-                API key
-              </NavLink>
-              <NavLink className="leftbar-item" to="/channels">
-                Channels
-              </NavLink>
-              <NavLink className="leftbar-item" to="/packages">
-                Packages
-              </NavLink>
-            </div>
-            <div className="right-section">
-              <FetchHoc
-                url={url}
-                loadingMessage="Fetching user information"
-                genericErrorMessage="Error fetching user information"
-              >
-                {(userData: any) => (
-                  <Switch>
-                    <Route path="/profile">
-                      <UserProfile userData={userData} />
-                    </Route>
-                    <Route path="/api-keys">
-                      <UserAPIKey />
-                    </Route>
-                    <Route path="/channels">
-                      <UserChannels username={userData.user.username} />
-                    </Route>
-                    <Route path="/packages">
-                      <UserPackages username={userData.user.username} />
-                    </Route>
-                    <Route path="/" exact>
-                      <Redirect to="/profile" />
-                    </Route>
-                  </Switch>
-                )}
-              </FetchHoc>
-            </div>
-          </div>
-        </div>
-      </Router>
+      <div className="page-contents-width-limit">
+        <Breadcrumbs items={breadcrumbItems} />
+        <h2 className="heading2">User Details</h2>
+        <Tabs
+          orientation="vertical"
+          activeid={`user-${selectedTabId}`}
+          onChange={(event) => {
+            this.setTabId(
+              // Remove head `user-`
+              ((event.target as any).activeid as string).slice(5)
+            );
+          }}
+        >
+          <Tab id="user-profile">Profile</Tab>
+          <Tab id="user-api-keys">API keys</Tab>
+          <Tab id="user-channels">Channels</Tab>
+          <Tab id="user-packages">Packages</Tab>
+          <TabPanel>
+            <UserProfile userData={userData} />
+          </TabPanel>
+          <TabPanel>
+            <UserAPIKey />
+          </TabPanel>
+          <TabPanel>
+            <UserChannels username={userData.user.username} />
+          </TabPanel>
+          <TabPanel>
+            <UserPackages username={userData.user.username} />
+          </TabPanel>
+        </Tabs>
+      </div>
     );
   }
 }

@@ -1,76 +1,79 @@
+import { Tab, TabPanel, Tabs } from '@jupyter-notebook/react-components';
+import { IRouter } from '@jupyterlab/application';
 import { Breadcrumbs } from '@quetz-frontend/apputils';
-
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-
-import { withRouter } from 'react-router-dom';
-
-import 'react-tabs/style/react-tabs.css';
-
 import * as React from 'react';
-
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import PackageDetailsApiKeys from './tab-api-keys';
 import PackageInfo from './tab-info';
-
 import PackageMembers from './tab-members';
 
-import PackageDetailsApiKeys from './tab-api-keys';
+export enum PackageTabs {
+  Info = 'info',
+  Members = 'members',
+  ApiKeys = 'api-keys',
+}
+export interface IPackageDetailsState {
+  selectedTabId: string;
+}
 
-const PACKAGE_TABS = {
-  INFO: 0,
-  MEMBERS: 1,
-  API_KEYS: 2,
-};
+export interface IPackageDetailsProps extends RouteComponentProps {
+  router: IRouter;
+}
 
-const HASH_TO_INDEX: Record<string, number> = {
-  info: 0,
-  members: 1,
-  api_keys: 2,
-};
-
-const INDEX_TO_HASH: Record<number, string> = {
-  0: 'info',
-  1: 'members',
-  2: 'api_keys',
-};
-
-class PackageDetails extends React.PureComponent<any, any> {
-  constructor(props: any) {
+class PackageDetails extends React.PureComponent<
+  IPackageDetailsProps,
+  IPackageDetailsState
+> {
+  constructor(props: IPackageDetailsProps) {
     super(props);
-    const locationHash = (window.location.hash || '#info').substring(1);
+    const locationHash = (
+      window.location.hash || `#${PackageTabs.Info}`
+    ).substring(1);
     this.state = {
-      selectedTabIndex: HASH_TO_INDEX[locationHash] || PACKAGE_TABS.INFO,
+      selectedTabId: locationHash ?? PackageTabs.Info,
     };
   }
 
-  setTabIndex = (selectedTabIndex: any) => {
+  setTabId = (selectedTabId: any) => {
     this.setState({
-      selectedTabIndex,
+      selectedTabId,
     });
-    history.pushState(null, '', `#${INDEX_TO_HASH[selectedTabIndex]}`);
+    history.pushState(null, '', `#${selectedTabId}`);
   };
 
   render(): JSX.Element {
-    const { selectedTabIndex } = this.state;
+    const { selectedTabId } = this.state;
     const {
-      match: {
-        params: { channelId, packageId },
-      },
+      match: { params },
     } = this.props;
+    const { channelId, packageId } = params as {
+      channelId: string;
+      packageId: string;
+    };
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'Channels',
-        link: '/channels',
+        onClick: () => {
+          this.props.router.navigate('/channels');
+        },
       },
       {
         text: channelId,
-        link: `/channels/${channelId}`,
+        onClick: () => {
+          this.props.router.navigate(`/channels/${channelId}`);
+        },
       },
       {
         text: 'packages',
-        link: `/channels/${channelId}?tab=packages`,
+        onClick: () => {
+          this.props.router.navigate(`/channels/${channelId}?tab=packages`);
+        },
       },
       {
         text: packageId,
@@ -83,12 +86,18 @@ class PackageDetails extends React.PureComponent<any, any> {
         <h2 className="heading2">
           {channelId}/{packageId}
         </h2>
-        <Tabs selectedIndex={selectedTabIndex} onSelect={this.setTabIndex}>
-          <TabList>
-            <Tab>Info</Tab>
-            <Tab>Members</Tab>
-            <Tab>API keys</Tab>
-          </TabList>
+        <Tabs
+          activeid={`package-${selectedTabId}`}
+          onChange={(event) => {
+            this.setTabId(
+              // Remove head `package-`
+              ((event.target as any).activeid as string).slice(8)
+            );
+          }}
+        >
+          <Tab id={`package-${PackageTabs.Info}`}>Info</Tab>
+          <Tab id={`package-${PackageTabs.Members}`}>Members</Tab>
+          <Tab id={`package-${PackageTabs.ApiKeys}`}>API keys</Tab>
           <TabPanel>
             <PackageInfo />
           </TabPanel>

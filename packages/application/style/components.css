@@ -10,10 +10,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  font-family: 'Open Sans', sans-serif;
-}
-
 .table-small {
   font-size: 14px;
   border-collapse: collapse;
@@ -24,12 +20,12 @@ body {
 }
 
 .link {
-  color: var(--jp-quetz-primary-color);
+  color: var(--jp-brand-color1);
   text-decoration: none;
 }
 
-.link:hover {
-  color: var(--jp-quetz-primary-color);
+.link:hover,
+.link:focus {
   text-decoration: underline;
 }
 
@@ -88,101 +84,99 @@ body {
  **********************/
 /* TODO: Letter spacing for text */
 .heading1 {
-  font-size: 54px;
+  font-size: var(--jp-content-font-size5);
   line-height: 68px;
   margin-top: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .heading2 {
-  font-size: 40px;
+  font-size: var(--jp-content-font-size4);
   line-height: 50px;
   margin-top: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .heading3 {
-  font-size: 28px;
+  font-size: var(--jp-content-font-size3);
   line-height: 36px;
   margin-top: 0;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .paragraph {
-  font-size: 16px;
+  font-size: var(--jp-content-font-size1);
   line-height: 22px;
   margin-top: 0;
   margin-bottom: 24px;
-  font-family: 'Open Sans', sans-serif;
-  position: relative;
+  font-family: var(--jp-content-font-family);
 }
 
 .text {
-  font-size: 16px;
+  font-size: var(--jp-content-font-size1);
   line-height: 22px;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  position: relative;
+  font-family: var(--jp-content-font-family);
 }
 
 .minor-paragraph {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 22px;
   margin-top: 0;
   margin-bottom: 24px;
-  color: #bdbdbd;
-  font-family: 'Open Sans', sans-serif;
+  color: var(--jp-ui-font-color2);
+  font-family: var(--jp-content-font-family);
 }
 
 .minor-text {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 20px;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .caption {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 20px;
   margin-bottom: 10px;
   text-transform: uppercase;
   margin-top: 0;
-  color: var(--jp-quetz-primary-color);
-  font-family: 'Source Sans Pro', sans-serif;
+  color: var(--jp-brand-color1);
+  font-family: var(--jp-content-font-family);
 }
 
 .caption-inline {
-  font-size: 14px;
+  font-size: var(--jp-content-font-size0);
   line-height: 20px;
   margin-top: 0;
   margin-bottom: 6px;
   text-transform: uppercase;
   color: inherit;
   font-weight: bold;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .section-heading {
-  font-size: 18px;
+  font-size: var(--jp-content-font-size2);
   line-height: 20px;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 6px;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .annotation {
-  font-size: 12px;
+  font-size: var(--jp-content-font-size0);
   line-height: 17px;
   margin-bottom: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .annotation-text {
-  font-size: 12px;
+  font-size: var(--jp-content-font-size0);
   line-height: 17px;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--jp-content-font-family);
 }
 
 .profile-icon {
@@ -194,111 +188,19 @@ body {
 /**********************
         Topbar
  **********************/
+
 .topbar-item {
   height: 100%;
   margin: auto;
   margin-right: 10px;
   display: flex;
   align-items: center;
+
+  font-weight: bold;
+  padding: 0 20px;
 }
 
 .topbar-item-content {
   margin: auto;
   margin-right: 10px;
-}
-
-.topbar-spacer {
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
-.topbar-search-wrapper {
-  max-width: 400px;
-  margin: 0 10px;
-}
-
-.topbar-item {
-  font-weight: bold;
-  padding: 0 20px;
-}
-
-/**********************
-        Tabs
- **********************/
-.react-tabs__tab-list {
-  padding: 0 5px !important;
-  border-bottom: 1px solid #404040 !important;
-  margin: 0 !important;
-}
-
-.react-tabs__tab {
-  padding: 10px 30px !important;
-  color: #aaaaaa;
-  font-size: 16px;
-  font-family: 'Open Sans', sans-serif;
-  background-color: transparent;
-  border: 0 !important;
-}
-
-.react-tabs__tab:hover {
-  color: var(--jp-quetz-primary-color);
-}
-
-.react-tabs__tab.react-tabs__tab--selected {
-  background-color: #404040;
-  color: var(--jp-quetz-primary-color);
-}
-
-/**********************
-        Leftbar
- **********************/
-.leftbar {
-  width: 200px;
-  border-radius: 6px;
-  background-color: #404040;
-  flex-grow: 0;
-  padding: 4px 0;
-  position: relative;
-}
-
-.leftbar-item {
-  text-align: left;
-  border: 0;
-  background-color: transparent;
-  width: 100%;
-  padding: 7px 20px;
-  border-radius: 0;
-  color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
-  margin: 8px 0;
-  position: relative;
-  display: block;
-}
-
-.leftbar-item.active {
-  color: var(--jp-quetz-primary-color);
-  font-weight: bold;
-}
-
-.leftbar-item.active::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: var(--jp-quetz-primary-color);
-}
-
-.left-right {
-  display: flex;
-  align-items: flex-start;
-}
-
-.right-section {
-  flex-grow: 1;
-  padding-left: 76px;
-  display: flex;
-  flex-direction: column;
 }

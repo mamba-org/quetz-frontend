@@ -1,13 +1,15 @@
 import copy
+import glob
 import json
 import logging
 import os
+import sys
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
 import jinja2
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Body, Depends, Header, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
 from quetz import authorization, rest_models
 from quetz.authentication.registry import AuthenticatorRegistry
@@ -16,7 +18,13 @@ from quetz.dao import Dao
 from quetz.deps import get_dao, get_rules, get_session
 
 from .utils import get_extensions_dir, get_federated_extensions
-from .paths import GLOBAL_FRONTEND_DIR, LOCAL_APP_DIR
+from .paths import GLOBAL_FRONTEND_DIR
+from .resources import (
+    Settings,
+    get_frontend_dir,
+    get_frontend_settings,
+    get_index_template,
+)
 
 logger = logging.getLogger("quetz.frontend")
 config = Config()
@@ -27,41 +35,67 @@ catchall_router = APIRouter()
 ROUTE_PREFIX = "ui"
 
 config_data = {}
-index_template = None
 federated_extensions = []
 
 
 @lru_cache(maxsize=1)
-def get_frontend_settings() -> dict:
-    return {}
+def is_dev_mode() -> bool:
+    """Whether the server run in dev mode or not.
+
+    The application is considered in dev mode if the
+    ``--reload`` cli option is set.
+    """
+    return "--reload" in sys.argv
 
 
-@lru_cache(maxsize=1)
-def get_frontend_dir() -> Path:
-    if LOCAL_APP_DIR.exists():
-        logger.info("Using local DEVELOPMENT frontend directory.")
-        return LOCAL_APP_DIR
-    elif GLOBAL_FRONTEND_DIR.exists():
-        logger.info("Using global frontend directory.")
-        return GLOBAL_FRONTEND_DIR
-    else:
-        raise RuntimeException(
-            f"Could not find frontend files in:\n- {LOCAL_APP_DIR!s}\n- {GLOBAL_FRONTEND_DIR!s}"
-        )
+# Endpoint handlers
 
 
 @router.get("/api/settings", include_in_schema=False)
-def get_settings():
-    return frontend_settings
+def get_settings(frontend_settings: Settings = Depends(get_frontend_settings)):
+    return frontend_settings.to_json()
+
+
+@router.get("/api/settings/{extension:path}", include_in_schema=False)
+def get_settings(
+    extension: str, frontend_settings: Settings = Depends(get_frontend_settings)
+):
+    return frontend_settings[extension]
+
+
+@router.put("/api/settings/{extension:path}", include_in_schema=False, status_code=204)
+def put_settings(
+    extension: str,
+    settings: str = Body(...),
+    frontend_settings: Settings = Depends(get_frontend_settings),
+):
+    logger.warn(settings)
+    # Override the settings
+    frontend_settings[extension] = json.loads(settings)["raw"]
+    return {"success": True}
 
 
 @router.get("/themes/{resource:path}", include_in_schema=False)
-def get_theme(resource: str, frontend_dir: Path = Depends(get_frontend_dir)):
+def get_theme(
+    resource: str,
+    frontend_dir: Path = Depends(get_frontend_dir),
+    extensions_dir: Path = get_extensions_dir(),
+):
+    logger.warn(resource)
     path = frontend_dir / "themes" / resource
-    if path.exists() and under_frontend_dir(frontend_dir, path):
+    if path.exists():
         return FileResponse(path=path)
     else:
-        raise HTTPException(status_code=404)
+        logger.warn(str(extensions_dir))
+        # Path.glob does not follow symlinks
+        for theme_extension in glob.glob(str(extensions_dir) + "/**/themes", recursive=True):
+            # TODO Replace local paths with mangled paths; e.g. `url('../foo.css')`, `url('images/foo.png')`
+            path = Path(theme_extension) / resource
+            logger.warn(str(path))
+            if path.exists():
+                return FileResponse(path)
+
+    raise HTTPException(status_code=404)
 
 
 @router.get("/extensions/{resource:path}", include_in_schema=False)
@@ -89,8 +123,10 @@ def static(
     frontend_dir: Path = Depends(get_frontend_dir),
 ):
     path = frontend_dir / "static" / resource
-    if path.exists() and under_frontend_dir(frontend_dir, path):
-        return FileResponse(path=path)
+    if path.exists():
+        return FileResponse(
+            path=path, headers={"cache-control": "public, max-age=604800, immutable"}
+        )
     else:
         raise HTTPException(status_code=404)
 
@@ -122,22 +158,18 @@ def index(
         else:
             raise HTTPException(status_code=404)
     else:
-        logging.warn(resource)
         extensions, disabled_extensions = get_federated_extensions([extensions_dir])
         federated_extensions = load_federated_extensions(extensions)
         config_data["federated_extensions"] = federated_extensions
         config_data["disabledExtensions"] = disabled_extensions
 
-        if profile:
-            index_rendered = get_rendered_index(config_data, profile, index_template)
-            return HTMLResponse(content=index_rendered, status_code=200)
-        else:
-            index_html_path = frontend_dir / "static" / "index.html"
-            if not index_html_path.exists() or "no-cache" in map(
-                lambda p: p.strip(), (cache_control or "").split(",")
-            ):
-                render_index(frontend_dir)
-            return FileResponse(path=index_html_path)
+        logger.info(cache_control)
+        if is_dev_mode():
+            get_index_template.cache_clear()
+
+        index_template = get_index_template(frontend_dir)
+        index_rendered = get_rendered_index(config_data, profile, index_template)
+        return HTMLResponse(content=index_rendered, status_code=200)
 
 
 def under_frontend_dir(frontend_dir: Path, path: Path) -> bool:
@@ -153,33 +185,18 @@ def under_frontend_dir(frontend_dir: Path, path: Path) -> bool:
     )
 
 
-def get_rendered_index(config_data, profile, index_template):
-    """Adds profile info to index.html"""
+def get_rendered_index(
+    config_data: dict, profile: Optional["Profile"], index_template: "jinja2.Template"
+) -> str:
+    """Rendered the index file with user profile"""
     cfg = copy.copy(config_data)
-    cfg["logged_in_user_profile"] = rest_models.Profile.from_orm(profile).json()
+    if profile is not None:
+        cfg["logged_in_user_profile"] = rest_models.Profile.from_orm(profile).json()
+    elif "logged_in_user_profile" in cfg:
+        del cfg["logged_in_user_profile"]
+
     index_rendered = index_template.render(page_config=cfg)
     return index_rendered
-
-
-def render_index(frontend_dir: Path):
-    """Load the index.html with config and settings"""
-    global index_template, frontend_settings, config_data
-
-    if "logged_in_user_profile" in config_data:
-        del config_data["logged_in_user_profile"]
-
-    # Create index.html with config
-    index_template = jinja2.Template(
-        (frontend_dir / "static" / "index.html.j2").read_text()
-    )
-    fo = frontend_dir / "static" / "index.html"
-    fo.write_text(index_template.render(page_config=config_data))
-
-    template_path = frontend_dir / "templates"
-    if template_path.exists():
-        # Load settings
-        with (template_path / "settings.json").open() as fi:
-            frontend_settings = json.load(fi)
 
 
 def load_federated_extensions(federated_extensions: dict) -> list:
@@ -246,5 +263,3 @@ def register(app):
         "mode": "multiple-document",
         "exposeAppInBrowser": False,
     }
-
-    render_index(frontend_dir)

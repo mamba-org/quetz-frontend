@@ -4,7 +4,11 @@ import { URLExt } from '@jupyterlab/coreutils';
 
 import { Dialog, ReactWidget } from '@jupyterlab/apputils';
 
-import { Button } from '@jupyterlab/ui-components';
+import {
+  Button,
+  Checkbox,
+  TextField,
+} from '@jupyter-notebook/react-components';
 
 import { InlineLoader, API_STATUSES } from '@quetz-frontend/apputils';
 
@@ -328,13 +332,11 @@ export class RequestAPIKeyDialog
       <form className="jp-Input-Dialog">
         <div className="qs-Form-Section">
           <label className="qs-Form-Section-Label">Description</label>
-          <input
-            type="textarea"
+          <TextField
             name="description"
-            className="jp-mod-styled"
             value={this._api_key_info.description}
             onChange={this._handleDescription}
-          />
+          ></TextField>
         </div>
 
         <div className="qs-Form-Section">
@@ -350,17 +352,15 @@ export class RequestAPIKeyDialog
         </div>
 
         <div className="qs-Form-Section-Row">
-          <input
+          <Checkbox
             id="user-apiKey"
-            type="checkbox"
             name="user-apiKey"
-            defaultChecked={this._user_api_key}
+            checked={this._user_api_key}
             onChange={this._handleUserCheck}
-          />
-          <label>
+          >
             API key with same roles as{' '}
-            <label className="qs-Label-Caption">{this._username}</label>
-          </label>
+            <span className="qs-Label-Caption">{this._username}</span>
+          </Checkbox>
         </div>
 
         {!this._user_api_key && (

@@ -1,20 +1,14 @@
-import { ServerConnection } from '@jupyterlab/services';
-
-import { URLExt } from '@jupyterlab/coreutils';
-
-import { Breadcrumbs, SearchBox, formatPlural } from '@quetz-frontend/apputils';
-
-import { PaginatedList } from '@quetz-frontend/table';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {
   faGlobeAmericas,
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
-
-import ReactTooltip from 'react-tooltip';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Search, Tooltip } from '@jupyter-notebook/react-components';
+import { IRouter } from '@jupyterlab/application';
+import { URLExt } from '@jupyterlab/coreutils';
+import { ServerConnection } from '@jupyterlab/services';
+import { Breadcrumbs, formatPlural } from '@quetz-frontend/apputils';
+import { PaginatedList } from '@quetz-frontend/table';
 import * as React from 'react';
 
 interface IChannelsApiItem {
@@ -28,13 +22,20 @@ interface IChannelsApiItem {
   packages_count: number;
 }
 
+export interface IChannelsListProps {
+  router: IRouter;
+}
+
 type ChannelsAppState = {
   channels: null | IChannelsApiItem[];
   searchText: string;
 };
 
-class ChannelsList extends React.Component<any, ChannelsAppState> {
-  constructor(props: any) {
+class ChannelsList extends React.PureComponent<
+  IChannelsListProps,
+  ChannelsAppState
+> {
+  constructor(props: IChannelsListProps) {
     super(props);
     this.state = {
       channels: null,
@@ -42,7 +43,7 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
     };
   }
 
-  onSearch = (searchText: string) => {
+  onSearch = (searchText: string): void => {
     this.setState({ searchText });
   };
 
@@ -52,7 +53,9 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'Channels',
@@ -66,14 +69,20 @@ class ChannelsList extends React.Component<any, ChannelsAppState> {
       <>
         <Breadcrumbs items={breadcrumbItems} />
         <h2 className="heading2">Channels</h2>
-        <div className="channels-search">
-          <SearchBox onTextUpdate={this.onSearch} />
-        </div>
+        <Search
+          className="channels-search"
+          onInput={(event) => {
+            this.onSearch((event.target as HTMLInputElement).value);
+          }}
+          placeholder="Search"
+        />
         <PaginatedList
           url={url}
           params={{ q: searchText }}
           columns={getChannelsListColumns()}
-          to={(rowData: any) => `/channels/${rowData.name}`}
+          to={(rowData: any) => {
+            this.props.router.navigate(`/channels/${rowData.name}`);
+          }}
         />
       </>
     );
@@ -86,25 +95,26 @@ const getChannelsListColumns = (): any => [
   {
     Header: '',
     accessor: 'name',
-    Cell: ({ row }: any) =>
-      (
+    Cell: ({ row }: any) => {
+      const [anchor, setAnchor] = React.useState<HTMLElement | null>(null);
+
+      return (
         <>
           <span
-            data-for={`tooltip-${row.original.name}`}
-            data-tip={row.original.private ? 'Private' : 'Public'}
+            ref={(element) => {
+              setAnchor(element);
+            }}
           >
             <FontAwesomeIcon
               icon={row.original.private ? faUnlockAlt : faGlobeAmericas}
             />
           </span>
-          <ReactTooltip
-            id={`tooltip-${row.original.name}`}
-            place="right"
-            type="dark"
-            effect="solid"
-          />
+          <Tooltip anchorElement={anchor} position="right">
+            {row.original.private ? 'Private' : 'Public'}
+          </Tooltip>
         </>
-      ) as any,
+      ) as JSX.Element;
+    },
     width: 5,
   },
   {

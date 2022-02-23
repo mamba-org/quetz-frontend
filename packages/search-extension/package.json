@@ -29,16 +29,14 @@
     "@jupyterlab/apputils": "^3.2.0",
     "@jupyterlab/coreutils": "^5.2.0",
     "@jupyterlab/services": "^6.2.0",
+    "@jupyter-notebook/react-components": "~0.6.1",
     "@quetz-frontend/application": "^0.1.0",
     "@quetz-frontend/apputils": "^0.1.0",
     "@quetz-frontend/table": "^0.1.0",
-    "react": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "react-tooltip": "^4.2.11"
+    "react": "^17.0.1"
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "@types/react-router-dom": "^5.1.6",
     "rimraf": "~3.0.2",
     "typescript": "~4.1.3"
   },

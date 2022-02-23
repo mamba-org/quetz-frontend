@@ -1,15 +1,13 @@
-import { ServerConnection } from '@jupyterlab/services';
-
+import { IRouter } from '@jupyterlab/application';
 import { URLExt } from '@jupyterlab/coreutils';
-
+import { ServerConnection } from '@jupyterlab/services';
 import {
-  InlineLoader,
-  Breadcrumbs,
   API_STATUSES,
+  Breadcrumbs,
+  InlineLoader,
 } from '@quetz-frontend/apputils';
-
 import * as React from 'react';
-
+import { RouteComponentProps } from 'react-router-dom';
 import Table from './table';
 
 interface IOwner {
@@ -36,14 +34,18 @@ type JobState = {
   apiStatus: API_STATUSES;
 };
 
+export interface IJobProps extends RouteComponentProps {
+  router: IRouter;
+}
+
 /**
  *
  */
-class Job extends React.Component<any, JobState> {
-  constructor(props: any) {
+class Job extends React.Component<IJobProps, JobState> {
+  constructor(props: IJobProps) {
     super(props);
     this.state = {
-      id: props.match.params.jobId,
+      id: (props.match.params as any).jobId,
       job: {
         id: 0,
         created: new Date(),
@@ -56,7 +58,7 @@ class Job extends React.Component<any, JobState> {
     };
   }
 
-  async componentDidMount() {
+  async componentDidMount(): Promise<void> {
     const settings = ServerConnection.makeSettings();
     const url = URLExt.join(
       settings.baseUrl,
@@ -78,11 +80,15 @@ class Job extends React.Component<any, JobState> {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this.props.router.navigate('/home');
+        },
       },
       {
         text: 'Jobs',
-        link: '/jobs',
+        onClick: () => {
+          this.props.router.navigate('/jobs');
+        },
       },
       {
         text: 'Job ID',

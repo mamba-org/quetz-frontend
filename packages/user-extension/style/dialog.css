@@ -31,7 +31,7 @@
 
 .jp-Dialog-header {
   text-align: left;
-  font: normal normal bold 28px/36px Source Sans Pro;
+  font-size: var(--jp-ui-font-size2);
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -45,22 +45,20 @@
 
 .qs-Form-Section-Row {
   margin-bottom: 10px;
-  border-bottom: 1px solid #404040;
+  border-bottom: 1px solid var(--jp-border-color1);
 }
 
 .qs-Form-Section-Label {
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #ffffff;
+  color: var(--jp-ui-font-color1);
   opacity: 1;
 }
 
 .qs-Label-Caption {
   text-align: left;
-  font: normal normal bold 16px/20px Source Sans Pro;
   letter-spacing: 0px;
-  color: #ffff00;
+  color: var(--jp-brand-color1);
   opacity: 1;
 }
 
@@ -70,9 +68,8 @@
 
 label.qs-Input-Label {
   text-align: left;
-  font: normal normal normal 14px/19px Open Sans;
   letter-spacing: 0px;
-  color: #ffffff;
+  color: var(--jp-ui-font-color1);
   opacity: 1;
 }
 
@@ -81,14 +78,12 @@ label.qs-Input-Label:focus {
 }
 
 input.jp-mod-styled {
-  background: #404040 0% 0% no-repeat padding-box;
-  border-radius: 6px;
+  border-radius: var(--jp-border-radius);
   opacity: 1;
 
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #ffffff;
+  color: var(--jp-ui-font-color1);
 }
 
 input.jp-mod-styled:focus {
@@ -96,14 +91,12 @@ input.jp-mod-styled:focus {
 }
 
 select.jp-mod-styled {
-  background: #404040 0% 0% no-repeat padding-box;
-  border-radius: 6px;
+  border-radius: var(--jp-border-radius);
   opacity: 1;
 
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #ffffff;
+  color: var(--jp-ui-font-color1);
 }
 
 select.jp-mod-styled:focus {
@@ -116,87 +109,58 @@ select.jp-mod-styled:focus {
 
 .bp3-button-text {
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #fffe37;
+  color: var(--jp-border-color1);
   opacity: 1;
 }
 
 .jp-Button.minimal {
-  border-radius: 6px;
+  border-radius: var(--jp-border-radius);
   opacity: 1;
 
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #fffe37;
-}
-
-.jp-Button.minimal:hover {
-  background: #404040 0% 0% no-repeat padding-box;
-  border-radius: 6px;
-  opacity: 1;
-
-  text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
-  letter-spacing: 0px;
-  color: #fffe37;
+  color: var(--jp-border-color1);
 }
 
 .jp-Button.minimal:focus {
   outline: 0;
 }
 
+button.jp-mod-styled {
+  border: none !important;
+}
+
 button.jp-mod-styled.jp-mod-accept {
-  background: #fffe37 0% 0% no-repeat padding-box;
-  border-radius: 6px;
+  background: var(--jp-brand-color1) 0% 0% no-repeat padding-box;
+  border-radius: var(--jp-border-radius);
   opacity: 1;
 
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #000000;
+  color: var(--jp-ui-inverse-font-color1);
 }
 
 button.jp-mod-styled.jp-mod-accept:hover {
-  background: #404040 0% 0% no-repeat padding-box;
-  border-radius: 6px;
-  opacity: 1;
-
-  text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
-  letter-spacing: 0px;
-  color: #fffe37;
-  opacity: 1;
+  background: var(--jp-brand-color0) 0% 0% no-repeat padding-box;
+  color: var(--jp-ui-inverse-font-color0);
 }
 
 button.jp-mod-styled.jp-mod-accept:focus {
-  outline: 0;
+  outline: 1px solid var(--jp-brand-color1) !important;
 }
 
 button.jp-mod-styled.jp-mod-reject {
-  background: #404040 0% 0% no-repeat padding-box;
-  border-radius: 6px;
+  background: var(--jp-inverse-layout-color2) 0% 0% no-repeat padding-box;
+  border-radius: var(--jp-border-radius);
   opacity: 1;
 
   text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
   letter-spacing: 0px;
-  color: #ffffff;
+  color: var(--jp-ui-inverse-font-color2);
 }
 
 button.jp-mod-styled.jp-mod-reject:hover {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  border-radius: 6px;
-  opacity: 1;
-
-  text-align: left;
-  font: normal normal normal 16px/22px Open Sans;
-  letter-spacing: 0px;
-  color: #222222;
-  opacity: 1;
-}
-
-button.jp-mod-styled.jp-mod-reject:focus {
-  outline: 0;
+  background: var(--jp-inverse-layout-color3) 0% 0% no-repeat padding-box;
+  color: var(--jp-ui-inverse-font-color3);
 }

@@ -9,5 +9,3 @@ import '@quetz-frontend/apputils/style/index.js';
 import '@quetz-frontend/table/style/index.js';
 
 import './base.css';
-import './channels.css';
-import './packages.css';

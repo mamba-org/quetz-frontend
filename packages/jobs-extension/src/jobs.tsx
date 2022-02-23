@@ -13,6 +13,7 @@ import {
 import { Table } from '@quetz-frontend/table';
 
 import * as React from 'react';
+import { IRouter } from '@jupyterlab/application';
 
 interface IOwner {
   id: string;
@@ -36,7 +37,7 @@ interface IJob {
  *
  */
 export class Jobs extends ReactWidget {
-  constructor() {
+  constructor(private _router: IRouter) {
     super();
     this.id = DOMUtils.createDomID();
     this.title.label = 'Jobs main page';
@@ -64,7 +65,9 @@ export class Jobs extends ReactWidget {
     const breadcrumbItems = [
       {
         text: 'Home',
-        link: '/',
+        onClick: () => {
+          this._router.navigate('/home');
+        },
       },
       {
         text: 'Jobs',

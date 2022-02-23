@@ -1,8 +1,8 @@
+import { Search } from '@jupyter-notebook/react-components';
+
 import { ServerConnection } from '@jupyterlab/services';
 
 import clsx from 'clsx';
-
-import PropTypes from 'prop-types';
 
 import * as React from 'react';
 
@@ -131,14 +131,13 @@ export const Table: React.FC<ITableFcProps> = ({
   return (
     <>
       {enableSearch && (
-        <input
-          className="input search-input table-search-input"
+        <Search
+          className="table-search-input"
           placeholder="Search"
-          type="text"
           value={globalFilter || ''}
           onChange={(e) => {
             searching.current = true;
-            setGlobalFilter(e.target.value);
+            setGlobalFilter((e.target as HTMLInputElement).value);
           }}
         />
       )}
@@ -290,11 +289,4 @@ export const PaginatedTable = ({
       query={state.query}
     />
   );
-};
-
-Table.propTypes = {
-  columns: PropTypes.any,
-  data: PropTypes.any,
-  renderRowSubComponent: PropTypes.any,
-  enableSearch: PropTypes.any,
 };
