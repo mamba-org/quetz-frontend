@@ -13,7 +13,7 @@ import { quetzIcon } from './icons';
  * The main title plugin.
  */
 export const title: QuetzFrontEndPlugin<void> = {
-  id: '@quetz-frontend/menu-extension:topBar/title',
+  id: '@quetz-frontend/menu-extension:title',
   autoStart: true,
   requires: [IRouter],
   activate: activateTitle,

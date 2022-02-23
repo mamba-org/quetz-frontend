@@ -1,4 +1,3 @@
-import { IRankedMenu } from '@jupyterlab/ui-components';
 import {
   QuetzFrontEnd,
   QuetzFrontEndPlugin,
@@ -7,31 +6,22 @@ import {
 import { IMenu } from '@quetz-frontend/menu';
 
 const plugin: QuetzFrontEndPlugin<void> = {
-  id: '@quetz-frontend/login-extension:login',
+  id: '@quetz-frontend/login-extension:plugin',
   autoStart: true,
   requires: [IMenu],
   activate: (app: QuetzFrontEnd, mainMenu: IMenu): void => {
-    const logins: { [k: string]: IRankedMenu.IItemOptions } = {
+    const logins: { [k: string]: { provider: string; api: string } } = {
       github_login_available: {
-        command: 'menu:login',
-        args: {
-          provider: 'GitHub',
-          api: 'github',
-        },
+        provider: 'GitHub',
+        api: 'github',
       },
       google_login_available: {
-        command: 'menu:login',
-        args: {
-          provider: 'Google',
-          api: 'google',
-        },
+        provider: 'Google',
+        api: 'google',
       },
       azuread_login_available: {
-        command: 'menu:login',
-        args: {
-          provider: 'AzureAD',
-          api: 'azuread',
-        },
+        provider: 'AzureAD',
+        api: 'azuread',
       },
     };
 
@@ -42,7 +32,11 @@ const plugin: QuetzFrontEndPlugin<void> = {
         const data = JSON.parse(config_data.innerHTML);
         for (const name in logins) {
           if (data[name]) {
-            mainMenu.addItem({ ...logins[name], rank: rank++ });
+            mainMenu.addItem({
+              command: '@quetz-frontend/menu-extension:login',
+              args: logins[name],
+              rank: rank++,
+            });
           }
         }
       } catch (err) {

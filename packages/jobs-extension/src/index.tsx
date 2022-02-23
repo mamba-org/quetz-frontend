@@ -23,11 +23,11 @@ export namespace CommandIDs {
   /**
    * Open jobs widget
    */
-  export const jobs = '@quetz-frontend:jobs';
+  export const jobs = '@quetz-frontend/jobs-extensions:open';
   /**
    * Go to jobs page
    */
-  export const goToJobs = '@quetz-frontend:navigate-to-jobs';
+  export const goToJobs = '@quetz-frontend/jobs-extensions:navigate-to-jobs';
 }
 
 /**
