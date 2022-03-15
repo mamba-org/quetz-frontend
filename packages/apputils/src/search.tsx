@@ -26,10 +26,7 @@ export class SearchBox extends React.PureComponent<ISearchBoxProps> {
       <form
         onSubmit={(event: React.FormEvent) => {
           event.preventDefault();
-          const current = this._searchRef.current;
-          if (!current) return;
-          const input = (current as any).control;
-          const value = input?.value;
+          const value = this._searchRef.current?.value;
 
           if (value) {
             (this._searchRef.current! as any).value = '';
