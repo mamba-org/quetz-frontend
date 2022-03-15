@@ -13,9 +13,10 @@
   "scripts": {
     "build": "yarn run build:packages && yarn run build:core",
     "build:core": "cd quetz_frontend/app && yarn && yarn run build",
+    "build:core:prod": "cd quetz_frontend/app && yarn && yarn run build:prod",
     "build:examples": "lerna run build --scope \"@quetz-example/*\"",
     "build:packages": "lerna run build --scope \"@quetz-frontend/!(main-app)*\"",
-    "build:prod": "yarn run build:packages && yarn run build:core",
+    "build:prod": "yarn run build:packages && yarn run build:core:prod",
     "clean": "yarn run clean:core && yarn run clean:packages",
     "clean:all": "lerna run clean:all && rimraf yarn.lock && rimraf node_modules",
     "clean:core": "cd quetz_frontend/app && yarn run clean",

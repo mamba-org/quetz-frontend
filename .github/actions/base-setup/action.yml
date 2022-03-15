@@ -26,7 +26,7 @@ runs:
     - name: Install Node.js
       shell: bash -l {0}
       run: |
-        conda install nodejs=14 yarn
+        mamba install nodejs=16 yarn
 
     - name: Install the server
       shell: bash -l {0}

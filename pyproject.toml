@@ -3,8 +3,8 @@ requires = ["jupyter_packaging~=0.10,<2"]
 build-backend = "jupyter_packaging.build_api"
 
 [tool.jupyter-packaging.options]
-skip-if-exists = ["quetz_frontend/app/style.js"]
-ensured-targets = ["quetz_frontend/app/style.js", "quetz_frontend/app/package.json"]
+skip-if-exists = ["quetz_frontend/app/static/style.js"]
+ensured-targets = ["quetz_frontend/app/static/style.js", "quetz_frontend/app/static/package.json"]
 
 [tool.jupyter-packaging.builder]
 factory = "jupyter_packaging.npm_builder"

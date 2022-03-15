@@ -6,22 +6,18 @@ LOCAL_APP_DIR = HERE / "quetz_frontend" / "app"
 GLOBAL_APP_DIR = "share/quetz/frontend/app"
 
 data_files_spec = [
-    (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "node_modules/**"),
     (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "static/**"),
     (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "themes/**"),
-    (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "schemas/**"),
-    (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "package.json"),
-    (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "style.js"),
+    (GLOBAL_APP_DIR, str(LOCAL_APP_DIR), "schemas/**")
 ]
 
 # Representative files that should exist after a successful build
 ensured_targets = [
-    str(LOCAL_APP_DIR / "node_modules"),
     str(LOCAL_APP_DIR / "templates"),
     str(LOCAL_APP_DIR / "static"),
     str(LOCAL_APP_DIR / "themes"),
-    str(LOCAL_APP_DIR / "package.json"),
-    str(LOCAL_APP_DIR / "style.js"),
+    str(LOCAL_APP_DIR / "static" / "package.json"),
+    str(LOCAL_APP_DIR / "static" / "style.js"),
 ]
 
 try:
