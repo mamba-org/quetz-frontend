@@ -15,7 +15,7 @@ runs:
     - uses: actions/checkout@v2
       with:
         repository: mamba-org/quetz
-        ref: master
+        ref: main
         path: ${{ inputs.server_folder }}
 
     - uses: mamba-org/provision-with-micromamba@main

@@ -92,7 +92,6 @@ export const Pagination = ({
       </p>
       <p className="paragraph padding-side">
         <Select
-          // @ts-expect-error unknown value in typing
           value={pageSize}
           onChange={(e) => {
             // @ts-expect-error target has value
