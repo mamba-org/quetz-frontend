@@ -15,6 +15,7 @@ from .paths import (
     GLOBAL_EXTENSIONS_DIR,
     GLOBAL_FRONTEND_DIR,
     GLOBAL_QUETZ_DIR,
+    HERE,
     LOCAL_APP_DIR,
 )
 from .utils import clean_dir, get_extensions_dir, get_federated_extensions
@@ -163,14 +164,14 @@ def list() -> None:
 
     if not extensions:
         print("No installed extensions yet")
-    
+
     for ext in extensions.values():
         print(f'\t-  {Path(ext["ext_path"]).relative_to(GLOBAL_EXTENSIONS_DIR)}')
-    
+
     print(f"Disabled extensions:")
     print(f"---------------------")
     for ext in disabled_extensions:
-        print(f'\t-  {ext}')
+        print(f"\t-  {ext}")
 
     print()
 
@@ -220,9 +221,17 @@ def _develop_extension(ext_path: Path):
     )
 
 
-def _build_extension(ext_path: Path, dev_mode: bool = False, watch: bool = False):
-    if not GLOBAL_APP_DIR.joinpath("package.json").exists():
-        print(f"Quetz frontend not fount at '{GLOBAL_APP_DIR!s}'")
+def _build_extension(
+    ext_path: Path,
+    dev_mode: bool = False,
+    watch: bool = False,
+    core_path: Optional[Path] = None,
+):
+    if core_path is None:
+        core_path = HERE / "app"
+    
+    if not core_path.joinpath("package.json").exists():
+        print(f"Quetz frontend not found at '{core_path!s}'")
 
     builder_path = _find_builder(ext_path)
     if builder_path is None:
@@ -237,7 +246,7 @@ def _build_extension(ext_path: Path, dev_mode: bool = False, watch: bool = False
         print(f"Could not find {exe}. Install NodeJS.")
         exit(1)
 
-    command = [exe, str(builder_path), "--core-path", str(GLOBAL_APP_DIR.resolve())]
+    command = [exe, str(builder_path), "--core-path", str(core_path.resolve())]
 
     if dev_mode:
         command.append("--development")
