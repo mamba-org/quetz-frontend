@@ -8,16 +8,16 @@ const config: PlaywrightTestConfig = {
     port: 8000,
     timeout: 120 * 1000,
     // It is safe to reuse the server for stories testing
-    reuseExistingServer: true
+    reuseExistingServer: true,
   },
   use: {
     baseURL: process.env.TARGET_URL ?? 'http://localhost:8000',
-    trace: 'on-first-retry'
+    trace: 'on-first-retry',
   },
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] }
+      use: { ...devices['Desktop Chrome'] },
     },
     // {
     //   name: 'firefox',
@@ -27,7 +27,7 @@ const config: PlaywrightTestConfig = {
     //   name: 'webkit',
     //   use: { ...devices['Desktop Safari'] }
     // }
-  ]
+  ],
 };
 
 export default config;
