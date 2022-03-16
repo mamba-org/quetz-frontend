@@ -1,14 +1,13 @@
 {
-    "name": "@quetz-frontend/examples-test",
-    "version": "1.0.0",
-    "description": "Quetz Frontend Examples Tests",
-    "private": true,
-    "scripts": {
-      "start": "quetz start ./test_quetz",
-      "test": "yarn playwright test"
-    },
-    "devDependencies": {
-      "@playwright/test": "^1.19.0"
-    }
+  "name": "@quetz-frontend/examples-test",
+  "version": "1.0.0",
+  "description": "Quetz Frontend Examples Tests",
+  "private": true,
+  "scripts": {
+    "start": "quetz start ./test_quetz",
+    "test": "yarn playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.19.0"
   }
-  
+}
