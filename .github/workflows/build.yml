@@ -133,7 +133,7 @@ jobs:
         with:
           path: |
             ${{ github.workspace }}/pw-browsers
-          key: ${{ runner.os }}-${{ hashFiles('ui-tests/yarn.lock') }}
+          key: ${{ runner.os }}-${{ hashFiles('examples/tests/package.json') }}
 
       - name: Install Playwright
         working-directory: examples/tests
