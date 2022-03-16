@@ -27,7 +27,7 @@ jobs:
 
       - name: Install builder
         run: |
-          mamba install build
+          conda install build
 
       - name: Package frontend
         working-directory: frontend
@@ -70,13 +70,17 @@ jobs:
         with:
           environment-name: quetz
           environment-file: environment.yml
+          extra-specs: |
+            nodejs=16
+            yarn
+          cache-downloads: true
 
       - name: Base Setup
         run: |
           set -ex
           pip install quetz_frontend*.whl
           # FIXME missing quetz server dependency
-          pip install httpx
+          pip install "httpx~=0.20.0"
 
           cat > dev_config.toml << EOF
           [sqlalchemy]
@@ -102,7 +106,6 @@ jobs:
         working-directory: examples/light_theme
         run: |
           set -ex
-          mamba install nodejs=16 yarn
 
           yarn
           # Build first so it link with local version of @quetz-frontend packages
