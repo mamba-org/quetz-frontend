@@ -13,7 +13,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-        
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -69,15 +69,14 @@ jobs:
             - https://repo.mamba.pm/conda-forge
           dependencies:
             - python>=3.7
+            - nodejs=16
+            - yarn
           EOF
 
       - uses: mamba-org/provision-with-micromamba@main
         with:
           environment-name: quetz
           environment-file: environment.yml
-          extra-specs: |
-            nodejs=16
-            yarn
           cache-downloads: true
 
       - name: Base Setup
@@ -106,6 +105,13 @@ jobs:
           quetz create --copy-conf ./dev_config.toml --dev test_quetz
 
       - uses: actions/checkout@v2
+
+      - name: Build quetz packages
+        run: |
+          set -ex
+
+          yarn
+          yarn build:packages
 
       - name: Install
         working-directory: examples/light_theme
