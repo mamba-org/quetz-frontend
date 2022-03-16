@@ -72,7 +72,7 @@ jobs:
           environment-file: environment.yml
 
       - name: Base Setup
-        run:
+        run: |
           set -ex
           pip install quetz_frontend*.whl
           # FIXME missing quetz server dependency
