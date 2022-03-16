@@ -9,7 +9,7 @@ config[0] = merge(config[0], {
   output: {
     // Add version argument when in production so the Jupyter server
     // allows caching of files (i.e., does not set the CacheControl header to no-cache to prevent caching static files)
-    filename: '[name].[contenthash].js?v=[contenthash]'
+    filename: '[name].[contenthash].js?v=[contenthash]',
   },
   optimization: {
     minimize: true,
@@ -23,20 +23,20 @@ config[0] = merge(config[0], {
           mangle: true,
           output: {
             beautify: false,
-            comments: false
+            comments: false,
           },
-          safari10: true
+          safari10: true,
         },
-        cache: process.platform !== 'win32'
-      })
-    ]
+        cache: process.platform !== 'win32',
+      }),
+    ],
   },
   plugins: [
     new WPPlugin.JSONLicenseWebpackPlugin({
-      excludedPackageTest: packageName =>
-        packageName === '@quetz-frontend/main-app'
-    })
-  ]
+      excludedPackageTest: (packageName) =>
+        packageName === '@quetz-frontend/main-app',
+    }),
+  ],
 });
 
 module.exports = config;
