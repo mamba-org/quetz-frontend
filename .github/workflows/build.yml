@@ -102,7 +102,7 @@ jobs:
           admins = ["dummy:alice"]
           EOF
 
-          quetz create --copy-conf ./dev_config.toml --dev test_quetz
+          quetz create --copy-conf ./dev_config.toml --dev /tmp/test_quetz
 
       - uses: actions/checkout@v2
 
