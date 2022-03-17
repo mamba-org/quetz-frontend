@@ -40,5 +40,8 @@
   "quetz": {
     "coreDependency": true
   },
-  "styleModule": "style/index.js"
+  "styleModule": "style/index.js",
+  "publishConfig": {
+    "access": "public"
+  }
 }
