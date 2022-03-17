@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/menu-extension",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -34,9 +34,9 @@
     "@lumino/coreutils": "^1.5.3",
     "@lumino/signaling": "^1.4.3",
     "@lumino/widgets": "^1.19.0",
-    "@quetz-frontend/application": "^0.1.0",
-    "@quetz-frontend/apputils": "^0.1.0",
-    "@quetz-frontend/menu": "^0.1.0",
+    "@quetz-frontend/application": "^0.3.0",
+    "@quetz-frontend/apputils": "^0.3.0",
+    "@quetz-frontend/menu": "^0.3.0",
     "react": "^17.0.1"
   },
   "devDependencies": {
@@ -46,5 +46,8 @@
   "quetz": {
     "coreDependency": true
   },
-  "styleModule": "style/index.js"
+  "styleModule": "style/index.js",
+  "publishConfig": {
+    "access": "public"
+  }
 }

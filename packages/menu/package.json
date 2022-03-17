@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/menu",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -37,5 +37,8 @@
   "quetz": {
     "coreDependency": true
   },
-  "styleModule": "style/index.js"
+  "styleModule": "style/index.js",
+  "publishConfig": {
+    "access": "public"
+  }
 }
