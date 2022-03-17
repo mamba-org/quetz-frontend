@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/application-extension",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -30,8 +30,8 @@
     "@jupyterlab/translation": "^3.2.0",
     "@jupyterlab/ui-components": "^3.2.0",
     "@lumino/widgets": "^1.19.0",
-    "@quetz-frontend/application": "^0.2.0",
-    "@quetz-frontend/menu": "^0.2.0"
+    "@quetz-frontend/application": "^0.3.0",
+    "@quetz-frontend/menu": "^0.3.0"
   },
   "devDependencies": {
     "rimraf": "~3.0.2",

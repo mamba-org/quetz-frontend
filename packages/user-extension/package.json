@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/user-extension",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -36,10 +36,10 @@
     "@jupyterlab/services": "^6.2.0",
     "@jupyterlab/ui-components": "^3.2.0",
     "@lumino/messaging": "^1.4.3",
-    "@quetz-frontend/application": "^0.2.0",
-    "@quetz-frontend/apputils": "^0.2.0",
-    "@quetz-frontend/menu": "^0.2.0",
-    "@quetz-frontend/table": "^0.2.0",
+    "@quetz-frontend/application": "^0.3.0",
+    "@quetz-frontend/apputils": "^0.3.0",
+    "@quetz-frontend/menu": "^0.3.0",
+    "@quetz-frontend/table": "^0.3.0",
     "moment": "^2.29.1",
     "react": "^17.0.1"
   },

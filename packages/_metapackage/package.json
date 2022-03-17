@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/metapackage",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

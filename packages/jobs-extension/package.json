@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/jobs-extension",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -29,10 +29,10 @@
     "@jupyterlab/apputils": "^3.2.0",
     "@jupyterlab/coreutils": "^5.2.0",
     "@jupyterlab/services": "^6.2.0",
-    "@quetz-frontend/application": "^0.2.0",
-    "@quetz-frontend/apputils": "^0.2.0",
-    "@quetz-frontend/menu": "^0.2.0",
-    "@quetz-frontend/table": "^0.2.0",
+    "@quetz-frontend/application": "^0.3.0",
+    "@quetz-frontend/apputils": "^0.3.0",
+    "@quetz-frontend/menu": "^0.3.0",
+    "@quetz-frontend/table": "^0.3.0",
     "react": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-table": "^7.6.3",

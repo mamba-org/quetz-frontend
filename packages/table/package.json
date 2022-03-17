@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/table",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -31,7 +31,7 @@
     "@fortawesome/react-fontawesome": "^0.1.17",
     "@jupyter-notebook/react-components": "~0.6.1",
     "@jupyterlab/services": "^6.2.0",
-    "@quetz-frontend/apputils": "^0.2.0",
+    "@quetz-frontend/apputils": "^0.3.0",
     "clsx": "^1.1.1",
     "react": "^17.0.1",
     "react-table": "^7.6.3",

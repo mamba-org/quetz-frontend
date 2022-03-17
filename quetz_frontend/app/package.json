@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/main-app",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
     "build": "yarn run clean && webpack",
@@ -45,14 +45,14 @@
   },
   "dependencies": {
     "@jupyterlab/apputils-extension": "^3.2.0",
-    "@quetz-frontend/application-extension": "^0.2.0",
-    "@quetz-frontend/channels-extension": "^0.2.0",
-    "@quetz-frontend/home-extension": "^0.2.0",
-    "@quetz-frontend/jobs-extension": "^0.2.0",
-    "@quetz-frontend/login-extension": "^0.2.0",
-    "@quetz-frontend/menu-extension": "^0.2.0",
-    "@quetz-frontend/search-extension": "^0.2.0",
-    "@quetz-frontend/user-extension": "^0.2.0",
+    "@quetz-frontend/application-extension": "^0.3.0",
+    "@quetz-frontend/channels-extension": "^0.3.0",
+    "@quetz-frontend/home-extension": "^0.3.0",
+    "@quetz-frontend/jobs-extension": "^0.3.0",
+    "@quetz-frontend/login-extension": "^0.3.0",
+    "@quetz-frontend/menu-extension": "^0.3.0",
+    "@quetz-frontend/search-extension": "^0.3.0",
+    "@quetz-frontend/user-extension": "^0.3.0",
     "quetz-theme": "^0.2.1"
   },
   "devDependencies": {

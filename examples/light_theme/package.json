@@ -1,6 +1,6 @@
 {
   "name": "@quetz-example/light-theme",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A light theme extension for Quetz.",
   "keywords": [
     "quetz",
@@ -46,7 +46,7 @@
   },
   "dependencies": {
     "@jupyterlab/apputils": "^3.2.7",
-    "@quetz-frontend/application": "^0.2.0"
+    "@quetz-frontend/application": "^0.3.0"
   },
   "devDependencies": {
     "@quetz-frontend/builder": "^3.3.0",
