@@ -54,6 +54,9 @@ function activateTitle(app: QuetzFrontEnd, router: IRouter): void {
   spacer.addClass('topbar-spacer');
   app.shell.add(spacer, 'top', { rank: 50 });
 
+  /**
+   * Create the Quetz Logo widget
+   */
   function createLogo(): Widget {
     const link = document.createElement('a');
     const logo = new Widget({ node: link });

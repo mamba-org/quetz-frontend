@@ -8,12 +8,11 @@ include ts*.json
 include yarn.lock
 include lerna.json
 
-graft quetz_frontend/app/
+graft quetz_frontend/app
 graft packages
 
+prune quetz_frontend/app/build
 prune **/node_modules
-# prune lib
-# prune binder
 
 # Patterns to exclude from any directory
 global-exclude *~

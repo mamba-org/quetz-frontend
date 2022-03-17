@@ -22,11 +22,10 @@ runs:
       with:
         environment-name: quetz
         environment-file: ${{ inputs.server_folder }}/environment.yml
-
-    - name: Install Node.js
-      shell: bash -l {0}
-      run: |
-        conda install nodejs=14 yarn
+        extra-specs: |
+          nodejs=16
+          yarn
+        cache-downloads: true
 
     - name: Install the server
       shell: bash -l {0}

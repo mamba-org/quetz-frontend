@@ -65,3 +65,4 @@ junit.xml
 *.code-workspace
 .history
 .vscode
+examples/tests/test_quetz

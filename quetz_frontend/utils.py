@@ -26,7 +26,6 @@ def get_extensions_dir() -> Path:
     if not GLOBAL_EXTENSIONS_DIR.exists():
         GLOBAL_EXTENSIONS_DIR.mkdir(parents=True, exist_ok=True)
         logger.info("Creating a global frontend extensions directory.")
-        return None
 
     return GLOBAL_EXTENSIONS_DIR
 

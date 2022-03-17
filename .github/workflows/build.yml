@@ -9,6 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash -l {0}
+
     steps:
       - uses: actions/checkout@v2
         with:
@@ -25,27 +30,94 @@ jobs:
           yarn run eslint:check
           yarn run prettier:check
 
+      - name: Install builder
+        run: |
+          conda install build
+
+      - name: Package frontend
+        working-directory: frontend
+        run: |
+          set -ex
+
+          python -m build -w .
+
+      - name: Upload package
+        uses: actions/upload-artifact@v2
+        with:
+          name: quetz-frontend-wheel
+          path: frontend/dist/quetz_frontend*.whl
+          if-no-files-found: error
+
   example:
     name: Test Quetz frontend extension examples
     runs-on: ubuntu-latest
+    needs: build
 
     defaults:
       run:
         shell: bash -l {0}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
         with:
-          path: frontend
+          name: quetz-frontend-wheel
+
+      - run: |
+          cat > environment.yml << EOF
+          name: quetz
+          channels:
+            - https://repo.mamba.pm/conda-forge
+          dependencies:
+            - python>=3.7
+            - nodejs=16
+            - yarn
+          EOF
+
+      - uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-name: quetz
+          environment-file: environment.yml
+          cache-downloads: true
 
       - name: Base Setup
-        uses: ./frontend/.github/actions/base-setup
-        with:
-          frontend_folder: frontend
+        run: |
+          set -ex
+          pip install quetz_frontend*.whl
+          # FIXME missing quetz server dependency
+          pip install "httpx~=0.20.0"
+
+          cat > dev_config.toml << EOF
+          [sqlalchemy]
+          database_url = "sqlite:///./quetz.sqlite"
+
+          [session]
+          secret = "b72376b88e6f249cb0921052ea8a092381ca17fd8bb0caf4d847e337b3d34cf8"
+          https_only = false
+
+          [logging]
+          level = "DEBUG"
+          file = "quetz.log"
+
+          [users]
+          admins = ["dummy:alice"]
+          EOF
+
+          quetz create --copy-conf ./dev_config.toml --dev /tmp/test_quetz
+
+      - uses: actions/checkout@v2
+
+      - name: Build quetz packages
+        run: |
+          set -ex
+
+          yarn
+          yarn build:packages
 
       - name: Install
-        working-directory: frontend/examples/light_theme
+        working-directory: examples/light_theme
         run: |
+          set -ex
+
           yarn
           # Build first so it link with local version of @quetz-frontend packages
           yarn build
@@ -55,3 +127,33 @@ jobs:
 
           quetz-frontend list
           quetz-frontend list 2>&1 | grep -ie "@quetz-example/light-theme"
+
+      - name: Set up browser cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ github.workspace }}/pw-browsers
+          key: ${{ runner.os }}-${{ hashFiles('examples/tests/package.json') }}
+
+      - name: Install Playwright
+        working-directory: examples/tests
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: |
+          set -ex
+          yarn
+          yarn playwright install chromium
+
+      - name: Test example
+        working-directory: examples/tests
+        run: |
+          set -ex
+          yarn test
+
+      - name: Upload Playwright Test report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: light-theme-playwright-tests
+          path: |
+            examples/tests/test-results
