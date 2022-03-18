@@ -45,7 +45,7 @@ def get_federated_extensions(quetzextensions_path: List[Path]) -> dict:
     """Get the metadata about federated extensions"""
 
     # Internal getter to apply lru_cache as it does not support list argument
-    @lru_cache
+    @lru_cache()
     def get_metadata(ext_dir: Path) -> list:
         datas = []
 
