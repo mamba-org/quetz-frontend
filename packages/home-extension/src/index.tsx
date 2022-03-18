@@ -36,13 +36,13 @@ const plugin: QuetzFrontEndPlugin<void> = {
     router.register({
       pattern: /^\/home.*/,
       command: CommandIDs.open,
-      rank: 50
+      rank: 50,
     });
 
     router.register({
       pattern: /^\/$/,
       command: CommandIDs.open,
-      rank: 50
+      rank: 50,
     });
   },
 };

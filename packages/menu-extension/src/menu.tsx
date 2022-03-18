@@ -140,9 +140,8 @@ export class MenuButton extends ReactWidget {
           };
 
           // block default avatar from showing invalid image for dummy users
-          if (profile.avatar_url == '/avatar.jpg')
-          {
-            profile.avatar_url = "";
+          if (profile.avatar_url == '/avatar.jpg') {
+            profile.avatar_url = '';
           }
 
           return (
@@ -154,36 +153,35 @@ export class MenuButton extends ReactWidget {
                 className="hamburger-menu-button"
               >
                 {isAnonymous ? (
-                  <div style={{display: 'flex', alignItems: 'center'}}>
-                  <avatarIcon.react
-                    className="anonymous-icon"
-                    tag="span"
-                    width="28px"
-                    height="28px"
-                  />
-                  <span className="hamburger-menu-text">Login</span>
-                  <hamburgerIcon.react
-                    className="hamburger-icon"
-                    tag="span"
-                  />
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <avatarIcon.react
+                      className="anonymous-icon"
+                      tag="span"
+                      width="28px"
+                      height="28px"
+                    />
+                    <span className="hamburger-menu-text">Login</span>
+                    <hamburgerIcon.react
+                      className="hamburger-icon"
+                      tag="span"
+                    />
                   </div>
                 ) : (
-                  <div style={{display: 'flex', alignItems: 'center'}}>
-                  <Avatar
-                    src={profile.avatar_url}
-                    shape="circle"
-                    alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
-                  ></Avatar>
-                  <span className="hamburger-menu-text">Menu</span>
-                  <hamburgerIcon.react
-                    className="hamburger-icon"
-                    tag="span"
-                    width="28px"
-                    height="28px"
-                  />
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Avatar
+                      src={profile.avatar_url}
+                      shape="circle"
+                      alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
+                    ></Avatar>
+                    <span className="hamburger-menu-text">Menu</span>
+                    <hamburgerIcon.react
+                      className="hamburger-icon"
+                      tag="span"
+                      width="28px"
+                      height="28px"
+                    />
                   </div>
                 )}
-
               </Button>
             </div>
           );
