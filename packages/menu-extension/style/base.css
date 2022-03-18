@@ -1,6 +1,10 @@
+.topbar {
+  justify-content: space-between;
+}
+
 .topbar-spacer {
-  flex-grow: 1;
-  flex-shrink: 1;
+  /* flex-grow: 1; */
+  /* flex-shrink: 1; */
 }
 
 .topbar-search-wrapper {
@@ -15,13 +19,12 @@
 
 .topbar-item {
   height: 100%;
-  margin: auto;
-  margin-right: 10px;
+  /* margin: auto; */
+  /* margin-right: 10px; */
   display: flex;
   align-items: center;
-
   font-weight: bold;
-  padding: 0 20px;
+  /* padding: 0 20px; */
 }
 
 .quetz-main-menu {
@@ -37,6 +40,32 @@
   width: 100%;
 }
 
+.hamburger-menu-button {
+  border-radius: 100px;
+}
+
 .anonymous-icon > svg {
-  transform: translateY(2px);
+  transform: translate(-3px, 2px);
+}
+
+.hamburger-icon {
+  display: block;
+  border-left: 1px solid #888;
+  height: 22px;
+  padding-left: 5px;
+  margin-left: 5px;
+  color: #AAA;
+  align-items: center;
+}
+
+.hamburger-menu-text {
+  margin-left: 5px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.hamburger-icon > svg {
+  height: 22px;
+  width: 22px;
 }

@@ -68,7 +68,7 @@ class SearchPage extends ReactWidget {
       {
         text: 'Home',
         onClick: () => {
-          this._route('/home');
+          this._route('/');
         },
       },
       {
