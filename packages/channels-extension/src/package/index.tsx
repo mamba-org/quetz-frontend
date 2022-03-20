@@ -54,7 +54,7 @@ class PackageDetails extends React.PureComponent<
       {
         text: 'Home',
         onClick: () => {
-          this.props.router.navigate('/home');
+          this.props.router.navigate('/');
         },
       },
       {

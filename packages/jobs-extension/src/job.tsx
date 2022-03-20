@@ -81,7 +81,7 @@ class Job extends React.Component<IJobProps, JobState> {
       {
         text: 'Home',
         onClick: () => {
-          this.props.router.navigate('/home');
+          this.props.router.navigate('/');
         },
       },
       {

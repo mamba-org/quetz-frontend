@@ -71,7 +71,7 @@ function activateTitle(app: QuetzFrontEnd, router: IRouter): void {
     logo.addClass('topbar-item');
     logo.node.title = 'Quetz';
     logo.node.onclick = () => {
-      router.navigate('/home');
+      router.navigate('/');
     };
     return logo;
   }

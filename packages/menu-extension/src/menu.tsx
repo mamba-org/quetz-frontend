@@ -10,7 +10,7 @@ import {
 } from '@quetz-frontend/application';
 import { IMenu, Profile } from '@quetz-frontend/menu';
 import * as React from 'react';
-import { avatarIcon } from './icons';
+import { avatarIcon, hamburgerIcon } from './icons';
 
 namespace CommandIDs {
   /**
@@ -138,26 +138,49 @@ export class MenuButton extends ReactWidget {
             name: 'Anonymous',
             avatar_url: '',
           };
+
+          // block default avatar from showing invalid image for dummy users
+          if (profile.avatar_url == '/avatar.jpg') {
+            profile.avatar_url = '';
+          }
+
           return (
             <div>
               <Button
-                appearance="stealth"
+                // appearance="stealth"
                 aria-label={`User Menu: ${profile.name}`}
                 onClick={this._onClick}
+                className="hamburger-menu-button"
               >
                 {isAnonymous ? (
-                  <avatarIcon.react
-                    className="anonymous-icon"
-                    tag="span"
-                    width="28px"
-                    height="28px"
-                  />
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <avatarIcon.react
+                      className="anonymous-icon"
+                      tag="span"
+                      width="28px"
+                      height="28px"
+                    />
+                    <span className="hamburger-menu-text">Login</span>
+                    <hamburgerIcon.react
+                      className="hamburger-icon"
+                      tag="span"
+                    />
+                  </div>
                 ) : (
-                  <Avatar
-                    src={profile.avatar_url}
-                    shape="circle"
-                    alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
-                  ></Avatar>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Avatar
+                      src={profile.avatar_url}
+                      shape="circle"
+                      alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
+                    ></Avatar>
+                    <span className="hamburger-menu-text">Menu</span>
+                    <hamburgerIcon.react
+                      className="hamburger-icon"
+                      tag="span"
+                      width="28px"
+                      height="28px"
+                    />
+                  </div>
                 )}
               </Button>
             </div>
