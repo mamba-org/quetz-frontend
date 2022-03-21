@@ -42,7 +42,7 @@
   line-height: 22px;
   padding: 7px 20px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 100px;
   color: #ffffff;
   background-color: #404040;
   transition: background-color 0.5s ease;
@@ -75,11 +75,29 @@
 /**********************
         Button
  **********************/
+/* Hide the remove text button */
+jp-search::part(clear-button) {
+  display: none;
+}
+
+jp-search::part(control) {
+  padding-inline-start: calc(var(--design-unit) * 2px + 7px);
+}
+
 .btn-group {
   display: flex;
   align-items: center;
 }
-
-.btn-group jp-button {
+.quetz-search-box jp-search::part(root) {
+  border-radius: 100px;
+}
+.quetz-search-box jp-button {
   margin: 0 4px;
+  margin-left: -35px;
+  z-index: 100;
+  min-height: 0;
+  min-width: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
 }

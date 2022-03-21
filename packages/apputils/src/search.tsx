@@ -13,6 +13,7 @@ export interface ISearchBoxProps {
    * Callback on search term submission
    */
   onSubmit: (input: string) => void;
+  value: string;
 }
 
 export class SearchBox extends React.PureComponent<ISearchBoxProps> {
@@ -29,13 +30,16 @@ export class SearchBox extends React.PureComponent<ISearchBoxProps> {
           const value = (this._searchRef.current as any)?.value;
 
           if (value) {
-            (this._searchRef.current! as any).value = '';
             this.props.onSubmit(value);
           }
         }}
       >
-        <div className="btn-group">
-          <Search ref={this._searchRef} placeholder="Search"></Search>
+        <div className="btn-group quetz-search-box">
+          <Search
+            ref={this._searchRef}
+            value={this.props.value}
+            placeholder="Search"
+          ></Search>
           <Button appearance="neutral" type="submit">
             <FontAwesomeIcon icon={faSearch} />
           </Button>

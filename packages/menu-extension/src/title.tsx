@@ -19,6 +19,10 @@ export const title: QuetzFrontEndPlugin<void> = {
   activate: activateTitle,
 };
 
+class ISearchState {
+  query: string;
+}
+
 /**
  * Top search widget
  */
@@ -28,6 +32,16 @@ class SearchWidget extends ReactWidget {
     this.id = DOMUtils.createDomID();
     this.addClass('topbar-search-wrapper');
     this._router = router;
+
+    let searchText = '';
+    if (window.location.pathname == '/search') {
+      searchText = new URLSearchParams(window.location.search).get('q') || '';
+    }
+
+    console.log('Search text: ', searchText);
+    this.state = {
+      query: searchText,
+    };
   }
 
   onSearch = (searchText: string): void => {
@@ -35,9 +49,12 @@ class SearchWidget extends ReactWidget {
   };
 
   render(): React.ReactElement {
-    return <SearchBox onSubmit={this.onSearch} />;
+    return (
+      <SearchBox onSubmit={this.onSearch} value={this.state.query || ''} />
+    );
   }
 
+  private state: ISearchState;
   private _router: IRouter;
 }
 
@@ -50,9 +67,6 @@ function activateTitle(app: QuetzFrontEnd, router: IRouter): void {
 
   app.shell.add(logo, 'top', { rank: 0 });
   app.shell.add(new SearchWidget(router), 'top', { rank: 20 });
-  const spacer = new Widget();
-  spacer.addClass('topbar-spacer');
-  app.shell.add(spacer, 'top', { rank: 50 });
 
   /**
    * Create the Quetz Logo widget
