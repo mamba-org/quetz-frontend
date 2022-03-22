@@ -31,7 +31,7 @@ export class Breadcrumbs extends React.PureComponent<IBreadcrumbsProps> {
         {items.map((item) =>
           item.onClick ? (
             <BreadcrumbItem key={item.text}>
-              <a style={{ color: "var(--jp-brand-color1)" }} onClick={item.onClick}>
+              <a onClick={item.onClick}>
                 {item.text}
               </a>
             </BreadcrumbItem>
