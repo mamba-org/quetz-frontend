@@ -1,8 +1,4 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-} from '@jupyter-notebook/react-components';
+import { Breadcrumb, BreadcrumbItem } from '@jupyter-notebook/react-components';
 
 import * as React from 'react';
 export interface IBreadcrumbsProps {
@@ -32,9 +28,7 @@ export class Breadcrumbs extends React.PureComponent<IBreadcrumbsProps> {
         {items.map((item) =>
           item.onClick ? (
             <BreadcrumbItem key={item.text}>
-              <Button appearance="lightweight" onClick={item.onClick}>
-                {item.text}
-              </Button>
+              <a onClick={item.onClick}>{item.text}</a>
             </BreadcrumbItem>
           ) : (
             <BreadcrumbItem key={item.text} href={item.href}>

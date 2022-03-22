@@ -48,4 +48,8 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
   justify-content: space-between;
 }
 
+jp-breadcrumb-item a {
+  color: var(--jp-brand-color1);
+}
+
 @import url('./components.css');
