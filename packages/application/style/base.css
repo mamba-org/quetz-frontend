@@ -49,7 +49,7 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
 }
 
 jp-breadcrumb-item a {
-  color:  var(--jp-brand-color1);
+  color: var(--jp-brand-color1);
 }
 
 @import url('./components.css');
