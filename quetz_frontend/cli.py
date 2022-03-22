@@ -79,7 +79,7 @@ def install(ext_path: str = Argument(Path(), help="The path of the extension")) 
     extension_path = Path(ext_path).resolve()
     assert extension_path.joinpath("package.json").exists()
 
-    _build_extension(ext_path, True, False)
+    _build_extension(extension_path, True, False)
 
     module, metadata = _get_extensions_metadata(extension_path)
     src = Path(extension_path).joinpath(module.__name__, metadata[0]["src"])
