@@ -48,6 +48,10 @@
   transform: translate(-3px, 2px);
 }
 
+#login-menu jp-avatar {
+  transform: translate(-3px, 0px);
+}
+
 .hamburger-icon {
   display: block;
   border-left: 1px solid #888;
