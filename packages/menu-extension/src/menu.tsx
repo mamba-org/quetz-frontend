@@ -172,13 +172,12 @@ export class MenuButton extends ReactWidget {
                       src={profile.avatar_url}
                       shape="circle"
                       alt={`${profile.name.slice(0, 2).toLocaleUpperCase()}`}
-                    ></Avatar>
+                      style={{ width: '28px', height: '28px' }}
+                    />
                     <span className="hamburger-menu-text">Menu</span>
                     <hamburgerIcon.react
                       className="hamburger-icon"
                       tag="span"
-                      width="28px"
-                      height="28px"
                     />
                   </div>
                 )}
