@@ -35,8 +35,12 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
   overflow: auto;
   background: var(--jp-layout-color1);
   color: var(--jp-ui-font-color0);
-  max-height: calc(100vh - var(--jp-private-topbar-height) - var(--jp-private-bottombar-height));
-  height: calc(100vh - var(--jp-private-topbar-height) - var(--jp-private-bottombar-height));
+  max-height: calc(
+    100vh - var(--jp-private-topbar-height) - var(--jp-private-bottombar-height)
+  );
+  height: calc(
+    100vh - var(--jp-private-topbar-height) - var(--jp-private-bottombar-height)
+  );
   overflow-y: auto;
   padding-bottom: 50px;
 }
