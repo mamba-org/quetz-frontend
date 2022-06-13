@@ -110,7 +110,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
   /**
    * Get the bottom area wrapper panel
    */
-   get bottom(): Widget {
+  get bottom(): Widget {
     return this._bottomWrapper;
   }
 

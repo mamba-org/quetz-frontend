@@ -10,7 +10,8 @@ import * as React from 'react';
  * The command ids used by the about plugin.
  */
 export namespace CommandIDs {
-  export const termsofservices = '@quetz-frontend/about-extension:termsofservices';
+  export const termsofservices =
+    '@quetz-frontend/about-extension:termsofservices';
 }
 
 /**
@@ -34,9 +35,11 @@ export class TermsOfServices extends ReactWidget {
 
   render(): React.ReactElement {
     return (
-      <div onClick={() => {
+      <div
+        onClick={() => {
           this._route('/termsofservices');
-        }}>
+        }}
+      >
         Terms Of Services
       </div>
     );
@@ -57,11 +60,7 @@ export class AboutQuantStack extends ReactWidget {
   }
 
   render(): React.ReactElement {
-    return (
-      <a href="https://quantstack.net">
-        About QuantStack
-      </a>
-    );
+    return <a href="https://quantstack.net">About QuantStack</a>;
   }
 }
 
@@ -75,8 +74,13 @@ class TermsOfServicesPage extends ReactWidget {
   render(): React.ReactElement {
     return (
       <div>
-        This is the Terms Of Services contents
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        This is the Terms Of Services contents Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </div>
     );
   }
@@ -84,6 +88,7 @@ class TermsOfServicesPage extends ReactWidget {
 
 /**
  * @param app Application object
+ * @param router
  * @returns The application about object
  */
 function activateAbout(app: QuetzFrontEnd, router: IRouter): void {
