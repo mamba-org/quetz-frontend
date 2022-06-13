@@ -1,0 +1,9 @@
+.bottombar-link {
+  color: var(--jp-brand-color0);
+  text-align: center;
+  cursor: pointer;
+}
+
+.bottombar-link:hover {
+  text-decoration: underline;
+}

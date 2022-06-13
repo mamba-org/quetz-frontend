@@ -19,7 +19,7 @@ export namespace IShell {
   /**
    * The areas of the application shell where widgets can reside.
    */
-  export type Area = 'main' | 'top';
+  export type Area = 'main' | 'top' | 'bottom';
 }
 
 /**
@@ -37,12 +37,15 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
     const rootLayout = new BoxLayout();
 
     this._top = new Private.PanelHandler();
+    this._bottom = new Private.PanelHandler();
     this._main = new Panel();
 
+    this._bottom.panel.id = 'bottom-panel';
     this._top.panel.id = 'top-panel';
     this._main.id = 'main-panel';
 
     BoxLayout.setStretch(this._top.panel, 0);
+    BoxLayout.setStretch(this._bottom.panel, 0);
     BoxLayout.setStretch(this._main, 1);
 
     // this._main.spacing = 5;
@@ -50,6 +53,7 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
     rootLayout.spacing = 0;
     rootLayout.addWidget(this._top.panel);
     rootLayout.addWidget(this._main);
+    rootLayout.addWidget(this._bottom.panel);
 
     this.layout = rootLayout;
   }
@@ -75,6 +79,9 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
     if (area === 'top') {
       return this._top.addWidget(widget, rank);
     }
+    if (area === 'bottom') {
+      return this._bottom.addWidget(widget, rank);
+    }
     if (area === 'main' || area === undefined) {
       // if (this._main.widgets.length > 0) {
       //   // do not add the widget if there is already one
@@ -98,6 +105,13 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
    */
   get top(): Widget {
     return this._topWrapper;
+  }
+
+  /**
+   * Get the bottom area wrapper panel
+   */
+   get bottom(): Widget {
+    return this._bottomWrapper;
   }
 
   widgets(area: IShell.Area): IIterator<Widget> {
@@ -143,6 +157,8 @@ export class Shell extends Widget implements JupyterFrontEnd.IShell {
   private _main: Panel;
   private _top: Private.PanelHandler;
   private _topWrapper: Panel;
+  private _bottom: Private.PanelHandler;
+  private _bottomWrapper: Panel;
 }
 
 namespace Private {
