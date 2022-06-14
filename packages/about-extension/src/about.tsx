@@ -5,6 +5,8 @@ import {
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
 import * as React from 'react';
+import { marked } from 'marked';
+import tos from '../style/tos.md';
 
 /**
  * The command ids used by the about plugin.
@@ -68,20 +70,15 @@ class TermsOfServicesPage extends ReactWidget {
   constructor() {
     super();
     this.id = DOMUtils.createDomID();
+    this.addClass('tos-page');
     this.title.label = 'Terms Of Services';
   }
 
   render(): React.ReactElement {
     return (
-      <div className="page-contents-width-limit">
-        This is the Terms Of Services contents Lorem ipsum dolor sit amet,
-        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-        et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-        dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </div>
+      <div className="page-contents-width-limit" dangerouslySetInnerHTML={
+        { __html: marked(tos) }
+      }></div>
     );
   }
 }

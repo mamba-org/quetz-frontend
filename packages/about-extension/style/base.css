@@ -7,3 +7,7 @@
 .bottombar-link:hover {
   text-decoration: underline;
 }
+
+strong {
+  font-weight: bold;
+}

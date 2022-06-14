@@ -2098,6 +2098,7 @@
     "@lumino/widgets" "^1.19.0"
     "@quetz-frontend/application" "^0.3.1"
     "@quetz-frontend/apputils" "^0.3.1"
+    marked "^4.0.17"
     react "^17.0.1"
 
 "@quetz-frontend/application-extension@file:packages/application-extension":
@@ -2376,6 +2377,11 @@
   version "4.14.180"
   resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.180.tgz"
   integrity sha512-XOKXa1KIxtNXgASAnwj7cnttJxS4fksBRywK/9LzRV5YxrF80BXZIGeQSuoESQ/VkUj30Ae0+YcuHc15wJCB2g==
+
+"@types/marked@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-4.0.3.tgz#2098f4a77adaba9ce881c9e0b6baf29116e5acc4"
+  integrity sha512-HnMWQkLJEf/PnxZIfbm0yGJRRZYYMhb++O9M36UCTA9z53uPvVoSlAwJr3XOpDEryb7Hwl1qAx/MV6YIW1RXxg==
 
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -6829,6 +6835,11 @@ marked@^2.0.0:
   version "2.1.3"
   resolved "https://registry.npmjs.org/marked/-/marked-2.1.3.tgz"
   integrity sha512-/Q+7MGzaETqifOMWYEA7HVMaZb4XbcRfaOzcSsHZEith83KGlvaSG33u0SKu89Mj5h+T8V2hM+8O45Qc5XTgwA==
+
+marked@^4.0.17:
+  version "4.0.17"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.17.tgz#1186193d85bb7882159cdcfc57d1dfccaffb3fe9"
+  integrity sha512-Wfk0ATOK5iPxM4ptrORkFemqroz0ZDxp5MWfYA7H/F+wO17NRWV5Ypxi6p3g2Xmw2bKeiYOl6oVnLHKxBA0VhA==
 
 media-typer@0.3.0:
   version "0.3.0"
