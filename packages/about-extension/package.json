@@ -17,7 +17,7 @@
     "lib/*.js",
     "style/*.css",
     "style/index.js",
-    "style/img/*.{jpg,png,svg,md}"
+    "style/img/*.{jpg,png,svg}"
   ],
   "scripts": {
     "build": "tsc -b",
@@ -37,8 +37,8 @@
     "@quetz-frontend/application": "^0.3.1",
     "@quetz-frontend/apputils": "^0.3.1",
     "@types/marked": "^4.0.3",
-    "marked": "^4.0.17",
-    "react": "^17.0.1"
+    "react": "^17.0.1",
+    "react-markdown": "^8.0.3"
   },
   "devDependencies": {
     "rimraf": "~3.0.2",

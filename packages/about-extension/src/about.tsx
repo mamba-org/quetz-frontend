@@ -1,12 +1,14 @@
+import * as React from 'react';
+import ReactMarkdown from "react-markdown";
+import { PathExt, URLExt } from '@jupyterlab/coreutils';
+import { ServerConnection } from '@jupyterlab/services';
 import { IRouter } from '@jupyterlab/application';
 import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
 import {
   QuetzFrontEnd,
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
-import * as React from 'react';
-import { marked } from 'marked';
-import tos from '../style/tos.md';
+import { FetchHoc } from '@quetz-frontend/apputils';
 
 /**
  * The command ids used by the about plugin.
@@ -75,10 +77,28 @@ class TermsOfServicesPage extends ReactWidget {
   }
 
   render(): React.ReactElement {
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/tos');
+
     return (
-      <div className="page-contents-width-limit" dangerouslySetInnerHTML={
-        { __html: marked(tos) }
-      }></div>
+      <div className="page-contents-width-limit">
+        <FetchHoc
+          url={url}
+          loadingMessage="Fetching Terms Of Services"
+          genericErrorMessage="Error fetching Terms Of Services">
+            {(tos: any) => {
+              if (PathExt.extname(tos.filename) === '.md') {
+                return (
+                  <ReactMarkdown children={tos.content}/>
+                );
+              } else {
+                return (
+                  <div>{tos.content}</div>
+                );
+              }
+            }}
+        </FetchHoc>
+      </div>
     );
   }
 }
