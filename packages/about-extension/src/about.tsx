@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from 'react-markdown';
 import { PathExt, URLExt } from '@jupyterlab/coreutils';
 import { ServerConnection } from '@jupyterlab/services';
 import { IRouter } from '@jupyterlab/application';
@@ -85,18 +85,15 @@ class TermsOfServicesPage extends ReactWidget {
         <FetchHoc
           url={url}
           loadingMessage="Fetching Terms Of Services"
-          genericErrorMessage="Error fetching Terms Of Services">
-            {(tos: any) => {
-              if (PathExt.extname(tos.filename) === '.md') {
-                return (
-                  <ReactMarkdown children={tos.content}/>
-                );
-              } else {
-                return (
-                  <div>{tos.content}</div>
-                );
-              }
-            }}
+          genericErrorMessage="Error fetching Terms Of Services"
+        >
+          {(tos: any) => {
+            if (PathExt.extname(tos.filename) === '.md') {
+              return <ReactMarkdown>tos.content</ReactMarkdown>;
+            } else {
+              return <div>{tos.content}</div>;
+            }
+          }}
         </FetchHoc>
       </div>
     );
