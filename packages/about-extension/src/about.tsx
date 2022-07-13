@@ -89,7 +89,7 @@ class TermsOfServicesPage extends ReactWidget {
         >
           {(tos: any) => {
             if (PathExt.extname(tos.filename) === '.md') {
-              return <ReactMarkdown>tos.content</ReactMarkdown>;
+              return <ReactMarkdown>{tos.content}</ReactMarkdown>;
             } else {
               return <div>{tos.content}</div>;
             }
