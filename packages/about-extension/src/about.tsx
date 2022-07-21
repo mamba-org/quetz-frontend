@@ -1,59 +1,94 @@
-import * as React from 'react';
-import ReactMarkdown from 'react-markdown';
+import { IRouter } from '@jupyterlab/application';
+import { DOMUtils, ReactWidget, showDialog } from '@jupyterlab/apputils';
 import { PathExt, URLExt } from '@jupyterlab/coreutils';
 import { ServerConnection } from '@jupyterlab/services';
-import { IRouter } from '@jupyterlab/application';
-import { DOMUtils, ReactWidget } from '@jupyterlab/apputils';
-import {
-  QuetzFrontEnd,
-  QuetzFrontEndPlugin,
-} from '@quetz-frontend/application';
+
 import { FetchHoc } from '@quetz-frontend/apputils';
 
-/**
- * The command ids used by the about plugin.
- */
-export namespace CommandIDs {
-  export const termsofservices =
-    '@quetz-frontend/about-extension:termsofservices';
-}
-
-/**
- * The about plugin.
- */
-export const about: QuetzFrontEndPlugin<void> = {
-  id: '@quetz-frontend/about-extension:about',
-  autoStart: true,
-  requires: [IRouter],
-  activate: activateAbout,
-};
+import ReactMarkdown from 'react-markdown';
+import * as React from 'react';
 
 export class TermsOfServices extends ReactWidget {
+  private _signed = false;
+  private _router: IRouter;
+
   constructor(router: IRouter) {
     super();
     this.id = 'termsofservices-link';
     this.addClass('bottombar-link');
 
     this._router = router;
+    this._router.routed.connect(this._pathChanged, this);
+  }
+
+  dispose(): void {
+    this._router.routed.disconnect(this._pathChanged, this);
+  }
+
+  private _pathChanged(sender: IRouter, args: IRouter.ILocation): void {
+    if (this._signed || args.path == "/termsofservices") {
+      return;
+    }
+
+    const settings = ServerConnection.makeSettings();
+    const url = URLExt.join(settings.baseUrl, '/api/tos/sign');
+    const init: RequestInit = {};
+    ServerConnection.makeRequest(url, init, settings)
+    .then(async resp => {
+      const data = await resp.json();
+      if (resp.ok && data) {
+        this._signed = true;
+        this.update();
+        this._router.routed.disconnect(this._pathChanged, this);
+
+      } else {
+        this._signed = false;
+        this.update();
+        this._router.navigate("/termsofservices");
+      }
+      
+    }).catch(error => {
+      console.info(error);
+      this.update();
+      this._router.navigate("/termsofservices");
+    });
+  }
+
+  private _acceptTOS(): void {
+    const settings = ServerConnection.makeSettings();
+		const url = URLExt.join(settings.baseUrl, '/api/tos/sign');
+		const init: RequestInit = {
+      method: 'POST'
+    };
+		ServerConnection.makeRequest(url, init, settings)
+    .then(async resp => {
+      const data = await resp.json();
+      if (resp.ok) {
+        this._signed = true;
+        this._router.routed.disconnect(this._pathChanged, this);
+        this.update();
+        this._router.navigate("/");
+      } else {
+        showDialog({ title: "Error while signing the terms of services", body: data.detail });
+      }
+    }).catch(error => console.info(error));
   }
 
   render(): React.ReactElement {
-    return (
-      <div
-        onClick={() => {
-          this._route('/termsofservices');
-        }}
-      >
-        Terms Of Services
-      </div>
-    );
+    if (this._signed) {
+      return (
+        <div onClick={() => this._router.navigate('/termsofservices')} >
+          Terms Of Services
+        </div>
+      );
+    } else {
+      return (
+        <div onClick={() => this._acceptTOS()} >
+          Accept Terms Of Services
+        </div>
+      );
+    }
   }
-
-  private _route(route: string): void {
-    this._router.navigate(route);
-  }
-
-  private _router: IRouter;
 }
 
 export class AboutQuantStack extends ReactWidget {
@@ -68,7 +103,8 @@ export class AboutQuantStack extends ReactWidget {
   }
 }
 
-class TermsOfServicesPage extends ReactWidget {
+export class TermsOfServicesPage extends ReactWidget {
+
   constructor() {
     super();
     this.id = DOMUtils.createDomID();
@@ -98,30 +134,4 @@ class TermsOfServicesPage extends ReactWidget {
       </div>
     );
   }
-}
-
-/**
- * @param app Application object
- * @param router
- * @returns The application about object
- */
-function activateAbout(app: QuetzFrontEnd, router: IRouter): void {
-  const { shell, commands } = app;
-
-  const terms = new TermsOfServices(router);
-  const about = new AboutQuantStack();
-
-  shell.add(terms, 'bottom', { rank: 100 });
-  shell.add(about, 'bottom', { rank: 100 });
-
-  commands.addCommand(CommandIDs.termsofservices, {
-    execute: () => {
-      shell.add(new TermsOfServicesPage(), 'main');
-    },
-  });
-
-  router.register({
-    pattern: /^\/termsofservices/,
-    command: CommandIDs.termsofservices,
-  });
 }
