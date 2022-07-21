@@ -1,0 +1,7 @@
+name: quetz
+channels:
+  - https://repo.mamba.pm/conda-forge
+dependencies:
+  - quetz
+  - nodejs=16
+  - yarn

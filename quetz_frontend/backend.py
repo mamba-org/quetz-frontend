@@ -11,6 +11,7 @@ from typing import Optional
 import jinja2
 from fastapi import APIRouter, Body, Depends, Header, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse
+
 from quetz import authorization, rest_models
 from quetz.authentication.registry import AuthenticatorRegistry
 from quetz.config import Config
@@ -49,7 +50,6 @@ def is_dev_mode() -> bool:
 
 
 # Endpoint handlers
-
 
 @router.get("/api/settings", include_in_schema=False)
 def get_settings(frontend_settings: Settings = Depends(get_frontend_settings)):
