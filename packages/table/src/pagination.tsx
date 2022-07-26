@@ -127,6 +127,7 @@ export const Pagination = ({
       <JSXPageNumberField />
       <p className="paragraph padding-side">
         <Select
+          defaultValue="25"
           value={pageSize.toString()}
           onChange={(e) => {
             // @ts-expect-error target has value
@@ -137,7 +138,6 @@ export const Pagination = ({
             <Option
               key={pageSize}
               value={pageSize}
-              // defaultValue="25"
             >
               Show {pageSize}
             </Option>
