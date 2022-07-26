@@ -186,7 +186,7 @@ export const Table: React.FC<ITableFcProps> = ({
           </tr>
         </tbody>
       </table>
-      {paginated && showPaginationInformation && (
+      {paginated && (
         <Pagination
           pageSize={pageSize}
           pageCount={pageCount}
@@ -199,6 +199,7 @@ export const Table: React.FC<ITableFcProps> = ({
           pageOptions={pageOptions}
           setPageSize={setPageSize}
           loading={loading}
+          showPagination={showPaginationInformation}
         />
       )}
     </>
