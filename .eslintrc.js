@@ -44,7 +44,7 @@ module.exports = {
     'jsdoc/require-returns': 'off',
     'jsdoc/no-types': 'warn',
     'prefer-arrow-callback': 'error',
-    "react/prop-types": "off",
+    'react/prop-types': 'off',
   },
   settings: {
     jsdoc: {
