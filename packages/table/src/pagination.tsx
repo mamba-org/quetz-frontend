@@ -26,9 +26,8 @@ export const Pagination = ({
   pageOptions,
   setPageSize,
   loading,
-  showPagination
+  showPagination,
 }: any) => {
-
   const JSXButtonGroup = () => {
     if (showPagination) {
       return (
@@ -66,12 +65,11 @@ export const Pagination = ({
             <FontAwesomeIcon icon={faAngleDoubleRight} />
           </Button>
         </div>
-      )
+      );
+    } else {
+      return <div></div>;
     }
-    else {
-      return (<div></div>);
-    }
-  }
+  };
 
   const JSXPageIndex = () => {
     if (showPagination) {
@@ -87,64 +85,59 @@ export const Pagination = ({
               </strong>
             </p>
           )}
-      </div>
-      )
+        </div>
+      );
+    } else {
+      return <div></div>;
     }
-    else {
-      return (<div></div>);
-    }
-  }
+  };
 
   const JSXPageNumberField = () => {
     if (showPagination) {
       return (
         <p className="paragraph padding-side">
-        Go to page: &emsp;
-        <NumberField
-          value={pageIndex + 1}
-          onChange={(e) => {
-            // @ts-expect-error target has value
-            const page = e.target.value ? Number(e.target.value) - 1 : 0;
-            gotoPage(page);
-          }}
-          style={{ width: '100px', verticalAlign: "middle" }}
-        />
-      </p>
-      )
+          Go to page: &emsp;
+          <NumberField
+            value={pageIndex + 1}
+            onChange={(e) => {
+              // @ts-expect-error target has value
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: '100px', verticalAlign: 'middle' }}
+          />
+        </p>
+      );
+    } else {
+      return <p></p>;
     }
-    else {
-      return (<p></p>);
-    }
-  }
+  };
 
   return (
-  <div className="jp-table-controls">
-    <div className="jp-table-controls-left">
-      <JSXButtonGroup />
-      <JSXPageIndex />
+    <div className="jp-table-controls">
+      <div className="jp-table-controls-left">
+        <JSXButtonGroup />
+        <JSXPageIndex />
+      </div>
+      <div className="jp-table-controls-right jp-table-controls-text">
+        <JSXPageNumberField />
+        <p className="paragraph padding-side">
+          <Select
+            defaultValue="25"
+            value={pageSize.toString()}
+            onChange={(e) => {
+              // @ts-expect-error target has value
+              setPageSize(Number(e.target.value));
+            }}
+          >
+            {['25', '50', '100'].map((pageSize) => (
+              <Option key={pageSize} value={pageSize}>
+                Show {pageSize}
+              </Option>
+            ))}
+          </Select>
+        </p>
+      </div>
     </div>
-    <div className="jp-table-controls-right jp-table-controls-text">
-      <JSXPageNumberField />
-      <p className="paragraph padding-side">
-        <Select
-          defaultValue="25"
-          value={pageSize.toString()}
-          onChange={(e) => {
-            // @ts-expect-error target has value
-            setPageSize(Number(e.target.value));
-          }}
-        >
-          {["25", "50", "100"].map((pageSize) => (
-            <Option
-              key={pageSize}
-              value={pageSize}
-            >
-              Show {pageSize}
-            </Option>
-          ))}
-        </Select>
-      </p>
-    </div>
-  </div>
   );
-}
+};
