@@ -64,7 +64,7 @@
   height: fit-content;
   margin: 15px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -77,12 +77,14 @@
 .jp-table-controls-right {
   height: fit-content;
   display: flex;
-  align-items: flex-end;
+  /* align-items: flex-end; */
 }
 
 .jp-table-controls-text {
-  height: 36px;
+  height: 48px;
   margin: 0px;
+  align-items: center;
+  display: flex;
 }
 
 .jp-table-controls-text .padding {
