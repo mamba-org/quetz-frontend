@@ -153,7 +153,7 @@ export const List = ({
           </div>
         </div>
       </div>
-      {paginated && showPaginationInformation && (
+      {paginated && (
         <Pagination
           pageSize={pageSize}
           pageCount={pageCount}
@@ -166,6 +166,7 @@ export const List = ({
           pageOptions={pageOptions}
           setPageSize={setPageSize}
           loading={loading}
+          showPagination={showPaginationInformation}
         />
       )}
     </>

@@ -14,6 +14,21 @@ import {
 import { InlineLoader } from '@quetz-frontend/apputils';
 import * as React from 'react';
 
+export interface IPaginationOptions {
+  pageSize: number;
+  pageCount: number;
+  gotoPage: (updater: ((pageIndex: number) => number) | number) => void;
+  canPreviousPage: boolean;
+  previousPage: () => void;
+  nextPage: () => void;
+  canNextPage: boolean;
+  pageIndex: number;
+  pageOptions: number[];
+  setPageSize: (pageSize: number) => void;
+  loading: boolean;
+  showPagination: boolean;
+}
+
 export const Pagination = ({
   pageSize,
   pageCount,
@@ -27,7 +42,7 @@ export const Pagination = ({
   setPageSize,
   loading,
   showPagination,
-}: any) => {
+}: IPaginationOptions) => {
   const JSXButtonGroup = () => {
     if (showPagination) {
       return (
@@ -98,7 +113,7 @@ export const Pagination = ({
         <p className="paragraph padding-side">
           Go to page: &emsp;
           <NumberField
-            value={pageIndex + 1}
+            value={(pageIndex + 1).toString()}
             onChange={(e) => {
               // @ts-expect-error target has value
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
