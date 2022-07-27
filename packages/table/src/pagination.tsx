@@ -15,17 +15,64 @@ import { InlineLoader } from '@quetz-frontend/apputils';
 import * as React from 'react';
 
 export interface IPaginationOptions {
+  /**
+   * Number of items to show.
+   */
   pageSize: number;
+
+  /**
+   * total number of pages.
+   */
   pageCount: number;
-  gotoPage: (updater: ((pageIndex: number) => number) | number) => void;
-  canPreviousPage: boolean;
-  previousPage: () => void;
-  nextPage: () => void;
-  canNextPage: boolean;
+
+  /**
+   * Current page index.
+   */
   pageIndex: number;
+
+  /**
+   * List of available page number.
+   */
   pageOptions: number[];
+
+  /**
+   * Whether a previous page is available or not.
+   */
+  canPreviousPage: boolean;
+
+  /**
+   * Whether a next page is available or not.
+   */
+  canNextPage: boolean;
+
+  /**
+   * Function that will change the current page index.
+   */
+  gotoPage: (updater: ((pageIndex: number) => number) | number) => void;
+
+  /**
+   * Function to go to previous page;
+   */
+  previousPage: () => void;
+
+  /**
+   * Function to go to next page.
+   */
+  nextPage: () => void;
+
+  /**
+   * Function to change the number of items to show.
+   */
   setPageSize: (pageSize: number) => void;
+
+  /**
+   * Whether the index is loading.
+   */
   loading: boolean;
+
+  /**
+   * Whether to show the entire pagination bar.
+   */
   showPagination: boolean;
 }
 
