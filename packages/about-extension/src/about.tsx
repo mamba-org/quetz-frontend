@@ -26,16 +26,17 @@ export class TermsOfServices extends ReactWidget {
   }
 
   private _pathChanged(sender: IRouter, args: IRouter.ILocation): void {
-    if (this._signed || args.path == "/termsofservices") {
+    if (args.path == "/termsofservices") {
       return;
     }
 
     const settings = ServerConnection.makeSettings();
-    const url = URLExt.join(settings.baseUrl, '/api/tos/sign');
+    const url = URLExt.join(settings.baseUrl, '/api/tos/status');
     const init: RequestInit = {};
     ServerConnection.makeRequest(url, init, settings)
     .then(async resp => {
       const data = await resp.json();
+      console.debug(data);
       if (resp.ok && data) {
         this._signed = true;
         this.update();
