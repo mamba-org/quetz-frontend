@@ -14,10 +14,6 @@ import { avatarIcon, hamburgerIcon } from './icons';
 
 namespace CommandIDs {
   /**
-   * Login using a given provider
-   */
-  export const login = '@quetz-frontend/menu-extension:login';
-  /**
    * Logout the current user
    */
   export const logout = '@quetz-frontend/menu-extension:logout';
@@ -202,18 +198,6 @@ function activateMenu(app: QuetzFrontEnd): IMenu {
   });
   menu.addClass('quetz-main-menu');
   const menuButton = new MenuButton(menu);
-
-  // Add commands
-  app.commands.addCommand(CommandIDs.login, {
-    label: (args) => `Sign in with ${args.provider}`,
-    isEnabled: (args) => !!args.provider && !!args.api,
-    isVisible: () => menu.profile === null,
-    execute: (args) => {
-      if (args.api) {
-        window.location.href = `/auth/${args.api}/login`;
-      }
-    },
-  });
 
   app.commands.addCommand(CommandIDs.logout, {
     label: 'Sign out',

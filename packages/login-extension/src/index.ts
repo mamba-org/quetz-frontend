@@ -3,51 +3,108 @@ import {
   QuetzFrontEndPlugin,
 } from '@quetz-frontend/application';
 
+import { PageConfig } from '@jupyterlab/coreutils';
+
 import { IMenu } from '@quetz-frontend/menu';
 
-const plugin: QuetzFrontEndPlugin<void> = {
-  id: '@quetz-frontend/login-extension:plugin',
+namespace CommandIDs {
+  /**
+   * Login using a GitHub.
+   */
+  export const loginGitHub = '@quetz-frontend/login-extension:login-GitHub';
+  /**
+   * Login using a Google.
+   */
+  export const loginGoogle = '@quetz-frontend/login-extension:login-Google';
+  /**
+   * Login using a Azure.
+   */
+  export const loginAzure = '@quetz-frontend/login-extension:login-Azure';
+  /**
+   * Login using a GitLab.
+   */
+  export const loginGitLab = '@quetz-frontend/login-extension:login-GitLab';
+}
+
+const github: QuetzFrontEndPlugin<void> = {
+  id: '@quetz-frontend/login-extension:GitHub',
   autoStart: true,
   requires: [IMenu],
   activate: (app: QuetzFrontEnd, mainMenu: IMenu): void => {
-    const logins: { [k: string]: { provider: string; api: string } } = {
-      github_login_available: {
-        provider: 'GitHub',
-        api: 'github',
-      },
-      google_login_available: {
-        provider: 'Google',
-        api: 'google',
-      },
-      azuread_login_available: {
-        provider: 'AzureAD',
-        api: 'azuread',
-      },
-    };
+    const isEnabled = PageConfig.getOption('github_login_available') === 'true';
 
-    const config_data = document.getElementById('jupyter-config-data');
-    if (config_data) {
-      let rank = 200;
-      try {
-        const data = JSON.parse(config_data.innerHTML);
-        for (const name in logins) {
-          if (data[name]) {
-            mainMenu.addItem({
-              command: '@quetz-frontend/menu-extension:login',
-              args: logins[name],
-              rank: rank++,
-            });
-          }
-        }
-      } catch (err) {
-        console.error(err.message);
-        // add both if cannot parse data
-        for (const name in logins) {
-          mainMenu.addItem({ ...logins[name], rank: rank++ });
-        }
-      }
-    }
+    app.commands.addCommand(CommandIDs.loginGitHub, {
+      label: () => 'Sign in with GitHub',
+      isEnabled: () => isEnabled,
+      isVisible: () => isEnabled && mainMenu.profile === null,
+      execute: () => {
+        window.location.href = '/auth/github/login';
+      },
+    });
+
+    mainMenu.addItem({ command: CommandIDs.loginGitHub });
   },
 };
 
-export default plugin;
+const google: QuetzFrontEndPlugin<void> = {
+  id: '@quetz-frontend/login-extension:Google',
+  autoStart: true,
+  requires: [IMenu],
+  activate: (app: QuetzFrontEnd, mainMenu: IMenu): void => {
+    const isEnabled = PageConfig.getOption('google_login_available') === 'true';
+
+    app.commands.addCommand(CommandIDs.loginGoogle, {
+      label: () => 'Sign in with Google',
+      isEnabled: () => isEnabled,
+      isVisible: () => isEnabled && mainMenu.profile === null,
+      execute: () => {
+        window.location.href = '/auth/google/login';
+      },
+    });
+
+    mainMenu.addItem({ command: CommandIDs.loginGoogle });
+  },
+};
+
+const azure: QuetzFrontEndPlugin<void> = {
+  id: '@quetz-frontend/login-extension:Azure',
+  autoStart: true,
+  requires: [IMenu],
+  activate: (app: QuetzFrontEnd, mainMenu: IMenu): void => {
+    const isEnabled =
+      PageConfig.getOption('azuread_login_available') === 'true';
+
+    app.commands.addCommand(CommandIDs.loginAzure, {
+      label: () => 'Sign in with Azure',
+      isEnabled: () => isEnabled,
+      isVisible: () => isEnabled && mainMenu.profile === null,
+      execute: () => {
+        window.location.href = '/auth/azure/login';
+      },
+    });
+
+    mainMenu.addItem({ command: CommandIDs.loginAzure });
+  },
+};
+
+const gitlab: QuetzFrontEndPlugin<void> = {
+  id: '@quetz-frontend/login-extension:GitLab',
+  autoStart: true,
+  requires: [IMenu],
+  activate: (app: QuetzFrontEnd, mainMenu: IMenu): void => {
+    const isEnabled = PageConfig.getOption('gitlab_login_available') === 'true';
+
+    app.commands.addCommand(CommandIDs.loginGitLab, {
+      label: () => 'Sign in with GitLab',
+      isEnabled: () => isEnabled,
+      isVisible: () => isEnabled && mainMenu.profile === null,
+      execute: () => {
+        window.location.href = '/auth/gitlab/login';
+      },
+    });
+
+    mainMenu.addItem({ command: CommandIDs.loginGitLab });
+  },
+};
+
+export default [github, google, azure, gitlab];
