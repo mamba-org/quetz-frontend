@@ -160,25 +160,3 @@ jobs:
           name: light-theme-playwright-tests
           path: |
             examples/tests/test-results
-
-  check-release:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
-
-      - name: Check Release
-        uses: jupyter-server/jupyter_releaser/.github/actions/check-release@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
