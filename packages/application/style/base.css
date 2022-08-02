@@ -42,7 +42,6 @@ body[data-jp-theme-light='false'] path#quetz-logo-swirl-highlight {
     100vh - var(--jp-private-topbar-height) - var(--jp-private-bottombar-height)
   );
   overflow-y: auto;
-  padding-bottom: 50px;
 }
 
 #top-panel {
