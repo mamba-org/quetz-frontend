@@ -39,7 +39,7 @@ cd quetz
 pip install -e .
 
 # Run quetz
-quetz run test_quetz --copy-conf ./dev_config.toml --dev --reload
+quetz run test_quetz --delete --copy-conf ./dev_config.toml --dev --reload
 ```
 
 Modify the `quetz/test_quetz/config.toml` file to add the client_id, client_secret, github username and the front-end paths.

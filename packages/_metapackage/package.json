@@ -11,7 +11,6 @@
     "watch": "tsc -b -w --preserveWatchOutput"
   },
   "dependencies": {
-    "@quetz-frontend/about-extension": "file:../about-extension",
     "@quetz-frontend/application": "file:../application",
     "@quetz-frontend/application-extension": "file:../application-extension",
     "@quetz-frontend/apputils": "file:../apputils",

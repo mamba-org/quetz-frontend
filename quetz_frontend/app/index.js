@@ -58,7 +58,6 @@ export async function main() {
       ].includes(id)
     ),
     require('@quetz-frontend/application-extension'),
-    require('@quetz-frontend/about-extension'),
     require('@quetz-frontend/channels-extension'),
     require('@quetz-frontend/jobs-extension'),
     require('@quetz-frontend/login-extension'),
