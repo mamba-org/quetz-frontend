@@ -46,44 +46,49 @@ class PackageVersions extends React.PureComponent<
           if (versionData.length === 0) {
             return <div>No versions available for the package</div>;
           }
-          const info = versionData[0].info;
+          // const info = versionData[0].info;
           return (
             <>
               {/*TODO: Copy button for md5 */}
               <div className="package-row-flex">
-                <div>
-                  <h4 className="section-heading">Package Info</h4>
+              { versionData.map((version: any) => {
+                let info = version.info;
+                return (
+                  <div>
+                    <h4 className="section-heading">Package Info</h4>
+                    <p className="minor-paragraph">
+                      <b>Arch</b>: {info.arch || 'n/a'}
+                      <br />
+                      <b>Build</b>: {info.build || 'n/a'}
+                      <br />
+                      <b>MD5</b>: {info.md5}
+                      <br />
+                      <b>Platform</b>: {versionData[0].platform || info.platform}
+                      <br />
+                      <b>Version</b>: {info.version}
+                    </p>
+
+
+                  <h4 className="section-heading">Dependencies</h4>
                   <p className="minor-paragraph">
-                    <b>Arch</b>: {info.arch || 'n/a'}
-                    <br />
-                    <b>Build</b>: {info.build || 'n/a'}
-                    <br />
-                    <b>MD5</b>: {info.md5}
-                    <br />
-                    <b>Platform</b>: {versionData[0].platform || info.platform}
-                    <br />
-                    <b>Version</b>: {info.version}
+                    {map(info.depends, (dep: string, key: string) => (
+                      <span key={`${info.arch}_${key}`} className="tag">
+                        {dep}
+                      </span>
+                    ))}
                   </p>
                 </div>
-
-                <div>
-                  <h4 className="section-heading">Install</h4>
-                  <div className="package-install-command">
-                    <pre>
-                      mamba install -c {channel} {selectedPackage}
-                    </pre>
-                  </div>
-                </div>
+                )
+              })}
               </div>
 
-              <h4 className="section-heading">Dependencies</h4>
-              <p className="minor-paragraph">
-                {map(info.depends, (dep: string, key: string) => (
-                  <span key={key} className="tag">
-                    {dep}
-                  </span>
-                ))}
-              </p>
+              <h4 className="section-heading">Install</h4>
+              <div className="minor-paragraph package-install-command">
+                <pre>
+                  mamba install -c {channel} {selectedPackage}
+                </pre>
+              </div>
+
               <h4 className="section-heading">History</h4>
               <table className="table-small full-width">
                 <thead>
@@ -98,7 +103,7 @@ class PackageVersions extends React.PureComponent<
                 </thead>
                 <tbody>
                   {versionData.map((version: any) => (
-                    <tr key={version.time_created}>
+                    <tr key={`${version.info.arch}_${version.time_created}`}>
                       <td>{version.uploader.name}</td>
                       <td>
                         {fromNow(version.time_created, {
