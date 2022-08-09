@@ -129,16 +129,16 @@ class PackageMainContent extends React.PureComponent<any, any> {
               <p className="minor-paragraph">
                 {packageData.description || <i>n/a</i>}
               </p>
-              {packageData.platforms && packageData.platforms.lenght !== 0 && (
+              {packageData.platforms && packageData.platforms.length !== 0 && (
                 <div>
                   <h4 className="section-heading">Platforms</h4>
                   {this._formatPlatform(packageData.platforms)}
                 </div>
               )}
+              <PackageVersions selectedPackage={packageId} channel={channelId} platformsList={packageData.platforms}/>
             </>
           )}
         </FetchHoc>
-        <PackageVersions selectedPackage={packageId} channel={channelId} />
       </div>
     );
   }

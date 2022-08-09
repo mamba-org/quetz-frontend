@@ -13,6 +13,7 @@ import * as React from 'react';
 type PackageVersionProps = {
   channel: string;
   selectedPackage: string;
+  platformsList?: string[];
 };
 
 type PackageVersionsState = {
@@ -24,6 +25,7 @@ class PackageVersions extends React.PureComponent<
   PackageVersionProps,
   PackageVersionsState
 > {
+
   render(): JSX.Element {
     const { channel, selectedPackage } = this.props;
     const settings = ServerConnection.makeSettings();
@@ -42,16 +44,25 @@ class PackageVersions extends React.PureComponent<
         loadingMessage={`Loading versions in ${selectedPackage}`}
         genericErrorMessage="Error fetching package versions information"
       >
-        {(versionData: any) => {
+        {(versionData: any[]) => {
           if (versionData.length === 0) {
             return <div>No versions available for the package</div>;
           }
-          // const info = versionData[0].info;
+
+          const lastVersionsData: any[] = [];
+          if (this.props.platformsList)
+            this.props.platformsList.forEach(( platform ) => {
+              lastVersionsData.push(versionData.find(version => {
+                return version["platform"] === platform;
+              }));
+            });
+          else lastVersionsData.push(versionData[0])
+
           return (
             <>
               {/*TODO: Copy button for md5 */}
               <div className="package-row-flex">
-              { versionData.map((version: any) => {
+              { lastVersionsData.map((version: any) => {
                 let info = version.info;
                 return (
                   <div>
@@ -63,7 +74,7 @@ class PackageVersions extends React.PureComponent<
                       <br />
                       <b>MD5</b>: {info.md5}
                       <br />
-                      <b>Platform</b>: {versionData[0].platform || info.platform}
+                      <b>Platform</b>: {info.platform}
                       <br />
                       <b>Version</b>: {info.version}
                     </p>
