@@ -39,3 +39,22 @@
 .member-role-column {
   width: 20%;
 }
+
+.package-install-command pre {
+  display: inline;
+}
+
+.package-install-command svg {
+  float: right;
+}
+
+.copy-button.shake {
+  animation: shake 0.5s 1;
+}
+
+@keyframes shake {
+  25% { transform: rotate(-20deg);  }
+  50% { transform: rotate(30deg); }
+  75% { transform: rotate(-10deg); }
+  100%{ transform: rotate(0deg); }
+}

@@ -12,6 +12,8 @@ import * as React from 'react';
 
 import { PaginatedTable } from '@quetz-frontend/table';
 
+import CopyButton from '../components/copy-button'
+
 type PackageVersionProps = {
   channel: string;
   selectedPackage: string;
@@ -65,7 +67,6 @@ class PackageVersions extends React.PureComponent<
 
           return (
             <>
-              {/*TODO: Copy button for md5 */}
               <div className="package-row-flex">
               { lastVersionsData.map((version: any) => {
 
@@ -78,7 +79,7 @@ class PackageVersions extends React.PureComponent<
                       <br />
                       <b>Build</b>: {info.build || 'n/a'}
                       <br />
-                      <b>MD5</b>: {info.md5}
+                      <b>MD5</b>: {info.md5} <CopyButton copyText={info.md5} />
                       <br />
                       <b>Platform</b>: {info.platform}
                       <br />
@@ -104,6 +105,7 @@ class PackageVersions extends React.PureComponent<
                 <pre>
                   mamba install -c {channel} {selectedPackage}
                 </pre>
+                <CopyButton copyText={`mamba install -c ${channel} ${selectedPackage}`} size='lg' />
               </div>
 
               {this.props.showVersionsList && (
@@ -120,11 +122,9 @@ class PackageVersions extends React.PureComponent<
           );
         }}
       </FetchHoc>
-
     );
   }
 }
-
 
 export default PackageVersions;
 
@@ -151,7 +151,6 @@ export const getVersionTableColumns = (baseURL: string) => [
     Header: 'Filename',
     accessor: 'filename',
     Cell: ({ row }: any) => {
-      console.log(row);
       return (
         <a
           href={URLExt.join(
