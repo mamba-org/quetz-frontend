@@ -10,9 +10,12 @@ import fromNow from 'fromnow';
 
 import * as React from 'react';
 
+import { PaginatedTable } from '@quetz-frontend/table';
+
 type PackageVersionProps = {
   channel: string;
   selectedPackage: string;
+  showVersionsList?: boolean;
   platformsList?: string[];
 };
 
@@ -31,12 +34,13 @@ class PackageVersions extends React.PureComponent<
     const settings = ServerConnection.makeSettings();
     const url = URLExt.join(
       settings.baseUrl,
-      '/api/channels',
+      '/api/paginated/channels',
       channel,
       '/packages',
       selectedPackage,
       '/versions'
     );
+
 
     return (
       <FetchHoc
@@ -44,25 +48,27 @@ class PackageVersions extends React.PureComponent<
         loadingMessage={`Loading versions in ${selectedPackage}`}
         genericErrorMessage="Error fetching package versions information"
       >
-        {(versionData: any[]) => {
-          if (versionData.length === 0) {
+        {(versionData: any) => {
+
+          if (versionData.result.length === 0) {
             return <div>No versions available for the package</div>;
           }
 
           const lastVersionsData: any[] = [];
           if (this.props.platformsList)
             this.props.platformsList.forEach(( platform ) => {
-              lastVersionsData.push(versionData.find(version => {
+              lastVersionsData.push(versionData.result.find((version: { [x: string]: any; }) => {
                 return version["platform"] === platform;
               }));
             });
-          else lastVersionsData.push(versionData[0])
+          else lastVersionsData.push(versionData.result[0])
 
           return (
             <>
               {/*TODO: Copy button for md5 */}
               <div className="package-row-flex">
               { lastVersionsData.map((version: any) => {
+
                 let info = version.info;
                 return (
                   <div>
@@ -100,66 +106,94 @@ class PackageVersions extends React.PureComponent<
                 </pre>
               </div>
 
-              <h4 className="section-heading">History</h4>
-              <table className="table-small full-width">
-                <thead>
-                  <tr>
-                    <th>Uploader</th>
-                    <th>Date</th>
-                    <th>Filename</th>
-                    <th>Platform</th>
-                    <th>Size</th>
-                    <th>Version</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {versionData.map((version: any) => (
-                    <tr key={`${version.info.arch}_${version.time_created}`}>
-                      <td>{version.uploader.name}</td>
-                      <td>
-                        {fromNow(version.time_created, {
-                          max: 1,
-                          suffix: true,
-                        })}
-                      </td>
-                      <td>
-                        <a
-                          href={URLExt.join(
-                            settings.baseUrl,
-                            `/get/${channel}/${version.info.subdir}/${version.filename}`
-                          )}
-                          download
-                        >
-                          {version.filename}
-                        </a>
-                      </td>
-                      <td>
-                        {version.info.platform === 'linux' ? (
-                          <i className="fa fa-linux fa-2x" />
-                        ) : version.info.platform === 'osx' ? (
-                          <i className="fa fa-apple fa-2x" />
-                        ) : version.info.platform === 'win' ? (
-                          <i className="fa fa-windows fa-2x" />
-                        ) : (
-                          <div className="package-platform-noarch">
-                            <i className="fa fa-linux" />
-                            <i className="fa fa-apple" />
-                            <i className="fa fa-windows" />
-                          </div>
-                        )}
-                      </td>
-                      <td>{formatSize(version.info.size)}</td>
-                      <td>{version.version}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              {this.props.showVersionsList && (
+                <>
+                  <h4 className="section-heading">History</h4>
+                  <PaginatedTable
+                    url={url}
+                    enableSearch={false}
+                    columns={getVersionTableColumns(settings.baseUrl)}
+                  />
+                </>
+              )}
             </>
           );
         }}
       </FetchHoc>
+
     );
   }
 }
 
+
 export default PackageVersions;
+
+export const getVersionTableColumns = (baseURL: string) => [
+  {
+    Header: 'Uploader',
+    accessor: 'uploader.name',
+    Cell: ({ row }: any) => (row.values['uploader.name']) as any,
+  },
+  {
+    Header: 'Date',
+    accessor: 'time_created',
+    Cell: ({ row }: any) =>
+      (
+        fromNow(
+          row.values.time_created, {
+            max: 1,
+            suffix: true,
+          }
+        )
+      )
+  },
+  {
+    Header: 'Filename',
+    accessor: 'filename',
+    Cell: ({ row }: any) => {
+      console.log(row);
+      return (
+        <a
+          href={URLExt.join(
+            baseURL,
+            `/get/${row.original.channel_name}/${row.original.info.subdir}/${row.values.filename}`
+          )}
+          download
+        >
+          {row.values.filename}
+        </a>
+      )
+    }
+  },
+  {
+    Header: 'Platform',
+    accessor: 'info.platform',
+    Cell: ({ row }: any) =>
+      {
+        const platform = row.values['info.platform'];
+        return platform === 'linux' ? (
+          <i className="fa fa-linux fa-2x" />
+        ) : platform === 'osx' ? (
+          <i className="fa fa-apple fa-2x" />
+        ) : platform === 'win' ? (
+          <i className="fa fa-windows fa-2x" />
+        ) : (
+          <div className="package-platform-noarch">
+            <i className="fa fa-linux" />
+            <i className="fa fa-apple" />
+            <i className="fa fa-windows" />
+          </div>
+        )
+      }
+  },
+  {
+    Header: 'Size',
+    accessor: 'info.size',
+    Cell: ({ row }: any) => (formatSize(row.values['info.size'])) as any,
+  },
+  {
+    Header: 'Version',
+    accessor: 'version',
+    Cell: ({ row }: any) => (row.values.version) as any,
+  }
+];
