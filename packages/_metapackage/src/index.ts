@@ -1,4 +1,3 @@
-import '@quetz-frontend/about-extension';
 import '@quetz-frontend/application';
 import '@quetz-frontend/application-extension';
 import '@quetz-frontend/apputils';
