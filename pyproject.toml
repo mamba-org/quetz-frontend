@@ -17,21 +17,11 @@ build_cmd = "build:prod"
 npm = ["yarn"]
 
 [tool.check-manifest]
-ignore = ["quetz_frontend/app/build/**", "yarn.lock", ".*", "package-lock.json"]
+ignore = ["builder/**", "examples/**", "packages/**", "quetz_frontend/app/static/**", "quetz_frontend/app/themes/**", "quetz_frontend/app/build/**", "quetz_frontend/app/style.js", "scripts/**", "environment.yml", "yarn.lock", ".*"]
 
-[tool.tbump.version]
-current = "0.3.1"
-regex = '''
-  (?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)
-  ((?P<channel>a|b|rc|.dev)(?P<release>\d+))?
-'''
-
-[tool.tbump.git]
-message_template = "Bump to {new_version}"
-tag_template = "v{new_version}"
-
-[[tool.tbump.file]]
-src = "quetz_frontend/_version.py"
+[tool.jupyter-releaser.hooks]
+before-bump-version = ["yarn"]
+before-build-npm = ["yarn"]
 
 [tool.jupyter-releaser.options]
 version-cmd = "python scripts/bump-version.py --force"
