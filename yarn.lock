@@ -2085,26 +2085,6 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.21.tgz"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
-<<<<<<< HEAD
-"@quetz-frontend/about-extension@file:packages/about-extension":
-  version "0.3.1"
-  dependencies:
-    "@jupyter-notebook/react-components" "~0.9.1"
-    "@jupyterlab/application" "^3.2.0"
-    "@jupyterlab/apputils" "^3.2.0"
-    "@jupyterlab/ui-components" "^3.2.0"
-    "@lumino/commands" "^1.12.0"
-    "@lumino/coreutils" "^1.5.3"
-    "@lumino/signaling" "^1.4.3"
-    "@lumino/widgets" "^1.19.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@types/marked" "^4.0.3"
-    react "^17.0.1"
-    react-markdown "^8.0.3"
-
-=======
->>>>>>> 65517e0 (Removes the about extension and moves it to another repo)
 "@quetz-frontend/application-extension@file:packages/application-extension":
   version "0.3.1"
   dependencies:
@@ -2196,6 +2176,7 @@
 "@quetz-frontend/login-extension@file:packages/login-extension":
   version "0.3.1"
   dependencies:
+    "@jupyterlab/coreutils" "^5.2.0"
     "@quetz-frontend/application" "^0.3.1"
     "@quetz-frontend/menu" "^0.3.1"
     react "^17.0.1"
