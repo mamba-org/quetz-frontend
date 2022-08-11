@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/examples-test",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0-alpha.1",
   "description": "Quetz Frontend Examples Tests",
   "private": true,
   "scripts": {
