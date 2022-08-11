@@ -1,7 +1,5 @@
 # Quetz Light Theme
 
-[![Github Actions Status](https://github.com/mamba-org/quetz-frontend/tree/main/examples/light-theme/workflows/Build/badge.svg)](https://github.com/mamba-org/quetz-frontend/tree/main/examples/light-theme/actions/workflows/build.yml)
-
 A light theme extension for Quetz.
 
 

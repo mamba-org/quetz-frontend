@@ -2,6 +2,9 @@
 requires = ["jupyter_packaging~=0.10,<2"]
 build-backend = "jupyter_packaging.build_api"
 
+[tool.isort]
+profile = "black"
+
 [tool.jupyter-packaging.options]
 skip-if-exists = ["quetz_frontend/app/static/style.js"]
 ensured-targets = ["quetz_frontend/app/static/style.js", "quetz_frontend/app/static/package.json"]
@@ -14,4 +17,11 @@ build_cmd = "build:prod"
 npm = ["yarn"]
 
 [tool.check-manifest]
-ignore = ["quetz_frontend/app/build/**", "yarn.lock", ".*", "package-lock.json"]
+ignore = ["builder/**", "examples/**", "packages/**", "quetz_frontend/app/static/**", "quetz_frontend/app/themes/**", "quetz_frontend/app/build/**", "quetz_frontend/app/style.js", "scripts/**", "environment.yml", "yarn.lock", ".*"]
+
+[tool.jupyter-releaser.hooks]
+before-bump-version = ["yarn"]
+before-build-npm = ["yarn"]
+
+[tool.jupyter-releaser.options]
+version-cmd = "python scripts/bump-version.py --force"
