@@ -7,15 +7,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 
 type CopyButtonProps = {
+  /**
+   * Text to copy when clicking the button.
+   */
   copyText: string;
+
+  /**
+   * Size of the icon as fontawesome SizeProp.
+   */
   size?: SizeProp;
-}
+};
 
 /**
  * A button to copy a text to clipboard.
+ *
+ * @param props - The properties of the button, CopyButtonProps type.
  */
-const CopyButton = (props: CopyButtonProps) => {
-
+const CopyButton = (props: CopyButtonProps): JSX.Element => {
   const [shake, setShake] = React.useState(false);
 
   /**
@@ -24,10 +32,15 @@ const CopyButton = (props: CopyButtonProps) => {
   const animate = () => {
     setShake(true);
     setTimeout(() => setShake(false), 1000);
-  }
+  };
 
-  return(
-    <FontAwesomeIcon className={'copy-button' + (props.size ? ` fa-${props.size}` : '') + (shake ? ' shake' : '')}
+  return (
+    <FontAwesomeIcon
+      className={
+        'copy-button' +
+        (props.size ? ` fa-${props.size}` : '') +
+        (shake ? ' shake' : '')
+      }
       icon={faCopy}
       onClick={() => {
         animate();
@@ -35,7 +48,6 @@ const CopyButton = (props: CopyButtonProps) => {
       }}
     />
   );
-
-}
+};
 
 export default CopyButton;

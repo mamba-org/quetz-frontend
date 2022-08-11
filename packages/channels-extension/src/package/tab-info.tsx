@@ -135,7 +135,12 @@ class PackageMainContent extends React.PureComponent<any, any> {
                   {this._formatPlatform(packageData.platforms)}
                 </div>
               )}
-              <PackageVersions selectedPackage={packageId} channel={channelId} showVersionsList={true} platformsList={packageData.platforms}/>
+              <PackageVersions
+                selectedPackage={packageId}
+                channel={channelId}
+                showVersionsList={true}
+                platformsList={packageData.platforms}
+              />
             </>
           )}
         </FetchHoc>
