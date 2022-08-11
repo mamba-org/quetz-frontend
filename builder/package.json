@@ -1,6 +1,5 @@
 {
   "name": "@quetz-frontend/builder",
-  "private": true,
   "version": "3.3.1",
   "description": "Quetz - Extension Builder",
   "homepage": "https://github.com/mamba-org/quetz-frontend",
