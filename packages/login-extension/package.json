@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/login-extension",
-  "version": "0.3.1",
+  "version": "0.4.0-alpha.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -26,9 +26,9 @@
     "watch": "tsc -b --watch"
   },
   "dependencies": {
-    "@quetz-frontend/application": "^0.3.1",
-    "@quetz-frontend/menu": "^0.3.1",
     "@jupyterlab/coreutils": "^5.2.0",
+    "@quetz-frontend/application": "^0.4.0-alpha.0",
+    "@quetz-frontend/menu": "^0.4.0-alpha.0",
     "react": "^17.0.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/apputils",
-  "version": "0.3.1",
+  "version": "0.4.0-alpha.0",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
