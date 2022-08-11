@@ -53,9 +53,13 @@ def bump(force, spec):
     lerna_cmd = f"{LERNA_CMD} {js_version}"
     if force:
         lerna_cmd += " --yes"
-    run(lerna_cmd)
+    
     # update the resolutions in the app package.json
+    # Doing it before running `lerna version`` so lerna will
+    # prettify the files
     _update_resolutions("@quetz-frontend", "~{}".format(js_version))
+    run(lerna_cmd)
+    
 
 def _update_resolutions(package, version):
     """
