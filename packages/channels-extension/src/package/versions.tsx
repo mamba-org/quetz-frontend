@@ -20,7 +20,6 @@ type PackageVersionProps = {
   channel: string;
   selectedPackage: string;
   showVersionsList?: boolean;
-  platformsList?: string[];
 };
 
 type PackageVersionsState = {
@@ -28,11 +27,80 @@ type PackageVersionsState = {
   apiStatus: API_STATUSES;
 };
 
+type Platforms = {
+  [os: string]: {
+    faIconName?: string;
+    operatingSystems: string[];
+  };
+};
+
 class PackageVersions extends React.PureComponent<
   PackageVersionProps,
   PackageVersionsState
 > {
-  render(): JSX.Element {
+  private _platforms: Platforms = {
+    linux: {
+      faIconName: 'linux',
+      operatingSystems: [],
+    },
+    osx: {
+      faIconName: 'apple',
+      operatingSystems: [],
+    },
+    win: {
+      faIconName: 'windows',
+      operatingSystems: [],
+    },
+    other: {
+      operatingSystems: [],
+    },
+  };
+
+  /**
+   * Include the OS in the list of corresponding platforms.
+   *
+   * @param os - the os name as string.
+   */
+  private _fillPlatform = (os: string): boolean => {
+    const pf = os.split('-')[0];
+
+    const pfKey = (pf in this._platforms ? pf : 'other') as keyof Platforms;
+
+    const newPlatform = this._platforms[pfKey].operatingSystems.length == 0;
+    if (!this._platforms[pfKey].operatingSystems.includes(os)) {
+      this._platforms[pfKey].operatingSystems.push(os);
+    }
+
+    return newPlatform;
+  };
+
+  /**
+   * Format the platform icon and the list of OS.
+   *
+   * @param platform - the platform name as string.
+   */
+  private _formatPlatform = (platform: string): React.ReactNode => {
+    const pfKey = (
+      platform in this._platforms ? platform : 'other'
+    ) as keyof Platforms;
+
+    return (
+      <div>
+        <div className="package-files-row">
+          {'faIconName' in this._platforms[pfKey] && (
+            <i className={`fa fa-${this._platforms[pfKey].faIconName} fa-3x`} />
+          )}
+          <span className="package-platform-list">
+            {this._platforms[pfKey].operatingSystems.map((platform, index) => (
+              <p key={`${platform}_${index}`}>{platform}</p>
+            ))}
+          </span>
+        </div>
+      </div>
+    );
+  };
+
+  render(): React.ReactElement {
     const { channel, selectedPackage } = this.props;
     const settings = ServerConnection.makeSettings();
     const url = URLExt.join(
@@ -56,17 +124,12 @@ class PackageVersions extends React.PureComponent<
           }
 
           const lastVersionsData: any[] = [];
-          if (this.props.platformsList) {
-            this.props.platformsList.forEach((platform) => {
-              lastVersionsData.push(
-                versionData.result.find((version: { [x: string]: any }) => {
-                  return version['platform'] === platform;
-                })
-              );
-            });
-          } else {
-            lastVersionsData.push(versionData.result[0]);
-          }
+          versionData.result.forEach((version: any) => {
+            const newPlatform = this._fillPlatform(version.platform);
+            if (newPlatform) {
+              lastVersionsData.push(version);
+            }
+          });
 
           return (
             <>
@@ -74,7 +137,11 @@ class PackageVersions extends React.PureComponent<
                 {lastVersionsData.map((version: any) => {
                   const info = version.info;
                   return (
-                    <div key={`${info.platform}_${info.version}`}>
+                    <div
+                      key={`${info.platform}_${info.version}`}
+                      className="platform-item"
+                    >
+                      {this._formatPlatform(info.platform)}
                       <h4 className="section-heading">Package Info</h4>
                       <p className="minor-paragraph">
                         <b>Arch</b>: {info.arch || 'n/a'}
@@ -84,18 +151,20 @@ class PackageVersions extends React.PureComponent<
                         <b>MD5</b>: {info.md5}{' '}
                         <CopyButton copyText={info.md5} />
                         <br />
-                        <b>Platform</b>: {info.platform}
+                        <b>Platform</b>: {version.platform}
                         <br />
-                        <b>Version</b>: {info.version}
+                        <b>Latest version</b>: {info.version}
                       </p>
 
                       <h4 className="section-heading">Dependencies</h4>
                       <p className="minor-paragraph">
-                        {map(info.depends, (dep: string, key: string) => (
-                          <span key={`${info.arch}_${key}`} className="tag">
-                            {dep}
-                          </span>
-                        ))}
+                        {map(info.depends, (dep: string, key: string) => {
+                          return (
+                            <span key={`${info.arch}_${key}`} className="tag">
+                              {dep}
+                            </span>
+                          );
+                        })}
                       </p>
                     </div>
                   );

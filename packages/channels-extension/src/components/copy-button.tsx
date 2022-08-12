@@ -23,7 +23,7 @@ type CopyButtonProps = {
  *
  * @param props - The properties of the button, CopyButtonProps type.
  */
-const CopyButton = (props: CopyButtonProps): JSX.Element => {
+const CopyButton = (props: CopyButtonProps): React.ReactElement => {
   const [shake, setShake] = React.useState(false);
 
   /**
