@@ -1,13 +1,22 @@
 .package-row-flex {
   display: flex;
   justify-content: space-between;
+  overflow-x: auto;
 }
 
 .package-files-row {
   display: flex;
-  padding: 18px 42px;
+  padding: 18px 5px;
   border-bottom: 1px solid var(--jp-layout-color2);
   align-items: center;
+}
+
+.platform-item {
+  margin-right: 50px;
+}
+
+.platform-item:last-child {
+  margin-right: 0px;
 }
 
 .package-platform-noarch {
@@ -27,7 +36,7 @@
 
 .package-platform-list {
   list-style: none;
-  padding-left: 15px;
+  padding-left: 5px;
 }
 
 .package-install-command {
