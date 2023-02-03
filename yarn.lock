@@ -2222,18 +2222,18 @@
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
 "@quetz-frontend/application-extension@file:packages/application-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/translation" "^3.2.0"
     "@jupyterlab/ui-components" "^3.2.0"
     "@lumino/widgets" "^1.19.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/menu" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/menu" "^0.4.0-alpha.1"
 
 "@quetz-frontend/application@file:packages/application":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
@@ -2247,7 +2247,7 @@
     "@lumino/widgets" "^1.19.0"
 
 "@quetz-frontend/apputils@file:packages/apputils":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.3.0"
     "@fortawesome/free-solid-svg-icons" "^6.0.0"
@@ -2262,7 +2262,7 @@
     react-notifications-component "^3.3.0"
 
 "@quetz-frontend/channels-extension@file:packages/channels-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.3.0"
     "@fortawesome/free-solid-svg-icons" "^6.0.0"
@@ -2273,52 +2273,52 @@
     "@jupyterlab/coreutils" "^5.2.0"
     "@jupyterlab/services" "^6.2.0"
     "@jupyterlab/ui-components" "^3.2.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@quetz-frontend/table" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
+    "@quetz-frontend/table" "^0.4.0-alpha.1"
     fromnow "^3.0.1"
     lodash "^4.17.20"
     react "^17.0.1"
     react-router-dom "^5.2.0"
 
 "@quetz-frontend/home-extension@file:packages/home-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.3.0"
     "@fortawesome/free-solid-svg-icons" "^6.0.0"
     "@fortawesome/react-fontawesome" "^0.1.17"
     "@jupyterlab/coreutils" "^5.2.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@quetz-frontend/table" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
+    "@quetz-frontend/table" "^0.4.0-alpha.1"
     react "^17.0.1"
 
 "@quetz-frontend/jobs-extension@file:packages/jobs-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/coreutils" "^5.2.0"
     "@jupyterlab/services" "^6.2.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@quetz-frontend/menu" "^0.3.1"
-    "@quetz-frontend/table" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
+    "@quetz-frontend/menu" "^0.4.0-alpha.1"
+    "@quetz-frontend/table" "^0.4.0-alpha.1"
     react "^17.0.1"
     react-router-dom "^5.2.0"
     react-table "^7.6.3"
     regenerator-runtime "^0.13.9"
 
 "@quetz-frontend/login-extension@file:packages/login-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyterlab/coreutils" "^5.2.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/menu" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/menu" "^0.4.0-alpha.1"
     react "^17.0.1"
 
 "@quetz-frontend/menu-extension@file:packages/menu-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyter-notebook/react-components" "~0.9.1"
     "@jupyterlab/application" "^3.2.0"
@@ -2328,47 +2328,47 @@
     "@lumino/coreutils" "^1.5.3"
     "@lumino/signaling" "^1.4.3"
     "@lumino/widgets" "^1.19.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@quetz-frontend/menu" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
+    "@quetz-frontend/menu" "^0.4.0-alpha.1"
     react "^17.0.1"
 
 "@quetz-frontend/menu@file:packages/menu":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyterlab/ui-components" "^3.2.0"
     "@lumino/coreutils" "^1.5.3"
     "@lumino/signaling" "^1.4.3"
 
 "@quetz-frontend/search-extension@file:packages/search-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@jupyter-notebook/react-components" "~0.9.1"
     "@jupyterlab/application" "^3.2.0"
     "@jupyterlab/apputils" "^3.2.0"
     "@jupyterlab/coreutils" "^5.2.0"
     "@jupyterlab/services" "^6.2.0"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@quetz-frontend/table" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
+    "@quetz-frontend/table" "^0.4.0-alpha.1"
     react "^17.0.1"
 
 "@quetz-frontend/table@file:packages/table":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.3.0"
     "@fortawesome/free-solid-svg-icons" "^6.0.0"
     "@fortawesome/react-fontawesome" "^0.1.17"
     "@jupyter-notebook/react-components" "~0.9.1"
     "@jupyterlab/services" "^6.2.0"
-    "@quetz-frontend/apputils" "^0.3.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
     clsx "^1.1.1"
     react "^17.0.1"
     react-table "^7.6.3"
     regenerator-runtime "^0.13.9"
 
 "@quetz-frontend/user-extension@file:packages/user-extension":
-  version "0.3.1"
+  version "0.4.0-alpha.1"
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.3.0"
     "@fortawesome/free-solid-svg-icons" "^6.0.0"
@@ -2380,10 +2380,10 @@
     "@jupyterlab/services" "^6.2.0"
     "@jupyterlab/ui-components" "^3.2.0"
     "@lumino/messaging" "^1.4.3"
-    "@quetz-frontend/application" "^0.3.1"
-    "@quetz-frontend/apputils" "^0.3.1"
-    "@quetz-frontend/menu" "^0.3.1"
-    "@quetz-frontend/table" "^0.3.1"
+    "@quetz-frontend/application" "^0.4.0-alpha.1"
+    "@quetz-frontend/apputils" "^0.4.0-alpha.1"
+    "@quetz-frontend/menu" "^0.4.0-alpha.1"
+    "@quetz-frontend/table" "^0.4.0-alpha.1"
     moment "^2.29.1"
     react "^17.0.1"
 
@@ -5792,9 +5792,9 @@ htmlparser2@^6.0.0, htmlparser2@^6.1.0:
     entities "^2.0.0"
 
 http-cache-semantics@^4.0.0, http-cache-semantics@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.npmjs.org/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz"
-  integrity sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.1.tgz#abe02fcb2985460bf0323be664436ec3476a6d5a"
+  integrity sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==
 
 http-errors@1.8.1:
   version "1.8.1"
