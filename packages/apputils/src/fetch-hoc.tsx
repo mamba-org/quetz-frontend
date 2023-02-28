@@ -66,7 +66,7 @@ export class FetchHoc<T> extends React.PureComponent<
 
     if (apiStatus === API_STATUSES.FAILED) {
       return (
-        <p className="paragraph padding">
+        <p className="paragraph padding error-message">
           {error || genericErrorMessage || 'Error occurred while fetching data'}
           &emsp;
           <Button appearance="lightweight" onClick={this.tryFetch}>
