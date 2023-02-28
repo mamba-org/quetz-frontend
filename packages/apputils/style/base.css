@@ -97,3 +97,8 @@ jp-search::part(control) {
   height: 30px;
   border-radius: 100px;
 }
+
+.error-message {
+  display: flex;
+  align-items: center;
+}
