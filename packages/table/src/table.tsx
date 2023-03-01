@@ -111,20 +111,22 @@ export const Table: React.FC<ITableFcProps> = ({
   ) as any;
 
   // Debounce our onFetchData call for 100ms
-  const fetchDataDebounced = useAsyncDebounce(fetchData, 100);
+  if (fetchData) {
+    const fetchDataDebounced = useAsyncDebounce(fetchData, 100);
 
-  // When these table states change, fetch new data!
-  React.useEffect(() => {
-    if (searching.current) {
-      gotoPage(0);
-    }
-    searching.current = false;
-    fetchDataDebounced({
-      pageIndex: pageIndex,
-      pageSize: pageSize,
-      query: globalFilter,
-    });
-  }, [fetchDataDebounced, pageIndex, pageSize, globalFilter]);
+    // When these table states change, fetch new data!
+    React.useEffect(() => {
+      if (searching.current) {
+        gotoPage(0);
+      }
+      searching.current = false;
+      fetchDataDebounced({
+        pageIndex: pageIndex,
+        pageSize: pageSize,
+        query: globalFilter,
+      });
+    }, [fetchDataDebounced, pageIndex, pageSize, globalFilter]);
+  }
 
   // Only show the "Showing 1 to x of y results and arrows if there's more than one page"
   const showPaginationInformation = dataSize > pageSize;
