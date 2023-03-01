@@ -84,10 +84,13 @@ class ChannelDetails extends React.PureComponent<
         <Tabs
           activeid={`channel-${selectedTabIndex}`}
           onChange={(event) => {
-            this.setTabId(
-              // Remove head `channel-`
-              ((event.target as any).activeid as string).slice(8)
-            );
+            const activeID = (event.target as any).activeid;
+            if (typeof activeID === 'string') {
+              this.setTabId(
+                // Remove head `channel-`
+                activeID.slice(8)
+              );
+            }
           }}
         >
           <Tab id={`channel-${ChannelTabs.Info}`}>Info</Tab>
