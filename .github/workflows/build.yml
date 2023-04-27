@@ -76,7 +76,7 @@ jobs:
             - yarn
           EOF
 
-      - uses: mamba-org/provision-with-micromamba@main
+      - uses: mamba-org/setup-micromamba@v1
         with:
           environment-name: quetz
           environment-file: environment.yml

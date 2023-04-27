@@ -18,11 +18,11 @@ runs:
         ref: main
         path: ${{ inputs.server_folder }}
 
-    - uses: mamba-org/provision-with-micromamba@main
+    - uses: mamba-org/setup-micromamba@v1
       with:
         environment-name: quetz
         environment-file: ${{ inputs.server_folder }}/environment.yml
-        extra-specs: |
+        create-args: >-
           nodejs=16
           yarn
         cache-downloads: true
