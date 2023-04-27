@@ -29,17 +29,17 @@ jobs:
         run: |
           yarn run eslint:check
           yarn run prettier:check
+        shell: micromamba-shell {0}
 
       - name: Install builder
         run: |
-          conda install build
+          micromamba install build
+        shell: bash -el {0}
 
       - name: Package frontend
         working-directory: frontend
-        run: |
-          set -ex
-
-          python -m build -w .
+        run: python -m build -w .
+        shell: micromamba-shell {0}
 
       - name: Upload package
         uses: actions/upload-artifact@v2
@@ -115,6 +115,7 @@ jobs:
 
           yarn
           yarn build:packages
+        shell: micromamba-shell {0}
 
       - name: Install
         working-directory: examples/light_theme
@@ -130,6 +131,7 @@ jobs:
 
           quetz-frontend list
           quetz-frontend list 2>&1 | grep -ie "@quetz-example/light-theme"
+        shell: micromamba-shell {0}
 
       - name: Set up browser cache
         uses: actions/cache@v2
@@ -146,12 +148,14 @@ jobs:
           set -ex
           yarn
           yarn playwright install chromium
+        shell: micromamba-shell {0}
 
       - name: Test example
         working-directory: examples/tests
         run: |
           set -ex
           yarn test
+        shell: micromamba-shell {0}
 
       - name: Upload Playwright Test report
         if: always()
