@@ -27,6 +27,7 @@ jobs:
       - name: Lint
         working-directory: frontend
         run: |
+          yarn install
           yarn run eslint:check
           yarn run prettier:check
         shell: micromamba-shell {0}
