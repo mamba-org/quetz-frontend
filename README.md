@@ -29,7 +29,7 @@ First of all, clone quetz and quetz-frontend, create a conda environment using t
 # Create an environment
 mamba env create -f quetz/environment.yml
 conda activate quetz
-mamba install -c conda-forge nodejs=14 yarn
+mamba install -c conda-forge nodejs=16 yarn=1.21
 ```
 
 #### Install Quetz in dev mode
