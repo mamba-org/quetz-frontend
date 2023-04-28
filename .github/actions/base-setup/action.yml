@@ -24,7 +24,7 @@ runs:
         environment-file: ${{ inputs.server_folder }}/environment.yml
         create-args: >-
           nodejs=16
-          yarn
+          yarn=1.21
         cache-downloads: true
 
     - name: Install the server

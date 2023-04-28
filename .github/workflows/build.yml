@@ -74,7 +74,7 @@ jobs:
           dependencies:
             - python=${{ matrix.python-version }}
             - nodejs=16
-            - yarn
+            - yarn=1.21
           EOF
 
       - uses: mamba-org/setup-micromamba@v1
