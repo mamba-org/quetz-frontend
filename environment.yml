@@ -4,4 +4,4 @@ channels:
 dependencies:
   - quetz
   - nodejs=16
-  - yarn
+  - yarn=1.22
