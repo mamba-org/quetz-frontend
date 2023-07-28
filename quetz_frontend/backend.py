@@ -145,6 +145,8 @@ def index(
     user_id = auth.get_user()
     profile = dao.get_profile(user_id)
 
+    # request might also be /channels/<channel_name>/packages/<package.name>
+    # where the package name contains a "."
     if "." in resource and not ('channels/' in resource and 'packages/' in resource):
         file_name = (
             resource
