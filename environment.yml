@@ -5,3 +5,4 @@ dependencies:
   - quetz
   - nodejs=16
   - yarn=1.22
+  - pydantic<2
