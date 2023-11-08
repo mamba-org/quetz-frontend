@@ -28,7 +28,7 @@ First of all, clone quetz and quetz-frontend, create a conda environment using t
 ```bash
 # Create an environment
 mamba env create -f quetz/environment.yml
-conda activate quetz
+mamba activate quetz
 mamba install -c conda-forge nodejs=16 yarn=1.22
 ```
 
