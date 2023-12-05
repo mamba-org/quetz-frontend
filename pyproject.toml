@@ -25,3 +25,6 @@ before-build-npm = ["yarn", "yarn build:prod"]
 
 [tool.jupyter-releaser.options]
 version-cmd = "python scripts/bump-version.py --force"
+
+[tool.check-wheel-contents]
+ignore = ["W002"]
