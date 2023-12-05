@@ -11,6 +11,10 @@
   "directories": {
     "lib": "lib/"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mamba-org/quetz-frontend.git"
+  },
   "files": [
     "lib/*.d.ts",
     "lib/*.js.map",
