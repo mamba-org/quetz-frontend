@@ -2,6 +2,10 @@
   "name": "@quetz-frontend/main-app",
   "version": "0.4.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mamba-org/quetz-frontend.git"
+  },
   "scripts": {
     "build": "yarn run clean && webpack",
     "build:dev": "yarn run build",
