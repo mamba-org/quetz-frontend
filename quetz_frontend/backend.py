@@ -236,7 +236,7 @@ def register(app):
     azuread_login_available = auth_registry.is_registered("azuread")
 
     config_data = {
-        "appName": "Quetz – the fast conda package server!",
+        "appName": "Quetz - the fast conda package server!",
         "baseUrl": "/",
         "wsUrl": "",
         "appUrl": f"/{ROUTE_PREFIX}",

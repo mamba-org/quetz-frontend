@@ -20,8 +20,8 @@ npm = ["yarn"]
 ignore = ["builder/**", "examples/**", "packages/**", "quetz_frontend/app/static/**", "quetz_frontend/app/themes/**", "quetz_frontend/app/build/**", "quetz_frontend/app/style.js", "scripts/**", "environment.yml", "yarn.lock", ".*"]
 
 [tool.jupyter-releaser.hooks]
-before-bump-version = ["yarn"]
-before-build-npm = ["yarn"]
+before-bump-version = ["python -m pip install build", "yarn"]
+before-build-npm = ["yarn", "yarn build:prod"]
 
 [tool.jupyter-releaser.options]
 version-cmd = "python scripts/bump-version.py --force"
