@@ -1,6 +1,6 @@
 {
   "name": "@quetz-frontend/search-extension",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "sideEffects": [
     "style/*.css",
     "style/index.js"
@@ -34,9 +34,9 @@
     "@jupyterlab/apputils": "^3.2.0",
     "@jupyterlab/coreutils": "^5.2.0",
     "@jupyterlab/services": "^6.2.0",
-    "@quetz-frontend/application": "^0.4.0",
-    "@quetz-frontend/apputils": "^0.4.0",
-    "@quetz-frontend/table": "^0.4.0",
+    "@quetz-frontend/application": "^0.4.1",
+    "@quetz-frontend/apputils": "^0.4.1",
+    "@quetz-frontend/table": "^0.4.1",
     "react": "^17.0.1"
   },
   "devDependencies": {

@@ -2,6 +2,33 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.4.1
+
+([Full Changelog](https://github.com/mamba-org/quetz-frontend/compare/v0.4.0...596aad034b8194c0a2b7166a9205876aff6bf9ad))
+
+### Bugs fixed
+
+- fix: don't filter out packages with dot in name [#150](https://github.com/mamba-org/quetz-frontend/pull/150) ([@YYYasin19](https://github.com/YYYasin19))
+
+### Maintenance and upkeep improvements
+
+- Add jupyter-releaser workflow [#157](https://github.com/mamba-org/quetz-frontend/pull/157) ([@trungleduc](https://github.com/trungleduc))
+- Yarn version [#149](https://github.com/mamba-org/quetz-frontend/pull/149) ([@alanderex](https://github.com/alanderex))
+- Switch to setup-micromamba [#148](https://github.com/mamba-org/quetz-frontend/pull/148) ([@pavelzw](https://github.com/pavelzw))
+
+### Other merged PRs
+
+- Remove pydantic pin [#155](https://github.com/mamba-org/quetz-frontend/pull/155) ([@trungleduc](https://github.com/trungleduc))
+- Replace conda with mamba in readme [#154](https://github.com/mamba-org/quetz-frontend/pull/154) ([@trungleduc](https://github.com/trungleduc))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/mamba-org/quetz-frontend/graphs/contributors?from=2023-03-01&to=2023-12-05&type=c))
+
+[@alanderex](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Aalanderex+updated%3A2023-03-01..2023-12-05&type=Issues) | [@hbcarlos](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Ahbcarlos+updated%3A2023-03-01..2023-12-05&type=Issues) | [@pavelzw](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Apavelzw+updated%3A2023-03-01..2023-12-05&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Atrungleduc+updated%3A2023-03-01..2023-12-05&type=Issues) | [@YYYasin19](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3AYYYasin19+updated%3A2023-03-01..2023-12-05&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.4.0
 
 ([Full Changelog](https://github.com/mamba-org/quetz-frontend/compare/v0.3.1...abd4ee329159777909ff709db9495dcb3c909fdb))
@@ -45,8 +72,6 @@
 ([GitHub contributors page for this release](https://github.com/mamba-org/quetz-frontend/graphs/contributors?from=2022-03-31&to=2023-03-01&type=c))
 
 [@brichet](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Abrichet+updated%3A2022-03-31..2023-03-01&type=Issues) | [@dependabot](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Adependabot+updated%3A2022-03-31..2023-03-01&type=Issues) | [@fcollonval](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Afcollonval+updated%3A2022-03-31..2023-03-01&type=Issues) | [@hbcarlos](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Ahbcarlos+updated%3A2022-03-31..2023-03-01&type=Issues) | [@martinRenou](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3AmartinRenou+updated%3A2022-03-31..2023-03-01&type=Issues) | [@wolfv](https://github.com/search?q=repo%3Amamba-org%2Fquetz-frontend+involves%3Awolfv+updated%3A2022-03-31..2023-03-01&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.4.0a2
 
