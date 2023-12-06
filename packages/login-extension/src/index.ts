@@ -79,7 +79,7 @@ const azure: QuetzFrontEndPlugin<void> = {
       isEnabled: () => isEnabled,
       isVisible: () => isEnabled && mainMenu.profile === null,
       execute: () => {
-        window.location.href = '/auth/azure/login';
+        window.location.href = '/auth/azuread/login';
       },
     });
 
