@@ -5,3 +5,8 @@ dependencies:
   - quetz
   - nodejs=16
   - yarn=1.22
+  - sqlalchemy
+  - sqlalchemy-utils
+  - conda-build
+  - psycopg2
+  - xattr

@@ -1,0 +1,17 @@
+[sqlalchemy]
+database_url = "sqlite:///./quetz.sqlite"
+
+[session]
+# openssl rand -hex 32
+secret = "d859fc0c3554e47bdd6a8c1c27971f397dda673dbf263d30c349fb870ef7cd43"
+https_only = false
+
+[logging]
+level = "DEBUG"
+file = "quetz.log"
+
+[users]
+admins = ["dummy:alice"]
+
+[profiling]
+enable_sampling = false
