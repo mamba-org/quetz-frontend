@@ -193,7 +193,7 @@ def get_rendered_index(
     """Rendered the index file with user profile"""
     cfg = copy.copy(config_data)
     if profile is not None:
-        cfg["logged_in_user_profile"] = rest_models.Profile.from_orm(profile).json()
+        cfg["logged_in_user_profile"] = rest_models.Profile.model_validate(profile).model_dump_json()
     elif "logged_in_user_profile" in cfg:
         del cfg["logged_in_user_profile"]
 
